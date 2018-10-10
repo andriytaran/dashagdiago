@@ -1,0 +1,7 @@
+{
+  "extends": "loopback",
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "indent-size": [true, "tab"]
+}

@@ -1,0 +1,26 @@
+{
+    "name": "Coach",
+    "properties": {
+        "fname": {
+            "type": "string"
+        },
+        "mname": {
+            "type": "string"
+        },
+        "fname": {
+            "type": "string"
+        },
+        "lname": {
+            "type": "string"
+        },
+        "schoolID": {
+            "type": "string"
+        },
+        "fname": {
+            "type": "string"
+        },
+        "coachTitle": {
+            "type": "string"
+        }
+    }
+}

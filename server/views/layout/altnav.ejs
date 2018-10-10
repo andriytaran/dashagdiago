@@ -1,0 +1,72 @@
+<nav class="navbar navbar-default navbar-header-full navbar-dark yamm navbar-static-top" role="navigation" id="header">
+<a href="/"> <img src="/assets/img/logo.png" width="150"></a>
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-bars"></i>
+      </button>
+      <a href="/">
+        <div class="header-full-title navbar-brand">
+          <div class="clearfix"></div>
+          <h1 class="animated fadeInRight"></h1><br>
+        </div>
+      </a>
+    </div> <!-- navbar-header -->
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+       <li><a href="/profile">About Us</a></li>
+           <li><a href="/player_assessment">Player Assessment</a></li>
+               <li><a href="/cultural_fit">Cultural Fit</a></li>
+                   <li><a href="/branding">Digital Brand</a></li>
+      <!--   <li class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Partners</a>
+          <ul class="dropdown-menu dropdown-menu-left animated-2x animated fadeIn">
+            <li><a href="#">Wilson</a></li>
+            <li><a href="#">Football Scoop</a></li>
+          </ul>
+        </li> -->
+        
+        <li class="coaches">
+          <a href="#" data-toggle="modal" data-target="#myModal" class="">
+            Login</a>
+        </li>
+      </ul>
+    </div><!-- navbar-collapse -->
+  </div><!-- container -->
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="center-block logig-form">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Coach Login</div>
+        <div class="panel-body">
+          <form method="post" action="/login" role="form">
+            <div class="form-group">
+              <div class="input-group login-input">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" class="form-control" placeholder="Username">
+              </div>
+              <br>
+              <div class="input-group login-input">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input type="password" class="form-control" placeholder="Password">
+              </div>
+            
+              <button type="submit" class="btn btn-ar btn-primary pull-right">Login</button>
+          
+              <hr class="dotted margin-10">
+              <!-- <a href="#" class="btn btn-ar btn-success pull-right">Create Account</a> -->
+              <a href="#">Forgot Password</a>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
