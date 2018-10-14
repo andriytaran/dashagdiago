@@ -50,13 +50,11 @@ app.get('/', async function(req, res, next) {
         }
     }
 
-
     const offenseResponse = await client.search({ index: 'baseline', body: offenseObj })
       response.offenseCount = Math.round((offenseResponse.hits.total / response.overallCount ) * 100);
 
     const defenseResponse = await client.search({ index: 'baseline', body: defenseObj })
       response.defenseCount = Math.round(( defenseResponse.hits.total / response.overallCount ) * 100)
-
 
     res.render('home', { response: response });
 
@@ -93,4 +91,32 @@ app.get('/', async function(req, res, next) {
   app.post('/login', (req, res, next) => {
     res.render('coachLandng');
   });
+
+  // dashboard data ajax handler
+  app.post('/api/dashboard-data', async function (req, res) {
+    const type = (req.body.type !== undefined) ? req.body.type : '';
+    var response = {};
+
+    switch (type) {
+      case 'core_attributes':
+        // dashboard core attributes chart
+        var coreAttributesObj = {
+          "aggs": {
+            "avgCompetitiveness": { "avg": { "field": "CoreAttributesCompetitiveness" } },
+            "avgPersistence": { "avg": { "field": "CoreAttributesPersistence" } },
+            "avgWorkethic": { "avg": { "field": "CoreAttributesWorkethic" } },
+            "avgTeamOrientation": { "avg": { "field": "CoreAttributesTeamOrientation" } },
+            "avgMastery": { "avg": { "field": "CoreAttributesMastery" } },
+          }
+        }
+
+        const coreAttributesResponse = await client.search({ index: 'baseline', body: coreAttributesObj })
+        response.coreAttributes = coreAttributesResponse.aggregations;
+
+        break;
+    };
+
+    return res.json(response);
+  });
+
 };
