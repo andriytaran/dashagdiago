@@ -1,10 +1,10 @@
 //Reads json file and generates elasticsearch bulk api compatible json document
 
-var inputFile = "./baselinev2.json";
+var inputFile = "./cincinnati.json";
 
-var outputFile = "./es_baseline.json";
+var outputFile = "./es_cincinnati.json";
 
-var index = "baseline";
+var index = "cincinnati";
 
 var type= "post";
 
