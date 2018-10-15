@@ -85,13 +85,13 @@ var handleInteractiveChart = function () {
     }).appendTo("body").fadeIn(200);
   }
   if ($('#interactive-chart').length !== 0) {
-  
-    var data1 = [ 
-      [1, 40], [2, 50], [3, 60], [4, 60], [5, 60], [6, 65], [7, 75], [8, 90], [9, 100], [10, 105], 
-      [11, 110], [12, 110], [13, 120], [14, 130], [15, 135],[16, 145], [17, 132], [18, 123], [19, 135], [20, 150] 
+
+    var data1 = [
+      [1, 40], [2, 50], [3, 60], [4, 60], [5, 60], [6, 65], [7, 75], [8, 90], [9, 100], [10, 105],
+      [11, 110], [12, 110], [13, 120], [14, 130], [15, 135],[16, 145], [17, 132], [18, 123], [19, 135], [20, 150]
     ];
     var data2 = [
-      [1, 10],  [2, 6], [3, 10], [4, 12], [5, 18], [6, 20], [7, 25], [8, 23], [9, 24], [10, 25], 
+      [1, 10],  [2, 6], [3, 10], [4, 12], [5, 18], [6, 20], [7, 25], [8, 23], [9, 24], [10, 25],
       [11, 18], [12, 30], [13, 25], [14, 25], [15, 30], [16, 27], [17, 20], [18, 18], [19, 31], [20, 23]
     ];
     var xLabel = [
@@ -99,8 +99,8 @@ var handleInteractiveChart = function () {
       [11,''],[12,'May&nbsp;25'],[13,''],[14,''],[15,'May&nbsp;28'],[16,''],[17,''],[18,'May&nbsp;31'],[19,''],[20,'']
     ];
     $.plot($("#interactive-chart"), [{
-        data: data1, 
-        label: "Page Views", 
+        data: data1,
+        label: "Page Views",
         color: COLOR_BLUE,
         lines: { show: true, fill:false, lineWidth: 2 },
         points: { show: true, radius: 3, fillColor: COLOR_WHITE },
@@ -115,8 +115,8 @@ var handleInteractiveChart = function () {
       }], {
         xaxis: {  ticks:xLabel, tickDecimals: 0, tickColor: COLOR_BLACK_TRANSPARENT_2 },
         yaxis: {  ticks: 10, tickColor: COLOR_BLACK_TRANSPARENT_2, min: 0, max: 200 },
-        grid: { 
-        hoverable: true, 
+        grid: {
+        hoverable: true,
         clickable: true,
         tickColor: COLOR_BLACK_TRANSPARENT_2,
         borderWidth: 1,
@@ -145,7 +145,7 @@ var handleInteractiveChart = function () {
         }
       } else {
         $("#tooltip").remove();
-        previousPoint = null;            
+        previousPoint = null;
       }
       event.preventDefault();
     });
@@ -159,29 +159,30 @@ var handleCoreAttributes = function () {
       type: 'core_attributes',
     }, function (response) {
       if (response.coreAttributes !== undefined) {
-        var coreAttributesData = [
-          { label: "Competitiveness", data: response.coreAttributes.avgCompetitiveness.value, color: COLOR_RED },
-          { label: "Mastery", data: response.coreAttributes.avgMastery.value, color: COLOR_GREEN },
-          { label: "Persistence", data: response.coreAttributes.avgPersistence.value, color: COLOR_BLUE },
-          { label: "Team Orientation", data: response.coreAttributes.avgTeamOrientation.value, color: COLOR_PURPLE },
-          { label: "Work Ethic", data: response.coreAttributes.avgWorkethic.value, color: COLOR_YELLOW }
-        ];
-        $.plot('#core-attributes', coreAttributesData, {
-          series: {
-            pie: {
-              // innerRadius: 0.5,
-              show: true,
-              label: {
-                show: true
-              }
-            }
-          },
-          grid: {
-            hoverable: true
-          },
-          legend: {
-            show: true
-          }
+        var coreAttributesData = {
+          datasets: [{
+            data: [
+              response.coreAttributes.avgCompetitiveness.value,
+              response.coreAttributes.avgMastery.value,
+              response.coreAttributes.avgPersistence.value,
+              response.coreAttributes.avgTeamOrientation.value,
+              response.coreAttributes.avgWorkethic.value,
+            ],
+          }],
+          labels: [
+            "Competitiveness",
+            "Mastery",
+            "Persistence",
+            "Team Orientation",
+            "Work Ethic",
+          ],
+        };
+
+        var ctx = $("#core-attributes");
+        var coreAttributesChart = new Chart(ctx, {
+          type: 'pie',
+          data: coreAttributesData,
+          options: {}
         });
       }
     }, 'json');
@@ -239,7 +240,7 @@ var handleDashboardSparkline = function() {
     options.highlightSpotColor = COLOR_GREY;
     $('#sparkline-return-visitors').sparkline(value, options);
   }
-    
+
   renderDashboardSparkline();
 
   $(window).on('resize', function() {
