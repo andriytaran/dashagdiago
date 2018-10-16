@@ -1,6 +1,15 @@
 {
   "extends": "loopback",
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "ignoreTemplateLiterals": true,
+        "ignoreUrls": true
+      }
+    ]
   }
 }
