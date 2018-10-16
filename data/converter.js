@@ -49,6 +49,11 @@ Supported extensions: ${supportedExtensions}`,
     describe: '_type for es',
     type: 'string',
   })
+  .option('i', {
+    alias: 'index',
+    describe: '_index for es',
+    type: 'string',
+  })
   .help('h')
   .alias('h', 'help')
   .check(check)
@@ -102,7 +107,7 @@ function csvHandler(argv) {
 function jsonHandler(argv) {
   const {input, type} = argv;
 
-  const index = getFilenameWithoutExt(input);
+  const index = argv.index || getFilenameWithoutExt(input);
 
   console.log(`
 Applying json processor with:
