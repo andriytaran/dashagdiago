@@ -147,16 +147,24 @@ module.exports = (app) => {
           body: coreAttributesObj,
         });
 
+        const programBenchmarkPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: coreAttributesObj,
+        });
+
         const [
           coreAttributesResponse,
           agdiagoBenchmarkResponse,
+          programBenchmarkResponse,
         ] = await Promise.all([
           coreAttributesPromise,
           agdiagoBenchmarkPromise,
+          programBenchmarkPromise,
         ]);
 
         response.coreAttributes = coreAttributesResponse.aggregations;
         response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        response.programBenchmark = programBenchmarkResponse.aggregations;
 
         break;
     };
