@@ -99,6 +99,7 @@ module.exports = (app) => {
   });
 
   // dashboard data ajax handler
+  // TODO: use loopback for this?
   app.post('/api/dashboard-data', async function(req, res) {
     const type = (req.body.type !== undefined) ? req.body.type : '';
     var response = {};
@@ -110,37 +111,52 @@ module.exports = (app) => {
           'aggs': {
             'avgCompetitiveness': {
               'avg': {
-                'field': 'CoreAttributesCompetitiveness',
+                'field': 'coreAttributesCompetitiveness',
               },
             },
             'avgPersistence': {
               'avg': {
-                'field': 'CoreAttributesPersistence',
+                'field': 'coreAttributesPersistence',
               },
             },
             'avgWorkethic': {
               'avg': {
-                'field': 'CoreAttributesWorkethic',
+                'field': 'coreAttributesWorkethic',
               },
             },
             'avgTeamOrientation': {
               'avg': {
-                'field': 'CoreAttributesTeamOrientation',
+                'field': 'coreAttributesTeamOrientation',
               },
             },
             'avgMastery': {
               'avg': {
-                'field': 'CoreAttributesMastery',
+                'field': 'coreAttributesMastery',
               },
             },
           },
         };
 
-        const coreAttributesResponse = await client.search({
+        const coreAttributesPromise = client.search({
+          index: 'cincinnati',
+          body: coreAttributesObj,
+        });
+
+        const agdiagoBenchmarkPromise = client.search({
           index: 'baseline',
           body: coreAttributesObj,
         });
+
+        const [
+          coreAttributesResponse,
+          agdiagoBenchmarkResponse,
+        ] = await Promise.all([
+          coreAttributesPromise,
+          agdiagoBenchmarkPromise,
+        ]);
+
         response.coreAttributes = coreAttributesResponse.aggregations;
+        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
 
         break;
     };
