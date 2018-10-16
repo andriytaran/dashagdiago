@@ -6,60 +6,66 @@ const fs = require('fs');
 var request = require('request-promise');
 var baseSearchUri = 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com/';
 
-
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  host: 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com'
+  host: 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com',
 });
 
 module.exports = (app) => {
   // Home
-app.get('/', async function(req, res, next) {
-
+  app.get('/', async function(req, res, next) {
     var response = {};
     var responseObj = {};
 
-
-    const overallCountResponse = await request({ uri: baseSearchUri + '_count', method: 'get' });
+    const overallCountResponse = await request({
+      uri: baseSearchUri + '_count',
+      method: 'get',
+    });
     responseObj = JSON.parse(overallCountResponse);
     response.overallCount = responseObj.count;
 
     var offenseObj = {
-        "size": 0,
-        "query": {
-            "bool": {
-                "must": {
-                    "match": {
-                        "offenseDefense": 0
-                    }
-                }
-            }
-        }
-    }
+      'size': 0,
+      'query': {
+        'bool': {
+          'must': {
+            'match': {
+              'offenseDefense': 0,
+            },
+          },
+        },
+      },
+    };
 
     var defenseObj = {
-        "size": 0,
-        "query": {
-            "bool": {
-                "must": {
-                    "match": {
-                        "offenseDefense": 1
-                    }
-                }
-            }
-        }
-    }
+      'size': 0,
+      'query': {
+        'bool': {
+          'must': {
+            'match': {
+              'offenseDefense': 1,
+            },
+          },
+        },
+      },
+    };
 
-    const offenseResponse = await client.search({ index: 'baseline', body: offenseObj })
-      response.offenseCount = Math.round((offenseResponse.hits.total / response.overallCount ) * 100);
+    const offenseResponse = await client.search({
+      index: 'baseline',
+      body: offenseObj,
+    });
+    response.offenseCount =
+      Math.round((offenseResponse.hits.total / response.overallCount) * 100);
 
-    const defenseResponse = await client.search({ index: 'baseline', body: defenseObj })
-      response.defenseCount = Math.round(( defenseResponse.hits.total / response.overallCount ) * 100)
+    const defenseResponse = await client.search({
+      index: 'baseline',
+      body: defenseObj,
+    });
+    response.defenseCount =
+      Math.round((defenseResponse.hits.total / response.overallCount) * 100);
 
-    res.render('home', { response: response });
-
-});
-
+    res.render('home', {response: response});
+  });
 
   app.get('/profile', function(req, res, next) {
     res.render('pages/profile');
@@ -93,7 +99,7 @@ app.get('/', async function(req, res, next) {
   });
 
   // dashboard data ajax handler
-  app.post('/api/dashboard-data', async function (req, res) {
+  app.post('/api/dashboard-data', async function(req, res) {
     const type = (req.body.type !== undefined) ? req.body.type : '';
     var response = {};
 
@@ -101,16 +107,39 @@ app.get('/', async function(req, res, next) {
       case 'core_attributes':
         // dashboard core attributes chart
         var coreAttributesObj = {
-          "aggs": {
-            "avgCompetitiveness": { "avg": { "field": "CoreAttributesCompetitiveness" } },
-            "avgPersistence": { "avg": { "field": "CoreAttributesPersistence" } },
-            "avgWorkethic": { "avg": { "field": "CoreAttributesWorkethic" } },
-            "avgTeamOrientation": { "avg": { "field": "CoreAttributesTeamOrientation" } },
-            "avgMastery": { "avg": { "field": "CoreAttributesMastery" } },
-          }
-        }
+          'aggs': {
+            'avgCompetitiveness': {
+              'avg': {
+                'field': 'CoreAttributesCompetitiveness',
+              },
+            },
+            'avgPersistence': {
+              'avg': {
+                'field': 'CoreAttributesPersistence',
+              },
+            },
+            'avgWorkethic': {
+              'avg': {
+                'field': 'CoreAttributesWorkethic',
+              },
+            },
+            'avgTeamOrientation': {
+              'avg': {
+                'field': 'CoreAttributesTeamOrientation',
+              },
+            },
+            'avgMastery': {
+              'avg': {
+                'field': 'CoreAttributesMastery',
+              },
+            },
+          },
+        };
 
-        const coreAttributesResponse = await client.search({ index: 'baseline', body: coreAttributesObj })
+        const coreAttributesResponse = await client.search({
+          index: 'baseline',
+          body: coreAttributesObj,
+        });
         response.coreAttributes = coreAttributesResponse.aggregations;
 
         break;
@@ -118,5 +147,4 @@ app.get('/', async function(req, res, next) {
 
     return res.json(response);
   });
-
 };
