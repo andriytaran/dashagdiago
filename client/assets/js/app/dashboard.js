@@ -145,64 +145,74 @@ var handleInteractiveChart = function () {
   }
 };
 
-var handleCoreAttributes = function () {
+var handleCoreAttributes = (function () {
   "use strict";
-  if ($('#core-attributes').length !== 0) {
-    $.post('/api/dashboard-data', {
-      type: 'core_attributes',
-    }, function (response) {
-      if (response.coreAttributes !== undefined) {
-        var coreAttributesData = [
-          { label: "Competitiveness", value: response.coreAttributes.avgCompetitiveness.value, color: COLOR_RED },
-          { label: "Mastery", value: response.coreAttributes.avgMastery.value, color: COLOR_GREEN },
-          { label: "Persistence", value: response.coreAttributes.avgPersistence.value, color: COLOR_BLUE },
-          { label: "Team Orientation", value: response.coreAttributes.avgTeamOrientation.value, color: COLOR_PURPLE },
-          { label: "Work Ethic", value: response.coreAttributes.avgWorkethic.value, color: COLOR_YELLOW }
-        ];
 
-        nv.addGraph(function () {
-          var pieChart = nv.models.pieChart()
+  function getCoreAttributesData(responseData) {
+    return [
+      { label: "Competitiveness", value: responseData.avgCompetitiveness.value, color: COLOR_RED },
+      { label: "Mastery", value: responseData.avgMastery.value, color: COLOR_GREEN },
+      { label: "Persistence", value: responseData.avgPersistence.value, color: COLOR_BLUE },
+      { label: "Team Orientation", value: responseData.avgTeamOrientation.value, color: COLOR_PURPLE },
+      { label: "Work Ethic", value: responseData.avgWorkethic.value, color: COLOR_YELLOW }
+    ];
+  }
+
+  function getTooltip(label) {
+    switch (label) {
+      case "Competitiveness":
+        return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
+      case "Mastery":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      case "Persistence":
+        return "<h4>Persistence</h4><p class='dashboard-tooltip'>Not everything in football comes easily and some games or plays can be difficult or more complicated than expected. In these situations, success comes from resiliency and an unwillingness to give up. Athletes with persistence persevere in the face of obstacles and do not give up. It’s in their nature to keep working and try harder to overcome adversity in whatever they do. Their natural intensity and resolve allow them to find success.</p>";
+      case "Team Orientation":
+        return "<h4>Team Orientation</h4><p class='dashboard-tooltip'>Some athletes naturally possess a “team first” mindset, seeking to build collaboration that leads to success. These individuals are often the glue that holds the team together, fostering positive relationships within the group. When there is work to be done, these athletes jump in to help others even when it means going beyond the scope of their own expectations. Seen as dependable, they take ownership for their work and follow through, which builds trust and leads to close relationships with their team members.</p>";
+      case "Work Ethic":
+        return "<h4>Work Ethic</h4><p class='dashboard-tooltip'>Athletes with strong work ethic create structure in their lives to ensure follow through and success. These individuals are punctual, focused and organized; they often create plans to ensure that they meet attendance and performance expectations. Naturally goal-oriented, they set priorities and tune out distractions to accomplish the objectives. For athletes with work ethic, they believe in getting the work done and doing it right.</p>";
+      default:
+        return "";
+    };
+  }
+
+  function drawGraph(responseData, selector) {
+    if (responseData !== undefined) {
+      var coreAttributesData = getCoreAttributesData(responseData);
+
+      nv.addGraph(function () {
+        var pieChart = nv.models.pieChart()
             .x(function (d) { return d.label })
             .y(function (d) { return d.value })
-            // .showLabels(true)
+        // .showLabels(true)
             .labelThreshold(.05);
 
-          pieChart.tooltip.contentGenerator(function (obj) {
-            var tooltip = "";
-
-            switch (obj.data.label) {
-              case "Competitiveness":
-                tooltip = "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
-                break;
-              case "Mastery":
-                tooltip = "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
-                break;
-              case "Persistence":
-                tooltip = "<h4>Persistence</h4><p class='dashboard-tooltip'>Not everything in football comes easily and some games or plays can be difficult or more complicated than expected. In these situations, success comes from resiliency and an unwillingness to give up. Athletes with persistence persevere in the face of obstacles and do not give up. It’s in their nature to keep working and try harder to overcome adversity in whatever they do. Their natural intensity and resolve allow them to find success.</p>";
-                break;
-              case "Team Orientation":
-                tooltip = "<h4>Team Orientation</h4><p class='dashboard-tooltip'>Some athletes naturally possess a “team first” mindset, seeking to build collaboration that leads to success. These individuals are often the glue that holds the team together, fostering positive relationships within the group. When there is work to be done, these athletes jump in to help others even when it means going beyond the scope of their own expectations. Seen as dependable, they take ownership for their work and follow through, which builds trust and leads to close relationships with their team members.</p>";
-                break;
-              case "Work Ethic":
-                tooltip = "<h4>Work Ethic</h4><p class='dashboard-tooltip'>Athletes with strong work ethic create structure in their lives to ensure follow through and success. These individuals are punctual, focused and organized; they often create plans to ensure that they meet attendance and performance expectations. Naturally goal-oriented, they set priorities and tune out distractions to accomplish the objectives. For athletes with work ethic, they believe in getting the work done and doing it right.</p>";
-                break;
-            };
-
-            return tooltip;
-          });
-
-          d3.select('#core-attributes').append('svg')
-            .datum(coreAttributesData)
-            .transition().duration(350)
-            .call(pieChart);
-
-          return pieChart;
+        pieChart.tooltip.contentGenerator(function (obj) {
+          return getTooltip(obj.data.label);
         });
 
-      }
-    }, 'json');
+        d3.select(selector).append('svg')
+          .datum(coreAttributesData)
+          .transition().duration(350)
+          .call(pieChart);
+
+        return pieChart;
+      });
+
+    }
   }
-};
+
+  return function handleCoreAttributes() {
+    if ($('#core-attributes').length !== 0) {
+      $.post('/api/dashboard-data', {
+        type: 'core_attributes',
+      }, function (response) {
+        drawGraph(response.coreAttributes, '#core-attributes');
+        drawGraph(response.agdiagoBenchmark, '#agdiago-core-attributes');
+        drawGraph(response.programBenchmark, '#program-core-attributes');
+      }, 'json');
+    }
+  }
+})();
 
 var handleDashboardSparkline = function() {
   "use strict";
