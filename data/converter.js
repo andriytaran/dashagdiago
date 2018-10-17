@@ -8,7 +8,7 @@ const {pipeline} = require('stream');
 
 const supportedExtensions = ['csv', 'json'];
 const prefix = 'es_';
-const url = 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com/_bulk';
+const urlDefault = 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com/';
 
 // check is called BEFORE middlewares are applied so need to apply it twice :(
 const check = createCheck(function check(argv) {
@@ -43,6 +43,7 @@ Supported extensions: ${supportedExtensions}`,
     handler
   )
   .coerce('input', normalizeInput)
+  .coerce('url', normalizeUrl)
   .option('t', {
     alias: 'type',
     default: 'post',
@@ -53,6 +54,12 @@ Supported extensions: ${supportedExtensions}`,
     alias: 'index',
     describe: '_index for es',
     type: 'string',
+  })
+  .option('u', {
+    alias: 'url',
+    default: urlDefault,
+    describe: 'ElasticSearch url',
+    type: 'string'
   })
   .help('h')
   .alias('h', 'help')
@@ -109,7 +116,7 @@ function csvHandler(argv) {
 }
 
 function jsonHandler(argv) {
-  const {input, type} = argv;
+  const {input, type, url} = argv;
 
   const index = argv.index || getFilenameWithoutExt(input);
 
@@ -157,6 +164,14 @@ function createCheck(fn) {
 
 function normalizeInput(input) {
   return path.resolve(input);
+}
+
+function normalizeUrl(url) {
+  if (url.endsWith('/')) {
+    return url + '_bulk';
+  } else {
+    return url + '/_bulk';
+  }
 }
 
 function fileExists(filepath) {
