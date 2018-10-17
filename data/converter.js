@@ -98,6 +98,8 @@ function csvHandler(argv) {
     transformStream,
     writeStream,
     function onFinish() {
+      if (err) console.error(err);
+
       console.log('Finished csv processor');
       jsonHandler(Object.assign({}, argv, {
         input: output,
