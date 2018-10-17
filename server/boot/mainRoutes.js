@@ -99,7 +99,7 @@ module.exports = (app) => {
   });
 
   // dashboard data ajax handler
-  // TODO: use loopback for this?
+  // TODO: use loopback for this? or move to '/' handler?
   app.post('/api/dashboard-data', async function(req, res) {
     const type = (req.body.type !== undefined) ? req.body.type : '';
     var response = {};
@@ -137,6 +137,7 @@ module.exports = (app) => {
           },
         };
 
+        // TODO: combine as single request if possible?
         const coreAttributesPromise = client.search({
           index: 'cincinnati',
           body: coreAttributesObj,
