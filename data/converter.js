@@ -97,7 +97,7 @@ function csvHandler(argv) {
     readStream,
     transformStream,
     writeStream,
-    function onFinish() {
+    function onFinish(err) {
       if (err) console.error(err);
 
       console.log('Finished csv processor');
