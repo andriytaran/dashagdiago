@@ -3,12 +3,13 @@
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const {ELASTICSEARCH_URL} = require('../env');
 var request = require('request-promise');
-var baseSearchUri = 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com/';
+var baseSearchUri = ELASTICSEARCH_URL;
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  host: 'https://search-agdiago-ajvfe7hmdvjahbf6544srce6xy.us-east-1.es.amazonaws.com',
+  host: ELASTICSEARCH_URL,
 });
 
 module.exports = (app) => {

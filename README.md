@@ -16,6 +16,12 @@ npm run converter -- ./data/cincinnati.json --url http://localhost:9200
 npm run converter -- ./data/cincinnati-benchmarks.json --url http://localhost:9200
 ```
 
+Then copy `.env.example` to `.env` and start project normally:
+
+```sh
+npm run start
+```
+
 # generate data
 
 To generate json suitable to bulk upload to ElasticSearch, use
