@@ -90,7 +90,7 @@ function csvHandler(argv) {
   const readStream = fs.createReadStream(input).on('error', console.error);
   const writeStream = fs.createWriteStream(output).on('error', console.error);
   const transformStream = csvtojson({
-    checkType: true
+    checkType: true,
   }).on('error', console.error);
 
   pipeline(
