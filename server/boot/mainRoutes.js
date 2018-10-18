@@ -169,6 +169,21 @@ module.exports = (app) => {
         response.programBenchmark = programBenchmarkResponse.aggregations;
 
         break;
+      case 'cultural_fit':
+        response.culturalFit = [{
+          percentileStart: 0,
+          percentileEnd: 44,
+          count: 123,
+        }, {
+          percentileStart: 45,
+          percentileEnd: 74,
+          count: 5432,
+        }, {
+          percentileStart: 75,
+          percentileEnd: 100,
+          count: 2500,
+        }];
+        break;
     };
 
     return res.json(response);
