@@ -148,14 +148,33 @@ var handleInteractiveChart = function () {
 var handleCoreAttributes = (function () {
   "use strict";
 
-  function getCoreAttributesData(responseData) {
-    return [
-      { label: "Competitiveness", value: responseData.avgCompetitiveness.value, color: COLOR_RED },
-      { label: "Mastery", value: responseData.avgMastery.value, color: COLOR_GREEN },
-      { label: "Persistence", value: responseData.avgPersistence.value, color: COLOR_BLUE },
-      { label: "Team Orientation", value: responseData.avgTeamOrientation.value, color: COLOR_PURPLE },
-      { label: "Work Ethic", value: responseData.avgWorkethic.value, color: COLOR_YELLOW }
-    ];
+  function getCoreAttributesData(response) {
+    return [{
+      perc: response.coreAttributes.avgCompetitiveness.value,
+      ftick: response.programBenchmark.avgCompetitiveness.value,
+      stick: response.agdiagoBenchmark.avgCompetitiveness.value,
+      name: "Competitiveness"
+    }, {
+      perc: response.coreAttributes.avgMastery.value,
+      ftick: response.programBenchmark.avgMastery.value,
+      stick: response.agdiagoBenchmark.avgMastery.value,
+      name: "Mastery"
+    }, {
+      perc: response.coreAttributes.avgPersistence.value,
+      ftick: response.programBenchmark.avgPersistence.value,
+      stick: response.agdiagoBenchmark.avgPersistence.value,
+      name: "Persistence"
+    }, {
+      perc: response.coreAttributes.avgTeamOrientation.value,
+      ftick: response.programBenchmark.avgTeamOrientation.value,
+      stick: response.agdiagoBenchmark.avgTeamOrientation.value,
+      name: "Team Orientation"
+    }, {
+      perc: response.coreAttributes.avgWorkethic.value,
+      ftick: response.programBenchmark.avgWorkethic.value,
+      stick: response.agdiagoBenchmark.avgWorkethic.value,
+      name: "Work Ethic"
+    }];
   }
 
   function getTooltip(label) {
@@ -180,32 +199,7 @@ var handleCoreAttributes = (function () {
       $.post('/api/dashboard-data', {
         type: 'core_attributes',
       }, function (response) {
-        const data = [{
-          perc: response.coreAttributes.avgCompetitiveness.value,
-          ftick: response.programBenchmark.avgCompetitiveness.value,
-          stick: response.agdiagoBenchmark.avgCompetitiveness.value,
-          name: "Competitiveness"
-        }, {
-          perc: response.coreAttributes.avgMastery.value,
-          ftick: response.programBenchmark.avgMastery.value,
-          stick: response.agdiagoBenchmark.avgMastery.value,
-          name: "Mastery"
-        }, {
-          perc: response.coreAttributes.avgPersistence.value,
-          ftick: response.programBenchmark.avgPersistence.value,
-          stick: response.agdiagoBenchmark.avgPersistence.value,
-          name: "Persistence"
-        }, {
-          perc: response.coreAttributes.avgTeamOrientation.value,
-          ftick: response.programBenchmark.avgTeamOrientation.value,
-          stick: response.agdiagoBenchmark.avgTeamOrientation.value,
-          name: "Team Orientation"
-        }, {
-          perc: response.coreAttributes.avgWorkethic.value,
-          ftick: response.programBenchmark.avgWorkethic.value,
-          stick: response.agdiagoBenchmark.avgWorkethic.value,
-          name: "Work Ethic"
-        }];
+        const data = getCoreAttributesData(response);
 
         drawbarchart(data, '#core-attributes');
       }, 'json');
