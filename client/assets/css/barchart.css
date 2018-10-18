@@ -1,0 +1,42 @@
+.barchart div {
+  height: 20px;
+}
+
+.barchart .gbar {
+  color: black;
+  position: relative;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  font-weight: bold;
+}
+
+.barchart .namef {
+  width: 70px;
+}
+.barchart .mbar {
+  font: 15px sans-serif;
+  text-align: right;
+  width: 600px;
+  padding: 3px;
+  margin: 1px;
+  color: green;
+  font-weight: bold;
+  position: relative;
+  border: 2px solid gray;
+}
+
+.barchart .perc {
+  background-color: steelblue;
+  position: absolute;
+  top: 3px;
+}
+
+.barchart .tick {
+  position: absolute;
+  width: 2px;
+  background-color: black;
+  top: 3px;
+}
+
+.barchart .red {background-color: red;}
