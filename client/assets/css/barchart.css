@@ -8,11 +8,19 @@
   justify-content: space-between;
 }
 
+.barchart .tooltip-inner {
+  max-width: 350px;
+  /* If max-width does not work, try using width instead */
+  width: 350px;
+}
 
+.barchart .mbar:hover {box-shadow: inset 0px 0px 500px lightgrey;}
+
+/* .barchart .namef {width: 30%} */
 .barchart .mbar {
   display: flex;
   justify-content: space-between;
-
+  /* width: 30%; */
   font: 15px sans-serif;
   text-align: right;
   padding: 3px;
