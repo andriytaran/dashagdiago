@@ -175,40 +175,39 @@ var handleCoreAttributes = (function () {
     };
   }
 
-  function drawGraph(responseData, selector) {
-    if (responseData !== undefined) {
-      var coreAttributesData = getCoreAttributesData(responseData);
-
-      nv.addGraph(function () {
-        var pieChart = nv.models.pieChart()
-            .x(function (d) { return d.label })
-            .y(function (d) { return d.value })
-        // .showLabels(true)
-            .labelThreshold(.05);
-
-        pieChart.tooltip.contentGenerator(function (obj) {
-          return getTooltip(obj.data.label);
-        });
-
-        d3.select(selector).append('svg')
-          .datum(coreAttributesData)
-          .transition().duration(350)
-          .call(pieChart);
-
-        return pieChart;
-      });
-
-    }
-  }
-
   return function handleCoreAttributes() {
     if ($('#core-attributes').length !== 0) {
       $.post('/api/dashboard-data', {
         type: 'core_attributes',
       }, function (response) {
-        drawGraph(response.coreAttributes, '#core-attributes');
-        drawGraph(response.agdiagoBenchmark, '#agdiago-core-attributes');
-        drawGraph(response.programBenchmark, '#program-core-attributes');
+        const data = [{
+          perc: response.coreAttributes.avgCompetitiveness.value,
+          ftick: response.programBenchmark.avgCompetitiveness.value,
+          stick: response.agdiagoBenchmark.avgCompetitiveness.value,
+          name: "Competitiveness"
+        }, {
+          perc: response.coreAttributes.avgMastery.value,
+          ftick: response.programBenchmark.avgMastery.value,
+          stick: response.agdiagoBenchmark.avgMastery.value,
+          name: "Mastery"
+        }, {
+          perc: response.coreAttributes.avgPersistence.value,
+          ftick: response.programBenchmark.avgPersistence.value,
+          stick: response.agdiagoBenchmark.avgPersistence.value,
+          name: "Persistence"
+        }, {
+          perc: response.coreAttributes.avgTeamOrientation.value,
+          ftick: response.programBenchmark.avgTeamOrientation.value,
+          stick: response.agdiagoBenchmark.avgTeamOrientation.value,
+          name: "Team Orientation"
+        }, {
+          perc: response.coreAttributes.avgWorkethic.value,
+          ftick: response.programBenchmark.avgWorkethic.value,
+          stick: response.agdiagoBenchmark.avgWorkethic.value,
+          name: "Work Ethic"
+        }];
+
+        drawbarchart(data, '#core-attributes');
       }, 'json');
     }
   }
