@@ -170,19 +170,75 @@ module.exports = (app) => {
 
         break;
       case 'cultural_fit':
-        response.culturalFit = [{
+        // TODO: use actual cultural fit
+        const culturalFitField = 'weight';
+
+        // dashboard cultural fit chart
+        const culturalFitBaselineObj = {
+          'size': 0,
+          'aggs': {
+            'percCulturalFit': {
+              'percentiles': {
+                'field': culturalFitField,
+                'keyed': false,
+                'percents': [
+                  45,
+                  75,
+                ],
+              },
+            },
+          },
+        };
+
+        const culturalFitBaselineResponse = await client.search({
+          index: 'baseline',
+          body: culturalFitBaselineObj,
+        });
+        const [percLowFit, percMedFit] =
+              culturalFitBaselineResponse.aggregations.percCulturalFit.values;
+        const percentiles = [{
           percentileStart: 0,
           percentileEnd: 44,
-          count: 123,
         }, {
           percentileStart: 45,
           percentileEnd: 74,
-          count: 5432,
         }, {
           percentileStart: 75,
           percentileEnd: 100,
-          count: 2500,
         }];
+
+        const culturalFitTeamObj = {
+          'aggs': {
+            'rangeCulturalFit': {
+              'range': {
+                'field': culturalFitField,
+                'ranges': [
+                  {'to': percLowFit.value},
+                  {'from': percLowFit.value, 'to': percMedFit.value},
+                  {'from': percMedFit.value},
+                ],
+              },
+            },
+          },
+        };
+
+        const culturalFitTeamResponse = await client.search({
+          index: 'cincinnati',
+          body: culturalFitTeamObj,
+        });
+
+        response.culturalFit = culturalFitTeamResponse
+          .aggregations
+          .rangeCulturalFit
+          .buckets
+          .map((bucket, i) => ({
+            rangeStart: bucket.from || 0,
+            rangeEnd: bucket.to || 100,
+            count: bucket.doc_count,
+            percentileStart: percentiles[i].percentileStart,
+            percentileEnd: percentiles[i].percentileEnd,
+          }));
+
         break;
     };
 
