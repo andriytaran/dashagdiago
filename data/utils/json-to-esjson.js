@@ -3,6 +3,7 @@
 const JSONStream = require('JSONStream');
 const {Transform} = require('stream');
 
+const normalizeJson = require('./normalize-json');
 const uniqueId = require('./unique-id');
 
 module.exports = function createStreams(index, type) {
@@ -11,6 +12,9 @@ module.exports = function createStreams(index, type) {
   const output = new Transform({
     writableObjectMode: true,
     transform(node, _, next) {
+      node = Object.assign({}, node);
+      normalizeJson(node);
+
       // eslint-disable-next-line max-len
       this.push(`{ "index" : { "_index" : "${index}", "_type" : "${type}", "_id" : "${uniqueId(node.id)}" }}\n`);
       this.push(JSON.stringify(node) + '\n');

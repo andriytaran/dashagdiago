@@ -88,6 +88,7 @@ function csvHandler(argv) {
 
   console.log('Applying csv processor');
 
+  const normalizeJson = require('./utils/normalize-json');
   const csvtojson = require('csvtojson');
 
   const output = replaceExt(input, 'json');
@@ -98,7 +99,11 @@ function csvHandler(argv) {
   const writeStream = fs.createWriteStream(output).on('error', console.error);
   const transformStream = csvtojson({
     checkType: true,
-  }).on('error', console.error);
+  })
+    .subscribe(json => {
+      normalizeJson(json);
+    })
+    .on('error', console.error);
 
   pipeline(
     readStream,
@@ -146,7 +151,7 @@ _type: ${type}
       console.log('Finished json processor');
       console.log(`Now you can bulk post the data to es using this command:
 
-curl -s -H "Content-Type: application/x-ndjson" -XPOST ${url} --data-binary "@${output}"; echo`);
+curl -s -H "Content-Type: application/x-ndjson" -XPOST ${url} --data-binary "@${output}"`);
     }
   );
 }
