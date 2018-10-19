@@ -106,7 +106,7 @@ module.exports = (app) => {
     var response = {};
 
     switch (type) {
-      case 'core_attributes':
+      case 'core_attributes': {
         // dashboard core attributes chart
         var coreAttributesObj = {
           'aggs': {
@@ -169,7 +169,57 @@ module.exports = (app) => {
         response.programBenchmark = programBenchmarkResponse.aggregations;
 
         break;
-      case 'cultural_fit':
+      }
+      case 'academic': {
+        // dashboard academic chart
+        var academicObj = {
+          'aggs': {
+            'avgAct': {
+              'avg': {
+                'field': 'act',
+              },
+            },
+            'avgSat': {
+              'avg': {
+                'field': 'sat',
+              },
+            },
+          },
+        };
+
+        // TODO: combine as single request if possible?
+        const academicPromise = client.search({
+          index: 'cincinnati',
+          body: academicObj,
+        });
+
+        const agdiagoBenchmarkPromise = client.search({
+          index: 'baseline',
+          body: academicObj,
+        });
+
+        const programBenchmarkPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: academicObj,
+        });
+
+        const [
+          academicResponse,
+          agdiagoBenchmarkResponse,
+          programBenchmarkResponse,
+        ] = await Promise.all([
+          academicPromise,
+          agdiagoBenchmarkPromise,
+          programBenchmarkPromise,
+        ]);
+
+        response.academic = academicResponse.aggregations;
+        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        response.programBenchmark = programBenchmarkResponse.aggregations;
+
+        break;
+      }
+      case 'cultural_fit': {
         // TODO: use actual cultural fit
         const culturalFitField = 'weight';
 
@@ -240,6 +290,7 @@ module.exports = (app) => {
           }));
 
         break;
+      }
     };
 
     return res.json(response);
