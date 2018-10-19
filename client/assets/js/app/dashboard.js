@@ -201,12 +201,54 @@ var handleCoreAttributes = (function () {
       }, function (response) {
         const data = getCoreAttributesData(response);
 
-        drawbarchart(data, '#core-attributes');
+        drawbarchart(data, '#core-attributes', getTooltip);
       }, 'json');
     }
   }
 })();
+var handleCulturalFit = (function () {
+  "use strict";
 
+  function getCulturalFitData(response) {
+    return [
+      {
+        "label": "Low Fit",
+        "value" : response.culturalFit[0].count,
+        "start" : response.culturalFit[0].percentileStart,
+        "end" : response.culturalFit[0].percentileEnd
+      } ,
+      {
+        "label": "Med Fit",
+        "value" : response.culturalFit[1].count,
+        "start" : response.culturalFit[1].percentileStart,
+        "end" : response.culturalFit[1].percentileEnd
+      } ,
+      {
+        "label": "Top Fit",
+        "value" : response.culturalFit[2].count,
+        "start" : response.culturalFit[2].percentileStart,
+        "end" : response.culturalFit[2].percentileEnd
+      }
+    ];
+  }
+
+  function getTooltip(data) {
+    return data.label + " (" + data.start + " - " + data.end + " percentile)" + " = " + data.value + " players";
+  }
+
+  return function handleCulturalFit() {
+    if ($('#cultural-fit').length !== 0) {
+      $.post('/api/dashboard-data', {
+        type: 'cultural_fit',
+      }, function (response) {
+        debugger;
+        const data = getCulturalFitData(response);
+
+        drawpiechart(data, '#cultural-fit', getTooltip);
+      }, 'json');
+    }
+  }
+})();
 var handleDashboardSparkline = function() {
   "use strict";
   var options = {
@@ -315,6 +357,7 @@ var Dashboard = function () {
       handleInteractiveChart();
       handleDashboardSparkline();
       handleCoreAttributes();
+      handleCulturalFit();
       handleDashboardTodolist();
       handleVectorMap();
       handleDashboardDatepicker();
