@@ -199,9 +199,51 @@ var handleCoreAttributes = (function () {
       $.post('/api/dashboard-data', {
         type: 'core_attributes',
       }, function (response) {
+
         const data = getCoreAttributesData(response);
 
         drawbarchart(data, '#core-attributes', getTooltip);
+      }, 'json');
+    }
+  }
+})();
+var handleAcademicAttributes = (function () {
+  "use strict";
+
+  function getAcademicAttributesData(response) {
+    return [{
+      perc: response.academic.avgSat.value,
+      ftick: response.programBenchmark.avgSat.value,
+      stick: response.agdiagoBenchmark.avgSat.value,
+      name: "Sat"
+    }, {
+      perc: response.academic.avgAct.value,
+      ftick: response.programBenchmark.avgAct.value,
+      stick: response.agdiagoBenchmark.avgAct.value,
+      name: "Act"
+    }];
+  }
+
+  function getTooltip(label) {
+    switch (label) {
+      case "Sat":
+        return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
+      case "Act":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      default:
+        return "";
+    };
+  }
+
+  return function handleAcademicAttributes() {
+    if ($('#academic').length !== 0) {
+      $.post('/api/dashboard-data', {
+        type: 'academic',
+      }, function (response) {
+        debugger;
+        const data = getAcademicAttributesData(response);
+
+        drawacademic(data, '#academic', getTooltip);
       }, 'json');
     }
   }
@@ -241,7 +283,7 @@ var handleCulturalFit = (function () {
       $.post('/api/dashboard-data', {
         type: 'cultural_fit',
       }, function (response) {
-        debugger;
+
         const data = getCulturalFitData(response);
 
         drawpiechart(data, '#cultural-fit', getTooltip);
@@ -358,6 +400,7 @@ var Dashboard = function () {
       handleDashboardSparkline();
       handleCoreAttributes();
       handleCulturalFit();
+      handleAcademicAttributes();
       handleDashboardTodolist();
       handleVectorMap();
       handleDashboardDatepicker();

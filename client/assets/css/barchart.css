@@ -14,7 +14,9 @@
   width: 350px;
 }
 
-.barchart .mbar:hover {box-shadow: inset 0px 0px 500px lightgrey;}
+.barchart .mbar:hover {
+  box-shadow: inset 0px 0px 500px lightgrey;
+}
 
 /* .barchart .namef {width: 30%} */
 .barchart .mbar {
@@ -25,18 +27,21 @@
   text-align: right;
   padding: 3px;
   margin: 1px;
-  color: green;
+  color: black;
   font-weight: bold;
   position: relative;
   border: 2px solid gray;
 }
-
+.barchart .val {
+  position: absolute;
+  right: 0px;
+}
 .barchart .mbar div {
   height: 20px;
 }
 
 .barchart .perc {
-  background-color: steelblue;
+  background-color: green;
 }
 
 .barchart .tick {
@@ -45,4 +50,6 @@
   background-color: black;
 }
 
-.barchart .red {background-color: red;}
+.barchart .red {
+  background-color: red;
+}
