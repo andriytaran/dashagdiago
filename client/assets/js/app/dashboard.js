@@ -240,7 +240,6 @@ var handleAcademicAttributes = (function () {
       $.post('/api/dashboard-data', {
         type: 'academic',
       }, function (response) {
-        debugger;
         const data = getAcademicAttributesData(response);
 
         drawacademic(data, '#academic', getTooltip);
