@@ -12,8 +12,8 @@
 
       <!-- begin row -->
       <div class="row">
-        <!-- begin col-4 -->
-        <div class="col-lg-4 col-md-6">
+        <!-- begin col-3 -->
+        <div class="col-lg-3 col-md-6">
           <div class="widget widget-stats bg-black-darker">
             <div class="stats-icon"><i class="fa fa-child"></i></div>
             <div class="stats-info">
@@ -25,9 +25,9 @@
             </div>
           </div>
         </div>
-        <!-- end col-4 -->
-        <!-- begin col-4 -->
-        <div class="col-lg-4 col-md-6">
+        <!-- end col-3 -->
+        <!-- begin col-3 -->
+        <div class="col-lg-3 col-md-6">
           <div class="widget widget-stats bg-gradient-purple">
             <div class="stats-icon"><i class="fa fa-link"></i></div>
             <div class="stats-info">
@@ -39,9 +39,9 @@
             </div>
           </div>
         </div>
-        <!-- end col-4 -->
-        <!-- begin col-4 -->
-        <div class="col-lg-4 col-md-6">
+        <!-- end col-3 -->
+        <!-- begin col-3 -->
+        <div class="col-lg-3 col-md-6">
           <div class="widget widget-stats bg-grey-darker">
             <div class="stats-icon"><i class="fa fa-users"></i></div>
             <div class="stats-info">
@@ -53,7 +53,21 @@
             </div>
           </div>
         </div>
-        <!-- end col-4 -->
+        <!-- end col-3 -->
+        <!-- begin col-3 -->
+        <div class="col-lg-3 col-md-6">
+          <div class="widget widget-stats bg-grey-darker">
+            <div class="stats-icon"><i class="fa fa-users"></i></div>
+            <div class="stats-info">
+              <h4>Average score</h4>
+              <p><% if ( typeof response !== 'undefined' ) { %><%=23 %><%}%>%</p>
+            </div>
+            <div class="stats-link">
+              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- end col-3 -->
         <!-- begin col-4 -->
         <!--
         <div class="col-lg-4 col-md-6">
@@ -87,8 +101,8 @@
               </div>
               <h4 class="panel-title">Cultural Fit</h4>
             </div>
-            <div class="panel-body">
-              <div id="cultural-fit" class="height-sm"></div>
+            <div class="panel-body panel-height-5">
+              <a href="/culturalfit"><div id="cultural-fit" class="height-sm"></div></a>
             </div>
           </div>
           <!-- end panel -->
@@ -429,7 +443,7 @@
               </div>
               <h4 class="panel-title">Core Attributes</h4>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-height-5">
               <div id="core-attributes" class="height-sm"></div>
             </div>
           </div>
@@ -620,7 +634,7 @@
       <!-- end row -->
     </div>
 <% stylesheet('/../assets/css/barchart.css') -%>
+<% stylesheet('/../assets/css/home.css') -%>
 <% script('/../assets/js/app/drawbarchart.js') -%>
 <% script('/../assets/js/app/drawpiechart.js') -%>
-<% script('/../assets/js/app/academic.js') -%>
-<% script('/../assets/js/app/dashboard.js') -%>
+<% script('/../assets/js/app/home.js') -%>

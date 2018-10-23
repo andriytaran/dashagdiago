@@ -1,33 +1,52 @@
 
 var handleCoreAttributes = (function () {
   "use strict";
+  // function getrange(){
+  //   if (value < 100 && ftick < 100 && stick < 100){return "[0 - 100]";}
+  //   if (value < 1000 && ftick < 1000 && stick < 1000){return "[0 - 1000]";}
+  //   if (value < 10000 && ftick < 10000 && stick < 10000){return "[0 - 10000]";}
+  // }
 
+  // function getbarvalue(a) {
+  //   if (a == "[0 - 100]"){return "percent";}
+  //   else {return "number";}
+  // }
   function getCoreAttributesData(response) {
     return [{
-      perc: response.coreAttributes.avgCompetitiveness.value,
+      value: response.coreAttributes.avgCompetitiveness.value,
       ftick: response.programBenchmark.avgCompetitiveness.value,
       stick: response.agdiagoBenchmark.avgCompetitiveness.value,
-      name: "Competitiveness"
+      name: "Competitiveness",
+      range: [0, 100],
+      style: "percent"
     }, {
-      perc: response.coreAttributes.avgMastery.value,
+      value: response.coreAttributes.avgMastery.value,
       ftick: response.programBenchmark.avgMastery.value,
       stick: response.agdiagoBenchmark.avgMastery.value,
-      name: "Mastery"
+      name: "Mastery",
+      range: [0, 100],
+      style: "percent"
     }, {
-      perc: response.coreAttributes.avgPersistence.value,
+      value: response.coreAttributes.avgPersistence.value,
       ftick: response.programBenchmark.avgPersistence.value,
       stick: response.agdiagoBenchmark.avgPersistence.value,
-      name: "Persistence"
+      name: "Persistence",
+      range: [0, 100],
+      style: "percent"
     }, {
-      perc: response.coreAttributes.avgTeamOrientation.value,
+      value: response.coreAttributes.avgTeamOrientation.value,
       ftick: response.programBenchmark.avgTeamOrientation.value,
       stick: response.agdiagoBenchmark.avgTeamOrientation.value,
-      name: "Team Orientation"
+      name: "Team Orientation",
+      range: [0, 100],
+      style: "percent"
     }, {
-      perc: response.coreAttributes.avgWorkethic.value,
+      value: response.coreAttributes.avgWorkethic.value,
       ftick: response.programBenchmark.avgWorkethic.value,
       stick: response.agdiagoBenchmark.avgWorkethic.value,
-      name: "Work Ethic"
+      name: "Work Ethic",
+      range: [0, 100],
+      style: "percent"
     }];
   }
 
@@ -55,7 +74,7 @@ var handleCoreAttributes = (function () {
       }, function (response) {
 
         const data = getCoreAttributesData(response);
-
+        debugger;
         drawbarchart(data, '#core-attributes', getTooltip);
       }, 'json');
     }
@@ -67,15 +86,19 @@ var handleAcademicAttributes = (function () {
 
   function getAcademicAttributesData(response) {
     return [{
-      perc: response.academic.avgSat.value,
+      value: response.academic.avgSat.value,
       ftick: response.programBenchmark.avgSat.value,
       stick: response.agdiagoBenchmark.avgSat.value,
-      name: "Sat"
+      name: "Sat",
+      range: [0, 10000],
+      style: "number"
     }, {
-      perc: response.academic.avgAct.value,
+      value: response.academic.avgAct.value,
       ftick: response.programBenchmark.avgAct.value,
       stick: response.agdiagoBenchmark.avgAct.value,
-      name: "Act"
+      name: "Act",
+      range: [0, 100],
+      style: "percent"
     }];
   }
 
@@ -97,7 +120,7 @@ var handleAcademicAttributes = (function () {
       }, function (response) {
         const data = getAcademicAttributesData(response);
 
-        drawacademic(data, '#academic', getTooltip);
+        drawbarchart(data, '#academic', getTooltip);
       }, 'json');
     }
   }
