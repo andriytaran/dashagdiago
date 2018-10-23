@@ -158,7 +158,6 @@ var handleAcademicAttributes = (function() {
 //   }
 // })();
 function HandleDropDownAlert(selector) {
-  debugger;
   if ($(selector).length !== 0) {
     $(selector).on("click", dropdownalert);
     function dropdownalert() {
