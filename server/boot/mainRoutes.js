@@ -102,13 +102,28 @@ module.exports = (app) => {
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
   app.post('/api/dashboard-data', async function(req, res) {
-    const type = (req.body.type !== undefined) ? req.body.type : '';
-    var response = {};
+    const playerPosition = req.body.playerPosition != null ?
+      req.body.playerPosition.toLowerCase() :
+      null;
+    const type = req.body.type != null ? req.body.type : null;
+    var response = {
+      playerPosition,
+    };
+
+    const query = playerPosition ? {
+      'query': {
+        'term': {
+          'position': playerPosition,
+        },
+      },
+    } : {};
 
     switch (type) {
       case 'core_attributes': {
         // dashboard core attributes chart
-        var coreAttributesObj = {
+
+        var coreAttributesObj = Object.assign({
+          'size': 0,
           'aggs': {
             'avgCompetitiveness': {
               'avg': {
@@ -136,7 +151,7 @@ module.exports = (app) => {
               },
             },
           },
-        };
+        }, query);
 
         // TODO: combine as single request if possible?
         const coreAttributesPromise = client.search({
@@ -164,6 +179,8 @@ module.exports = (app) => {
           programBenchmarkPromise,
         ]);
 
+        console.log('coreAttributesResponse', coreAttributesResponse);
+
         response.coreAttributes = coreAttributesResponse.aggregations;
         response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
         response.programBenchmark = programBenchmarkResponse.aggregations;
@@ -172,7 +189,8 @@ module.exports = (app) => {
       }
       case 'academic': {
         // dashboard academic chart
-        var academicObj = {
+        var academicObj = Object.assign({
+          'size': 0,
           'aggs': {
             'avgAct': {
               'avg': {
@@ -185,7 +203,7 @@ module.exports = (app) => {
               },
             },
           },
-        };
+        }, query);
 
         // TODO: combine as single request if possible?
         const academicPromise = client.search({
@@ -224,7 +242,7 @@ module.exports = (app) => {
         const culturalFitField = 'weight';
 
         // dashboard cultural fit chart
-        const culturalFitBaselineObj = {
+        const culturalFitBaselineObj = Object.assign({
           'size': 0,
           'aggs': {
             'percCulturalFit': {
@@ -238,7 +256,7 @@ module.exports = (app) => {
               },
             },
           },
-        };
+        }, query);
 
         const culturalFitBaselineResponse = await client.search({
           index: 'baseline',
