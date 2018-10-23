@@ -633,8 +633,30 @@
       </div>
       <!-- end row -->
     </div>
+    <!-- start modal -->
+    <div class="modal fade" id="chartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalplayerstitle">Players</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="players"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal -->
 <% stylesheet('/../assets/css/barchart.css') -%>
 <% stylesheet('/../assets/css/home.css') -%>
+<% script('/../assets/js/app/drawtable.js') -%>
 <% script('/../assets/js/app/drawbarchart.js') -%>
 <% script('/../assets/js/app/drawpiechart.js') -%>
 <% script('/../assets/js/app/home.js') -%>

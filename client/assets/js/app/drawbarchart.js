@@ -27,9 +27,19 @@ function drawbarchart(data, selector, getTooltip) {
     // mbar.attr("data-placement", "top");
     mbar.attr("title", getTooltip(d.name));
     $(mbar.node()).tooltip({ container: chart.node() });
+    function showmodal() {
+      debugger;
+      if (d.name == "SAT") {
+        drawtable(satplayersdata, "#players");
+      } else {
+        drawtable(playersdata, "#players");
+      }
+      $("#chartmodal").modal("show");
+    }
+    $(mbar.node()).on("click", showmodal);
     let barEnter = mbar.append("div");
 
-    barEnter.style("width", perccheck(d.value,d.range[0],d.range[1]) + "%");
+    barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
     }
@@ -38,24 +48,28 @@ function drawbarchart(data, selector, getTooltip) {
     let ftick = mbar.append("div");
     ftick.attr("class", "tick");
     ftick.style("left", function() {
-      return perccheck(d.ftick,d.range[0],d.range[1]) + "%";
+      return perccheck(d.ftick, d.range[0], d.range[1]) + "%";
     });
     let stick = mbar.append("div");
     stick.attr("class", "tick red");
     stick.style("left", function() {
-      return perccheck(d.stick,d.range[0],d.range[1]) + "%";
+      return perccheck(d.stick, d.range[0], d.range[1]) + "%";
     });
-    function displayvalue(value, style) {
+    function displayvalue(value, style, fractiondigits) {
+      let fractiondigitsval = 1;
+      if (d.fractiondigits != null) {
+        fractiondigitsval = d.fractiondigits;
+      }
       if (d.style == "percent") {
         return (d.value / 100).toLocaleString(undefined, {
           style: "percent",
-          maximumFractionDigits: 1,
-          minimumFractionDigits: 1
+          maximumFractionDigits: fractiondigitsval,
+          minimumFractionDigits: fractiondigitsval
         });
       } else {
         return d.value.toLocaleString(undefined, {
-          maximumFractionDigits: 1,
-          minimumFractionDigits: 1
+          maximumFractionDigits: fractiondigitsval,
+          minimumFractionDigits: fractiondigitsval
         });
       }
     }
