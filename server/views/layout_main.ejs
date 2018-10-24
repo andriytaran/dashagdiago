@@ -218,16 +218,8 @@
           <div class="dropdown">
             <button type="button" class="btn btn-grey dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Defensive Line</button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" id="defensiveLineDE" href="#">Defensive End</a>
-              <a class="dropdown-item" id="defensiveLineDT" href="#">Defensive Tackle</a>
-              <a class="dropdown-item" id="defensiveLineOG" href="#">Offensive Guard</a>
-              <a class="dropdown-item" id="defensiveLineOT" href="#">Offensive Tackler</a>
-              <a class="dropdown-item" id="defensiveLineOC" href="#">Offensive Center</a>
-              <a class="dropdown-item" id="defensiveLineOt" href="#">Offensive Tackle</a>
-              <a class="dropdown-item" id="defensiveLineDB" href="#">Defensive Back</a>
-              <a class="dropdown-item" id="defensiveLineP" href="#">Punter</a>
-              <a class="dropdown-item" id="defensiveLineS" href="#">Safety</a>
-              <a class="dropdown-item" id="defensiveLineLS" href="#">Long Snapper</a>
+              <a class="dropdown-item" id="defensiveLineDE" href="/?position=DE">Defensive End</a>
+              <a class="dropdown-item" id="defensiveLineDT" href="/?position=DT">Defensive Tackle</a>
             </div>
           </div>
         </center>
@@ -236,29 +228,28 @@
         <div class="dropdown">
           <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ofensive  Line</button>
           <div class="dropdown-menu">
-              <a class="dropdown-item" id="offensiveLineOG" href="#">Offensive Guard</a>
-              <a class="dropdown-item" id="offensiveLineOT" href="#">Offensive Tackler</a>
-              <a class="dropdown-item" id="offensiveLineOC" href="#">Offensive Center</a>
-              <a class="dropdown-item" id="offensiveLineOt" href="#">Offensive Tackle</a>
-              <a class="dropdown-item" id="offensiveLineLS" href="#">Long Snapper</a>
+              <a class="dropdown-item" id="offensiveLineOG" href="/?position=OG">Offensive Guard</a>
+              <a class="dropdown-item" id="offensiveLineOC" href="/?position=OC">Offensive Center</a>
+              <a class="dropdown-item" id="offensiveLineOt" href="/?position=OT">Offensive Tackle</a>
+              <a class="dropdown-item" id="offensiveLineLS" href="/?position=LS">Long Snapper</a>
             </div>
         </div>
         </center>
 
 
            <hr>
-            <center> <button type="button" id="runningBacks" class="btn btn-grey">Running Backs</button>  </center>
+            <center> <a href="/?position=RB"><button type="button" id="runningBacks" class="btn btn-grey">Running Backs</button></a>  </center>
            <hr>
-            <center> <button type="button" id="tightEnds" class="btn btn-grey">Tight Ends</button>  </center>
+            <center> <a href="/?position=TE"><button type="button" id="tightEnds" class="btn btn-grey">Tight Ends</button></a>  </center>
            <hr>
-            <center> <button type="button" id="wideReceivers" class="btn btn-grey">Wide Receivers</button>  </center>
+            <center> <a href="/?position=WR"><button type="button" id="wideReceivers" class="btn btn-grey">Wide Receivers</button> </a> </center>
            <hr>
             <center>
             <div class="dropdown">
-              <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kicking</button>
+              <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Special teams</button>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" id="kickingP" href="#">Punter</a>
-                  <a class="dropdown-item" id="kickingK" href="#">Kicker</a>
+                  <a class="dropdown-item" id="kickingP" href="/?position=P">Punter</a>
+                  <a class="dropdown-item" id="kickingK" href="/?position=K">Kicker</a>
               </div>
             </div>
             </center>
@@ -267,22 +258,30 @@
             <div class="dropdown">
               <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Defensive Backs</button>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" id="defensiveBacksC" href="#">Corner</a>
-                  <a class="dropdown-item" id="defensiveBacksB" href="#">Backs</a>
-                  <a class="dropdown-item" id="defensiveBacksS" href="#">Safety</a>
+                  <a class="dropdown-item" id="defensiveBacksC" href="/?position=CB">Corner Backs</a>
+                  <a class="dropdown-item" id="defensiveBacksS" href="/?position=S">Safety</a>
               </div>
             </div>
             </center>
             <hr>
-           <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center>
+            <center>
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quaterbacks</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" id="QBPro" href="/?position=QBPro">Pro Style</a>
+                    <a class="dropdown-item" id="QBDual" href="/?position=QBDual">Dual Threat</a>
+                </div>
+              </div>
+              </center>
+           <!-- <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center> -->
             <hr>
             <center>
             <div class="dropdown">
               <button type="button" class="btn btn-grey dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Linebackers</button>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" id="ilb" href="#">Inside Linebacker</a>
-                  <a class="dropdown-item" id="olb" href="#">Outside Linebacker</a>
-                  <a class="dropdown-item" id="mlb" href="#">Middle Linebacker</a>
+                  <a class="dropdown-item" id="ilb" href="/?position=ILB">Inside Linebacker</a>
+                  <a class="dropdown-item" id="olb" href="/?position=OLB">Outside Linebacker</a>
+                  <a class="dropdown-item" id="mlb" href="/?position=MLB">Middle Linebacker</a>
               </div>
             </div>
             </center>

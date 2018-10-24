@@ -77,12 +77,13 @@ var handleCoreAttributes = (function() {
     }
   }
 
-  return function handleCoreAttributes() {
+  return function handleCoreAttributes(position) {
     if ($("#core-attributes").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
-          type: "core_attributes"
+          type: "core_attributes",
+          playerPosition: position
         },
         function(response) {
           const data = getCoreAttributesData(response);
@@ -131,12 +132,13 @@ var handleAcademicAttributes = (function() {
     }
   }
 
-  return function handleAcademicAttributes() {
+  return function handleAcademicAttributes(position) {
     if ($("#academic").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
-          type: "academic"
+          type: "academic",
+          playerPosition: position
         },
         function(response) {
           const data = getAcademicAttributesData(response);
@@ -157,12 +159,26 @@ var handleAcademicAttributes = (function() {
 //     }
 //   }
 // })();
-function HandleDropDownAlert(selector) {
-  if ($(selector).length !== 0) {
-    $(selector).on("click", dropdownalert);
-    function dropdownalert() {
-      return alert(selector);
-    }
+// function HandleDropDownAlert(selector) {
+//   if ($(selector).length !== 0) {
+//     // $(selector).on("click", dropdowncont);
+//     // function dropdowncont() {
+//     //   return alert(selector);
+//     // }
+//   }
+// }
+
+function getUrlParameters(data) {
+  let res = {};
+  let urlParams = new URLSearchParams(window.location.search);
+  let myParam = urlParams.get("position");
+  if (myParam == null) {
+    res.position = undefined
+    return res;
+  }
+  else {
+    res.position = myParam.toUpperCase();
+    return res;
   }
 }
 var handleCulturalFit = (function() {
@@ -205,12 +221,13 @@ var handleCulturalFit = (function() {
     );
   }
 
-  return function handleCulturalFit() {
+  return function handleCulturalFit(position) {
     if ($("#cultural-fit").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
-          type: "cultural_fit"
+          type: "cultural_fit",
+          playerPosition: position
         },
         function(response) {
           const data = getCulturalFitData(response);
@@ -244,36 +261,38 @@ var Dashboard = (function() {
     //main function
     init: function() {
       handleDashboardGritterNotification();
-      HandleDropDownAlert("#defensiveLineDE");
-      HandleDropDownAlert("#defensiveLineDT");
-      HandleDropDownAlert("#defensiveLineOG");
-      HandleDropDownAlert("#defensiveLineOT");
-      HandleDropDownAlert("#defensiveLineOC");
-      HandleDropDownAlert("#defensiveLineOt");
-      HandleDropDownAlert("#defensiveLineDB");
-      HandleDropDownAlert("#defensiveLineP");
-      HandleDropDownAlert("#defensiveLineS");
-      HandleDropDownAlert("#defensiveLineLS");
-      HandleDropDownAlert("#offensiveLineOG");
-      HandleDropDownAlert("#offensiveLineOT");
-      HandleDropDownAlert("#offensiveLineOC");
-      HandleDropDownAlert("#offensiveLineOt");
-      HandleDropDownAlert("#offensiveLineLS");
-      HandleDropDownAlert("#runningBacks");
-      HandleDropDownAlert("#tightEnds");
-      HandleDropDownAlert("#wideReceivers");
-      HandleDropDownAlert("#kickingP");
-      HandleDropDownAlert("#kickingK");
-      HandleDropDownAlert("#defensiveBacksC");
-      HandleDropDownAlert("#defensiveBacksB");
-      HandleDropDownAlert("#defensiveBacksS");
-      HandleDropDownAlert("#quaterBacks");
-      HandleDropDownAlert("#ilb");
-      HandleDropDownAlert("#olb");
-      HandleDropDownAlert("#mlb");
-      handleCoreAttributes();
-      handleCulturalFit();
-      handleAcademicAttributes();
+      // HandleDropDownAlert("#defensiveLineDE");
+      // HandleDropDownAlert("#defensiveLineDT");
+      // HandleDropDownAlert("#defensiveLineOG");
+      // HandleDropDownAlert("#defensiveLineOT");
+      // HandleDropDownAlert("#defensiveLineOC");
+      // HandleDropDownAlert("#defensiveLineOt");
+      // HandleDropDownAlert("#defensiveLineDB");
+      // HandleDropDownAlert("#defensiveLineP");
+      // HandleDropDownAlert("#defensiveLineS");
+      // HandleDropDownAlert("#defensiveLineLS");
+      // HandleDropDownAlert("#offensiveLineOG");
+      // HandleDropDownAlert("#offensiveLineOT");
+      // HandleDropDownAlert("#offensiveLineOC");
+      // HandleDropDownAlert("#offensiveLineOt");
+      // HandleDropDownAlert("#offensiveLineLS");
+      // HandleDropDownAlert("#runningBacks");
+      // HandleDropDownAlert("#tightEnds");
+      // HandleDropDownAlert("#wideReceivers");
+      // HandleDropDownAlert("#kickingP");
+      // HandleDropDownAlert("#kickingK");
+      // HandleDropDownAlert("#defensiveBacksC");
+      // HandleDropDownAlert("#defensiveBacksB");
+      // HandleDropDownAlert("#defensiveBacksS");
+      // HandleDropDownAlert("#quaterBacks");
+      // HandleDropDownAlert("#ilb");
+      // HandleDropDownAlert("#olb");
+      // HandleDropDownAlert("#mlb");
+      getUrlParameters();
+      let urlParams = getUrlParameters();
+      handleCoreAttributes(urlParams.position);
+      handleCulturalFit(urlParams.position);
+      handleAcademicAttributes(urlParams.position);
     }
   };
 })();
