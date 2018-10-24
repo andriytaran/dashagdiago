@@ -71,8 +71,8 @@ function drawtable(data, selector) {
   }
   // column definitions
   var columns = [
-    { head: "First Name", cl: "title", html: f("firstName") },
-    { head: "Last Name", cl: "center", html: f("lastName") },
+    { head: "First Name", cl: "title", html: f("fname") },
+    { head: "Last Name", cl: "center", html: f("lname") },
     { head: "Position", cl: "center", html: f("position") },
     { head: "Score", cl: "num", html: f("score") }
   ];

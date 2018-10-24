@@ -102,6 +102,7 @@ module.exports = (app) => {
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
   app.post('/api/dashboard-data', async function(req, res) {
+    console.log(req.body);
     const playerPosition = req.body.playerPosition != null ?
       req.body.playerPosition.toLowerCase() :
       null;
@@ -138,7 +139,7 @@ module.exports = (app) => {
           fname: hit._source.fname,
           lname: hit._source.lname,
           position: hit._source.position,
-          score: _hit._source[field],
+          score: hit._source[field],
         }));
         break;
       }

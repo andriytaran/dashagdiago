@@ -1,4 +1,4 @@
-function drawbarchart(data, selector, getTooltip) {
+function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
   var chart = d3.select(selector);
   chart.attr("class", "barchart");
   var bar = chart.selectAll("div");
@@ -28,12 +28,7 @@ function drawbarchart(data, selector, getTooltip) {
     mbar.attr("title", getTooltip(d.name));
     $(mbar.node()).tooltip({ container: chart.node() });
     function showmodal() {
-      debugger;
-      if (d.name == "SAT") {
-        drawtable(satplayersdata, "#players");
-      } else {
-        drawtable(playersdata, "#players");
-      }
+      getPlayersData(position, d.field, function(players) {drawtable(players, "#players")});
       $("#chartmodal").modal("show");
     }
     $(mbar.node()).on("click", showmodal);

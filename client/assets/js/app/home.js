@@ -17,6 +17,7 @@ var handleCoreAttributes = (function() {
         ftick: response.programBenchmark.avgCompetitiveness.value,
         stick: response.agdiagoBenchmark.avgCompetitiveness.value,
         name: "Competitiveness",
+        field: "coreAttributesCompetitiveness",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -26,6 +27,7 @@ var handleCoreAttributes = (function() {
         ftick: response.programBenchmark.avgMastery.value,
         stick: response.agdiagoBenchmark.avgMastery.value,
         name: "Mastery",
+        field: "coreAttributesMastery",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -35,6 +37,7 @@ var handleCoreAttributes = (function() {
         ftick: response.programBenchmark.avgPersistence.value,
         stick: response.agdiagoBenchmark.avgPersistence.value,
         name: "Persistence",
+        field: "coreAttributesPersistence",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -44,6 +47,7 @@ var handleCoreAttributes = (function() {
         ftick: response.programBenchmark.avgTeamOrientation.value,
         stick: response.agdiagoBenchmark.avgTeamOrientation.value,
         name: "Team Orientation",
+        field: "coreAttributesTeamOrientation",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -53,6 +57,7 @@ var handleCoreAttributes = (function() {
         ftick: response.programBenchmark.avgWorkethic.value,
         stick: response.agdiagoBenchmark.avgWorkethic.value,
         name: "Work Ethic",
+        field: "coreAttributesWorkethic",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -87,13 +92,29 @@ var handleCoreAttributes = (function() {
         },
         function(response) {
           const data = getCoreAttributesData(response);
-          drawbarchart(data, "#core-attributes", getTooltip);
+          drawbarchart(data, "#core-attributes", position, getTooltip, getPlayersData);
         },
         "json"
       );
     }
   };
 })();
+
+function getPlayersData(position, field,cb) {
+    $.post(
+      "/api/dashboard-data",
+      {
+        type: "players_data",
+        playerPosition: position,
+        field: field
+      },
+      function(response) {
+        cb(response.players)
+      },
+      "json"
+    );
+};
+
 
 var handleAcademicAttributes = (function() {
   "use strict";
@@ -105,6 +126,7 @@ var handleAcademicAttributes = (function() {
         ftick: response.programBenchmark.avgSat.value,
         stick: response.agdiagoBenchmark.avgSat.value,
         name: "SAT",
+        field: "sat",
         range: [0, 10000],
         style: "number",
         fractiondigits: 0
@@ -114,8 +136,9 @@ var handleAcademicAttributes = (function() {
         ftick: response.programBenchmark.avgAct.value,
         stick: response.agdiagoBenchmark.avgAct.value,
         name: "ACT",
+        field: "act",
         range: [0, 100],
-        style: "percent",
+        style: "number",
         fractiondigits: 0
       }
     ];
@@ -143,7 +166,7 @@ var handleAcademicAttributes = (function() {
         function(response) {
           const data = getAcademicAttributesData(response);
 
-          drawbarchart(data, "#academic", getTooltip);
+          drawbarchart(data, "#academic", position, getTooltip, getPlayersData);
         },
         "json"
       );
