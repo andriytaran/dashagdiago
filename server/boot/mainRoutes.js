@@ -119,10 +119,28 @@ module.exports = (app) => {
     } : {};
 
     switch (type) {
+      case 'players_data': {
+        // dashboard players table modal
+
+        const field = req.body.field;
+
+        const playersObj = Object.assign({
+          'size': 10000,
+          '_source': ['fname', 'lname', 'position', field],
+        }, query);
+
+        const playersResponse = await client.search({
+          index: 'cincinnati',
+          body: playersObj,
+        });
+
+        response.players = playersResponse.hits.hits.map(hit => hit._source);
+        break;
+      }
       case 'core_attributes': {
         // dashboard core attributes chart
 
-        var coreAttributesObj = Object.assign({
+        const coreAttributesObj = Object.assign({
           'size': 0,
           'aggs': {
             'avgCompetitiveness': {
