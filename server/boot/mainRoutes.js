@@ -134,7 +134,12 @@ module.exports = (app) => {
           body: playersObj,
         });
 
-        response.players = playersResponse.hits.hits.map(hit => hit._source);
+        response.players = playersResponse.hits.hits.map(hit => ({
+          fname: hit._source.fname,
+          lname: hit._source.lname,
+          position: hit._source.position,
+          score: _hit._source[field],
+        }));
         break;
       }
       case 'core_attributes': {
