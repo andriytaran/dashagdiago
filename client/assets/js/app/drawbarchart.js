@@ -25,7 +25,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     mbar.attr("data-toggle", "tooltip");
     mbar.attr("data-html", "true");
     // mbar.attr("data-placement", "top");
-    mbar.attr("title", getTooltip(d.name));
+    mbar.attr("title", getTooltip(d.field));
     $(mbar.node()).tooltip({ container: chart.node() });
     function showmodal() {
       getPlayersData(position, d.field, function(players) {drawtable(players, "#players")});
@@ -64,11 +64,13 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
       if (d.style == "percent") {
         return (d.value / 100).toLocaleString(undefined, {
           style: "percent",
+          useGrouping: false,
           maximumFractionDigits: fractiondigitsval,
           minimumFractionDigits: fractiondigitsval
         });
       } else {
         return d.value.toLocaleString(undefined, {
+          useGrouping: false,
           maximumFractionDigits: fractiondigitsval,
           minimumFractionDigits: fractiondigitsval
         });
