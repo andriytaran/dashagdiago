@@ -234,7 +234,7 @@ var handleSocialProfileAttributes = (function() {
         field: "facebookSentiment",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.instagramFollowers.value,
@@ -244,7 +244,7 @@ var handleSocialProfileAttributes = (function() {
         field: "instagramFollowers",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.newsMedaiCoveragementions.value,
@@ -254,7 +254,7 @@ var handleSocialProfileAttributes = (function() {
         field: "newsMedaiCoveragementions",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.newsMediaCoverageRegional.value,
@@ -264,7 +264,7 @@ var handleSocialProfileAttributes = (function() {
         field: "newsMediaCoverageRegional",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.newsMediaCoverageSentiment.value,
@@ -274,7 +274,7 @@ var handleSocialProfileAttributes = (function() {
         field: "newsMediaCoverageSentiment",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.newsMediacoverageNational.value,
@@ -284,7 +284,7 @@ var handleSocialProfileAttributes = (function() {
         field: "newsMediacoverageNational",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.pressReleaseSentiment.value,
@@ -294,7 +294,7 @@ var handleSocialProfileAttributes = (function() {
         field: "pressReleaseSentiment",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.pressReleaseSentimentCounter.value,
@@ -304,7 +304,7 @@ var handleSocialProfileAttributes = (function() {
         field: "pressReleaseSentimentCounter",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.socialInstagramSentiment.value,
@@ -314,7 +314,7 @@ var handleSocialProfileAttributes = (function() {
         field: "socialInstagramSentiment",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.socialTwitterSentiment.value,
@@ -324,7 +324,7 @@ var handleSocialProfileAttributes = (function() {
         field: "socialTwitterSentiment",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: response.socialProfile.twitterFollowers.value,
@@ -334,7 +334,7 @@ var handleSocialProfileAttributes = (function() {
         field: "twitterFollowers",
         range: [0, 10],
         style: "number",
-        fractiondigits: 0
+        fractiondigits: 1
       }
     ];
   }
@@ -617,7 +617,7 @@ var handleAthleticAttributes = (function() {
         stick: response.agdiagoBenchmark.weight.value,
         name: "Weight",
         field: "weight",
-        range: [0, 100],
+        range: [0, 1000],
         style: "number",
         fractiondigits: 0
       };
