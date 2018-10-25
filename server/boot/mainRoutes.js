@@ -102,7 +102,6 @@ module.exports = (app) => {
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
   app.post('/api/dashboard-data', async function(req, res) {
-    console.log(req.body);
     const playerPosition = req.body.playerPosition != null ?
       req.body.playerPosition.toLowerCase() :
       null;
@@ -120,6 +119,218 @@ module.exports = (app) => {
     } : {};
 
     switch (type) {
+      case 'emotional_intel': {
+        // dashboard emotional intel chart
+
+        const emotionalIntelObj = Object.assign({
+          'size': 0,
+          'aggs': {
+            'emotionalIntelBehavior': {
+              'avg': {
+                'field': 'emotionalIntelBehavior',
+              },
+            },
+            'emotionalIntelReflection': {
+              'avg': {
+                'field': 'emotionalIntelReflection',
+              },
+            },
+            'emotionalIntelteamWork': {
+              'avg': {
+                'field': 'emotionalIntelteamWork',
+              },
+            },
+            'emotionalIntelRelationships': {
+              'avg': {
+                'field': 'emotionalIntelRelationships',
+              },
+            },
+            'emotionalIntelAccountability': {
+              'avg': {
+                'field': 'emotionalIntelAccountability',
+              },
+            },
+            'emotionalIntelResponsibility': {
+              'avg': {
+                'field': 'emotionalIntelResponsibility',
+              },
+            },
+            'emotionalIntelIndependence': {
+              'avg': {
+                'field': 'emotionalIntelIndependence',
+              },
+            },
+          },
+        });
+
+        // TODO: combine as single request if possible?
+        const emotionalIntelPromise = client.search({
+          index: 'cincinnati',
+          body: emotionalIntelObj,
+        });
+
+        const agdiagoBenchmarkPromise = client.search({
+          index: 'baseline',
+          body: emotionalIntelObj,
+        });
+
+        const programBenchmarkPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: emotionalIntelObj,
+        });
+
+        const [
+          emotionalIntelResponse,
+          agdiagoBenchmarkResponse,
+          programBenchmarkResponse,
+        ] = await Promise.all([
+          emotionalIntelPromise,
+          agdiagoBenchmarkPromise,
+          programBenchmarkPromise,
+        ]);
+
+        response.emotionalIntel = emotionalIntelResponse.aggregations;
+        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        response.programBenchmark = programBenchmarkResponse.aggregations;
+
+        break;
+      }
+      case 'athletic': {
+        // dashboard athletic chart
+
+        const athleticObj = Object.assign({
+          'size': 0,
+          'aggs': {
+            'forty': {
+              'avg': {
+                'field': 'forty',
+              },
+            },
+            'vertical': {
+              'avg': {
+                'field': 'vertical',
+              },
+            },
+            'carries': {
+              'avg': {
+                'field': 'carries',
+              },
+            },
+            'rushingYards': {
+              'avg': {
+                'field': 'rushingYards',
+              },
+            },
+            'rushingTouchdowns': {
+              'avg': {
+                'field': 'rushingTouchdowns',
+              },
+            },
+            'receptions': {
+              'avg': {
+                'field': 'receptions',
+              },
+            },
+            'recievingYards': {
+              'avg': {
+                'field': 'recievingYards',
+              },
+            },
+            'gamesPlayed': {
+              'avg': {
+                'field': 'gamesPlayed',
+              },
+            },
+            'gamesStarted': {
+              'avg': {
+                'field': 'gamesStarted',
+              },
+            },
+            'height': {
+              'avg': {
+                'field': 'height',
+              },
+            },
+            'weight': {
+              'avg': {
+                'field': 'weight',
+              },
+            },
+            'completions': {
+              'avg': {
+                'field': 'completions',
+              },
+            },
+            'passingYards': {
+              'avg': {
+                'field': 'passingYards',
+              },
+            },
+            'touchdownsThrown': {
+              'avg': {
+                'field': 'touchdownsThrown',
+              },
+            },
+            'interceptionsThrown': {
+              'avg': {
+                'field': 'interceptionsThrown',
+              },
+            },
+            'soloTackle': {
+              'avg': {
+                'field': 'soloTackles',
+              },
+            },
+            'totalTackles': {
+              'avg': {
+                'field': 'totalTackles',
+              },
+            },
+            'sacks': {
+              'avg': {
+                'field': 'sacks',
+              },
+            },
+            'tacklesForLoss': {
+              'avg': {
+                'field': 'tacklesForLoss',
+              },
+            },
+          },
+        });
+
+        // TODO: combine as single request if possible?
+        const athleticPromise = client.search({
+          index: 'cincinnati',
+          body: athleticObj,
+        });
+
+        const agdiagoBenchmarkPromise = client.search({
+          index: 'baseline',
+          body: athleticObj,
+        });
+
+        const programBenchmarkPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: athleticObj,
+        });
+
+        const [
+          athleticResponse,
+          agdiagoBenchmarkResponse,
+          programBenchmarkResponse,
+        ] = await Promise.all([
+          athleticPromise,
+          agdiagoBenchmarkPromise,
+          programBenchmarkPromise,
+        ]);
+
+        response.athletic = athleticResponse.aggregations;
+        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        response.programBenchmark = programBenchmarkResponse.aggregations;
+
+        break;
+      }
       case 'players_data': {
         // dashboard players table modal
 
@@ -149,27 +360,27 @@ module.exports = (app) => {
         const coreAttributesObj = Object.assign({
           'size': 0,
           'aggs': {
-            'avgCompetitiveness': {
+            'coreAttributesCompetitiveness': {
               'avg': {
                 'field': 'coreAttributesCompetitiveness',
               },
             },
-            'avgPersistence': {
+            'coreAttributesPersistence': {
               'avg': {
                 'field': 'coreAttributesPersistence',
               },
             },
-            'avgWorkethic': {
+            'coreAttributesWorkethic': {
               'avg': {
                 'field': 'coreAttributesWorkethic',
               },
             },
-            'avgTeamOrientation': {
+            'coreAttributesTeamOrientation': {
               'avg': {
                 'field': 'coreAttributesTeamOrientation',
               },
             },
-            'avgMastery': {
+            'coreAttributesMastery': {
               'avg': {
                 'field': 'coreAttributesMastery',
               },
@@ -203,8 +414,6 @@ module.exports = (app) => {
           programBenchmarkPromise,
         ]);
 
-        console.log('coreAttributesResponse', coreAttributesResponse);
-
         response.coreAttributes = coreAttributesResponse.aggregations;
         response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
         response.programBenchmark = programBenchmarkResponse.aggregations;
@@ -216,14 +425,24 @@ module.exports = (app) => {
         var academicObj = Object.assign({
           'size': 0,
           'aggs': {
-            'avgAct': {
+            'gpa': {
+              'avg': {
+                'field': 'gpa',
+              },
+            },
+            'sat': {
+              'avg': {
+                'field': 'sat',
+              },
+            },
+            'act': {
               'avg': {
                 'field': 'act',
               },
             },
-            'avgSat': {
+            'coreGpa': {
               'avg': {
-                'field': 'sat',
+                'field': 'coreGpa',
               },
             },
           },
@@ -256,6 +475,101 @@ module.exports = (app) => {
         ]);
 
         response.academic = academicResponse.aggregations;
+        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        response.programBenchmark = programBenchmarkResponse.aggregations;
+
+        break;
+      }
+      case 'social_profile': {
+        // dashboard social profile chart
+        var socialProfileObj = Object.assign({
+          'size': 0,
+          'aggs': {
+            'socialTwitterSentiment': {
+              'avg': {
+                'field': 'socialTwitterSentiment',
+              },
+            },
+            'twitterFollowers': {
+              'avg': {
+                'field': 'twitterFollowers',
+              },
+            },
+            'socialInstagramSentiment': {
+              'avg': {
+                'field': 'socialInstagramSentiment',
+              },
+            },
+            'instagramFollowers': {
+              'avg': {
+                'field': 'instagramFollowers',
+              },
+            },
+            'facebookSentiment': {
+              'avg': {
+                'field': 'facebookSentiment',
+              },
+            },
+            'newsMediaCoverageSentiment': {
+              'avg': {
+                'field': 'newsMediaCoverageSentiment',
+              },
+            },
+            'newsMedaiCoveragementions': {
+              'avg': {
+                'field': 'newsMedaiCoveragementions',
+              },
+            },
+            'newsMediacoverageNational': {
+              'avg': {
+                'field': 'newsMediacoverageNational',
+              },
+            },
+            'newsMediaCoverageRegional': {
+              'avg': {
+                'field': 'newsMediaCoverageRegional',
+              },
+            },
+            'pressReleaseSentiment': {
+              'avg': {
+                'field': 'pressReleaseSentiment',
+              },
+            },
+            'pressReleaseSentimentCounter': {
+              'avg': {
+                'field': 'pressReleaseSentimentCounter',
+              },
+            },
+          },
+        }, query);
+
+        // TODO: combine as single request if possible?
+        const socialProfilePromise = client.search({
+          index: 'cincinnati',
+          body: socialProfileObj,
+        });
+
+        const agdiagoBenchmarkPromise = client.search({
+          index: 'baseline',
+          body: socialProfileObj,
+        });
+
+        const programBenchmarkPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: socialProfileObj,
+        });
+
+        const [
+          socialProfileResponse,
+          agdiagoBenchmarkResponse,
+          programBenchmarkResponse,
+        ] = await Promise.all([
+          socialProfilePromise,
+          agdiagoBenchmarkPromise,
+          programBenchmarkPromise,
+        ]);
+
+        response.socialProfile = socialProfileResponse.aggregations;
         response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
         response.programBenchmark = programBenchmarkResponse.aggregations;
 
