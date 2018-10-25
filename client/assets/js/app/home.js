@@ -13,9 +13,9 @@ var handleCoreAttributes = (function() {
   function getCoreAttributesData(response) {
     return [
       {
-        value: response.coreAttributes.avgCompetitiveness.value,
-        ftick: response.programBenchmark.avgCompetitiveness.value,
-        stick: response.agdiagoBenchmark.avgCompetitiveness.value,
+        value: response.coreAttributes.coreAttributesCompetitiveness.value,
+        ftick: response.programBenchmark.coreAttributesCompetitiveness.value,
+        stick: response.agdiagoBenchmark.coreAttributesCompetitiveness.value,
         name: "Competitiveness",
         field: "coreAttributesCompetitiveness",
         range: [0, 100],
@@ -23,9 +23,9 @@ var handleCoreAttributes = (function() {
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.avgMastery.value,
-        ftick: response.programBenchmark.avgMastery.value,
-        stick: response.agdiagoBenchmark.avgMastery.value,
+        value: response.coreAttributes.coreAttributesMastery.value,
+        ftick: response.programBenchmark.coreAttributesMastery.value,
+        stick: response.agdiagoBenchmark.coreAttributesMastery.value,
         name: "Mastery",
         field: "coreAttributesMastery",
         range: [0, 100],
@@ -33,9 +33,9 @@ var handleCoreAttributes = (function() {
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.avgPersistence.value,
-        ftick: response.programBenchmark.avgPersistence.value,
-        stick: response.agdiagoBenchmark.avgPersistence.value,
+        value: response.coreAttributes.coreAttributesPersistence.value,
+        ftick: response.programBenchmark.coreAttributesPersistence.value,
+        stick: response.agdiagoBenchmark.coreAttributesPersistence.value,
         name: "Persistence",
         field: "coreAttributesPersistence",
         range: [0, 100],
@@ -43,9 +43,9 @@ var handleCoreAttributes = (function() {
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.avgTeamOrientation.value,
-        ftick: response.programBenchmark.avgTeamOrientation.value,
-        stick: response.agdiagoBenchmark.avgTeamOrientation.value,
+        value: response.coreAttributes.coreAttributesTeamOrientation.value,
+        ftick: response.programBenchmark.coreAttributesTeamOrientation.value,
+        stick: response.agdiagoBenchmark.coreAttributesTeamOrientation.value,
         name: "Team Orientation",
         field: "coreAttributesTeamOrientation",
         range: [0, 100],
@@ -53,9 +53,9 @@ var handleCoreAttributes = (function() {
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.avgWorkethic.value,
-        ftick: response.programBenchmark.avgWorkethic.value,
-        stick: response.agdiagoBenchmark.avgWorkethic.value,
+        value: response.coreAttributes.coreAttributesWorkethic.value,
+        ftick: response.programBenchmark.coreAttributesWorkethic.value,
+        stick: response.agdiagoBenchmark.coreAttributesWorkethic.value,
         name: "Work Ethic",
         field: "coreAttributesWorkethic",
         range: [0, 100],
@@ -91,8 +91,15 @@ var handleCoreAttributes = (function() {
           playerPosition: position
         },
         function(response) {
+          if (response.coreAttributes.coreAttributesCompetitiveness.value == null &&
+            response.coreAttributes.coreAttributesMastery.value == null &&
+            response.coreAttributes.coreAttributesWorkethic.value == null &&
+            response.coreAttributes.coreAttributesTeamOrientation.value == null &&
+            response.coreAttributes.coreAttributesPersistence.value == null)
+            {let elem = document.getElementById("coreAttributesBlock");elem.style.display = "none";}
+          else {
           const data = getCoreAttributesData(response);
-          drawbarchart(data, "#core-attributes", position, getTooltip, getPlayersData);
+          drawbarchart(data, "#core-attributes", position, getTooltip, getPlayersData);}
         },
         "json"
       );
@@ -122,9 +129,9 @@ var handleAcademicAttributes = (function() {
   function getAcademicAttributesData(response) {
     return [
       {
-        value: response.academic.avgSat.value,
-        ftick: response.programBenchmark.avgSat.value,
-        stick: response.agdiagoBenchmark.avgSat.value,
+        value: response.academic.sat.value,
+        ftick: response.programBenchmark.sat.value,
+        stick: response.agdiagoBenchmark.sat.value,
         name: "SAT",
         field: "sat",
         range: [0, 10000],
@@ -132,9 +139,9 @@ var handleAcademicAttributes = (function() {
         fractiondigits: 0
       },
       {
-        value: response.academic.avgAct.value,
-        ftick: response.programBenchmark.avgAct.value,
-        stick: response.agdiagoBenchmark.avgAct.value,
+        value: response.academic.act.value,
+        ftick: response.programBenchmark.act.value,
+        stick: response.agdiagoBenchmark.act.value,
         name: "ACT",
         field: "act",
         range: [0, 100],
@@ -165,8 +172,9 @@ var handleAcademicAttributes = (function() {
         },
         function(response) {
           const data = getAcademicAttributesData(response);
-
-          drawbarchart(data, "#academic", position, getTooltip, getPlayersData);
+          if (response.academic.act.value == null && response.academic.sat.value == null){let elem = document.getElementById("academicBlock");elem.style.display = "none";}
+          else {
+          drawbarchart(data, "#academic", position, getTooltip, getPlayersData);}
         },
         "json"
       );

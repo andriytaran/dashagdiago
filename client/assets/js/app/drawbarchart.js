@@ -35,21 +35,27 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     let barEnter = mbar.append("div");
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
+
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
     }
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
+    if (d.value == null){gbar.style("display", "none");}
     let ftick = mbar.append("div");
     ftick.attr("class", "tick");
+
     ftick.style("left", function() {
       return perccheck(d.ftick, d.range[0], d.range[1]) + "%";
     });
+    if (d.ftick == null){ftick.style("display", "none");}
     let stick = mbar.append("div");
     stick.attr("class", "tick red");
+
     stick.style("left", function() {
       return perccheck(d.stick, d.range[0], d.range[1]) + "%";
     });
+    if (d.stick == null){stick.style("display", "none");}
     function displayvalue(value, style, fractiondigits) {
       let fractiondigitsval = 1;
       if (d.fractiondigits != null) {
@@ -68,7 +74,6 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
         });
       }
     }
-
     // const percentText = (d.value / 100).toLocaleString(undefined, {
     //   style: "percent",
     //   minimumFractionDigits: 1
