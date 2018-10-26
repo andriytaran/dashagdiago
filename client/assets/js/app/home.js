@@ -409,7 +409,6 @@ var handleEmotionalIntelAttributes = (function() {
   "use strict";
 
   function getEmotionalIntelAttributesData(response) {
-    debugger;
     return [
       {
         value: response.emotionalIntel.emotionalIntelAccountability.value,
