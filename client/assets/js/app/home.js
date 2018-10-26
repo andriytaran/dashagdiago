@@ -92,12 +92,10 @@ var handleCoreAttributes = (function() {
         },
         function(response) {
           if (
-            response.coreAttributes.coreAttributesCompetitiveness.value ==
-              null &&
+            response.coreAttributes.coreAttributesCompetitiveness.value == null &&
             response.coreAttributes.coreAttributesMastery.value == null &&
             response.coreAttributes.coreAttributesWorkethic.value == null &&
-            response.coreAttributes.coreAttributesTeamOrientation.value ==
-              null &&
+            response.coreAttributes.coreAttributesTeamOrientation.value == null &&
             response.coreAttributes.coreAttributesPersistence.value == null
           ) {
             let elem = document.getElementById("coreAttributesBlock");
@@ -518,14 +516,12 @@ var handleEmotionalIntelAttributes = (function() {
         function(response) {
           const data = getEmotionalIntelAttributesData(response);
           if (
-            response.emotionalIntel.emotionalIntelAccountability.value ==
-              null &&
+            response.emotionalIntel.emotionalIntelAccountability.value == null &&
             response.emotionalIntel.emotionalIntelBehavior.value == null &&
             response.emotionalIntel.emotionalIntelIndependence.value == null &&
             response.emotionalIntel.emotionalIntelReflection.value == null &&
             response.emotionalIntel.emotionalIntelRelationships.value == null &&
-            response.emotionalIntel.emotionalIntelResponsibility.value ==
-              null &&
+            response.emotionalIntel.emotionalIntelResponsibility.value == null &&
             response.emotionalIntel.emotionalIntelteamWork.value == null
           ) {
             let elem = document.getElementById("emotionalIntelBlock");
