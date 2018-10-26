@@ -331,6 +331,23 @@ module.exports = (app) => {
 
         break;
       }
+      case 'single_player': {
+        // dashboard single player page
+
+        const id = req.body.playerId;
+
+        const playerResponse = await client.get({
+          index: 'cincinnati',
+          type: '_all',
+          id: id,
+        });
+
+        response.player = Object.assign({
+          id: id,
+        }, playerResponse._source);
+
+        break;
+      }
       case 'players_data': {
         // dashboard players table modal
 
@@ -347,6 +364,7 @@ module.exports = (app) => {
         });
 
         response.players = playersResponse.hits.hits.map(hit => ({
+          id: hit._id,
           fname: hit._source.fname,
           lname: hit._source.lname,
           position: hit._source.position,
