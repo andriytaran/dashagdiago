@@ -161,7 +161,7 @@ module.exports = (app) => {
               },
             },
           },
-        });
+        }, query);
 
         // TODO: combine as single request if possible?
         const emotionalIntelPromise = client.search({
@@ -297,7 +297,7 @@ module.exports = (app) => {
             //   },
             // },
           },
-        });
+        }, query);
 
         // TODO: combine as single request if possible?
         const athleticPromise = client.search({
