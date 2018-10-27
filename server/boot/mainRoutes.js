@@ -211,31 +211,31 @@ module.exports = (app) => {
                 'field': 'vertical',
               },
             },
-            // 'carries': {
-            //   'avg': {
-            //     'field': 'carries',
-            //   },
-            // },
-            // 'rushingYards': {
-            //   'avg': {
-            //     'field': 'rushingYards',
-            //   },
-            // },
-            // 'rushingTouchdowns': {
-            //   'avg': {
-            //     'field': 'rushingTouchdowns',
-            //   },
-            // },
-            // 'receptions': {
-            //   'avg': {
-            //     'field': 'receptions',
-            //   },
-            // },
-            // 'recievingYards': {
-            //   'avg': {
-            //     'field': 'recievingYards',
-            //   },
-            // },
+            'carries': {
+              'avg': {
+                'field': 'carries',
+              },
+            },
+            'rushingYards': {
+              'avg': {
+                'field': 'rushingYards',
+              },
+            },
+            'rushingTouchdowns': {
+              'avg': {
+                'field': 'rushingTouchdowns',
+              },
+            },
+            'receptions': {
+              'avg': {
+                'field': 'receptions',
+              },
+            },
+            'recievingYards': {
+              'avg': {
+                'field': 'recievingYards',
+              },
+            },
             'gamesPlayed': {
               'avg': {
                 'field': 'gamesPlayed',
@@ -256,46 +256,46 @@ module.exports = (app) => {
                 'field': 'weight',
               },
             },
-            // 'completions': {
-            //   'avg': {
-            //     'field': 'completions',
-            //   },
-            // },
-            // 'passingYards': {
-            //   'avg': {
-            //     'field': 'passingYards',
-            //   },
-            // },
-            // 'touchdownsThrown': {
-            //   'avg': {
-            //     'field': 'touchdownsThrown',
-            //   },
-            // },
-            // 'interceptionsThrown': {
-            //   'avg': {
-            //     'field': 'interceptionsThrown',
-            //   },
-            // },
-            // 'soloTackle': {
-            //   'avg': {
-            //     'field': 'soloTackles',
-            //   },
-            // },
-            // 'totalTackles': {
-            //   'avg': {
-            //     'field': 'totalTackles',
-            //   },
-            // },
-            // 'sacks': {
-            //   'avg': {
-            //     'field': 'sacks',
-            //   },
-            // },
-            // 'tacklesForLoss': {
-            //   'avg': {
-            //     'field': 'tacklesForLoss',
-            //   },
-            // },
+            'completions': {
+              'avg': {
+                'field': 'completions',
+              },
+            },
+            'passingYards': {
+              'avg': {
+                'field': 'passingYards',
+              },
+            },
+            'touchdownsThrown': {
+              'avg': {
+                'field': 'touchdownsThrown',
+              },
+            },
+            'interceptionsThrown': {
+              'avg': {
+                'field': 'interceptionsThrown',
+              },
+            },
+            'soloTackle': {
+              'avg': {
+                'field': 'soloTackles',
+              },
+            },
+            'totalTackles': {
+              'avg': {
+                'field': 'totalTackles',
+              },
+            },
+            'sacks': {
+              'avg': {
+                'field': 'sacks',
+              },
+            },
+            'tacklesForLoss': {
+              'avg': {
+                'field': 'tacklesForLoss',
+              },
+            },
           },
         }, query);
 

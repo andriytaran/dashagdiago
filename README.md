@@ -1,4 +1,4 @@
-# elasticsearch
+# local elasticsearch
 
 To start local ElasticSearch using docker:
 
@@ -14,6 +14,12 @@ To fill it with data:
 npm run converter -- ./data/baseline.json --url http://localhost:9200
 npm run converter -- ./data/cincinnati.json --url http://localhost:9200
 npm run converter -- ./data/cincinnati-benchmarks.json --url http://localhost:9200
+```
+
+To stop ElasticSearch and clear data:
+
+```sh
+docker-compose down -v
 ```
 
 Then copy `.env.example` to `.env` and start project normally:
