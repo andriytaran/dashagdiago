@@ -91,17 +91,16 @@ var handleCoreAttributes = (function() {
           playerPosition: position
         },
         function(response) {
-          if (
-            response.coreAttributes.coreAttributesCompetitiveness.value == null &&
-            response.coreAttributes.coreAttributesMastery.value == null &&
-            response.coreAttributes.coreAttributesWorkethic.value == null &&
-            response.coreAttributes.coreAttributesTeamOrientation.value == null &&
-            response.coreAttributes.coreAttributesPersistence.value == null
-          ) {
+          const data = getCoreAttributesData(response);
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("coreAttributesBlock");
             elem.style.display = "none";
           } else {
-            const data = getCoreAttributesData(response);
             drawbarchart(
               data,
               "#core-attributes",
@@ -148,6 +147,26 @@ var handleAcademicAttributes = (function() {
         fractiondigits: 0
       },
       {
+        value: response.academic.coreGpa.value,
+        ftick: response.programBenchmark.coreGpa.value,
+        stick: response.agdiagoBenchmark.coreGpa.value,
+        name: "Core GPA",
+        field: "coreGpa",
+        range: [0, 10],
+        style: "number",
+        fractiondigits: 1
+      },
+      {
+        value: response.academic.gpa.value,
+        ftick: response.programBenchmark.gpa.value,
+        stick: response.agdiagoBenchmark.gpa.value,
+        name: "GPA",
+        field: "gpa",
+        range: [0, 10],
+        style: "number",
+        fractiondigits: 1
+      },
+      {
         value: response.academic.act.value,
         ftick: response.programBenchmark.act.value,
         stick: response.agdiagoBenchmark.act.value,
@@ -181,10 +200,12 @@ var handleAcademicAttributes = (function() {
         },
         function(response) {
           const data = getAcademicAttributesData(response);
-          if (
-            response.academic.act.value == null &&
-            response.academic.sat.value == null
-          ) {
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("academicBlock");
             elem.style.display = "none";
           } else {
@@ -374,19 +395,12 @@ var handleSocialProfileAttributes = (function() {
         },
         function(response) {
           const data = getSocialProfileAttributesData(response);
-          if (
-            response.socialProfile.facebookSentiment.value == null &&
-            response.socialProfile.instagramFollowers.value == null &&
-            response.socialProfile.newsMedaiCoveragementions.value == null &&
-            response.socialProfile.newsMediaCoverageRegional.value == null &&
-            response.socialProfile.newsMediaCoverageSentiment.value == null &&
-            response.socialProfile.newsMediacoverageNational.value == null &&
-            response.socialProfile.pressReleaseSentiment.value == null &&
-            response.socialProfile.pressReleaseSentimentCounter.value == null &&
-            response.socialProfile.socialInstagramSentiment.value == null &&
-            response.socialProfile.socialTwitterSentiment.value == null &&
-            response.socialProfile.twitterFollowers.value == null
-          ) {
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("socialProfileBlock");
             elem.style.display = "none";
           } else {
@@ -514,15 +528,12 @@ var handleEmotionalIntelAttributes = (function() {
         },
         function(response) {
           const data = getEmotionalIntelAttributesData(response);
-          if (
-            response.emotionalIntel.emotionalIntelAccountability.value == null &&
-            response.emotionalIntel.emotionalIntelBehavior.value == null &&
-            response.emotionalIntel.emotionalIntelIndependence.value == null &&
-            response.emotionalIntel.emotionalIntelReflection.value == null &&
-            response.emotionalIntel.emotionalIntelRelationships.value == null &&
-            response.emotionalIntel.emotionalIntelResponsibility.value == null &&
-            response.emotionalIntel.emotionalIntelteamWork.value == null
-          ) {
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("emotionalIntelBlock");
             elem.style.display = "none";
           } else {
@@ -543,8 +554,163 @@ var handleEmotionalIntelAttributes = (function() {
 
 var handleAthleticAttributes = (function() {
   "use strict";
-
   function getAthleticAttributesData(response, playerPosition) {
+    function getCarries() {
+      return {
+        value: response.athletic.carries.value,
+        ftick: response.programBenchmark.carries.value,
+        stick: response.agdiagoBenchmark.carries.value,
+        name: "Carries",
+        field: "carries",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getCompletions() {
+      return {
+        value: response.athletic.completions.value,
+        ftick: response.programBenchmark.completions.value,
+        stick: response.agdiagoBenchmark.completions.value,
+        name: "Completions",
+        field: "completions",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getInterceptionsThrown() {
+      return {
+        value: response.athletic.interceptionsThrown.value,
+        ftick: response.programBenchmark.interceptionsThrown.value,
+        stick: response.agdiagoBenchmark.interceptionsThrown.value,
+        name: "Interceptions Thrown",
+        field: "interceptionsThrown",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getPassingYards() {
+      return {
+        value: response.athletic.passingYards.value,
+        ftick: response.programBenchmark.passingYards.value,
+        stick: response.agdiagoBenchmark.passingYards.value,
+        name: "Passing Yards",
+        field: "passingYards",
+        range: [0, 1000],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getRecievingYards() {
+      return {
+        value: response.athletic.recievingYards.value,
+        ftick: response.programBenchmark.recievingYards.value,
+        stick: response.agdiagoBenchmark.recievingYards.value,
+        name: "Recieving Yards",
+        field: "recievingYards",
+        range: [0, 1000],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getReceptions() {
+      return {
+        value: response.athletic.receptions.value,
+        ftick: response.programBenchmark.receptions.value,
+        stick: response.agdiagoBenchmark.receptions.value,
+        name: "Receptions",
+        field: "receptions",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getrushingTouchdowns() {
+      return {
+        value: response.athletic.rushingTouchdowns.value,
+        ftick: response.programBenchmark.rushingTouchdowns.value,
+        stick: response.agdiagoBenchmark.rushingTouchdowns.value,
+        name: "rushingTouchdowns",
+        field: "rushingTouchdowns",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getRushingYards() {
+      return {
+        value: response.athletic.rushingYards.value,
+        ftick: response.programBenchmark.rushingYards.value,
+        stick: response.agdiagoBenchmark.rushingYards.value,
+        name: "Rushing Yards",
+        field: "rushingYards",
+        range: [0, 1000],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getSacks() {
+      return {
+        value: response.athletic.sacks.value,
+        ftick: response.programBenchmark.sacks.value,
+        stick: response.agdiagoBenchmark.sacks.value,
+        name: "Sacks",
+        field: "sacks",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getSoloTackle() {
+      return {
+        value: response.athletic.soloTackle.value,
+        ftick: response.programBenchmark.soloTackle.value,
+        stick: response.agdiagoBenchmark.soloTackle.value,
+        name: "Solo Tackle",
+        field: "soloTackle",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getTacklesForLoss() {
+      return {
+        value: response.athletic.tacklesForLoss.value,
+        ftick: response.programBenchmark.tacklesForLoss.value,
+        stick: response.agdiagoBenchmark.tacklesForLoss.value,
+        name: "Tackles For Loss",
+        field: "tacklesForLoss",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function gettotalTackles() {
+      return {
+        value: response.athletic.totalTackles.value,
+        ftick: response.programBenchmark.totalTackles.value,
+        stick: response.agdiagoBenchmark.totalTackles.value,
+        name: "Total Tackles",
+        field: "totalTackles",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
+    function getTouchdownsThrown() {
+      return {
+        value: response.athletic.touchdownsThrown.value,
+        ftick: response.programBenchmark.touchdownsThrown.value,
+        stick: response.agdiagoBenchmark.touchdownsThrown.value,
+        name: "Touchdowns Thrown",
+        field: "touchdownsThrown",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      };
+    }
     function getForty() {
       return {
         value: response.athletic.forty.value,
@@ -617,14 +783,42 @@ var handleAthleticAttributes = (function() {
         fractiondigits: 0
       };
     }
-    return [
-      getForty(),
-      getGamesPlayed(),
-      getGamesStarted(),
-      getHeight(),
-      getVertical(),
-      getWeight()
-    ];
+    switch (playerPosition) {
+      case "RB":
+      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getReceptions(),getRecievingYards(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      case "QBPRO":
+      case "QBDUAL":
+      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getCompletions(),getPassingYards(),getTouchdownsThrown(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      case "DE":
+      case "DT":
+      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      case "ILB":
+      case "OLB":
+      case "MLB":
+      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      default:
+        return [
+          getForty(),
+          getGamesPlayed(),
+          getGamesStarted(),
+          getHeight(),
+          getVertical(),
+          getWeight(),
+          getCarries(),
+          getCompletions(),
+          getInterceptionsThrown(),
+          getPassingYards(),
+          getRecievingYards(),
+          getReceptions(),
+          getrushingTouchdowns(),
+          getRushingYards(),
+          getSacks(),
+          getSoloTackle(),
+          getTacklesForLoss(),
+          gettotalTackles(),
+          getTouchdownsThrown()
+        ];
+    }
   }
 
   function getTooltip(label) {
@@ -656,13 +850,11 @@ var handleAthleticAttributes = (function() {
         },
         function(response) {
           const data = getAthleticAttributesData(response, position);
-          if (
-            response.athletic.forty.value == null &&
-            response.athletic.gamesPlayed.value == null &&
-            response.athletic.gamesStarted.value == null &&
-            response.athletic.height.value == null &&
-            response.athletic.vertical.value == null &&
-            response.athletic.weight.value == null
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if ((data.every(checkifnull))
           ) {
             let elem = document.getElementById("athleticBlock");
             elem.style.display = "none";

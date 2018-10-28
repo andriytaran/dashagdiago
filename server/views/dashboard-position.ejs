@@ -7,85 +7,9 @@
       </ol>
       <!-- end breadcrumb -->
       <!-- begin page-header -->
-      <h1 class="page-header">Player Dashboard <small>Full View of Players.</small></h1>
+      <h1 class="page-header"><%=position %> position dashboard</h1>
       <!-- end page-header -->
 
-      <!-- begin row -->
-      <div class="row">
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-black-darker">
-            <div class="stats-icon"><i class="fa fa-child"></i></div>
-            <div class="stats-info">
-              <h4>TOTAL AGDIAGO PLAYERS</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.overallCount %><%}%></p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-gradient-purple">
-            <div class="stats-icon"><i class="fa fa-link"></i></div>
-            <div class="stats-info">
-              <h4>Defense</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.defenseCount %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-grey-darker">
-            <div class="stats-icon"><i class="fa fa-users"></i></div>
-            <div class="stats-info">
-              <h4>Offensive</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.offenseCount %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-grey-darker">
-            <div class="stats-icon"><i class="fa fa-users"></i></div>
-            <div class="stats-info">
-              <h4>Average score</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=23 %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-4 -->
-        <!--
-        <div class="col-lg-4 col-md-6">
-          <div class="widget widget-stats bg-black-lighter">
-            <div class="stats-icon"><i class="fa fa-clock"></i></div>
-            <div class="stats-info">
-              <h4>AVG TIME ON SITE</h4>
-              <p>00:12:23</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        -->
-        <!-- end col-4 -->
-      </div>
-      <!-- end row -->
       <!-- begin row -->
       <div class="row">
         <!-- begin col-8 -->

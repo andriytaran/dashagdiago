@@ -8,6 +8,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
   function createbar(d) {
     // const maxwidth = 300;
     // const widthPerPercent = maxwidth / 100;
+    if (d.value == null){return document.createElement("div")};
     function perccheck(value, ranges, rangee) {
       let singleperc = (rangee - ranges) / 100;
       return (value - ranges) / singleperc;

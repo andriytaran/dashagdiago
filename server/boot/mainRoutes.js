@@ -89,6 +89,11 @@ module.exports = (app) => {
     res.render('pages/cultural_fit');
   });
 
+  //dashboard-position
+  app.get('/dashboard-position', function(req, res, next) {
+    res.render('dashboard-position', {position: req.query.position});
+  });
+
   // Player Assessment
   app.get('/player_assessment', (req, res, next) => {
     res.render('pages/player_assessment');
