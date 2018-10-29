@@ -45,14 +45,14 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     barEnter.attr("class", "perc");
     if (d.value == null){gbar.style("display", "none");}
     let ftick = mbar.append("div");
-    ftick.attr("class", "tick");
+    ftick.attr("class", "tick red");
 
     ftick.style("left", function() {
       return perccheck(d.ftick, d.range[0], d.range[1]) + "%";
     });
     if (d.ftick == null){ftick.style("display", "none");}
     let stick = mbar.append("div");
-    stick.attr("class", "tick red");
+    stick.attr("class", "tick");
 
     stick.style("left", function() {
       return perccheck(d.stick, d.range[0], d.range[1]) + "%";
