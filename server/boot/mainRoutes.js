@@ -19,7 +19,7 @@ module.exports = (app) => {
     var responseObj = {};
 
     const overallCountResponse = await request({
-      uri: baseSearchUri + '_count',
+      uri: baseSearchUri + 'cincinnati/_count',
       method: 'get',
     });
     responseObj = JSON.parse(overallCountResponse);
@@ -52,14 +52,14 @@ module.exports = (app) => {
     };
 
     const offenseResponse = await client.search({
-      index: 'baseline',
+      index: 'cincinnati',
       body: offenseObj,
     });
     response.offenseCount =
       Math.round((offenseResponse.hits.total / response.overallCount) * 100);
 
     const defenseResponse = await client.search({
-      index: 'baseline',
+      index: 'cincinnati',
       body: defenseObj,
     });
     response.defenseCount =
