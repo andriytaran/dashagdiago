@@ -345,7 +345,6 @@ module.exports = (app) => {
           player,
           programSocialProfileResponse.aggregations
         );
-        console.log(programSocialProfileResponse.aggregations);
         const coreAttributesScore = calculateScore(
           player,
           programCoreAttributesResponse.aggregations
