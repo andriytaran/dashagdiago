@@ -1,45 +1,3 @@
-var playersdata = [
-  {
-    firstName: "The Godfather",
-    lastName: "Leha",
-    position: 175,
-    score: 6000000
-  },
-  {
-    firstName: "The Shawshank Redemption",
-    lastName: "Vovan",
-    position: 142,
-    score: 25000000
-  },
-  {
-    firstName: "The Lord of the Rings: The Return of the King",
-    lastName: "Dimas",
-    position: 251,
-    score: 94000000
-  }
-];
-
-var satplayersdata = [
-  {
-    firstName: "Ivanov",
-    lastName: "Evgeniy",
-    position: 115,
-    score: 1000
-  },
-  {
-    firstName: "Petrov",
-    lastName: "Bill",
-    position: 175,
-    score: 3000
-  },
-  {
-    firstName: "Sidorov",
-    lastName: "John",
-    position: 75,
-    score: 6000
-  }
-];
-
 function drawtable(data, selector) {
   function f() {
     var functions = arguments;
@@ -75,7 +33,7 @@ function drawtable(data, selector) {
     { head: "Last Name", cl: "center", html: f("lname") },
     { head: "Position", cl: "center", html: f("position") },
     { head: "Score", cl: "num", html: f("score") },
-    { head: "Show Details", cl: "title", html: function(d){return "<a href='/dashboard-player/?id=" + d.id + "'> " + d.id + " </a>" }}
+    { head: "Show Details", cl: "title", html: function(d){return "<a href='/dashboard-player/?id=" + d.id + "'>Show Details</a>" }}
   ];
   // create table
   $(selector).empty();

@@ -29,11 +29,13 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     // mbar.attr("data-placement", "top");
     mbar.attr("title", getTooltip(d.field));
     $(mbar.node()).tooltip({ container: chart.node() });
-    function showmodal() {
-      getPlayersData(position, d.field, function(players) {drawtable(players, "#players")});
-      $("#chartmodal").modal("show");
+    if (getPlayersData) {
+      function showmodal() {
+        getPlayersData(position, d.field, function(players) {drawtable(players, "#players")});
+        $("#chartmodal").modal("show");
+      }
+      $(mbar.node()).on("click", showmodal);
     }
-    $(mbar.node()).on("click", showmodal);
     let barEnter = mbar.append("div");
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
