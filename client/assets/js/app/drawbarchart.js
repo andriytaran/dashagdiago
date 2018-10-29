@@ -18,6 +18,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     let namefield = gbar.append("div");
     namefield.attr("class", "namef");
     namefield.style("width", "30%");
+
     namefield.text(d.name);
     let mbar = gbar.append("div");
     // let mainbar = d3.select(mbar).attr("class", "mbar");

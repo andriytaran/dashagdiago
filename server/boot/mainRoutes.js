@@ -94,6 +94,11 @@ module.exports = (app) => {
     res.render('dashboard-position', {position: req.query.position});
   });
 
+  //dashboard-pplayer
+  app.get('/dashboard-player', function(req, res, next) {
+    res.render('dashboard-player', {id: req.query.id});
+  });
+
   // Player Assessment
   app.get('/player_assessment', (req, res, next) => {
     res.render('pages/player_assessment');
@@ -106,6 +111,67 @@ module.exports = (app) => {
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
+  const athleticFields = [
+    'forty',
+    'vertical',
+    'carries',
+    'rushingYards',
+    'rushingTouchdowns',
+    'receptions',
+    'recievingYards',
+    'gamesPlayed',
+    'gamesStarted',
+    'height',
+    'weight',
+    'completions',
+    'passingYards',
+    'touchdownsThrown',
+    'interceptionsThrown',
+    'soloTackle',
+    'totalTackles',
+    'sacks',
+    'tacklesForLoss',
+  ];
+
+  const emotionalIntelFields = [
+    'emotionalIntelBehavior',
+    'emotionalIntelReflection',
+    'emotionalIntelteamWork',
+    'emotionalIntelRelationships',
+    'emotionalIntelAccountability',
+    'emotionalIntelResponsibility',
+    'emotionalIntelIndependence',
+  ];
+
+  const academicFields = [
+    'gpa',
+    'sat',
+    'act',
+    'coreGpa',
+  ];
+
+  const socialProfileFields = [
+    'socialTwitterSentiment',
+    'twitterFollowers',
+    'socialInstagramSentiment',
+    'instagramFollowers',
+    'facebookSentiment',
+    'newsMediaCoverageSentiment',
+    'newsMedaiCoveragementions',
+    'newsMediacoverageNational',
+    'newsMediaCoverageRegional',
+    'pressReleaseSentiment',
+    'pressReleaseSentimentCounter',
+  ];
+
+  const coreAttributesFields = [
+    'coreAttributesCompetitiveness',
+    'coreAttributesPersistence',
+    'coreAttributesWorkethic',
+    'coreAttributesTeamOrientation',
+    'coreAttributesMastery',
+  ];
+
   app.post('/api/dashboard-data', async function(req, res) {
     const playerPosition = req.body.playerPosition != null ?
       req.body.playerPosition.toLowerCase() :
@@ -127,46 +193,8 @@ module.exports = (app) => {
       case 'emotional_intel': {
         // dashboard emotional intel chart
 
-        const emotionalIntelObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'emotionalIntelBehavior': {
-              'avg': {
-                'field': 'emotionalIntelBehavior',
-              },
-            },
-            'emotionalIntelReflection': {
-              'avg': {
-                'field': 'emotionalIntelReflection',
-              },
-            },
-            'emotionalIntelteamWork': {
-              'avg': {
-                'field': 'emotionalIntelteamWork',
-              },
-            },
-            'emotionalIntelRelationships': {
-              'avg': {
-                'field': 'emotionalIntelRelationships',
-              },
-            },
-            'emotionalIntelAccountability': {
-              'avg': {
-                'field': 'emotionalIntelAccountability',
-              },
-            },
-            'emotionalIntelResponsibility': {
-              'avg': {
-                'field': 'emotionalIntelResponsibility',
-              },
-            },
-            'emotionalIntelIndependence': {
-              'avg': {
-                'field': 'emotionalIntelIndependence',
-              },
-            },
-          },
-        }, query);
+        const emotionalIntelObj =
+              Object.assign(getAggregationObj(emotionalIntelFields), query);
 
         // TODO: combine as single request if possible?
         const emotionalIntelPromise = client.search({
@@ -203,106 +231,8 @@ module.exports = (app) => {
       case 'athletic': {
         // dashboard athletic chart
 
-        const athleticObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'forty': {
-              'avg': {
-                'field': 'forty',
-              },
-            },
-            'vertical': {
-              'avg': {
-                'field': 'vertical',
-              },
-            },
-            'carries': {
-              'avg': {
-                'field': 'carries',
-              },
-            },
-            'rushingYards': {
-              'avg': {
-                'field': 'rushingYards',
-              },
-            },
-            'rushingTouchdowns': {
-              'avg': {
-                'field': 'rushingTouchdowns',
-              },
-            },
-            'receptions': {
-              'avg': {
-                'field': 'receptions',
-              },
-            },
-            'recievingYards': {
-              'avg': {
-                'field': 'recievingYards',
-              },
-            },
-            'gamesPlayed': {
-              'avg': {
-                'field': 'gamesPlayed',
-              },
-            },
-            'gamesStarted': {
-              'avg': {
-                'field': 'gamesStarted',
-              },
-            },
-            'height': {
-              'avg': {
-                'field': 'height',
-              },
-            },
-            'weight': {
-              'avg': {
-                'field': 'weight',
-              },
-            },
-            'completions': {
-              'avg': {
-                'field': 'completions',
-              },
-            },
-            'passingYards': {
-              'avg': {
-                'field': 'passingYards',
-              },
-            },
-            'touchdownsThrown': {
-              'avg': {
-                'field': 'touchdownsThrown',
-              },
-            },
-            'interceptionsThrown': {
-              'avg': {
-                'field': 'interceptionsThrown',
-              },
-            },
-            'soloTackle': {
-              'avg': {
-                'field': 'soloTackles',
-              },
-            },
-            'totalTackles': {
-              'avg': {
-                'field': 'totalTackles',
-              },
-            },
-            'sacks': {
-              'avg': {
-                'field': 'sacks',
-              },
-            },
-            'tacklesForLoss': {
-              'avg': {
-                'field': 'tacklesForLoss',
-              },
-            },
-          },
-        }, query);
+        const athleticObj =
+              Object.assign(getAggregationObj(athleticFields), query);
 
         // TODO: combine as single request if possible?
         const athleticPromise = client.search({
@@ -341,15 +271,94 @@ module.exports = (app) => {
 
         const id = req.body.playerId;
 
-        const playerResponse = await client.get({
+        const athleticObj =
+              Object.assign(getAggregationObj(athleticFields), query);
+        const emotionalIntelObj =
+              Object.assign(getAggregationObj(emotionalIntelFields), query);
+        const academicObj =
+              Object.assign(getAggregationObj(academicFields), query);
+        const socialProfileObj =
+              Object.assign(getAggregationObj(socialProfileFields), query);
+        const coreAttributesObj =
+              Object.assign(getAggregationObj(coreAttributesFields), query);
+
+        const programAthleticPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: athleticObj,
+        });
+        const programEmotionalIntelPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: emotionalIntelObj,
+        });
+        const programAcademicPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: academicObj,
+        });
+        const programSocialProfilePromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: socialProfileObj,
+        });
+        const programCoreAttributesPromise = client.search({
+          index: 'cincinnati-benchmarks',
+          body: coreAttributesObj,
+        });
+
+        const playerPromise = client.get({
           index: 'cincinnati',
           type: '_all',
           id: id,
         });
 
-        response.player = Object.assign({
+        const [
+          programAthleticResponse,
+          programEmotionalIntelResponse,
+          programAcademicResponse,
+          programSocialProfileResponse,
+          programCoreAttributesResponse,
+          playerResponse,
+        ] = await Promise.all([
+          programAthleticPromise,
+          programEmotionalIntelPromise,
+          programAcademicPromise,
+          programSocialProfilePromise,
+          programCoreAttributesPromise,
+          playerPromise,
+        ]);
+
+        const player = Object.assign({
           id: id,
         }, playerResponse._source);
+
+        const athleticScore = calculateScore(
+          player,
+          programAthleticResponse.aggregations
+        );
+        const emotionalIntelScore = calculateScore(
+          player,
+          programEmotionalIntelResponse.aggregations
+        );
+        const academicScore = calculateScore(
+          player,
+          programAcademicResponse.aggregations
+        );
+        const socialProfileScore = calculateScore(
+          player,
+          programSocialProfileResponse.aggregations
+        );
+        console.log(programSocialProfileResponse.aggregations);
+        const coreAttributesScore = calculateScore(
+          player,
+          programCoreAttributesResponse.aggregations
+        );
+
+        response.player = player;
+        response.scores = {
+          athletic: athleticScore,
+          emotionalIntel: emotionalIntelScore,
+          academic: academicScore,
+          socialProfile: socialProfileScore,
+          coreAttributes: coreAttributesScore,
+        };
 
         break;
       }
@@ -380,36 +389,8 @@ module.exports = (app) => {
       case 'core_attributes': {
         // dashboard core attributes chart
 
-        const coreAttributesObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'coreAttributesCompetitiveness': {
-              'avg': {
-                'field': 'coreAttributesCompetitiveness',
-              },
-            },
-            'coreAttributesPersistence': {
-              'avg': {
-                'field': 'coreAttributesPersistence',
-              },
-            },
-            'coreAttributesWorkethic': {
-              'avg': {
-                'field': 'coreAttributesWorkethic',
-              },
-            },
-            'coreAttributesTeamOrientation': {
-              'avg': {
-                'field': 'coreAttributesTeamOrientation',
-              },
-            },
-            'coreAttributesMastery': {
-              'avg': {
-                'field': 'coreAttributesMastery',
-              },
-            },
-          },
-        }, query);
+        const coreAttributesObj =
+              Object.assign(getAggregationObj(coreAttributesFields), query);
 
         // TODO: combine as single request if possible?
         const coreAttributesPromise = client.search({
@@ -445,31 +426,8 @@ module.exports = (app) => {
       }
       case 'academic': {
         // dashboard academic chart
-        var academicObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'gpa': {
-              'avg': {
-                'field': 'gpa',
-              },
-            },
-            'sat': {
-              'avg': {
-                'field': 'sat',
-              },
-            },
-            'act': {
-              'avg': {
-                'field': 'act',
-              },
-            },
-            'coreGpa': {
-              'avg': {
-                'field': 'coreGpa',
-              },
-            },
-          },
-        }, query);
+        var academicObj =
+            Object.assign(getAggregationObj(academicFields), query);
 
         // TODO: combine as single request if possible?
         const academicPromise = client.search({
@@ -505,66 +463,8 @@ module.exports = (app) => {
       }
       case 'social_profile': {
         // dashboard social profile chart
-        var socialProfileObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'socialTwitterSentiment': {
-              'avg': {
-                'field': 'socialTwitterSentiment',
-              },
-            },
-            'twitterFollowers': {
-              'avg': {
-                'field': 'twitterFollowers',
-              },
-            },
-            'socialInstagramSentiment': {
-              'avg': {
-                'field': 'socialInstagramSentiment',
-              },
-            },
-            'instagramFollowers': {
-              'avg': {
-                'field': 'instagramFollowers',
-              },
-            },
-            'facebookSentiment': {
-              'avg': {
-                'field': 'facebookSentiment',
-              },
-            },
-            'newsMediaCoverageSentiment': {
-              'avg': {
-                'field': 'newsMediaCoverageSentiment',
-              },
-            },
-            'newsMedaiCoveragementions': {
-              'avg': {
-                'field': 'newsMedaiCoveragementions',
-              },
-            },
-            'newsMediacoverageNational': {
-              'avg': {
-                'field': 'newsMediacoverageNational',
-              },
-            },
-            'newsMediaCoverageRegional': {
-              'avg': {
-                'field': 'newsMediaCoverageRegional',
-              },
-            },
-            'pressReleaseSentiment': {
-              'avg': {
-                'field': 'pressReleaseSentiment',
-              },
-            },
-            'pressReleaseSentimentCounter': {
-              'avg': {
-                'field': 'pressReleaseSentimentCounter',
-              },
-            },
-          },
-        }, query);
+        var socialProfileObj =
+            Object.assign(getAggregationObj(socialProfileFields), query);
 
         // TODO: combine as single request if possible?
         const socialProfilePromise = client.search({
@@ -675,3 +575,47 @@ module.exports = (app) => {
     return res.json(response);
   });
 };
+
+function getAggregationObj(fields) {
+  const obj = {
+    size: 0,
+    aggs: {},
+  };
+
+  fields.forEach(field => {
+    obj.aggs[field] = {
+      avg: {
+        field,
+      },
+    };
+  });
+
+  return obj;
+}
+
+function calculateScore(player, programAggs) {
+  const scores = Object.keys(programAggs).map(field => {
+    const value = player[field];
+    const programValue = programAggs[field].value;
+    if (value == null) return null;
+    if (programValue == null) return null;
+    if (programValue === 0) return 1;
+    return value / programValue;
+  });
+  const totalNonNull = scores.filter(score => score != null).length;
+  if (!totalNonNull) return null;
+  const score = scores.reduce((acc, curr) => curr == null ? acc : acc + curr);
+  return 100 * score / totalNonNull;
+}
+
+const programScoreWeights = {
+  athletic: 0.55,
+  emotionalIntel: 0.05,
+  academic: 0.10,
+  socialProfile: 0.05,
+  coreAttributes: 0.25,
+};
+
+function calculateOverallScore(scores) {
+  // TODO: implement
+}

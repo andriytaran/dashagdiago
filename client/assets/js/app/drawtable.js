@@ -74,7 +74,8 @@ function drawtable(data, selector) {
     { head: "First Name", cl: "title", html: f("fname") },
     { head: "Last Name", cl: "center", html: f("lname") },
     { head: "Position", cl: "center", html: f("position") },
-    { head: "Score", cl: "num", html: f("score") }
+    { head: "Score", cl: "num", html: f("score") },
+    { head: "Show Details", cl: "title", html: function(d){return "<a href='/dashboard-player/?id=" + d.id + "'> " + d.id + " </a>" }}
   ];
   // create table
   $(selector).empty();
