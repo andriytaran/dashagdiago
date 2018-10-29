@@ -189,6 +189,7 @@ module.exports = (app) => {
       },
     } : {};
 
+    // TODO: change agdiago benchmarks from average to 75 percentile
     switch (type) {
       case 'emotional_intel': {
         // dashboard emotional intel chart
@@ -406,11 +407,12 @@ module.exports = (app) => {
             query,
             mapAggsToScores(programAcademicResponse.aggregations)
           ),
-          socialProfile: await fetchBenchmarkScore(
-            'cincinnati',
-            query,
-            mapAggsToScores(programSocialProfileResponse.aggregations)
-          ),
+          socialProfile: null,
+          // await fetchBenchmarkScore(
+          //   'cincinnati',
+          //   query,
+          //   mapAggsToScores(programSocialProfileResponse.aggregations)
+          // ),
           coreAttributes: await fetchBenchmarkScore(
             'cincinnati',
             query,
@@ -434,11 +436,12 @@ module.exports = (app) => {
             query,
             mapAggsToScores(agdiagoAcademicResponse.aggregations)
           ),
-          socialProfile: await fetchBenchmarkScore(
-            'baseline',
-            query,
-            mapAggsToScores(agdiagoSocialProfileResponse.aggregations)
-          ),
+          socialProfile: null,
+          // await fetchBenchmarkScore(
+          //   'baseline',
+          //   query,
+          //   mapAggsToScores(agdiagoSocialProfileResponse.aggregations)
+          // ),
           coreAttributes: await fetchBenchmarkScore(
             'baseline',
             query,
@@ -558,29 +561,43 @@ module.exports = (app) => {
           body: socialProfileObj,
         });
 
-        const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: socialProfileObj,
-        });
+        // const agdiagoBenchmarkPromise = client.search({
+        //   index: 'baseline',
+        //   body: socialProfileObj,
+        // });
 
-        const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: socialProfileObj,
-        });
+        // const programBenchmarkPromise = client.search({
+        //   index: 'cincinnati-benchmarks',
+        //   body: socialProfileObj,
+        // });
 
         const [
           socialProfileResponse,
-          agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          // agdiagoBenchmarkResponse,
+          // programBenchmarkResponse,
         ] = await Promise.all([
           socialProfilePromise,
-          agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          // agdiagoBenchmarkPromise,
+          // programBenchmarkPromise,
         ]);
 
         response.socialProfile = socialProfileResponse.aggregations;
-        response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
-        response.programBenchmark = programBenchmarkResponse.aggregations;
+
+        response.agdiagoBenchmark = {};
+        Object.keys(response.socialProfile).forEach(field => {
+          response.agdiagoBenchmark[field] = {
+            value: null,
+          };
+        });
+
+        response.programBenchmark = {};
+        Object.keys(response.socialProfile).forEach(field => {
+          response.programBenchmark[field] = {
+            value: null,
+          };
+        });
+        // response.agdiagoBenchmark = agdiagoBenchmarkResponse.aggregations;
+        // response.programBenchmark = programBenchmarkResponse.aggregations;
 
         break;
       }
