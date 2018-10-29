@@ -303,6 +303,27 @@ module.exports = (app) => {
           body: coreAttributesObj,
         });
 
+        const agdiagoAthleticPromise = client.search({
+          index: 'baseline',
+          body: athleticObj,
+        });
+        const agdiagoEmotionalIntelPromise = client.search({
+          index: 'baseline',
+          body: emotionalIntelObj,
+        });
+        const agdiagoAcademicPromise = client.search({
+          index: 'baseline',
+          body: academicObj,
+        });
+        const agdiagoSocialProfilePromise = client.search({
+          index: 'baseline',
+          body: socialProfileObj,
+        });
+        const agdiagoCoreAttributesPromise = client.search({
+          index: 'baseline',
+          body: coreAttributesObj,
+        });
+
         const playerPromise = client.get({
           index: 'cincinnati',
           type: '_all',
@@ -315,6 +336,11 @@ module.exports = (app) => {
           programAcademicResponse,
           programSocialProfileResponse,
           programCoreAttributesResponse,
+          agdiagoAthleticResponse,
+          agdiagoEmotionalIntelResponse,
+          agdiagoAcademicResponse,
+          agdiagoSocialProfileResponse,
+          agdiagoCoreAttributesResponse,
           playerResponse,
         ] = await Promise.all([
           programAthleticPromise,
@@ -322,6 +348,11 @@ module.exports = (app) => {
           programAcademicPromise,
           programSocialProfilePromise,
           programCoreAttributesPromise,
+          agdiagoAthleticPromise,
+          agdiagoEmotionalIntelPromise,
+          agdiagoAcademicPromise,
+          agdiagoSocialProfilePromise,
+          agdiagoCoreAttributesPromise,
           playerPromise,
         ]);
 
@@ -384,6 +415,34 @@ module.exports = (app) => {
             'cincinnati',
             query,
             mapAggsToScores(programCoreAttributesResponse.aggregations)
+          ),
+        };
+
+        response.agdiagoScores = {
+          athletic: await fetchBenchmarkScore(
+            'baseline',
+            query,
+            mapAggsToScores(agdiagoAthleticResponse.aggregations)
+          ),
+          emotionalIntel: await fetchBenchmarkScore(
+            'baseline',
+            query,
+            mapAggsToScores(agdiagoEmotionalIntelResponse.aggregations)
+          ),
+          academic: await fetchBenchmarkScore(
+            'baseline',
+            query,
+            mapAggsToScores(agdiagoAcademicResponse.aggregations)
+          ),
+          socialProfile: await fetchBenchmarkScore(
+            'baseline',
+            query,
+            mapAggsToScores(agdiagoSocialProfileResponse.aggregations)
+          ),
+          coreAttributes: await fetchBenchmarkScore(
+            'baseline',
+            query,
+            mapAggsToScores(agdiagoCoreAttributesResponse.aggregations)
           ),
         };
 
