@@ -359,6 +359,34 @@ module.exports = (app) => {
           coreAttributes: coreAttributesScore,
         };
 
+        response.programScores = {
+          athletic: await fetchBenchmarkScore(
+            'cincinnati',
+            query,
+            mapAggsToScores(programAthleticResponse.aggregations)
+          ),
+          emotionalIntel: await fetchBenchmarkScore(
+            'cincinnati',
+            query,
+            mapAggsToScores(programEmotionalIntelResponse.aggregations)
+          ),
+          academic: await fetchBenchmarkScore(
+            'cincinnati',
+            query,
+            mapAggsToScores(programAcademicResponse.aggregations)
+          ),
+          socialProfile: await fetchBenchmarkScore(
+            'cincinnati',
+            query,
+            mapAggsToScores(programSocialProfileResponse.aggregations)
+          ),
+          coreAttributes: await fetchBenchmarkScore(
+            'cincinnati',
+            query,
+            mapAggsToScores(programCoreAttributesResponse.aggregations)
+          ),
+        };
+
         break;
       }
       case 'players_data': {
@@ -617,4 +645,59 @@ const programScoreWeights = {
 
 function calculateOverallScore(scores) {
   // TODO: implement
+}
+
+function mapAggsToScores(aggs) {
+  const res = {};
+  Object.keys(aggs).forEach(field => {
+    res[field] = aggs[field].value;
+  });
+  return res;
+}
+
+async function fetchBenchmarkScore(index, query, programScores) {
+  const nonNullKeys = Object.keys(programScores)
+    .filter(field => programScores[field] != null);
+  if (!nonNullKeys.length) return null;
+  const fetchObj = Object.assign({
+    'size': 0,
+    'aggs': {
+      'benchmarkScore': {
+        'percentiles': {
+          'script': {
+            'lang': 'painless',
+            'source': `
+float score = 0;
+for (int i = 0; i < params['fields'].length; ++i) {
+  def field = params['fields'][i];
+  if (params['scores'][i] == 0) {
+    score += 1.0;
+  } else {
+    score += (float)doc[field].value / (float)params['scores'][i];
+  }
+}
+return score / (float)params['fields'].length;
+`,
+            'params': {
+              'fields': nonNullKeys,
+              'scores': nonNullKeys.map(field => programScores[field]),
+            },
+          },
+          'keyed': false,
+          'percents': [
+            75,
+          ],
+        },
+      },
+    },
+  }, query);
+
+  const fetchResponse = await client.search({
+    index,
+    body: fetchObj,
+  });
+
+  const [agg] =
+        fetchResponse.aggregations.benchmarkScore.values;
+  return agg.value * 100;
 }
