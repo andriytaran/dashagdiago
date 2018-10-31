@@ -1,6 +1,7 @@
 var handleSinglePlayer = (function() {
   "use strict";
   function getSinglePlayerData(response, playerId) {
+    debugger;
     function getBasicPlayerInfo() {
       return {
         fname: response.player.fname,

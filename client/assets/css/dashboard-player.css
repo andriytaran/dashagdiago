@@ -1,0 +1,41 @@
+div#basic-player-info {
+  position: relative;
+  color: black;
+  font-weight: bold;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+}
+div#basic-player-info .univer {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: gray;
+  font-weight: normal;
+  font-size: 15px;
+}
+div#basic-player-info .photo {
+  margin: 30px 20px;
+  width: 30%;
+}
+
+div#basic-player-info .title {
+  font-size: 30px;
+}
+
+div#basic-player-info .textfield {
+  width: 70%;
+  max-width: 70%;
+  margin: 30px 20px;
+}
+
+div#basic-player-info .textfield .details {
+  margin: 20px 0px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+div#basic-player-info .textfield .details > div {
+  width: 50%;
+}

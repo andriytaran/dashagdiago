@@ -1,7 +1,40 @@
 function drawplayerinfo(data, selector) {
+
+  // function creatediv(parentid, newelclass, newelcont){
+  //   debugger;
+  //   let parentel = document.getElementById(parentid);
+  //   let newel = document.createElement("div");
+  //   if (newelclass == null || newelclass == undefined){
+  //     return parentel.appendChild(newel);
+  //   }
+  //   newel.className = newelclass;
+  //   newel.innerHTML = newelcont;
+  //   return parentel.appendChild(newel);
+  // }
+
+  // creatediv("basic-player-info", "textfield");
+  // creatediv("textfield", "photo");
+  // creatediv("textfield", "detailedinfo");
+  // let univer = data.university;
+  // creatediv("textfield", "univer", univer);
+  // let fullname = data.fname + " " + data.lname;
+  // creatediv("detailedinfo", "fullname", fullname);
+  // creatediv("detailedinfo", "furtherinfo");
+  // let hometown = "Hometown: " + data.hometown;
+  // let scout = "Scout Date: " + data.scoutDate;
+  // let coach = "Athletic Coach: " + data.coach;
+  // // let school = "Hight School: " + data.school;
+  // creadediv("furtherinfo", null ,hometown);
+  // creadediv("furtherinfo", null ,scout);
+  // creadediv("furtherinfo", null ,coach);
+  // creadediv("furtherinfo", null ,school);
+
   // создаем новый элемент div
   // и добавляем в него немного контента
   let mydiv = document.getElementById("basic-player-info");
+  var photodiv = document.createElement("div");
+  photodiv.className = "photo";
+  mydiv.appendChild(photodiv);
   var textDiv = document.createElement("div");
   textDiv.className = "textfield";
   mydiv.appendChild(textDiv);
@@ -25,12 +58,14 @@ function drawplayerinfo(data, selector) {
   schooldiv.className = "school";
   schooldiv.innerHTML = "Hight School: " + data.school;
   let scoutdate = document.createElement("div");
-  schooldiv.className = "scout";
-  schooldiv.innerHTML = "Scout Date: " + data.scoutDate;
+  scoutdate.className = "scout";
+  scoutdate.innerHTML = "Scout Date: " + data.scoutdate;
   let coach = document.createElement("div");
-  schooldiv.className = "coach";
-  schooldiv.innerHTML = "Athletic Coach: " + data.coach;
+  coach.className = "coach";
+  coach.innerHTML = "Athletic Coach: " + data.coach;
   title.appendChild(namediv);
-  details.appendChild(schooldiv);
   details.appendChild(hometowndiv);
+  details.appendChild(scoutdate);
+  details.appendChild(schooldiv);
+  details.appendChild(coach);
 }
