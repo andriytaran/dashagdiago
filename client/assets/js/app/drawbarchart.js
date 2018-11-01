@@ -1,9 +1,15 @@
 function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
   var chart = d3.select(selector);
+  chart.selectAll(".elLoader").remove();
+  // let cleaner = document.querySelector(selector);
+  // cleaner.removeChild();
+  // cleaner.innerHTML = '';
   chart.attr("class", "barchart");
   var bar = chart.selectAll("div");
   var barUpdate = bar.data(data);
   var barEnter = barUpdate.enter().append(createbar);
+
+  // let cleaner = d3.select(selector);
 
   function createbar(d) {
     // const maxwidth = 300;
@@ -31,8 +37,11 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     $(mbar.node()).tooltip({ container: chart.node() });
     if (getPlayersData) {
       function showmodal() {
-        getPlayersData(position, d.field, function(players) {drawtable(players, "#players")});
+        drawloader("#players");
         $("#chartmodal").modal("show");
+        getPlayersData(position, d.field, function(players) {
+          drawtable(players, "#players")
+        });
       }
       $(mbar.node()).on("click", showmodal);
     }

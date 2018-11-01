@@ -1,4 +1,4 @@
-div#basic-player-info {
+div#basic-player-info .playerinfoblock{
   position: relative;
   color: black;
   font-weight: bold;
@@ -20,22 +20,22 @@ div#basic-player-info .photo {
   width: 30%;
 }
 
-div#basic-player-info .title {
+div#basic-player-info .fullname {
   font-size: 30px;
 }
 
-div#basic-player-info .textfield {
+div#basic-player-info .detailedinfo {
   width: 70%;
   max-width: 70%;
   margin: 30px 20px;
 }
 
-div#basic-player-info .textfield .details {
+div#basic-player-info .detailedinfo .furtherinfo {
   margin: 20px 0px;
   display: grid;
   grid-template-columns: auto auto;
 }
 
-div#basic-player-info .textfield .details > div {
+div#basic-player-info .detailedinfo .furtherinfo > div {
   width: 50%;
 }

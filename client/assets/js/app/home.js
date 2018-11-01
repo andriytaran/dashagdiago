@@ -944,6 +944,15 @@ var handleCulturalFit = (function() {
   };
 })();
 
+function drawloader(selector){
+  let parent = d3.select(selector);
+  parent.selectAll("*").remove();
+  let elLoader = parent.append("div");
+  elLoader.attr("class", "elLoader");
+  let loader = elLoader.append("div");
+  loader.attr("class", "loader");
+}
+
 var handleDashboardGritterNotification = function() {
   $(window).on("load", function() {
     setTimeout(function() {

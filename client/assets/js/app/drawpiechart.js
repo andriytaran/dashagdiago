@@ -1,4 +1,6 @@
 function drawpiechart(data, selector, getTooltip) {
+  let block = d3.select(selector)
+  block.selectAll(".elLoader").remove()
   nv.addGraph(function() {
     var pieChart = nv.models
       .pieChart()
@@ -16,6 +18,7 @@ function drawpiechart(data, selector, getTooltip) {
     });
 
     d3.select(selector)
+
       .append("svg")
       .datum(data)
       .transition()
