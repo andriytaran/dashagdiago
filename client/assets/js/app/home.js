@@ -874,6 +874,115 @@ var handleAthleticAttributes = (function() {
   };
 })();
 
+
+var handleOverallScoreAttributes = (function() {
+  "use strict";
+
+  function getOverallAttributesData(response) {
+    return [
+      {
+        value: 10,
+        stick: 8,
+        // stick: response.agdiagoBenchmark.sat.value,
+        name: "Overall Score",
+        field: "overallScore",
+        contentId: "core-attributes",
+        range: [0, 10],
+        style: "number",
+        fractiondigits: 0
+      },
+      {
+        value: 50,
+        stick: 55,
+        // stick: response.agdiagoBenchmark.coreGpa.value,
+        name: "Overall Academic",
+        field: "overallAcademic",
+        contentId: "academic",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 1
+      },
+      {
+        value: 61,
+        stick: 33,
+        // stick: response.agdiagoBenchmark.gpa.value,
+        name: "Overall Emotional",
+        field: "overallEmotional",
+        contentId: "emotional-intel",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 1
+      },
+      {
+        value: 33,
+        stick: 66,
+        // stick: response.agdiagoBenchmark.act.value,
+        name: "Overall Athletic",
+        field: "overallAthletic",
+        contentId: "athletic",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      },
+      {
+        value: 99,
+        stick: 16,
+        // stick: response.agdiagoBenchmark.act.value,
+        name: "Overall Social",
+        field: "overallSocial",
+        contentId: "social-profile",
+        range: [0, 100],
+        style: "number",
+        fractiondigits: 0
+      }
+    ];
+  }
+
+  function getTooltip(field) {
+    switch (field) {
+      case "overallSocial":
+        return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
+      case "overallCore":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      default:
+        return "";
+    }
+  }
+
+  return function handleOverallAttributes(position) {
+    if ($("#accordionExample").length !== 0) {
+      $.post(
+        "/api/dashboard-data",
+        {
+          type: "academic",
+          playerPosition: position
+        },
+        function(response) {
+          const data = getOverallAttributesData(response);
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
+          }
+          if (data.every(checkifnull))
+           {
+            let elem = document.getElementById("overallBlock");
+            elem.style.display = "none";
+          } else {
+            drawOverall(
+              data,
+              "#accordionExample",
+              position,
+              getTooltip,
+              getPlayersData
+            );
+          }
+        },
+        "json"
+      );
+    }
+  };
+})();
+
 function getUrlParameters(data) {
   let res = {};
   let urlParams = new URLSearchParams(window.location.search);
@@ -1004,6 +1113,7 @@ var Dashboard = (function() {
       // HandleDropDownAlert("#mlb");
       getUrlParameters();
       let urlParams = getUrlParameters();
+      handleOverallScoreAttributes(urlParams.position);
       handleSocialProfileAttributes(urlParams.position);
       handleEmotionalIntelAttributes(urlParams.position);
       handleCoreAttributes(urlParams.position);

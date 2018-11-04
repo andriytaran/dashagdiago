@@ -178,6 +178,7 @@ var Dashboard = (function() {
       handleDashboardGritterNotification();
       getUrlParameters();
       let urlParams = getUrlParameters();
+      handleOverallScoreAttributes(urlParams.position);
       handleSinglePlayer(urlParams.id);
     }
   };

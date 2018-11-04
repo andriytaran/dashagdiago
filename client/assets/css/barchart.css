@@ -53,3 +53,8 @@
 .barchart .red {
   background-color: red;
 }
+
+.barchart .collapse {
+  padding-left: 28px;
+  padding-right: 28px;
+}
