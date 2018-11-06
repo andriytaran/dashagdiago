@@ -7,85 +7,9 @@
       </ol>
       <!-- end breadcrumb -->
       <!-- begin page-header -->
-      <h1 class="page-header">Player Dashboard <small>Full View of Players.</small></h1>
+      <h1 class="page-header"><%=position %> position dashboard</h1>
       <!-- end page-header -->
 
-      <!-- begin row -->
-      <div class="row">
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-black-darker">
-            <div class="stats-icon"><i class="fa fa-child"></i></div>
-            <div class="stats-info">
-              <h4>TOTAL AGDIAGO PLAYERS</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.overallCount %><%}%></p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-gradient-purple">
-            <div class="stats-icon"><i class="fa fa-link"></i></div>
-            <div class="stats-info">
-              <h4>Defense</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.defenseCount %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-grey-darker">
-            <div class="stats-icon"><i class="fa fa-users"></i></div>
-            <div class="stats-info">
-              <h4>Offensive</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.offenseCount %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-3 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="widget widget-stats bg-grey-darker">
-            <div class="stats-icon"><i class="fa fa-users"></i></div>
-            <div class="stats-info">
-              <h4>Average score</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=23 %><%}%>%</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        <!-- end col-3 -->
-        <!-- begin col-4 -->
-        <!--
-        <div class="col-lg-4 col-md-6">
-          <div class="widget widget-stats bg-black-lighter">
-            <div class="stats-icon"><i class="fa fa-clock"></i></div>
-            <div class="stats-info">
-              <h4>AVG TIME ON SITE</h4>
-              <p>00:12:23</p>
-            </div>
-            <div class="stats-link">
-              <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
-        -->
-        <!-- end col-4 -->
-      </div>
-      <!-- end row -->
       <!-- begin row -->
       <div class="row">
         <!-- begin col-8 -->
@@ -103,35 +27,6 @@
             </div>
             <div class="panel-body panel-height-5">
               <a href="/culturalfit"><div id="cultural-fit" class="height-sm"><div class="elLoader"><div class="loader"></div></div></div></a>
-            </div>
-          </div>
-          <!-- end panel -->
-        </div>
-        <!-- end col-6 -->
-      </div>
-      <!-- end row -->
-      <!-- begin row -->
-      <div class="row">
-        <!-- begin col-8 -->
-        <div class="col-lg-12">
-          <!-- begin panel -->
-          <div class="panel panel-inverse" data-sortable-id="index-1">
-            <div class="panel-heading">
-              <div class="panel-heading-btn">
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-              </div>
-              <h4 class="panel-title">categories</h4>
-            </div>
-            <div class="panel-body panel-height-5">
-                <a id="defensiveL" href="/dashboard-category/?category=defensiveL"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Defensive Line</button></a>
-                <a id="offensiveL" href="/dashboard-category/?category=offensiveL"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Ofensive  Line</button></a>
-                <a id="special" href="/dashboard-category/?category=special"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Special teams</button></a>
-                <a id="defensiveB" href="/dashboard-category/?category=defensiveB"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Defensive Backs</button></a>
-                <a id="quaterbacks" href="/dashboard-category/?category=defensiveB"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Quaterbacks</button></a>
-                <a id="linebackers" href="/dashboard-category/?category=defensiveB"><button type="button" class="btn" aria-haspopup="true" aria-expanded="false">Linebackers</button></a>
             </div>
           </div>
           <!-- end panel -->
@@ -459,8 +354,6 @@
             </div>
           </div> -->
           <!-- end panel -->
-
-
           <!-- begin panel -->
           <!--
           <div class="panel panel-inverse" data-sortable-id="index-6">
@@ -622,31 +515,6 @@
           <!-- end panel -->
 
 
-          <!-- <div class="row"> -->
-            <!-- start row -->
-        <!-- begin col-6 -->
-        <!-- <div class="col-lg-12"> -->
-          <!-- begin panel -->
-          <!-- <div class="panel panel-inverse" id="academicBlock" data-sortable-id="index-2">
-            <div class="panel-heading">
-              <div class="panel-heading-btn">
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-              </div>
-              <h4 class="panel-title">Academic</h4>
-            </div>
-            <div class="panel-body">
-              <div id="academic1" class="height-sm"><div class="elLoader"><div class="loader"></div></div></div>
-            </div>
-          </div> -->
-          <!-- end panel -->
-        <!-- </div>
-      </div> -->
-      <!-- end row -->
-
-
        <!-- start row -->
        <div class="row">
         <!-- begin col-6 -->
@@ -674,6 +542,9 @@
       </div>
       <!-- end row -->
 
+
+
+
     </div>
     <!-- start modal -->
     <div class="modal fade" id="chartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -686,7 +557,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div id="players"><div class="loader"></div></div>
+            <div id="players"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -699,8 +570,8 @@
 <% stylesheet('/../assets/css/barchart.css') -%>
 <% stylesheet('/../assets/css/home.css') -%>
 <% stylesheet('/../assets/css/table.css') -%>
-<% script('/../assets/js/app/drawtable.js') -%>
 <% script('/../assets/js/app/drawOverall.js') -%>
+<% script('/../assets/js/app/drawtable.js') -%>
 <% script('/../assets/js/app/drawbarchart.js') -%>
 <% script('/../assets/js/app/drawpiechart.js') -%>
-<% script('/../assets/js/app/home.js') -%>
+<% script('/../assets/js/app/categorydashboard.js') -%>

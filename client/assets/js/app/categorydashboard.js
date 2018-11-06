@@ -196,7 +196,7 @@ var handleAcademicAttributes = (function() {
         "/api/dashboard-data",
         {
           type: "academic",
-          playerPosition: position
+          playerPosition: position,
         },
         function(response) {
           const data = getAcademicAttributesData(response);
@@ -1118,13 +1118,13 @@ var Dashboard = (function() {
       // HandleDropDownAlert("#mlb");
       getUrlParameters();
       let urlParams = getUrlParameters();
-      handleOverallScoreAttributes(urlParams.position);
-      handleSocialProfileAttributes(urlParams.position);
-      handleEmotionalIntelAttributes(urlParams.position);
-      handleCoreAttributes(urlParams.position);
-      handleAthleticAttributes(urlParams.position);
-      handleCulturalFit(urlParams.position);
-      handleAcademicAttributes(urlParams.position);
+      handleOverallScoreAttributes(urlParams.category);
+      handleSocialProfileAttributes(urlParams.category);
+      handleEmotionalIntelAttributes(urlParams.category);
+      handleCoreAttributes(urlParams.category);
+      handleAthleticAttributes(urlParams.category);
+      handleCulturalFit(urlParams.category);
+      handleAcademicAttributes(urlParams.category);
     }
   };
 })();

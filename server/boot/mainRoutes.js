@@ -89,12 +89,18 @@ module.exports = (app) => {
     res.render('pages/cultural_fit');
   });
 
+
+  //dashboard-category
+  app.get('/dashboard-category', function(req, res, next) {
+    res.render('dashboard-category', {position: req.query.category});
+  });
+
   //dashboard-position
   app.get('/dashboard-position', function(req, res, next) {
     res.render('dashboard-position', {position: req.query.position});
   });
 
-  //dashboard-pplayer
+  //dashboard-player
   app.get('/dashboard-player', function(req, res, next) {
     res.render('dashboard-player', {id: req.query.id});
   });
