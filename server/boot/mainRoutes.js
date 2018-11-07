@@ -111,8 +111,8 @@ module.exports = (app) => {
   });
 
   // Login
-  app.post('/login', (req, res, next) => {
-    res.render('coachLandng');
+  app.get('/login', function(req, res, next) {
+    res.render('login');
   });
 
   // dashboard data ajax handler

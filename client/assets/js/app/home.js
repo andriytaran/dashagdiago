@@ -884,11 +884,11 @@ var handleOverallScoreAttributes = (function() {
         value: 10,
         stick: 8,
         // stick: response.agdiagoBenchmark.sat.value,
-        name: "Overall Score",
+        name: "Overall Core Attributes",
         field: "overallScore",
         contentId: "core-attributes",
-        range: [0, 10],
-        style: "number",
+        range: [0, 100],
+        style: "percent",
         fractiondigits: 0
       },
       {
