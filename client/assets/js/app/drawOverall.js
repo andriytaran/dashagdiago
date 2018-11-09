@@ -112,7 +112,8 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     mbar.attr("title", getTooltip(d.field));
     $(mbar.node()).tooltip({ container: chart.node() });
     if (getPlayersData) {
-      function showmodal() {
+      function showmodal(event) {
+        event.stopPropagation();
         drawloader("#players");
         $("#chartmodal").modal("show");
         getPlayersData(position, d.field, function(players) {
