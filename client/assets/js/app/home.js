@@ -889,7 +889,7 @@ var handleOverallScoreAttributes = (function() {
         contentId: "core-attributes",
         range: [0, 100],
         style: "percent",
-        fractiondigits: 0
+        fractiondigits: 1
       },
       {
         value: 50,
@@ -899,7 +899,7 @@ var handleOverallScoreAttributes = (function() {
         field: "overallAcademic",
         contentId: "academic",
         range: [0, 100],
-        style: "number",
+        style: "percent",
         fractiondigits: 1
       },
       {
@@ -910,7 +910,7 @@ var handleOverallScoreAttributes = (function() {
         field: "overallEmotional",
         contentId: "emotional-intel",
         range: [0, 100],
-        style: "number",
+        style: "percent",
         fractiondigits: 1
       },
       {
@@ -921,8 +921,8 @@ var handleOverallScoreAttributes = (function() {
         field: "overallAthletic",
         contentId: "athletic",
         range: [0, 100],
-        style: "number",
-        fractiondigits: 0
+        style: "percent",
+        fractiondigits: 1
       },
       {
         value: 99,
@@ -932,8 +932,8 @@ var handleOverallScoreAttributes = (function() {
         field: "overallSocial",
         contentId: "social-profile",
         range: [0, 100],
-        style: "number",
-        fractiondigits: 0
+        style: "percent",
+        fractiondigits: 1
       }
     ];
   }

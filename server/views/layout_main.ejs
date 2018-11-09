@@ -3,6 +3,7 @@
 <!--[if !IE]><!-->
 <html lang="en">
 <!--<![endif]-->
+
 <head>
   <meta charset="utf-8" />
   <title>Agdiago| Dashboard</title>
@@ -39,6 +40,7 @@
   <script src="../assets/plugins/pace/pace.min.js"></script>
   <!-- ================== END BASE JS ================== -->
 </head>
+
 <body>
   <!-- begin #page-loader -->
   <div id="page-loader" class="fade show"><span class="spinner"></span></div>
@@ -51,7 +53,8 @@
       <!-- begin navbar-header -->
 
       <div class="navbar-header">
-        <a href="/" class="navbar-brand"><img src="/assets/img/logo.png" width="140" > </a><img src="/assets/img/logo/logo-cincinnati.png" width="50" class="mb-1">
+        <a href="/" class="navbar-brand"><img src="/assets/img/logo.png" width="140"> </a><img src="/assets/img/logo/logo-cincinnati.png"
+          width="50" class="mb-1">
         <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -142,7 +145,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown navbar-user">
+        <!-- <li class="dropdown navbar-user">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <img src="../assets/img/user/user-13.jpg" alt="" />
             <span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
@@ -155,7 +158,9 @@
             <div class="dropdown-divider"></div>
             <a href="javascript:;" class="dropdown-item">Log Out</a>
           </div>
-        </li>
+        </li> -->
+        <li><a href="/login"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="">Login</button></a></li>
+        <li><a href="/register"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="">Register</button></a></li>
       </ul>
       <!-- end header navigation right -->
     </div>
@@ -167,7 +172,7 @@
       <div data-scrollbar="true" data-height="100%">
 
         <!-- begin sidebar user -->
-       <!--  <ul class="nav">
+        <!--  <ul class="nav">
           <li class="nav-profile">
             <a href="javascript:;" data-toggle="nav-profile">
               <div class="cover with-shadow"></div>
@@ -193,7 +198,7 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
 
-         <!--  <li class="nav-header">Navigation</li>
+          <!--  <li class="nav-header">Navigation</li>
           <li class="has-sub active">
             <a href="javascript:;">
               <b class="caret"></b>
@@ -209,84 +214,98 @@
 
 
 
-        <li>
-          <hr>
-  <center>     <i><font color="#ffffff" size="3" > View By </font></i></center>
-   <hr>
-
-        <center>
-          <div class="dropdown">
-            <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Defensive Line</button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" id="defensiveLineDE" href="/dashboard-position/?position=DE">Defensive End</a>
-              <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DT">Defensive Tackle</a>
-            </div>
-          </div>
-        </center>
-           <hr>
-        <center>
-        <div class="dropdown">
-          <button type="button" class="btn btn-grey dropdown-toggle lmenu"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ofensive  Line</button>
-          <div class="dropdown-menu">
-              <a class="dropdown-item" id="offensiveLineOG" href="/dashboard-position/?position=OG">Offensive Guard</a>
-              <a class="dropdown-item" id="offensiveLineOC" href="/dashboard-position/?position=OC">Offensive Center</a>
-              <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=OT">Offensive Tackle</a>
-              <a class="dropdown-item" id="offensiveLineLS" href="/dashboard-position/?position=LS">Long Snapper</a>
-            </div>
-        </div>
-        </center>
-
-
-           <hr>
-            <center> <a href="/dashboard-position/?position=RB"><button type="button" id="runningBacks" class="btn btn-grey lmenu">Running Backs</button></a>  </center>
-           <hr>
-            <center> <a href="/dashboard-position/?position=TE"><button type="button" id="tightEnds" class="btn btn-grey lmenu">Tight Ends</button></a>  </center>
-           <hr>
-            <center> <a href="/dashboard-position/?position=WR"><button type="button" id="wideReceivers" class="btn btn-grey lmenu">Wide Receivers</button> </a> </center>
-           <hr>
-            <center>
-            <div class="dropdown">
-              <button type="button" class="btn btn-grey dropdown-toggle lmenu"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Special teams</button>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" id="kickingP" href="/dashboard-position/?position=P">Punter</a>
-                  <a class="dropdown-item" id="kickingK" href="/dashboard-position/?position=K">Kicker</a>
-              </div>
-            </div>
-            </center>
+          <li>
             <hr>
+            <center> <i>
+                <font color="#ffffff" size="3"> View By </font>
+              </i></center>
+            <hr>
+
             <center>
-            <div class="dropdown">
-              <button type="button" class="btn btn-grey dropdown-toggle lmenu"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Defensive Backs</button>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" id="defensiveBacksC" href="/dashboard-position/?position=CB">Corner Backs</a>
-                  <a class="dropdown-item" id="defensiveBacksS" href="/dashboard-position/?position=S">Safety</a>
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Defensive Line</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" id="defensiveLineDE" href="/dashboard-position/?position=DE">Defensive End</a>
+                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DT">Defensive
+                    Tackle</a>
+                </div>
               </div>
-            </div>
             </center>
             <hr>
             <center>
               <div class="dropdown">
-                <button type="button" class="btn btn-grey dropdown-toggle lmenu"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quaterbacks</button>
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Ofensive Line</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" id="QBPro" href="/dashboard-position/?position=QBPro">Pro Style</a>
-                    <a class="dropdown-item" id="QBDual" href="/dashboard-position/?position=QBDual">Dual Threat</a>
+                  <a class="dropdown-item" id="offensiveLineOG" href="/dashboard-position/?position=OG">Offensive Guard</a>
+                  <a class="dropdown-item" id="offensiveLineOC" href="/dashboard-position/?position=OC">Offensive
+                    Center</a>
+                  <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=OT">Offensive
+                    Tackle</a>
+                  <a class="dropdown-item" id="offensiveLineLS" href="/dashboard-position/?position=LS">Long Snapper</a>
                 </div>
               </div>
-              </center>
-           <!-- <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center> -->
+            </center>
+
+
+            <hr>
+            <center> <a href="/dashboard-position/?position=RB"><button type="button" id="runningBacks" class="btn btn-grey lmenu">Running
+                  Backs</button></a> </center>
+            <hr>
+            <center> <a href="/dashboard-position/?position=TE"><button type="button" id="tightEnds" class="btn btn-grey lmenu">Tight
+                  Ends</button></a> </center>
+            <hr>
+            <center> <a href="/dashboard-position/?position=WR"><button type="button" id="wideReceivers" class="btn btn-grey lmenu">Wide
+                  Receivers</button> </a> </center>
             <hr>
             <center>
-            <div class="dropdown">
-              <button type="button" class="btn btn-grey dropdown-toggle lmenu"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Linebackers</button>
-              <div class="dropdown-menu">
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Special teams</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" id="kickingP" href="/dashboard-position/?position=P">Punter</a>
+                  <a class="dropdown-item" id="kickingK" href="/dashboard-position/?position=K">Kicker</a>
+                </div>
+              </div>
+            </center>
+            <hr>
+            <center>
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Defensive Backs</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" id="defensiveBacksC" href="/dashboard-position/?position=CB">Corner Backs</a>
+                  <a class="dropdown-item" id="defensiveBacksS" href="/dashboard-position/?position=S">Safety</a>
+                </div>
+              </div>
+            </center>
+            <hr>
+            <center>
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Quaterbacks</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" id="QBPro" href="/dashboard-position/?position=QBPro">Pro Style</a>
+                  <a class="dropdown-item" id="QBDual" href="/dashboard-position/?position=QBDual">Dual Threat</a>
+                </div>
+              </div>
+            </center>
+            <!-- <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center> -->
+            <hr>
+            <center>
+              <div class="dropdown">
+                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Linebackers</button>
+                <div class="dropdown-menu">
                   <a class="dropdown-item" id="ilb" href="/dashboard-position/?position=ILB">Inside Linebacker</a>
                   <a class="dropdown-item" id="olb" href="/dashboard-position/?position=OLB">Outside Linebacker</a>
                   <a class="dropdown-item" id="mlb" href="/dashboard-position/?position=MLB">Middle Linebacker</a>
+                </div>
               </div>
-            </div>
             </center>
 
- <hr>
+            <hr>
 
 
           </li>
@@ -296,7 +315,7 @@
 
 
 
-     <!--     <li class="has-sub">
+          <!--     <li class="has-sub">
             <a href="javascript:;">
               <span class="badge pull-right">10</span>
               <i class="fa fa-hdd"></i>
@@ -578,7 +597,7 @@
     <!-- end #sidebar -->
 
     <!-- begin #content -->
-          <%- body %>
+    <%- body %>
     <!-- end #content -->
 
     <!-- begin theme-panel -->
@@ -587,18 +606,30 @@
       <div class="theme-panel-content">
         <h5 class="m-t-0">Color Theme</h5>
         <ul class="theme-list clearfix">
-          <li><a href="javascript:;" class="bg-red" data-theme="red" data-theme-file="../assets/css/default/theme/red.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Red">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-pink" data-theme="pink" data-theme-file="../assets/css/default/theme/pink.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Pink">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-orange" data-theme="orange" data-theme-file="../assets/css/default/theme/orange.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Orange">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-yellow" data-theme="yellow" data-theme-file="../assets/css/default/theme/yellow.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Yellow">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-lime" data-theme="lime" data-theme-file="../assets/css/default/theme/lime.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Lime">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-green" data-theme="green" data-theme-file="../assets/css/default/theme/green.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Green">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-teal" data-theme="default" data-theme-file="../assets/css/default/theme/default.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Default">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-aqua" data-theme="aqua" data-theme-file="../assets/css/default/theme/aqua.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Aqua">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-blue" data-theme="blue" data-theme-file="../assets/css/default/theme/blue.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Blue">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-purple" data-theme="purple" data-theme-file="../assets/css/default/theme/purple.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Purple">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-indigo" data-theme="indigo" data-theme-file="../assets/css/default/theme/indigo.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Indigo">&nbsp;</a></li>
-          <li><a href="javascript:;" class="bg-black" data-theme="black" data-theme-file="../assets/css/default/theme/black.css" data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Black">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-red" data-theme="red" data-theme-file="../assets/css/default/theme/red.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Red">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-pink" data-theme="pink" data-theme-file="../assets/css/default/theme/pink.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Pink">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-orange" data-theme="orange" data-theme-file="../assets/css/default/theme/orange.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Orange">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-yellow" data-theme="yellow" data-theme-file="../assets/css/default/theme/yellow.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Yellow">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-lime" data-theme="lime" data-theme-file="../assets/css/default/theme/lime.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Lime">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-green" data-theme="green" data-theme-file="../assets/css/default/theme/green.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Green">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-teal" data-theme="default" data-theme-file="../assets/css/default/theme/default.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Default">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-aqua" data-theme="aqua" data-theme-file="../assets/css/default/theme/aqua.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Aqua">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-blue" data-theme="blue" data-theme-file="../assets/css/default/theme/blue.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Blue">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-purple" data-theme="purple" data-theme-file="../assets/css/default/theme/purple.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Purple">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-indigo" data-theme="indigo" data-theme-file="../assets/css/default/theme/indigo.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Indigo">&nbsp;</a></li>
+          <li><a href="javascript:;" class="bg-black" data-theme="black" data-theme-file="../assets/css/default/theme/black.css"
+              data-click="theme-selector" data-toggle="tooltip" data-trigger="hover" data-container="body" data-title="Black">&nbsp;</a></li>
         </ul>
         <div class="divider"></div>
         <div class="row m-t-10">
@@ -685,7 +716,8 @@
         <div class="divider"></div>
         <div class="row m-t-10">
           <div class="col-md-12">
-            <a href="javascript:;" class="btn btn-inverse btn-block btn-rounded" data-click="reset-local-storage"><b>Reset Local Storage</b></a>
+            <a href="javascript:;" class="btn btn-inverse btn-block btn-rounded" data-click="reset-local-storage"><b>Reset
+                Local Storage</b></a>
           </div>
         </div>
       </div>
@@ -693,10 +725,56 @@
     <!-- end theme-panel -->
 
     <!-- begin scroll to top btn -->
-    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
+        class="fa fa-angle-up"></i></a>
     <!-- end scroll to top btn -->
   </div>
   <!-- end page container -->
+
+  <!-- Modal -->
+  <div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="login login-v2" data-pageload-addclass="animated fadeIn">
+        <!-- begin brand -->
+        <div class="login-header">
+          <div class="brand">
+            <span class="logo"></span> <b>Color</b> Admin
+            <small>responsive bootstrap 3 admin template</small>
+          </div>
+          <div class="icon">
+            <i class="fa fa-lock"></i>
+          </div>
+        </div>
+        <!-- end brand -->
+        <!-- begin login-content -->
+        <div class="login-content">
+          <form action="index.html" method="GET" class="margin-bottom-0">
+            <div class="form-group m-b-20">
+              <input type="text" class="form-control form-control-lg" placeholder="Email Address" required />
+            </div>
+            <div class="form-group m-b-20">
+              <input type="password" class="form-control form-control-lg" placeholder="Password" required />
+            </div>
+            <div class="checkbox checkbox-css m-b-20">
+              <input type="checkbox" id="remember_checkbox" />
+              <label for="remember_checkbox">
+                Remember Me
+              </label>
+            </div>
+            <div class="login-buttons">
+              <button type="submit" class="btn btn-success btn-block btn-lg">Sign me in</button>
+            </div>
+            <div class="m-t-20">
+              Not a member yet? Click <a href="javascript:;">here</a> to register.
+            </div>
+          </form>
+        </div>
+        <!-- end login-content -->
+      </div>
+      <!-- end login -->
+    </div>
+  </div>
+
 
   <!-- ================== BEGIN BASE JS ================== -->
   <script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
@@ -729,10 +807,11 @@
   <!-- ================== END PAGE LEVEL JS ================== -->
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       App.init();
       Dashboard.init();
     });
   </script>
 </body>
+
 </html>

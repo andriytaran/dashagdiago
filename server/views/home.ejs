@@ -4,7 +4,6 @@
       <ol class="breadcrumb pull-right">
         <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
         <li class="breadcrumb-item active">Dashboard</li>
-        <li class="breadcrumb-item"><a href="/login">Login</a></li>
       </ol>
       <!-- end breadcrumb -->
       <!-- begin page-header -->
@@ -103,7 +102,7 @@
               <h4 class="panel-title">Cultural Fit</h4>
             </div>
             <div class="panel-body panel-height-5">
-              <a href="/culturalfit"><div id="cultural-fit" class="height-sm"><div class="elLoader"><div class="loader"></div></div></div></a>
+              <a href="/cultural_fit"><div id="cultural-fit" class="height-sm"><div class="elLoader"><div class="loader"></div></div></div></a>
             </div>
           </div>
           <!-- end panel -->
@@ -696,8 +695,97 @@
       </div>
     </div>
     <!-- end modal -->
+
+
+
+    <!-- Modal content-->
+    <!-- <div class="container">
+
+      <div class="row" id="pwd-container">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+          <section class="login-form">
+            <form method="post" action="#" role="login">
+              <img src="/assets/img/logo.png" class="img-responsive" alt="" style="width: 100px"/>
+              <input type="email" name="email" placeholder="Email" required class="form-control input-lg" value="enteryourmail@gmail.com" />
+
+              <input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" />
+
+
+              <div class="pwstrength_viewport_progress"></div>
+
+
+              <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+              <div>
+                <a href="#">Create account</a> or <a href="#">reset password</a>
+              </div>
+
+            </form>
+
+            <div class="form-links">
+              <a href="#">www.website.com</a>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-md-4"></div>
+
+
+      </div>
+    </div> -->
+
+
+
+<!-- Modal -->
+<div id="registerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="container">
+
+      <div class="row" id="reg-container">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+          <section class="login-form">
+            <form method="post" action="#" role="login">
+              <img src="/assets/img/logo.png" class="img-responsive" alt="" style="width: 100px"/>
+              <div class="notes">Enter your user Email</div>
+              <input type="email" name="email" placeholder="Email" required class="form-control input-lg" value="enteryourmail@gmail.com" />
+              <div class="notes">Create your password</div>
+              <input type="password" class="form-control input-lg" id="newpassword" placeholder="Password" required="" />
+              <div class="notes">Confirm your password</div>
+              <input type="password" class="form-control input-lg" id="repeatPassword" placeholder="Password" required="" />
+
+
+              <div class="pwstrength_viewport_progress"></div>
+
+
+              <button type="submit" name="go" class="btn btn-lg btn-warning btn-block">Sign in</button>
+              <div>
+                <a href="#">Create account</a> or <a href="#">reset password</a>
+              </div>
+
+            </form>
+
+            <div class="form-links">
+              <a href="#">www.website.com</a>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-md-4"></div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
 <% stylesheet('/../assets/css/common.css') -%>
 <% stylesheet('/../assets/css/barchart.css') -%>
+<% stylesheet('/../assets/css/login.css') -%>
 <% stylesheet('/../assets/css/home.css') -%>
 <% stylesheet('/../assets/css/table.css') -%>
 <% script('/../assets/js/app/drawtable.js') -%>

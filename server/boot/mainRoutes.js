@@ -115,6 +115,11 @@ module.exports = (app) => {
     res.render('login');
   });
 
+  // Login
+  app.get('/register', function(req, res, next) {
+    res.render('register');
+  });
+
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
   const athleticFields = [
