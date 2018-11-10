@@ -1,1 +1,7 @@
-.login .login-header .loglogo {width: 360px;}
+.login {
+  background-color: rgba(128, 125, 86, 0.5);
+}
+
+.login .login-header .loglogo {
+  width: 360px;
+}

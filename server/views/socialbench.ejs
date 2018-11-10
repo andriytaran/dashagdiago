@@ -1,0 +1,154 @@
+<% layout('layout_main') -%>
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">
+    <%=team %> Benchmark Input Page</h1>
+  <!-- end page-header -->
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-6 -->
+    <div class="col-lg-12">
+      <!-- begin panel -->
+      <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
+        <div class="panel-heading">
+          <h4 class="panel-title">Academic attributes benchmark input</h4>
+        </div>
+        <div class="panel-body">
+          <form id="socialform">
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="facebookSentiment">Facebook Sentiment Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Facebook Sentiment" id="facebookSentiment" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="instagramFollowers">Instagram Followers Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Instagram Followers" id="instagramFollowers" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="newsMediaCoveragementions">News Media Coverage mentions Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="News Media Coverage mentions" id="newsMediaCoverageMentions" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="newsMediaCoverageRegional">News Media Coverage Regional Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="News Media Coverage Regional" id="newsMediaCoverageRegional" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="newsMediaCoverageSentiment">News Media Coverage Sentiment Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="News Media Coverage Sentiment" id="newsMediaCoverageSentiment" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="newsMediaCoverageNational">News Media coverage National Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="News Media coverage National" id="newsMediaCoverageNational" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="pressReleaseSentiment">Press Release Sentiment Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Press Release Sentiment" id="pressReleaseSentiment" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="pressReleaseSentimentCounter">Press Release Sentiment Counter Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Press Release Sentiment Counter" id="pressReleaseSentimentCounter" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="socialInstagramSentiment">Social Instagram Sentiment Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Social Instagram Sentiment" id="socialInstagramSentiment" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="socialTwitterSentiment">Social Twitter Sentiment Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Social Twitter Sentiment" id="socialTwitterSentiment" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="twitterFollowers">Twitter Followers</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Twitter Followers" id="twitterFollowers" />
+              </div>
+            </div>
+            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
+          </form>
+          <!-- <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="sat"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="act"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="gpa"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="coreGpa"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div> -->
+
+        </div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- end col-6 -->
+  </div>
+  <!-- end row -->
+</div>
+
+<script>
+  document.getElementById('socialform').addEventListener('submit', function () {
+    submit();
+  });
+
+
+  function submit() {
+    let res = [];
+    let facebookSentimentVal = document.getElementById("facebookSentiment").value;
+    let instagramFollowersVal = document.getElementById("instagramFollowers").value;
+    let newsMediaCoverageMentionsVal = document.getElementById("newsMediaCoverageMentions").value;
+    let newsMediaCoverageRegionalVal = document.getElementById("newsMediaCoverageRegional").value;
+    let newsMediaCoverageSentimentVal = document.getElementById("newsMediaCoverageSentiment").value;
+    let newsMediaCoverageNationalVal = document.getElementById("newsMediaCoverageNational").value;
+    let pressReleaseSentimentVal = document.getElementById("pressReleaseSentiment").value;
+    let pressReleaseSentimentCounterVal = document.getElementById("pressReleaseSentimentCounter").value;
+    let socialInstagramSentimentVal = document.getElementById("socialInstagramSentiment").value;
+    let socialTwitterSentimentVal = document.getElementById("socialTwitterSentiment").value;
+    let twitterFollowersVal = document.getElementById("twitterFollowers").value;
+    res.push(facebookSentimentVal);
+    res.push(instagramFollowersVal);
+    res.push(newsMediaCoverageMentionsVal);
+    res.push(newsMediaCoverageRegionalVal);
+    res.push(newsMediaCoverageSentimentVal);
+    res.push(newsMediaCoverageNationalVal);
+    res.push(pressReleaseSentimentVal);
+    res.push(pressReleaseSentimentCounterVal);
+    res.push(socialInstagramSentimentVal);
+    res.push(socialTwitterSentimentVal);
+    res.push(twitterFollowersVal);
+    alert(res);
+  }
+</script>
+<% stylesheet('/../assets/css/common.css') -%>
+<% stylesheet('/../assets/css/bench.css') -%>
+<% stylesheet('/../assets/css/home.css') -%>
+<% script('/../assets/js/app/home.js') -%>

@@ -1,0 +1,89 @@
+<% layout('layout_main') -%>
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">
+    <%=team %> Benchmark Input Page</h1>
+  <!-- end page-header -->
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-6 -->
+    <div class="col-lg-12">
+      <!-- begin panel -->
+      <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
+        <div class="panel-heading">
+          <h4 class="panel-title">Academic attributes benchmark input</h4>
+        </div>
+        <div class="panel-body">
+          <form id="coreform">
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="competitiveness">Competitiveness Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Competitiveness" id="competitiveness" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="mastery">Mastery Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Mastery" id="mastery" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="persistence">Persistence Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Persistence" id="persistence" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="teamOrientation">Team Orientation Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Team Orientation" id="teamOrientation" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="workEthic">Work Ethic Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic" id="workEthic" />
+              </div>
+            </div>
+            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
+          </form>
+        </div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- end col-6 -->
+  </div>
+  <!-- end row -->
+</div>
+
+<script>
+  document.getElementById('coreform').addEventListener('submit', function () {
+    submit();
+  });
+
+
+  function submit() {
+    let res = [];
+    let competitivenessVal = document.getElementById("competitiveness").value;
+    let masteryVal = document.getElementById("mastery").value;
+    let persistenceVal = document.getElementById("persistence").value;
+    let teamOrientationVal = document.getElementById("teamOrientation").value;
+    let workEthicVal = document.getElementById("workEthic").value;
+    res.push(competitivenessVal);
+    res.push(masteryVal);
+    res.push(persistenceVal);
+    res.push(teamOrientationVal);
+    res.push(workEthicVal);
+    alert(res);
+  }
+</script>
+<% stylesheet('/../assets/css/common.css') -%>
+<% stylesheet('/../assets/css/bench.css') -%>
+<% stylesheet('/../assets/css/home.css') -%>
+<% script('/../assets/js/app/home.js') -%>

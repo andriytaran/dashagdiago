@@ -115,10 +115,36 @@ module.exports = (app) => {
     res.render('login');
   });
 
-  // Login
+  // Register
   app.get('/register', function(req, res, next) {
     res.render('register');
   });
+
+  // academic benchmark setup
+  app.get('/academicbench', function(req, res, next) {
+    res.render('academicbench', {team: "Cincinnati Bearcats"});
+  });
+
+  // emotional benchmark setup
+  app.get('/emotionalbench', function(req, res, next) {
+    res.render('emotionalbench', {team: "Cincinnati Bearcats"});
+  });
+
+  // core attributes benchmark setup
+  app.get('/corebench', function(req, res, next) {
+    res.render('corebench', {team: "Cincinnati Bearcats"});
+  });
+
+  // social benchmark setup
+  app.get('/socialbench', function(req, res, next) {
+    res.render('socialbench', {team: "Cincinnati Bearcats"});
+  });
+
+  // athletic benchmark setup
+  app.get('/athleticbench', function(req, res, next) {
+    res.render('athleticbench', {team: "Cincinnati Bearcats"});
+  });
+
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?

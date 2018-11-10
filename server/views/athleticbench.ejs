@@ -1,0 +1,217 @@
+<% layout('layout_main') -%>
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">
+    <%=team %> Benchmark Input Page</h1>
+  <!-- end page-header -->
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-6 -->
+    <div class="col-lg-12">
+      <!-- begin panel -->
+      <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
+        <div class="panel-heading">
+          <h4 class="panel-title">Athletic attributes benchmark input</h4>
+        </div>
+        <div class="panel-body">
+          <form id="athleticform">
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3">Carries Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Carries" id="carries" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="completions">Completions Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Completions" id="completions" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="interceptionsThrown">Interceptions Thrown Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Interceptions Thrown" id="interceptionsThrown" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+                <label class="col-form-label col-md-3" for="passingYards">Passing Yards Benchmark</label>
+                <div class="col-md-9">
+                  <input class="form-control m-b-5" type="text" placeholder="Passing Yards" id="passingYards" />
+                </div>
+              </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="recievingYards">Recieving Yards Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Recieving Yards" id="recievingYards" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="receptions">Receptions Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Receptions" id="receptions" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="rushingYards">Rushing Yards Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Rushing Yards" id="rushingYards" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="sacks">Sacks Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Sacks" id="sacks" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="rushingTouchdowns">Rushing Touchdowns Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Rushing Touchdowns" id="rushingTouchdowns" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="soloTackle">Solo Tackle Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Solo Tackle" id="soloTackle" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="tacklesForLoss">Tackles For Loss Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Tackles For Loss" id="tacklesForLoss" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="totalTackles">Total Tackles Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Total Tackles" id="totalTackles" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="touchdownsThrown">Touchfowns Thrown Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Touchfowns Thrown" id="touchdownsThrown" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="forty">Forty Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Forty" id="forty" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="gamesPlayed">Games Played Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Games Played" id="gamesPlayed" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="gamesStarted">Games Started Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Games Started" id="gamesStarted" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="height">Height Benchmark</label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Height" id="height" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+                <label class="col-form-label col-md-3" for="vertical">Vertical Benchmark</label>
+                <div class="col-md-9">
+                  <input class="form-control m-b-5" type="text" placeholder="Vertical" id="vertical" />
+                </div>
+              </div>
+              <div class="form-group row m-b-15">
+                  <label class="col-form-label col-md-3" for="weight">Weight Benchmark</label>
+                  <div class="col-md-9">
+                    <input class="form-control m-b-5" type="text" placeholder="Weight" id="weight" />
+                  </div>
+                </div>
+            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
+          </form>
+          <!-- <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="sat"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="act"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="gpa"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div>
+          <div class="singlepar">
+            <div class="formf"><input class="form-control" type="text" id="coreGpa"></div>
+            <div class="notef">Sat attributes needed</div>
+          </div> -->
+
+        </div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- end col-6 -->
+  </div>
+  <!-- end row -->
+</div>
+
+<script>
+  document.getElementById('athleticform').addEventListener('submit', function () {
+    submit();
+  });
+
+
+  function submit() {
+    let res = [];
+    let carriesVal = document.getElementById("carries").value;
+    let completionsVal = document.getElementById("completions").value;
+    let interceptionsThrownVal = document.getElementById("interceptionsThrown").value;
+    let passingYardsVal = document.getElementById("passingYards").value;
+    let recievingYardsVal = document.getElementById("recievingYards").value;
+    let receptionsVal = document.getElementById("receptions").value;
+    let rushingTouchdownsVal = document.getElementById("rushingTouchdowns").value;
+    let rushingYardsVal = document.getElementById("rushingYards").value;
+    let sacksVal = document.getElementById("sacks").value;
+    let soloTackleVal = document.getElementById("soloTackle").value;
+    let tacklesForLossVal = document.getElementById("tacklesForLoss").value;
+    let totalTacklesVal = document.getElementById("totalTackles").value;
+    let touchdownsThrownVal = document.getElementById("touchdownsThrown").value;
+    let fortyVal = document.getElementById("forty").value;
+    let gamesPlayedVal = document.getElementById("gamesPlayed").value;
+    let gamesStartedVal = document.getElementById("gamesStarted").value;
+    let heightVal = document.getElementById("height").value;
+    let verticalVal = document.getElementById("vertical").value;
+    let weightVal = document.getElementById("weight").value;
+    res.push(completionsVal);
+    res.push(interceptionsThrownVal);
+    res.push(passingYardsVal);
+    res.push(recievingYardsVal);
+    res.push(receptionsVal);
+    res.push(rushingTouchdownsVal);
+    res.push(rushingYardsVal);
+    res.push(sacksVal);
+    res.push(soloTackleVal);
+    res.push(tacklesForLossVal);
+    res.push(totalTacklesVal);
+    res.push(touchdownsThrownVal);
+    res.push(fortyVal);
+    res.push(gamesPlayedVal);
+    res.push(gamesStartedVal);
+    res.push(heightVal);
+    res.push(verticalVal);
+    res.push(heightVal);
+    alert(res);
+  }
+</script>
+<% stylesheet('/../assets/css/common.css') -%>
+<% stylesheet('/../assets/css/bench.css') -%>
+<% stylesheet('/../assets/css/home.css') -%>
+<% script('/../assets/js/app/home.js') -%>
