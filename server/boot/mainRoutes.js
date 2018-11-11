@@ -1,262 +1,298 @@
-'use strict';
+"use strict";
 
-const path = require('path');
-const os = require('os');
-const fs = require('fs');
-const {ELASTICSEARCH_URL} = require('../env');
-var request = require('request-promise');
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
+const { ELASTICSEARCH_URL } = require("../env");
+var request = require("request-promise");
 var baseSearchUri = ELASTICSEARCH_URL;
 
-var elasticsearch = require('elasticsearch');
+var elasticsearch = require("elasticsearch");
 var client = new elasticsearch.Client({
-  host: ELASTICSEARCH_URL,
+  host: ELASTICSEARCH_URL
 });
 
-module.exports = (app) => {
+module.exports = app => {
   // Home
-  app.get('/', async function(req, res, next) {
+  app.get("/", async function(req, res, next) {
     var response = {};
     var responseObj = {};
 
     const overallCountResponse = await request({
-      uri: baseSearchUri + 'cincinnati/_count',
-      method: 'get',
+      uri: baseSearchUri + "cincinnati/_count",
+      method: "get"
     });
     responseObj = JSON.parse(overallCountResponse);
     response.overallCount = responseObj.count;
 
     var offenseObj = {
-      'size': 0,
-      'query': {
-        'bool': {
-          'must': {
-            'match': {
-              'offenseDefense': 0,
-            },
-          },
-        },
-      },
+      size: 0,
+      query: {
+        bool: {
+          must: {
+            match: {
+              offenseDefense: 0
+            }
+          }
+        }
+      }
     };
 
     var defenseObj = {
-      'size': 0,
-      'query': {
-        'bool': {
-          'must': {
-            'match': {
-              'offenseDefense': 1,
-            },
-          },
-        },
-      },
+      size: 0,
+      query: {
+        bool: {
+          must: {
+            match: {
+              offenseDefense: 1
+            }
+          }
+        }
+      }
     };
 
     const offenseResponse = await client.search({
-      index: 'cincinnati',
-      body: offenseObj,
+      index: "cincinnati",
+      body: offenseObj
     });
-    response.offenseCount =
-      Math.round((offenseResponse.hits.total / response.overallCount) * 100);
+    response.offenseCount = Math.round(
+      (offenseResponse.hits.total / response.overallCount) * 100
+    );
 
     const defenseResponse = await client.search({
-      index: 'cincinnati',
-      body: defenseObj,
+      index: "cincinnati",
+      body: defenseObj
     });
-    response.defenseCount =
-      Math.round((defenseResponse.hits.total / response.overallCount) * 100);
+    response.defenseCount = Math.round(
+      (defenseResponse.hits.total / response.overallCount) * 100
+    );
 
-    res.render('home', {response: response});
+    res.render("home", { response: response });
   });
 
-  app.get('/profile', function(req, res, next) {
-    res.render('pages/profile');
+  app.get("/profile", function(req, res, next) {
+    res.render("pages/profile");
   });
 
-  app.get('/contact', function(req, res, next) {
-    res.render('pages/contact');
+  app.get("/contact", function(req, res, next) {
+    res.render("pages/contact");
   });
 
-  app.get('/faq', function(req, res, next) {
-    res.render('pages/faq');
+  app.get("/faq", function(req, res, next) {
+    res.render("pages/faq");
   });
 
-  app.get('/branding', function(req, res, next) {
-    res.render('pages/branding_page');
+  app.get("/branding", function(req, res, next) {
+    res.render("pages/branding_page");
   });
 
   // Cultural Fit
-  app.get('/cultural_fit', (req, res, next) => {
-    res.render('pages/cultural_fit');
+  app.get("/cultural_fit", (req, res, next) => {
+    res.render("pages/cultural_fit");
   });
 
-
   //dashboard-category
-  app.get('/dashboard-category', function(req, res, next) {
-    res.render('dashboard-category', {position: req.query.category});
+  app.get("/dashboard-category", function(req, res, next) {
+    res.render("dashboard-category", { position: req.query.category });
   });
 
   //dashboard-position
-  app.get('/dashboard-position', function(req, res, next) {
-    res.render('dashboard-position', {position: req.query.position});
+  app.get("/dashboard-position", function(req, res, next) {
+    res.render("dashboard-position", { position: req.query.position });
   });
 
   //dashboard-player
-  app.get('/dashboard-player', function(req, res, next) {
-    res.render('dashboard-player', {id: req.query.id});
+  app.get("/dashboard-player", function(req, res, next) {
+    res.render("dashboard-player", { id: req.query.id });
   });
 
   // Player Assessment
-  app.get('/player_assessment', (req, res, next) => {
-    res.render('pages/player_assessment');
+  app.get("/player_assessment", (req, res, next) => {
+    res.render("pages/player_assessment");
   });
 
   // Login
-  app.get('/login', function(req, res, next) {
-    res.render('login');
+  app.get("/login", function(req, res, next) {
+    res.render("login");
   });
 
   // Register
-  app.get('/register', function(req, res, next) {
-    res.render('register');
+  app.get("/register", function(req, res, next) {
+    res.render("register");
   });
 
   // academic benchmark setup
-  app.get('/academicbench', function(req, res, next) {
-    res.render('academicbench', {team: "Cincinnati Bearcats"});
+  app.get("/academbench", function(req, res, next) {
+    res.render("academbench", {
+      team: "Cincinnati Bearcats",
+      positions: positionF
+    });
   });
 
   // emotional benchmark setup
-  app.get('/emotionalbench', function(req, res, next) {
-    res.render('emotionalbench', {team: "Cincinnati Bearcats"});
+  app.get("/emotionalbench", function(req, res, next) {
+    res.render("emotionalbench", {
+      team: "Cincinnati Bearcats",
+      positions: positionF
+    });
   });
 
   // core attributes benchmark setup
-  app.get('/corebench', function(req, res, next) {
-    res.render('corebench', {team: "Cincinnati Bearcats"});
+  app.get("/corebench", function(req, res, next) {
+    res.render("corebench", {
+      team: "Cincinnati Bearcats",
+      positions: positionF
+    });
   });
 
   // social benchmark setup
-  app.get('/socialbench', function(req, res, next) {
-    res.render('socialbench', {team: "Cincinnati Bearcats"});
+  app.get("/socialbench", function(req, res, next) {
+    res.render("socialbench", {
+      team: "Cincinnati Bearcats",
+      positions: positionF
+    });
   });
 
   // athletic benchmark setup
-  app.get('/athleticbench', function(req, res, next) {
-    res.render('athleticbench', {team: "Cincinnati Bearcats"});
+  app.get("/athleticbench", function(req, res, next) {
+    res.render("athleticbench", {
+      team: "Cincinnati Bearcats",
+      positions: positionF
+    });
   });
 
+  const positionF = [
+      "Defensive End",
+      "Defensive Tackle",
+      "Offensive Guard",
+      "Offensive Center",
+      "Offensive Tackle",
+      "Long Snapper",
+      "Running Backs",
+      "Tight Ends",
+      "Wide Receivers",
+      "Punter",
+      "Kicker",
+      "Corner Backs",
+      "Safety",
+      "Pro Style",
+      "Dual Threat",
+      "Inside Linebacker",
+      "Outside Linebacker",
+      "Middle Linebacker"
+    ];
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
   const athleticFields = [
-    'forty',
-    'vertical',
-    'carries',
-    'rushingYards',
-    'rushingTouchdowns',
-    'receptions',
-    'recievingYards',
-    'gamesPlayed',
-    'gamesStarted',
-    'height',
-    'weight',
-    'completions',
-    'passingYards',
-    'touchdownsThrown',
-    'interceptionsThrown',
-    'soloTackle',
-    'totalTackles',
-    'sacks',
-    'tacklesForLoss',
+    "forty",
+    "vertical",
+    "carries",
+    "rushingYards",
+    "rushingTouchdowns",
+    "receptions",
+    "recievingYards",
+    "gamesPlayed",
+    "gamesStarted",
+    "height",
+    "weight",
+    "completions",
+    "passingYards",
+    "touchdownsThrown",
+    "interceptionsThrown",
+    "soloTackle",
+    "totalTackles",
+    "sacks",
+    "tacklesForLoss"
   ];
 
   const emotionalIntelFields = [
-    'emotionalIntelBehavior',
-    'emotionalIntelReflection',
-    'emotionalIntelteamWork',
-    'emotionalIntelRelationships',
-    'emotionalIntelAccountability',
-    'emotionalIntelResponsibility',
-    'emotionalIntelIndependence',
+    "emotionalIntelBehavior",
+    "emotionalIntelReflection",
+    "emotionalIntelteamWork",
+    "emotionalIntelRelationships",
+    "emotionalIntelAccountability",
+    "emotionalIntelResponsibility",
+    "emotionalIntelIndependence"
   ];
 
-  const academicFields = [
-    'gpa',
-    'sat',
-    'act',
-    'coreGpa',
-  ];
+  const academicFields = ["gpa", "sat", "act", "coreGpa"];
 
   const socialProfileFields = [
-    'socialTwitterSentiment',
-    'twitterFollowers',
-    'socialInstagramSentiment',
-    'instagramFollowers',
-    'facebookSentiment',
-    'newsMediaCoverageSentiment',
-    'newsMedaiCoveragementions',
-    'newsMediacoverageNational',
-    'newsMediaCoverageRegional',
-    'pressReleaseSentiment',
-    'pressReleaseSentimentCounter',
+    "socialTwitterSentiment",
+    "twitterFollowers",
+    "socialInstagramSentiment",
+    "instagramFollowers",
+    "facebookSentiment",
+    "newsMediaCoverageSentiment",
+    "newsMedaiCoveragementions",
+    "newsMediacoverageNational",
+    "newsMediaCoverageRegional",
+    "pressReleaseSentiment",
+    "pressReleaseSentimentCounter"
   ];
 
   const coreAttributesFields = [
-    'coreAttributesCompetitiveness',
-    'coreAttributesPersistence',
-    'coreAttributesWorkethic',
-    'coreAttributesTeamOrientation',
-    'coreAttributesMastery',
+    "coreAttributesCompetitiveness",
+    "coreAttributesPersistence",
+    "coreAttributesWorkethic",
+    "coreAttributesTeamOrientation",
+    "coreAttributesMastery"
   ];
 
-  app.post('/api/dashboard-data', async function(req, res) {
-    const playerPosition = req.body.playerPosition != null ?
-      req.body.playerPosition.toLowerCase() :
-      null;
+  app.post("/api/dashboard-data", async function(req, res) {
+    const playerPosition =
+      req.body.playerPosition != null
+        ? req.body.playerPosition.toLowerCase()
+        : null;
     const type = req.body.type != null ? req.body.type : null;
     var response = {
-      playerPosition,
+      playerPosition
     };
 
-    const query = playerPosition ? {
-      'query': {
-        'term': {
-          'position': playerPosition,
-        },
-      },
-    } : {};
+    const query = playerPosition
+      ? {
+          query: {
+            term: {
+              position: playerPosition
+            }
+          }
+        }
+      : {};
 
     switch (type) {
-      case 'emotional_intel': {
+      case "emotional_intel": {
         // dashboard emotional intel chart
 
-        const emotionalIntelObj =
-              Object.assign(getAggregationObj(emotionalIntelFields), query);
+        const emotionalIntelObj = Object.assign(
+          getAggregationObj(emotionalIntelFields),
+          query
+        );
 
         // TODO: combine as single request if possible?
         const emotionalIntelPromise = client.search({
-          index: 'cincinnati',
-          body: emotionalIntelObj,
+          index: "cincinnati",
+          body: emotionalIntelObj
         });
 
         const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: emotionalIntelObj,
+          index: "baseline",
+          body: emotionalIntelObj
         });
 
         const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: emotionalIntelObj,
+          index: "cincinnati-benchmarks",
+          body: emotionalIntelObj
         });
 
         const [
           emotionalIntelResponse,
           agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          programBenchmarkResponse
         ] = await Promise.all([
           emotionalIntelPromise,
           agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          programBenchmarkPromise
         ]);
 
         response.emotionalIntel = emotionalIntelResponse.aggregations;
@@ -265,36 +301,38 @@ module.exports = (app) => {
 
         break;
       }
-      case 'athletic': {
+      case "athletic": {
         // dashboard athletic chart
 
-        const athleticObj =
-              Object.assign(getAggregationObj(athleticFields), query);
+        const athleticObj = Object.assign(
+          getAggregationObj(athleticFields),
+          query
+        );
 
         // TODO: combine as single request if possible?
         const athleticPromise = client.search({
-          index: 'cincinnati',
-          body: athleticObj,
+          index: "cincinnati",
+          body: athleticObj
         });
 
         const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: athleticObj,
+          index: "baseline",
+          body: athleticObj
         });
 
         const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: athleticObj,
+          index: "cincinnati-benchmarks",
+          body: athleticObj
         });
 
         const [
           athleticResponse,
           agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          programBenchmarkResponse
         ] = await Promise.all([
           athleticPromise,
           agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          programBenchmarkPromise
         ]);
 
         response.athletic = athleticResponse.aggregations;
@@ -303,68 +341,78 @@ module.exports = (app) => {
 
         break;
       }
-      case 'single_player': {
+      case "single_player": {
         // dashboard single player page
 
         const id = req.body.playerId;
 
-        const athleticObj =
-              Object.assign(getAggregationObj(athleticFields), query);
-        const emotionalIntelObj =
-              Object.assign(getAggregationObj(emotionalIntelFields), query);
-        const academicObj =
-              Object.assign(getAggregationObj(academicFields), query);
-        const socialProfileObj =
-              Object.assign(getAggregationObj(socialProfileFields), query);
-        const coreAttributesObj =
-              Object.assign(getAggregationObj(coreAttributesFields), query);
+        const athleticObj = Object.assign(
+          getAggregationObj(athleticFields),
+          query
+        );
+        const emotionalIntelObj = Object.assign(
+          getAggregationObj(emotionalIntelFields),
+          query
+        );
+        const academicObj = Object.assign(
+          getAggregationObj(academicFields),
+          query
+        );
+        const socialProfileObj = Object.assign(
+          getAggregationObj(socialProfileFields),
+          query
+        );
+        const coreAttributesObj = Object.assign(
+          getAggregationObj(coreAttributesFields),
+          query
+        );
 
         const programAthleticPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: athleticObj,
+          index: "cincinnati-benchmarks",
+          body: athleticObj
         });
         const programEmotionalIntelPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: emotionalIntelObj,
+          index: "cincinnati-benchmarks",
+          body: emotionalIntelObj
         });
         const programAcademicPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: academicObj,
+          index: "cincinnati-benchmarks",
+          body: academicObj
         });
         const programSocialProfilePromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: socialProfileObj,
+          index: "cincinnati-benchmarks",
+          body: socialProfileObj
         });
         const programCoreAttributesPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: coreAttributesObj,
+          index: "cincinnati-benchmarks",
+          body: coreAttributesObj
         });
 
         const agdiagoAthleticPromise = client.search({
-          index: 'baseline',
-          body: athleticObj,
+          index: "baseline",
+          body: athleticObj
         });
         const agdiagoEmotionalIntelPromise = client.search({
-          index: 'baseline',
-          body: emotionalIntelObj,
+          index: "baseline",
+          body: emotionalIntelObj
         });
         const agdiagoAcademicPromise = client.search({
-          index: 'baseline',
-          body: academicObj,
+          index: "baseline",
+          body: academicObj
         });
         const agdiagoSocialProfilePromise = client.search({
-          index: 'baseline',
-          body: socialProfileObj,
+          index: "baseline",
+          body: socialProfileObj
         });
         const agdiagoCoreAttributesPromise = client.search({
-          index: 'baseline',
-          body: coreAttributesObj,
+          index: "baseline",
+          body: coreAttributesObj
         });
 
         const playerPromise = client.get({
-          index: 'cincinnati',
-          type: '_all',
-          id: id,
+          index: "cincinnati",
+          type: "_all",
+          id: id
         });
 
         const [
@@ -378,7 +426,7 @@ module.exports = (app) => {
           agdiagoAcademicResponse,
           agdiagoSocialProfileResponse,
           agdiagoCoreAttributesResponse,
-          playerResponse,
+          playerResponse
         ] = await Promise.all([
           programAthleticPromise,
           programEmotionalIntelPromise,
@@ -390,12 +438,15 @@ module.exports = (app) => {
           agdiagoAcademicPromise,
           agdiagoSocialProfilePromise,
           agdiagoCoreAttributesPromise,
-          playerPromise,
+          playerPromise
         ]);
 
-        const player = Object.assign({
-          id: id,
-        }, playerResponse._source);
+        const player = Object.assign(
+          {
+            id: id
+          },
+          playerResponse._source
+        );
 
         const athleticScore = calculateScore(
           player,
@@ -424,80 +475,83 @@ module.exports = (app) => {
           emotionalIntel: emotionalIntelScore,
           academic: academicScore,
           socialProfile: socialProfileScore,
-          coreAttributes: coreAttributesScore,
+          coreAttributes: coreAttributesScore
         };
 
         response.programScores = {
           athletic: await fetchBenchmarkScore(
-            'cincinnati',
+            "cincinnati",
             query,
             mapAggsToScores(programAthleticResponse.aggregations)
           ),
           emotionalIntel: await fetchBenchmarkScore(
-            'cincinnati',
+            "cincinnati",
             query,
             mapAggsToScores(programEmotionalIntelResponse.aggregations)
           ),
           academic: await fetchBenchmarkScore(
-            'cincinnati',
+            "cincinnati",
             query,
             mapAggsToScores(programAcademicResponse.aggregations)
           ),
           socialProfile: await fetchBenchmarkScore(
-            'cincinnati',
+            "cincinnati",
             query,
             mapAggsToScores(programSocialProfileResponse.aggregations)
           ),
           coreAttributes: await fetchBenchmarkScore(
-            'cincinnati',
+            "cincinnati",
             query,
             mapAggsToScores(programCoreAttributesResponse.aggregations)
-          ),
+          )
         };
 
         response.agdiagoScores = {
           athletic: await fetchBenchmarkScore(
-            'baseline',
+            "baseline",
             query,
             mapAggsToScores(agdiagoAthleticResponse.aggregations)
           ),
           emotionalIntel: await fetchBenchmarkScore(
-            'baseline',
+            "baseline",
             query,
             mapAggsToScores(agdiagoEmotionalIntelResponse.aggregations)
           ),
           academic: await fetchBenchmarkScore(
-            'baseline',
+            "baseline",
             query,
             mapAggsToScores(agdiagoAcademicResponse.aggregations)
           ),
           socialProfile: await fetchBenchmarkScore(
-            'baseline',
+            "baseline",
             query,
             mapAggsToScores(agdiagoSocialProfileResponse.aggregations)
           ),
           coreAttributes: await fetchBenchmarkScore(
-            'baseline',
+            "baseline",
             query,
             mapAggsToScores(agdiagoCoreAttributesResponse.aggregations)
-          ),
+          )
         };
 
         break;
       }
-      case 'players_data': {
+      case "players_data": {
         // dashboard players table modal
 
         const field = req.body.field;
 
-        const playersObj = Object.assign({
-          'size': 10000,
-          '_source': ['fname', 'lname', 'position', field],
-        }, query);
+        const playersObj = Object.assign(
+          {
+            size: 10000,
+            _source: ["fname", "lname", "position", field]
+          },
+          query
+        );
 
         const playersResponse = await client.search({
-          index: 'cincinnati',
-          body: playersObj,
+          index: "cincinnati",
+          body: playersObj
         });
 
         response.players = playersResponse.hits.hits.map(hit => ({
@@ -505,40 +559,42 @@ module.exports = (app) => {
           fname: hit._source.fname,
           lname: hit._source.lname,
           position: hit._source.position,
-          score: hit._source[field],
+          score: hit._source[field]
         }));
         break;
       }
-      case 'core_attributes': {
+      case "core_attributes": {
         // dashboard core attributes chart
 
-        const coreAttributesObj =
-              Object.assign(getAggregationObj(coreAttributesFields), query);
+        const coreAttributesObj = Object.assign(
+          getAggregationObj(coreAttributesFields),
+          query
+        );
 
         // TODO: combine as single request if possible?
         const coreAttributesPromise = client.search({
-          index: 'cincinnati',
-          body: coreAttributesObj,
+          index: "cincinnati",
+          body: coreAttributesObj
         });
 
         const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: coreAttributesObj,
+          index: "baseline",
+          body: coreAttributesObj
         });
 
         const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: coreAttributesObj,
+          index: "cincinnati-benchmarks",
+          body: coreAttributesObj
         });
 
         const [
           coreAttributesResponse,
           agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          programBenchmarkResponse
         ] = await Promise.all([
           coreAttributesPromise,
           agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          programBenchmarkPromise
         ]);
 
         response.coreAttributes = coreAttributesResponse.aggregations;
@@ -547,35 +603,37 @@ module.exports = (app) => {
 
         break;
       }
-      case 'academic': {
+      case "academic": {
         // dashboard academic chart
-        var academicObj =
-            Object.assign(getAggregationObj(academicFields), query);
+        var academicObj = Object.assign(
+          getAggregationObj(academicFields),
+          query
+        );
 
         // TODO: combine as single request if possible?
         const academicPromise = client.search({
-          index: 'cincinnati',
-          body: academicObj,
+          index: "cincinnati",
+          body: academicObj
         });
 
         const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: academicObj,
+          index: "baseline",
+          body: academicObj
         });
 
         const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: academicObj,
+          index: "cincinnati-benchmarks",
+          body: academicObj
         });
 
         const [
           academicResponse,
           agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          programBenchmarkResponse
         ] = await Promise.all([
           academicPromise,
           agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          programBenchmarkPromise
         ]);
 
         response.academic = academicResponse.aggregations;
@@ -584,35 +642,37 @@ module.exports = (app) => {
 
         break;
       }
-      case 'social_profile': {
+      case "social_profile": {
         // dashboard social profile chart
-        var socialProfileObj =
-            Object.assign(getAggregationObj(socialProfileFields), query);
+        var socialProfileObj = Object.assign(
+          getAggregationObj(socialProfileFields),
+          query
+        );
 
         // TODO: combine as single request if possible?
         const socialProfilePromise = client.search({
-          index: 'cincinnati',
-          body: socialProfileObj,
+          index: "cincinnati",
+          body: socialProfileObj
         });
 
         const agdiagoBenchmarkPromise = client.search({
-          index: 'baseline',
-          body: socialProfileObj,
+          index: "baseline",
+          body: socialProfileObj
         });
 
         const programBenchmarkPromise = client.search({
-          index: 'cincinnati-benchmarks',
-          body: socialProfileObj,
+          index: "cincinnati-benchmarks",
+          body: socialProfileObj
         });
 
         const [
           socialProfileResponse,
           agdiagoBenchmarkResponse,
-          programBenchmarkResponse,
+          programBenchmarkResponse
         ] = await Promise.all([
           socialProfilePromise,
           agdiagoBenchmarkPromise,
-          programBenchmarkPromise,
+          programBenchmarkPromise
         ]);
 
         response.socialProfile = socialProfileResponse.aggregations;
@@ -621,79 +681,83 @@ module.exports = (app) => {
 
         break;
       }
-      case 'cultural_fit': {
+      case "cultural_fit": {
         // TODO: use actual cultural fit
-        const culturalFitField = 'weight';
+        const culturalFitField = "weight";
 
         // dashboard cultural fit chart
-        const culturalFitBaselineObj = Object.assign({
-          'size': 0,
-          'aggs': {
-            'percCulturalFit': {
-              'percentiles': {
-                'field': culturalFitField,
-                'keyed': false,
-                'percents': [
-                  45,
-                  75,
-                ],
-              },
-            },
+        const culturalFitBaselineObj = Object.assign(
+          {
+            size: 0,
+            aggs: {
+              percCulturalFit: {
+                percentiles: {
+                  field: culturalFitField,
+                  keyed: false,
+                  percents: [45, 75]
+                }
+              }
+            }
           },
-        }, query);
+          query
+        );
 
         const culturalFitBaselineResponse = await client.search({
-          index: 'baseline',
-          body: culturalFitBaselineObj,
+          index: "baseline",
+          body: culturalFitBaselineObj
         });
-        const [percLowFit, percMedFit] =
-              culturalFitBaselineResponse.aggregations.percCulturalFit.values;
-        const percentiles = [{
-          percentileStart: 0,
-          percentileEnd: 44,
-        }, {
-          percentileStart: 45,
-          percentileEnd: 74,
-        }, {
-          percentileStart: 75,
-          percentileEnd: 100,
-        }];
+        const [
+          percLowFit,
+          percMedFit
+        ] = culturalFitBaselineResponse.aggregations.percCulturalFit.values;
+        const percentiles = [
+          {
+            percentileStart: 0,
+            percentileEnd: 44
+          },
+          {
+            percentileStart: 45,
+            percentileEnd: 74
+          },
+          {
+            percentileStart: 75,
+            percentileEnd: 100
+          }
+        ];
 
         const culturalFitTeamObj = {
-          'aggs': {
-            'rangeCulturalFit': {
-              'range': {
-                'field': culturalFitField,
-                'ranges': [
-                  {'to': percLowFit.value},
-                  {'from': percLowFit.value, 'to': percMedFit.value},
-                  {'from': percMedFit.value},
-                ],
-              },
-            },
-          },
+          aggs: {
+            rangeCulturalFit: {
+              range: {
+                field: culturalFitField,
+                ranges: [
+                  { to: percLowFit.value },
+                  { from: percLowFit.value, to: percMedFit.value },
+                  { from: percMedFit.value }
+                ]
+              }
+            }
+          }
         };
 
         const culturalFitTeamResponse = await client.search({
-          index: 'cincinnati',
-          body: culturalFitTeamObj,
+          index: "cincinnati",
+          body: culturalFitTeamObj
         });
 
-        response.culturalFit = culturalFitTeamResponse
-          .aggregations
-          .rangeCulturalFit
-          .buckets
-          .map((bucket, i) => ({
+        response.culturalFit = culturalFitTeamResponse.aggregations.rangeCulturalFit.buckets.map(
+          (bucket, i) => ({
             rangeStart: bucket.from || 0,
             rangeEnd: bucket.to || 100,
             count: bucket.doc_count,
             percentileStart: percentiles[i].percentileStart,
-            percentileEnd: percentiles[i].percentileEnd,
-          }));
+            percentileEnd: percentiles[i].percentileEnd
+          })
+        );
 
         break;
       }
-    };
+    }
 
     return res.json(response);
   });
@@ -702,14 +766,14 @@ module.exports = (app) => {
 function getAggregationObj(fields) {
   const obj = {
     size: 0,
-    aggs: {},
+    aggs: {}
   };
 
   fields.forEach(field => {
     obj.aggs[field] = {
       avg: {
-        field,
-      },
+        field
+      }
     };
   });
 
@@ -727,16 +791,16 @@ function calculateScore(player, programAggs) {
   });
   const totalNonNull = scores.filter(score => score != null).length;
   if (!totalNonNull) return null;
-  const score = scores.reduce((acc, curr) => curr == null ? acc : acc + curr);
-  return 100 * score / totalNonNull;
+  const score = scores.reduce((acc, curr) => (curr == null ? acc : acc + curr));
+  return (100 * score) / totalNonNull;
 }
 
 const programScoreWeights = {
   athletic: 0.55,
   emotionalIntel: 0.05,
-  academic: 0.10,
+  academic: 0.1,
   socialProfile: 0.05,
-  coreAttributes: 0.25,
+  coreAttributes: 0.25
 };
 
 function calculateOverallScore(scores) {
@@ -752,17 +816,19 @@ function mapAggsToScores(aggs) {
 }
 
 async function fetchBenchmarkScore(index, query, programScores) {
-  const nonNullKeys = Object.keys(programScores)
-    .filter(field => programScores[field] != null);
+  const nonNullKeys = Object.keys(programScores).filter(
+    field => programScores[field] != null
+  );
   if (!nonNullKeys.length) return null;
-  const fetchObj = Object.assign({
-    'size': 0,
-    'aggs': {
-      'benchmarkScore': {
-        'percentiles': {
-          'script': {
-            'lang': 'painless',
-            'source': `
+  const fetchObj = Object.assign(
+    {
+      size: 0,
+      aggs: {
+        benchmarkScore: {
+          percentiles: {
+            script: {
+              lang: "painless",
+              source: `
 float score = 0;
 for (int i = 0; i < params['fields'].length; ++i) {
   def field = params['fields'][i];
@@ -774,26 +840,25 @@ for (int i = 0; i < params['fields'].length; ++i) {
 }
 return score / (float)params['fields'].length;
 `,
-            'params': {
-              'fields': nonNullKeys,
-              'scores': nonNullKeys.map(field => programScores[field]),
+              params: {
+                fields: nonNullKeys,
+                scores: nonNullKeys.map(field => programScores[field])
+              }
             },
-          },
-          'keyed': false,
-          'percents': [
-            75,
-          ],
-        },
-      },
+            keyed: false,
+            percents: [75]
+          }
+        }
+      }
     },
-  }, query);
+    query
+  );
 
   const fetchResponse = await client.search({
     index,
-    body: fetchObj,
+    body: fetchObj
   });
 
-  const [agg] =
-        fetchResponse.aggregations.benchmarkScore.values;
+  const [agg] = fetchResponse.aggregations.benchmarkScore.values;
   return agg.value * 100;
 }

@@ -17,38 +17,59 @@
       <!-- begin panel -->
       <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
         <div class="panel-heading">
-          <h4 class="panel-title">Academic attributes benchmark input</h4>
+          <h4 class="panel-title">Core attributes benchmark input</h4>
         </div>
         <div class="panel-body">
           <form id="coreform">
             <div class="form-group row m-b-15">
-              <label class="col-form-label col-md-3" for="competitiveness">Competitiveness Benchmark</label>
+              <label class="col-form-label col-md-3" for="pos">Position: </label>
               <div class="col-md-9">
+                <select class="form-control" id="pos"><% for(let i=0; i<positions.length; i++) { %><option><%= positions[i] %></option><% } -%></select>
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="competitiveness">Competitiveness Benchmark</label>
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Competitiveness" id="competitiveness" />
+              </div>
+              <div class="col-md-4">
+                <input class="form-control m-b-5" type="text" placeholder="Competitiveness Factor" id="competitivenessF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="mastery">Mastery Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Mastery" id="mastery" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Mastery Factor" id="masteryF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="persistence">Persistence Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Persistence" id="persistence" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Persistence Factor" id="persistenceF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="teamOrientation">Team Orientation Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Team Orientation" id="teamOrientation" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Team Orientation Factor" id="teamOrientationF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="workEthic">Work Ethic Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Work Ethic" id="workEthic" />
+              </div>
+              <div class="col-md-4">
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic Factor" id="workEthicF" />
               </div>
             </div>
             <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
@@ -70,16 +91,28 @@
 
   function submit() {
     let res = [];
+    let pos = document.getElementById("pos").value;
     let competitivenessVal = document.getElementById("competitiveness").value;
+    let competitivenessFVal = document.getElementById("competitivenessF").value;
     let masteryVal = document.getElementById("mastery").value;
+    let masteryFVal = document.getElementById("masteryF").value;
     let persistenceVal = document.getElementById("persistence").value;
+    let persistenceFVal = document.getElementById("persistenceF").value;
     let teamOrientationVal = document.getElementById("teamOrientation").value;
+    let teamOrientationFVal = document.getElementById("teamOrientationF").value;
     let workEthicVal = document.getElementById("workEthic").value;
+    let workEthicFVal = document.getElementById("workEthicF").value;
+    res.push(pos);
     res.push(competitivenessVal);
+    res.push(competitivenessFVal);
     res.push(masteryVal);
+    res.push(masteryFVal);
     res.push(persistenceVal);
+    res.push(persistenceFVal);
     res.push(teamOrientationVal);
+    res.push(teamOrientationFVal);
     res.push(workEthicVal);
+    res.push(workEthicFVal);
     alert(res);
   }
 </script>

@@ -21,30 +21,48 @@
         <div class="panel-body">
           <form id="academicform">
             <div class="form-group row m-b-15">
-              <label class="col-form-label col-md-3" for="sat">SAT attributes needed</label>
+              <label class="col-form-label col-md-3" for="pos">Position: </label>
               <div class="col-md-9">
+                <select class="form-control" id="pos"><% for(let i=0; i<positions.length; i++) { %><option><%= positions[i] %></option><% } -%></select>
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="sat">SAT attributes needed</label>
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="SAT" id="sat" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="SAT Factor" id="satF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="act">ACT attributes needed</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="ACT" id="act" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="ACT Factor" id="actF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="gpa">GPA attributes needed</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="GPA" id="gpa" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="GPA Factor" id="gpaF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="coreGpa">CoreGPA attributes needed</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="coreGpa" id="coreGpa" />
               </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="coreGpa Factor" id="coreGpaF" />
+              </div>
             </div>
-            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
+            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Submit"></div>
           </form>
           <!-- <div class="singlepar">
             <div class="formf"><input class="form-control" type="text" id="sat"></div>
@@ -80,14 +98,24 @@
 
   function submit() {
     let res = [];
+    let pos = document.getElementById("pos").value;
     let satVal = document.getElementById("sat").value;
+    let satFVal = document.getElementById("satF").value;
     let actVal = document.getElementById("act").value;
+    let actFVal = document.getElementById("actF").value;
     let gpaVal = document.getElementById("gpa").value;
+    let gpaFVal = document.getElementById("gpaF").value;
     let coreGpaVal = document.getElementById("coreGpa").value;
+    let coreGpaFVal = document.getElementById("coreGpaF").value;
+    res.push(pos);
     res.push(satVal);
+    res.push(satFVal);
     res.push(actVal);
+    res.push(actFVal);
     res.push(gpaVal);
+    res.push(gpaFVal);
     res.push(coreGpaVal);
+    res.push(coreGpaFVal);
     alert(res);
   }
 </script>

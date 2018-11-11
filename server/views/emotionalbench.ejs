@@ -17,50 +17,77 @@
       <!-- begin panel -->
       <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
         <div class="panel-heading">
-          <h4 class="panel-title">Academic attributes benchmark input</h4>
+          <h4 class="panel-title">Emotional Intel attributes benchmark input</h4>
         </div>
         <div class="panel-body">
           <form id="emotionalform">
             <div class="form-group row m-b-15">
-              <label class="col-form-label col-md-3" for="emotionalIntelAccountability">Emotional Intel Accountability Benchmark</label>
+              <label class="col-form-label col-md-3" for="pos">Position: </label>
               <div class="col-md-9">
+                <select class="form-control" id="pos"><% for(let i=0; i<positions.length; i++) { %><option><%= positions[i] %></option><% } -%></select>
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="emotionalIntelAccountability">Emotional Intel Accountability Benchmark</label>
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Accountability" id="emotionalIntelAccountability" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Accountability Factor" id="emotionalIntelAccountabilityF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelBehavior">Emotional Intel Behavior Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Behavior" id="emotionalIntelBehavior" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Behavior Factor" id="emotionalIntelBehaviorF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelIndependence">Emotional Intel Independence Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Independence" id="emotionalIntelIndependence" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Independence Factor" id="emotionalIntelIndependenceF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelReflection">Emotional Intel Reflection Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Reflection" id="emotionalIntelReflection" />
               </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Reflection Factor" id="emotionalIntelReflectionF" />
+                </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelRelationships">Emotional Intel Relationships Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Relationships" id="emotionalIntelRelationships" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Relationships Factor" id="emotionalIntelRelationshipsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelResponsibility">Emotional Intel Responsibility Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Responsibility" id="emotionalIntelResponsibility" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel Responsibility Factor" id="emotionalIntelResponsibilityF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="emotionalIntelTeamWork">Emotional Intel teamWork Benchmark</label>
-              <div class="col-md-9">
+              <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Emotional Intel teamWork" id="emotionalIntelTeamWork" />
+              </div>
+              <div class="col-md-4">
+                  <input class="form-control m-b-5" type="text" placeholder="Emotional Intel teamWork Factor" id="emotionalIntelTeamWorkF" />
               </div>
             </div>
             <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Done"></div>
@@ -99,20 +126,36 @@
 
   function submit() {
     let res = [];
+    let pos = document.getElementById("pos").value;
     let emotionalIntelAccountabilityVal = document.getElementById("emotionalIntelAccountability").value;
+    let emotionalIntelAccountabilityFVal = document.getElementById("emotionalIntelAccountabilityF").value;
     let emotionalIntelBehaviorVal = document.getElementById("emotionalIntelBehavior").value;
+    let emotionalIntelBehaviorFVal = document.getElementById("emotionalIntelBehaviorF").value;
     let emotionalIntelIndependenceVal = document.getElementById("emotionalIntelIndependence").value;
+    let emotionalIntelIndependenceFVal = document.getElementById("emotionalIntelIndependenceF").value;
     let emotionalIntelReflectionVal = document.getElementById("emotionalIntelReflection").value;
+    let emotionalIntelReflectionFVal = document.getElementById("emotionalIntelReflectionF").value;
     let emotionalIntelRelationshipsVal = document.getElementById("emotionalIntelRelationships").value;
+    let emotionalIntelRelationshipsFVal = document.getElementById("emotionalIntelRelationshipsF").value;
     let emotionalIntelResponsibilityVal = document.getElementById("emotionalIntelResponsibility").value;
+    let emotionalIntelResponsibilityFVal = document.getElementById("emotionalIntelResponsibilityF").value;
     let emotionalIntelTeamWorkVal = document.getElementById("emotionalIntelTeamWork").value;
+    let emotionalIntelTeamWorkFVal = document.getElementById("emotionalIntelTeamWorkF").value;
+    res.push(pos);
     res.push(emotionalIntelAccountabilityVal);
+    res.push(emotionalIntelAccountabilityFVal);
     res.push(emotionalIntelBehaviorVal);
+    res.push(emotionalIntelBehaviorFVal);
     res.push(emotionalIntelIndependenceVal);
+    res.push(emotionalIntelIndependenceFVal);
     res.push(emotionalIntelReflectionVal);
+    res.push(emotionalIntelReflectionFVal);
     res.push(emotionalIntelRelationshipsVal);
+    res.push(emotionalIntelRelationshipsFVal);
     res.push(emotionalIntelResponsibilityVal);
+    res.push(emotionalIntelResponsibilityFVal);
     res.push(emotionalIntelTeamWorkVal);
+    res.push(emotionalIntelTeamWorkFVal);
     alert(res);
   }
 </script>
