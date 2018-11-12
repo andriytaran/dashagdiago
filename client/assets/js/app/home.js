@@ -1268,7 +1268,7 @@ var Dashboard = (function() {
   return {
     //main function
     init: function() {
-      handleDashboardGritterNotification();
+      // handleDashboardGritterNotification();
       // HandleDropDownAlert("#defensiveLineDE");
       // HandleDropDownAlert("#defensiveLineDT");
       // HandleDropDownAlert("#defensiveLineOG");
