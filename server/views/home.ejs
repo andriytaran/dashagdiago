@@ -18,7 +18,7 @@
             <div class="stats-icon"><i class="fa fa-child"></i></div>
             <div class="stats-info">
               <h4>TOTAL AGDIAGO PLAYERS</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.overallCount %><%}%></p>
+              <p><%= overallCount %></p>
             </div>
             <div class="stats-link">
               <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
@@ -32,7 +32,7 @@
             <div class="stats-icon"><i class="fa fa-link"></i></div>
             <div class="stats-info">
               <h4>Defense</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.defenseCount %><%}%>%</p>
+              <p><%= defensePercent %>%</p>
             </div>
             <div class="stats-link">
               <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
@@ -46,7 +46,7 @@
             <div class="stats-icon"><i class="fa fa-users"></i></div>
             <div class="stats-info">
               <h4>Offensive</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=response.offenseCount %><%}%>%</p>
+              <p><%= offensePercent %>%</p>
             </div>
             <div class="stats-link">
               <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
@@ -60,7 +60,7 @@
             <div class="stats-icon"><i class="fa fa-users"></i></div>
             <div class="stats-info">
               <h4>Average score</h4>
-              <p><% if ( typeof response !== 'undefined' ) { %><%=23 %><%}%>%</p>
+              <p><% if (overallScore) { %><%= overallScore %>%<% } else { %>Not available<% } %></p>
             </div>
             <div class="stats-link">
               <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>

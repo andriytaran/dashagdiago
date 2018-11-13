@@ -63,18 +63,17 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     bodywrap.setAttribute("aria-labelledby", headingid);
     bodywrap.setAttribute("data-parent", "#accordionExample");
     $(bodywrap).one('show.bs.collapse', function(){
-      let urlParams = getUrlParameters();
       switch (d.field){
-      case "overallScore":
-      return handleCoreAttributes(urlParams.position);
-      case "overallAcademic":
-      return handleAcademicAttributes(urlParams.position);
-      case "overallEmotional":
-      return handleEmotionalIntelAttributes(urlParams.position);
-      case "overallAthletic":
-      return handleAthleticAttributes(urlParams.position);
-      case "overallSocial":
-      return handleSocialProfileAttributes(urlParams.position);
+      case "coreAttributes":
+      return handleCoreAttributes(position);
+      case "academic":
+      return handleAcademicAttributes(position);
+      case "emotionalIntel":
+      return handleEmotionalIntelAttributes(position);
+      case "athletic":
+      return handleAthleticAttributes(position);
+      case "socialProfile":
+      return handleSocialProfileAttributes(position);
       }
     });
     let body = creatediv(bodywrap, "card-body", d.contentId);

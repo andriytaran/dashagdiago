@@ -43,3 +43,11 @@ For more options see
 ```sh
 npm run converter -- --help
 ```
+
+# debug (with VSCode)
+
+```sh
+npm run debug
+```
+
+In VSCode, use "Attach" debug configuration.
