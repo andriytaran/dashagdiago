@@ -1,6 +1,16 @@
 {
-  "db": {
-    "name": "db",
+  "dbdev": {
+    "name": "dbdev",
     "connector": "memory"
+  },
+  "db": {
+    "url": "mongodb://agdiago:agdiago4321@candidate.11.mongolayer.com:10692,candidate.2.mongolayer.com:10175/agdiago?replicaSet=set-54e405af38f33c2dec00002d",
+    "name": "db",
+    "connector": "mongodb"
+  },
+  "sendgrid": {
+    "name": "sendgrid",
+    "connector": "loopback-connector-sendgrid",
+    "api_key": "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"
   }
 }

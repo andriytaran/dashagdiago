@@ -13,12 +13,25 @@ const cors = require('cors');
 
 app.use(cors());
 
+// Passport configurators..
+var loopbackPassport = require('loopback-component-passport');
+var PassportConfigurator = loopbackPassport.PassportConfigurator;
+var passportConfigurator = new PassportConfigurator(app);
 /*
  * body-parser is a piece of express middleware that
  *   reads a form's input and stores it as a javascript
  *   object accessible through `req.body`
  *
  */
+
+ var config = {};
+try {
+  config = require('../providers.json');
+} catch (err) {
+  console.trace(err);
+  process.exit(1); // fatal
+}
+
 const bodyParser = require('body-parser');
 
 // configure body parser
@@ -44,6 +57,10 @@ app.middleware('parse', bodyParser.json());
 // to support URL-encoded bodies
 app.middleware('parse', bodyParser.urlencoded({
   extended: true,
+}));
+
+app.middleware('auth', loopback.token({
+  model: app.models.accessToken,
 }));
 
 app.middleware('session:before', cookieParser(app.get('cookieSecret')));
