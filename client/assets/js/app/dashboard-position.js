@@ -1,15 +1,65 @@
-var handleCoreAttributes = (function () {
+var handleCulturalFit = (function() {
   "use strict";
-  // function getrange(){
-  //   if (value < 100 && ftick < 100 && stick < 100){return "[0 - 100]";}
-  //   if (value < 1000 && ftick < 1000 && stick < 1000){return "[0 - 1000]";}
-  //   if (value < 10000 && ftick < 10000 && stick < 10000){return "[0 - 10000]";}
-  // }
 
-  // function getbarvalue(a) {
-  //   if (a == "[0 - 100]"){return "percent";}
-  //   else {return "number";}
-  // }
+  function getCulturalFitData(response) {
+    debugger;
+    return [
+      {
+        label: "Low Fit",
+        value: response.groups[0].count,
+        start: response.groups[0].percentileStart,
+        end: response.groups[0].percentileEnd
+      },
+      {
+        label: "Med Fit",
+        value: response.groups[1].count,
+        start: response.groups[1].percentileStart,
+        end: response.groups[1].percentileEnd
+      },
+      {
+        label: "Top Fit",
+        value: response.groups[2].count,
+        start: response.groups[2].percentileStart,
+        end: response.groups[2].percentileEnd
+      }
+    ];
+  }
+
+  function getTooltip(data) {
+    return (
+      data.label +
+      " (" +
+      data.start +
+      " - " +
+      data.end +
+      " percentile)" +
+      " = " +
+      data.value +
+      " players"
+    );
+  }
+
+  return function handleCulturalFit(position) {
+    if ($("#cultural-fit").length !== 0) {
+      $.post(
+        "/api/dashboard-data",
+        {
+          type: "percentile_groups",
+          position: position,
+          attribute: "culturalFit"
+        },
+        function(response) {
+          const data = getCulturalFitData(response);
+          drawpiechart(data, "#cultural-fit", getTooltip);
+        },
+        "json"
+      );
+    }
+  };
+})();
+
+var handleCoreAttributes = (function() {
+  "use strict";
   function getCoreAttributesData(response) {
     let res = [
       {
@@ -85,29 +135,30 @@ var handleCoreAttributes = (function () {
     }
   }
 
-  return function handleCoreAttributes(id) {
+  return function handleCoreAttributes(position) {
     if ($("#core-attributes").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
           type: "pillar",
           pillar: "coreAttributes",
-          id: id
+          position: position
         },
-        function (response) {
+        function(response) {
           const data = getCoreAttributesData(response);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
-          if (data.every(checkifnull)) {
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("core-attributes");
             elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#core-attributes",
-              undefined,
+              position,
               getTooltip,
               undefined,
             );
@@ -119,7 +170,7 @@ var handleCoreAttributes = (function () {
   };
 })();
 
-var handleAcademicAttributes = (function () {
+var handleAcademicAttributes = (function() {
   "use strict";
 
   function getAcademicAttributesData(response) {
@@ -166,7 +217,8 @@ var handleAcademicAttributes = (function () {
       }
     ];
     function sortByValue(a, b) { return b.value - a.value; }
-    return res.sort(sortByValue)
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(field) {
@@ -180,29 +232,30 @@ var handleAcademicAttributes = (function () {
     }
   }
 
-  return function handleAcademicAttributes(id) {
+  return function handleAcademicAttributes(position) {
     if ($("#academic").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
           type: "pillar",
           pillar: "academic",
-          id: id
+          position: position
         },
-        function (response) {
+        function(response) {
           const data = getAcademicAttributesData(response);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
-          if (data.every(checkifnull)) {
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("academic");
             elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#academic",
-              undefined,
+              position,
               getTooltip,
               undefined,
             );
@@ -214,7 +267,7 @@ var handleAcademicAttributes = (function () {
   };
 })();
 
-var handleSocialProfileAttributes = (function () {
+var handleSocialProfileAttributes = (function() {
   "use strict";
 
   function getSocialProfileAttributesData(response) {
@@ -362,29 +415,30 @@ var handleSocialProfileAttributes = (function () {
     }
   }
 
-  return function handleSocialProfileAttributes(id) {
+  return function handleSocialProfileAttributes(position) {
     if ($("#social-profile").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
           type: "pillar",
           pillar: "socialProfile",
-          id: id
+          position: position
         },
-        function (response) {
+        function(response) {
           const data = getSocialProfileAttributesData(response);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
-          if (data.every(checkifnull)) {
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("social-profile");
             elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#social-profile",
-              undefined,
+              position,
               getTooltip,
               undefined
             );
@@ -396,7 +450,7 @@ var handleSocialProfileAttributes = (function () {
   };
 })();
 
-var handleEmotionalIntelAttributes = (function () {
+var handleEmotionalIntelAttributes = (function() {
   "use strict";
 
   function getEmotionalIntelAttributesData(response) {
@@ -498,29 +552,30 @@ var handleEmotionalIntelAttributes = (function () {
     }
   }
 
-  return function handleEmotionalIntelAttributes(id) {
+  return function handleEmotionalIntelAttributes(position) {
     if ($("#emotional-intel").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
           type: "pillar",
           pillar: "emotionalIntel",
-          id: id
+          position: position
         },
-        function (response) {
+        function(response) {
           const data = getEmotionalIntelAttributesData(response);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
-          if (data.every(checkifnull)) {
+          if (data.every(checkifnull))
+           {
             let elem = document.getElementById("emotional-intel");
             elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#emotional-intel",
-              undefined,
+              position,
               getTooltip,
               undefined
             );
@@ -532,7 +587,7 @@ var handleEmotionalIntelAttributes = (function () {
   };
 })();
 
-var handleAthleticAttributes = (function () {
+var handleAthleticAttributes = (function() {
   "use strict";
   function getAthleticAttributesData(response, playerPosition) {
     function getCarries() {
@@ -766,21 +821,21 @@ var handleAthleticAttributes = (function () {
     let res;
     switch (playerPosition) {
       case "RB":
-        res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getReceptions(), getRecievingYards(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-        break;
+      res = [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getReceptions(),getRecievingYards(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      break;
       case "QBPRO":
       case "QBDUAL":
-        res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getCompletions(), getPassingYards(), getTouchdownsThrown(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-        break;
+      res = [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getCompletions(),getPassingYards(),getTouchdownsThrown(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      break;
       case "DE":
       case "DT":
-        res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-        break;
+      res = [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      break;
       case "ILB":
       case "OLB":
       case "MLB":
-        res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-        break;
+      res = [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+      break;
       default:
         res = [
           getForty(),
@@ -828,20 +883,20 @@ var handleAthleticAttributes = (function () {
     }
   }
 
-  return function handleAthleticAttributes(id) {
+  return function handleAthleticAttributes(position) {
     if ($("#athletic").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
           type: "pillar",
           pillar: "athletic",
-          id: id
+          position: position
         },
-        function (response) {
+        function(response) {
           const data = getAthleticAttributesData(response, window.position);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
           if ((data.every(checkifnull))
           ) {
@@ -851,7 +906,7 @@ var handleAthleticAttributes = (function () {
             drawbarchart(
               data,
               "#athletic",
-              undefined,
+              position,
               getTooltip,
               undefined
             );
@@ -863,21 +918,9 @@ var handleAthleticAttributes = (function () {
   };
 })();
 
-var handleSinglePlayer = (function () {
+var handleDashboardPosition = (function() {
   "use strict";
-  function getSinglePlayerData(response) {
-    function getBasicPlayerInfo() {
-      return {
-        fname: response.player.fname,
-        lname: response.player.lname,
-        hometown: response.player.hometown,
-        school: response.player.school,
-        team: response.player.teamName,
-        coach: response.player.coach,
-        scoutdate: response.player.scoutdate,
-        university: response.player.university,
-      };
-    }
+  function getDashboardData(response) {
     function getAthletic() {
       return {
         value: response.scores.player.athletic,
@@ -939,16 +982,13 @@ var handleSinglePlayer = (function () {
       };
     }
 
-    return {
-      playerInfo: getBasicPlayerInfo(),
-      playerAttributes: [
-        getAthletic(),
-        getEmotionalIntel(),
-        getAcademic(),
-        getSocialProfile(),
-        getCoreAttributes()
-      ]
-    };
+    return [
+      getAthletic(),
+      getEmotionalIntel(),
+      getAcademic(),
+      getSocialProfile(),
+      getCoreAttributes()
+    ];
   }
 
   function getTooltip(label) {
@@ -970,33 +1010,29 @@ var handleSinglePlayer = (function () {
     }
   }
 
-  return function handleSinglePlayer(id) {
-    if ($("#accordionExample").length !== 0 && $("#basic-player-info").length !== 0) {
+  return function handleDashboardPosition(position) {
+    if ($("#accordionExample").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
-          type: "single_player",
-          id: id
+          type: "scores",
+          position: position
         },
-        function (response) {
-          window.position = response.player.position;
-
-          const data = getSinglePlayerData(response);
-          drawplayerinfo(data.playerInfo, "#basic-player-info");
-          drawOverallBar(response.overallScore.player);
-          function checkifnull(datael) {
-            if (datael.value === null) { return true; }
-            else { return false; }
+        function(response) {
+          const data = getDashboardData(response);
+          function checkifnull(datael){
+            if (datael.value === null){return true;}
+            else{return false;}
           }
 
-          if (data.playerAttributes.every(checkifnull)) {
-            let elem = document.getElementById("playerAttributesBlock");
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("overallBlock1");
             elem.style.display = "none";
           } else {
             drawOverall(
-              data.playerAttributes,
+              data,
               "#accordionExample",
-              id,
+              position,
               getTooltip,
               undefined
             );
@@ -1008,25 +1044,14 @@ var handleSinglePlayer = (function () {
   };
 })();
 
-function drawOverallBar(scoreval) {
-  let scoreboard = document.getElementById("overallscore");
-  let str = scoreval / 100;
-  str = str.toLocaleString(undefined, {
-    useGrouping: false,
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-    style: "percent"
-  });
-  scoreboard.innerHTML = str;
-}
-
-var Dashboard = (function () {
+var Dashboard = (function() {
   "use strict";
   return {
     //main function
-    init: function () {
+    init: function() {
       let urlParams = getUrlParameters();
-      handleSinglePlayer(urlParams.id);
+      handleCulturalFit(urlParams.position);
+      handleDashboardPosition(urlParams.position);
     }
   };
 })();

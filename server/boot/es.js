@@ -50,6 +50,7 @@ class AggregationBuilder {
   constructor() {
     this.avgFields = [];
     this.percentileFields = [];
+    this.percentilesFields = [];
     this.queryBuilder = new QueryBuilder();
     this.queryBuilder.add({
       'body': {
@@ -107,6 +108,31 @@ class AggregationBuilder {
     return this;
   }
 
+  addPercentiles(field, percentiles, name = field) {
+    let fieldObj;
+    if (typeof field === 'string') {
+      fieldObj = {
+        'field': field,
+      };
+    } else {
+      fieldObj = field;
+    }
+
+    this.queryBuilder.add({
+      'body': {
+        'aggs': {
+          [name]: {
+            'percentiles': R.mergeDeepRight({
+              'percents': percentiles,
+            }, fieldObj),
+          },
+        },
+      },
+    });
+    this.percentilesFields.push(name);
+    return this;
+  }
+
   build() {
     return this.queryBuilder.build();
   }
@@ -120,6 +146,10 @@ class AggregationBuilder {
 
     for (let field of this.percentileFields) {
       res[field] = response.aggregations[field].values[0].value;
+    }
+
+    for (let field of this.percentilesFields) {
+      res[field] = response.aggregations[field].values;
     }
 
     return res;
@@ -562,6 +592,66 @@ async function fetchAgdiagoPillarAttributes(query, pillar) {
   return pillarAttributes;
 }
 
+async function fetchPercentileGroups(query, team, attribute) {
+  // HACK: fix it
+  attribute = 'weight';
+
+  const aggregationBuilder = new AggregationBuilder()
+    .addPercentiles(attribute, [45, 75], 'percentiles');
+
+  const fetchObj = new QueryBuilder()
+    .add({
+      'index': 'baseline',
+    })
+    .add(aggregationBuilder.build())
+    .add(query)
+    .build();
+
+  const fetchResponse = await client.search(fetchObj);
+
+  const {percentiles} = aggregationBuilder.parseResponse(fetchResponse);
+  const percentilesArr = Object.values(percentiles);
+
+  const rangesObj = {
+    'body': {
+      'aggs': {
+        'ranges': {
+          'range': {
+            'field': attribute,
+            'ranges': [
+              {'to': percentilesArr[0]},
+              {'from': percentilesArr[0], 'to': percentilesArr[1]},
+              {'from': percentilesArr[1]},
+            ],
+          },
+        },
+      },
+    },
+  };
+  const percentileSteps = [0, 45, 75, 100];
+
+  const rangesResponse = await client.search(new QueryBuilder()
+    .add({
+      index: team,
+    })
+    .add(rangesObj)
+    .add(query)
+    .build()
+  );
+
+  return rangesResponse
+    .aggregations
+    .ranges
+    .buckets
+    .map((bucket, i) => ({
+      rangeStart: bucket.from,
+      rangeEnd: bucket.to,
+      count: bucket.doc_count,
+      percentileStart: percentileSteps[i],
+      percentileEnd: percentileSteps[i + 1],
+    }));
+}
+
 function queryByTerm(term, value) {
   return value ? {
     'body': {
@@ -585,5 +675,6 @@ module.exports = {
   fetchPillarAttributes,
   fetchProgramPillarAttributes,
   fetchAgdiagoPillarAttributes,
+  fetchPercentileGroups,
   queryByTerm,
 };

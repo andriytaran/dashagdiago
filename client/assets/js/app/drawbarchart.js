@@ -5,6 +5,12 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
   // cleaner.removeChild();
   // cleaner.innerHTML = '';
   chart.attr("class", "barchart");
+
+  // for (let d of data) {
+  //   const newbar = createbar(d);
+  //   chart.append(newbar);
+  // }
+
   var bar = chart.selectAll("div");
   var barUpdate = bar.data(data);
   var barEnter = barUpdate.enter().append(createbar);

@@ -340,6 +340,21 @@ module.exports = app => {
 
         break;
       }
+      case 'percentile_groups': {
+        const attribute = parser.parseRequiredParameter('attribute');
+
+        const query = queryBuilder.build();
+
+        const percentileGroups = await es.fetchPercentileGroups(
+          query,
+          team,
+          attribute,
+        );
+
+        response.groups = percentileGroups;
+
+        break;
+      }
 
       // old
       // case 'emotional_intel': {
@@ -818,6 +833,9 @@ module.exports = app => {
  * Use {@link Parser} instead.
  */
 function parseParameter(param, req, part = 'body') {
+  if (param === 'position') {
+    return req[part][param] != null ? req[part][param].toLowerCase() : null;
+  }
   return req[part][param] != null ? req[part][param] : null;
 }
 
