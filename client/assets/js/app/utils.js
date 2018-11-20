@@ -18,3 +18,21 @@ function getUrlParameters() {
 
   return res;
 }
+
+function getDataRange(value, ftick, stick){
+  let res = [0];
+  let i = 0;
+  do {i = i + 100;}
+  while (i < value || i < ftick || i < stick)
+  res.push(i);
+  return res;
+}
+
+function drawloader(selector){
+  let parent = d3.select(selector);
+  parent.selectAll("*").remove();
+  let elLoader = parent.append("div");
+  elLoader.attr("class", "elLoader");
+  let loader = elLoader.append("div");
+  loader.attr("class", "loader");
+}

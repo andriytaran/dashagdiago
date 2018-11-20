@@ -523,6 +523,31 @@ async function fetchPlayer(query, team, id) {
   return player;
 }
 
+async function fetchPlayers(query, team, attribute) {
+  const fetchObj = new QueryBuilder()
+    .add({
+      'index': team,
+      'body': {
+        'size': 10000,
+        '_source': ['fname', 'lname', 'position', attribute],
+      },
+    })
+    .add(query)
+    .build();
+
+  const fetchResponse = await client.search(fetchObj);
+
+  const players = fetchResponse.hits.hits.map(hit => ({
+    id: hit._id,
+    fname: hit._source.fname,
+    lname: hit._source.lname,
+    position: hit._source.position,
+    value: hit._source[attribute],
+  }));
+
+  return players;
+}
+
 async function fetchPillarAttributes(query, team, pillar) {
   const pillarAttributesList = Object.keys(domain.pillarsObj[pillar].fields);
 
@@ -672,6 +697,7 @@ module.exports = {
   fetchOverallScore,
   fetchProgramBenchmarks,
   fetchPlayer,
+  fetchPlayers,
   fetchPillarAttributes,
   fetchProgramPillarAttributes,
   fetchAgdiagoPillarAttributes,

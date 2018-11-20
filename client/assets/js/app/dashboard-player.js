@@ -18,7 +18,11 @@ var handleCoreAttributes = (function () {
         stick: response.attributes.agdiago.coreAttributesCompetitiveness,
         name: "Competitiveness",
         field: "coreAttributesCompetitiveness",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.coreAttributesCompetitiveness,
+          response.attributes.program.coreAttributesCompetitiveness,
+          response.attributes.agdiago.coreAttributesCompetitiveness
+        ),
         style: "percent",
         fractiondigits: 1
       },
@@ -28,7 +32,11 @@ var handleCoreAttributes = (function () {
         stick: response.attributes.agdiago.coreAttributesMastery,
         name: "Mastery",
         field: "coreAttributesMastery",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.coreAttributesMastery,
+          response.attributes.program.coreAttributesMastery,
+          response.attributes.agdiago.coreAttributesMastery
+        ),
         style: "percent",
         fractiondigits: 1
       },
@@ -38,7 +46,11 @@ var handleCoreAttributes = (function () {
         stick: response.attributes.agdiago.coreAttributesPersistence,
         name: "Persistence",
         field: "coreAttributesPersistence",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.coreAttributesPersistence,
+          response.attributes.program.coreAttributesPersistence,
+          response.attributes.agdiago.coreAttributesPersistence
+        ),
         style: "percent",
         fractiondigits: 1
       },
@@ -48,7 +60,11 @@ var handleCoreAttributes = (function () {
         stick: response.attributes.agdiago.coreAttributesTeamOrientation,
         name: "Team Orientation",
         field: "coreAttributesTeamOrientation",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.coreAttributesTeamOrientation,
+          response.attributes.program.coreAttributesTeamOrientation,
+          response.attributes.agdiago.coreAttributesTeamOrientation
+        ),
         style: "percent",
         fractiondigits: 1
       },
@@ -58,7 +74,11 @@ var handleCoreAttributes = (function () {
         stick: response.attributes.agdiago.coreAttributesWorkethic,
         name: "Work Ethic",
         field: "coreAttributesWorkethic",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.coreAttributesWorkethic,
+          response.attributes.program.coreAttributesWorkethic,
+          response.attributes.agdiago.coreAttributesWorkethic
+        ),
         style: "percent",
         fractiondigits: 1
       }
@@ -130,7 +150,11 @@ var handleAcademicAttributes = (function () {
         stick: response.attributes.agdiago.sat,
         name: "SAT",
         field: "sat",
-        range: [0, 10000],
+        range: getDataRange(
+          response.attributes.player.sat,
+          response.attributes.program.sat,
+          response.attributes.agdiago.sat
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -140,7 +164,11 @@ var handleAcademicAttributes = (function () {
         stick: response.attributes.agdiago.coreGpa,
         name: "Core GPA",
         field: "coreGpa",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.coreGpa,
+          response.attributes.program.coreGpa,
+          response.attributes.agdiago.coreGpa
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -150,7 +178,11 @@ var handleAcademicAttributes = (function () {
         stick: response.attributes.agdiago.gpa,
         name: "GPA",
         field: "gpa",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.gpa,
+          response.attributes.program.gpa,
+          response.attributes.agdiago.gpa
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -160,7 +192,11 @@ var handleAcademicAttributes = (function () {
         stick: response.attributes.agdiago.act,
         name: "ACT",
         field: "act",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.act,
+          response.attributes.program.act,
+          response.attributes.agdiago.act
+        ),
         style: "number",
         fractiondigits: 0
       }
@@ -225,7 +261,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.facebookSentiment,
         name: "Facebook Sentiment",
         field: "facebookSentiment",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.facebookSentiment,
+          response.attributes.program.facebookSentiment,
+          response.attributes.agdiago.facebookSentiment
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -235,7 +275,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.instagramFollowers,
         name: "Instagram Followers",
         field: "instagramFollowers",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.instagramFollowers,
+          response.attributes.program.instagramFollowers,
+          response.attributes.agdiago.instagramFollowers
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -245,7 +289,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.newsMedaiCoveragementions,
         name: "News Medai Coverage mentions",
         field: "newsMedaiCoveragementions",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.newsMedaiCoveragementions,
+          response.attributes.program.newsMedaiCoveragementions,
+          response.attributes.agdiago.newsMedaiCoveragementions
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -255,7 +303,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.newsMediaCoverageRegional,
         name: "News Media Coverage Regional",
         field: "newsMediaCoverageRegional",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.newsMediaCoverageRegional,
+          response.attributes.program.newsMediaCoverageRegional,
+          response.attributes.agdiago.newsMediaCoverageRegional
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -265,7 +317,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.newsMediaCoverageSentiment,
         name: "News Media Coverage Sentiment",
         field: "newsMediaCoverageSentiment",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.newsMediaCoverageSentiment,
+          response.attributes.program.newsMediaCoverageSentiment,
+          response.attributes.agdiago.newsMediaCoverageSentiment
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -275,7 +331,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.newsMediacoverageNational,
         name: "News Media coverage National",
         field: "newsMediacoverageNational",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.newsMediacoverageNational,
+          response.attributes.program.newsMediacoverageNational,
+          response.attributes.agdiago.newsMediacoverageNational
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -285,7 +345,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.pressReleaseSentiment,
         name: "Press Release Sentiment",
         field: "pressReleaseSentiment",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.pressReleaseSentiment,
+          response.attributes.program.pressReleaseSentiment,
+          response.attributes.agdiago.pressReleaseSentiment
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -295,7 +359,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.pressReleaseSentimentCounter,
         name: "Press Release Sentiment Counter",
         field: "pressReleaseSentimentCounter",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.pressReleaseSentimentCounter,
+          response.attributes.program.pressReleaseSentimentCounter,
+          response.attributes.agdiago.pressReleaseSentimentCounter
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -305,7 +373,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.socialInstagramSentiment,
         name: "Social Instagram Sentiment",
         field: "socialInstagramSentiment",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.socialInstagramSentiment,
+          response.attributes.program.socialInstagramSentiment,
+          response.attributes.agdiago.socialInstagramSentiment
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -315,7 +387,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.socialTwitterSentiment,
         name: "Social Twitter Sentiment",
         field: "socialTwitterSentiment",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.socialTwitterSentiment,
+          response.attributes.program.socialTwitterSentiment,
+          response.attributes.agdiago.socialTwitterSentiment
+        ),
         style: "number",
         fractiondigits: 1
       },
@@ -325,7 +401,11 @@ var handleSocialProfileAttributes = (function () {
         stick: response.attributes.agdiago.twitterFollowers,
         name: "Twitter Followers",
         field: "twitterFollowers",
-        range: [0, 10],
+        range: getDataRange(
+          response.attributes.player.twitterFollowers,
+          response.attributes.program.twitterFollowers,
+          response.attributes.agdiago.twitterFollowers
+        ),
         style: "number",
         fractiondigits: 1
       }
@@ -407,7 +487,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelAccountability,
         name: "Emotional Intel Accountability",
         field: "emotionalIntelAccountability",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelAccountability,
+          response.attributes.program.emotionalIntelAccountability,
+          response.attributes.agdiago.emotionalIntelAccountability
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -417,7 +501,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelBehavior,
         name: "Emotional Intel Behavior",
         field: "emotionalIntelBehavior",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelBehavior,
+          response.attributes.program.emotionalIntelBehavior,
+          response.attributes.agdiago.emotionalIntelBehavior
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -427,7 +515,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelIndependence,
         name: "Eotional Intel Independence",
         field: "emotionalIntelIndependence",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelIndependence,
+          response.attributes.program.emotionalIntelIndependence,
+          response.attributes.agdiago.emotionalIntelIndependence
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -437,7 +529,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelReflection,
         name: "Emotional Intel Reflection",
         field: "emotionalIntelReflection",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelReflection,
+          response.attributes.program.emotionalIntelReflection,
+          response.attributes.agdiago.emotionalIntelReflection
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -447,7 +543,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelRelationships,
         name: "Emotional Intel Relationships",
         field: "emotionalIntelRelationships",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelRelationships,
+          response.attributes.program.emotionalIntelRelationships,
+          response.attributes.agdiago.emotionalIntelRelationships
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -457,7 +557,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelResponsibility,
         name: "Emotional Intel Responsibility",
         field: "emotionalIntelResponsibility",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelResponsibility,
+          response.attributes.program.emotionalIntelResponsibility,
+          response.attributes.agdiago.emotionalIntelResponsibility
+        ),
         style: "number",
         fractiondigits: 0
       },
@@ -467,7 +571,11 @@ var handleEmotionalIntelAttributes = (function () {
         stick: response.attributes.agdiago.emotionalIntelteamWork,
         name: "Emotional Intel teamWork",
         field: "emotionalIntelteamWork",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.emotionalIntelteamWork,
+          response.attributes.program.emotionalIntelteamWork,
+          response.attributes.agdiago.emotionalIntelteamWork
+        ),
         style: "number",
         fractiondigits: 0
       }
@@ -542,7 +650,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.carries,
         name: "Carries",
         field: "carries",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.carries,
+          response.attributes.program.carries,
+          response.attributes.agdiago.carries
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -554,7 +666,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.completions,
         name: "Completions",
         field: "completions",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.completions,
+          response.attributes.program.completions,
+          response.attributes.agdiago.completions
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -566,7 +682,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.interceptionsThrown,
         name: "Interceptions Thrown",
         field: "interceptionsThrown",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.interceptionsThrown,
+          response.attributes.program.interceptionsThrown,
+          response.attributes.agdiago.interceptionsThrown
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -578,7 +698,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.passingYards,
         name: "Passing Yards",
         field: "passingYards",
-        range: [0, 1000],
+        range: getDataRange(
+          response.attributes.player.passingYards,
+          response.attributes.program.passingYards,
+          response.attributes.agdiago.passingYards
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -590,7 +714,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.recievingYards,
         name: "Recieving Yards",
         field: "recievingYards",
-        range: [0, 1000],
+        range: getDataRange(
+          response.attributes.player.recievingYards,
+          response.attributes.program.recievingYards,
+          response.attributes.agdiago.recievingYards
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -602,7 +730,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.receptions,
         name: "Receptions",
         field: "receptions",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.receptions,
+          response.attributes.program.receptions,
+          response.attributes.agdiago.receptions
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -614,7 +746,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.rushingTouchdowns,
         name: "rushingTouchdowns",
         field: "rushingTouchdowns",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.rushingTouchdowns,
+          response.attributes.program.rushingTouchdowns,
+          response.attributes.agdiago.rushingTouchdowns
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -626,7 +762,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.rushingYards,
         name: "Rushing Yards",
         field: "rushingYards",
-        range: [0, 1000],
+        range: getDataRange(
+          response.attributes.player.rushingYards,
+          response.attributes.program.rushingYards,
+          response.attributes.agdiago.rushingYards
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -638,7 +778,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.sacks,
         name: "Sacks",
         field: "sacks",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.sacks,
+          response.attributes.program.sacks,
+          response.attributes.agdiago.sacks
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -650,7 +794,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.soloTackle,
         name: "Solo Tackle",
         field: "soloTackle",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.soloTackle,
+          response.attributes.program.soloTackle,
+          response.attributes.agdiago.soloTackle
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -662,7 +810,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.tacklesForLoss,
         name: "Tackles For Loss",
         field: "tacklesForLoss",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.tacklesForLoss,
+          response.attributes.program.tacklesForLoss,
+          response.attributes.agdiago.tacklesForLoss
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -674,7 +826,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.totalTackles,
         name: "Total Tackles",
         field: "totalTackles",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.totalTackles,
+          response.attributes.program.totalTackles,
+          response.attributes.agdiago.totalTackles
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -686,7 +842,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.touchdownsThrown,
         name: "Touchdowns Thrown",
         field: "touchdownsThrown",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.touchdownsThrown,
+          response.attributes.program.touchdownsThrown,
+          response.attributes.agdiago.touchdownsThrown
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -698,7 +858,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.forty,
         name: "Forty",
         field: "forty",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.forty,
+          response.attributes.program.forty,
+          response.attributes.agdiago.forty
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -710,7 +874,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.gamesPlayed,
         name: "Games Played",
         field: "gamesPlayed",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.gamesPlayed,
+          response.attributes.program.gamesPlayed,
+          response.attributes.agdiago.gamesPlayed
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -722,7 +890,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.gamesStarted,
         name: "Games Started",
         field: "gamesStarted",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.gamesStarted,
+          response.attributes.program.gamesStarted,
+          response.attributes.agdiago.gamesStarted
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -734,7 +906,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.height,
         name: "Height",
         field: "height",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.height,
+          response.attributes.program.height,
+          response.attributes.agdiago.height
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -746,7 +922,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.vertical,
         name: "Vertical",
         field: "vertical",
-        range: [0, 100],
+        range: getDataRange(
+          response.attributes.player.vertical,
+          response.attributes.program.vertical,
+          response.attributes.agdiago.vertical
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -758,7 +938,11 @@ var handleAthleticAttributes = (function () {
         stick: response.attributes.agdiago.weight,
         name: "Weight",
         field: "weight",
-        range: [0, 1000],
+        range: getDataRange(
+          response.attributes.player.weight,
+          response.attributes.program.weight,
+          response.attributes.agdiago.weight
+        ),
         style: "number",
         fractiondigits: 0
       };
@@ -885,7 +1069,10 @@ var handleSinglePlayer = (function () {
         name: "Athletic",
         field: "athletic",
         contentId: "athletic",
-        range: [0, 200],
+        range: getDataRange(
+          response.scores.player.athletic,
+          response.scores.agdiago.athletic
+        ),
         style: "percent",
         fractiondigits: 1
       };
@@ -897,7 +1084,10 @@ var handleSinglePlayer = (function () {
         name: "Emotional Intel",
         field: "emotionalIntel",
         contentId: "emotional-intel",
-        range: [0, 200],
+        range: getDataRange(
+          response.scores.player.emotionalIntel,
+          response.scores.agdiago.emotionalIntel
+        ),
         style: "percent",
         fractiondigits: 1
       };
@@ -909,7 +1099,10 @@ var handleSinglePlayer = (function () {
         name: "Academic",
         field: "academic",
         contentId: "academic",
-        range: [0, 200],
+        range: getDataRange(
+          response.scores.player.academic,
+          response.scores.agdiago.academic
+        ),
         style: "percent",
         fractiondigits: 1
       };
@@ -921,7 +1114,10 @@ var handleSinglePlayer = (function () {
         name: "Social Profile",
         field: "socialProfile",
         contentId: "social-profile",
-        range: [0, 200],
+        range: getDataRange(
+          response.scores.player.socialProfile,
+          response.scores.agdiago.socialProfile
+        ),
         style: "percent",
         fractiondigits: 1
       };
@@ -933,7 +1129,10 @@ var handleSinglePlayer = (function () {
         name: "Core Attributes",
         field: "coreAttributes",
         contentId: "core-attributes",
-        range: [0, 200],
+        range: getDataRange(
+          response.scores.player.coreAttributes,
+          response.scores.agdiago.coreAttributes
+        ),
         style: "percent",
         fractiondigits: 1
       };

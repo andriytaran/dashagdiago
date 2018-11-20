@@ -1,84 +1,155 @@
-var handleCoreAttributes = (function() {
-  "use strict";
-  // function getrange(){
-  //   if (value < 100 && ftick < 100 && stick < 100){return "[0 - 100]";}
-  //   if (value < 1000 && ftick < 1000 && stick < 1000){return "[0 - 1000]";}
-  //   if (value < 10000 && ftick < 10000 && stick < 10000){return "[0 - 10000]";}
-  // }
+function getPlayersData(position, attribute, cb) {
+  $.post(
+    "/api/dashboard-data",
+    {
+      type: "players",
+      position: position,
+      attribute: attribute
+    },
+    function(response) {
+      cb(response.players);
+    },
+    "json"
+  );
+}
 
-  // function getbarvalue(a) {
-  //   if (a == "[0 - 100]"){return "percent";}
-  //   else {return "number";}
-  // }
-  function getCoreAttributesData(response) {
+var handleCulturalFit = (function () {
+  "use strict";
+
+  function getCulturalFitData(response) {
     return [
       {
-        value: response.coreAttributes.coreAttributesCompetitiveness.value,
-        ftick: response.programBenchmark.coreAttributesCompetitiveness.value,
-        stick: response.agdiagoBenchmark.coreAttributesCompetitiveness.value,
+        label: "Low Fit",
+        value: response.groups[0].count,
+        start: response.groups[0].percentileStart,
+        end: response.groups[0].percentileEnd
+      },
+      {
+        label: "Med Fit",
+        value: response.groups[1].count,
+        start: response.groups[1].percentileStart,
+        end: response.groups[1].percentileEnd
+      },
+      {
+        label: "Top Fit",
+        value: response.groups[2].count,
+        start: response.groups[2].percentileStart,
+        end: response.groups[2].percentileEnd
+      }
+    ];
+  }
+
+  function getTooltip(data) {
+    return (
+      data.label +
+      " (" +
+      data.start +
+      " - " +
+      data.end +
+      " percentile)" +
+      " = " +
+      data.value +
+      " players"
+    );
+  }
+
+  return function handleCulturalFit(position) {
+    if ($("#cultural-fit").length !== 0) {
+      $.post(
+        "/api/dashboard-data",
+        {
+          type: "percentile_groups",
+          position: position,
+          attribute: "culturalFit"
+        },
+        function (response) {
+          const data = getCulturalFitData(response);
+          drawpiechart(data, "#cultural-fit", getTooltip);
+        },
+        "json"
+      );
+    }
+  };
+})();
+
+var handleCoreAttributes = (function () {
+  "use strict";
+  function getCoreAttributesData(response) {
+    let res = [
+      {
+        value: response.attributes.player.coreAttributesCompetitiveness,
+        ftick: response.attributes.program.coreAttributesCompetitiveness,
+        stick: response.attributes.agdiago.coreAttributesCompetitiveness,
+        range: getDataRange(
+          response.attributes.player.coreAttributesCompetitiveness,
+          response.attributes.program.coreAttributesCompetitiveness,
+          response.attributes.agdiago.coreAttributesCompetitiveness,
+        ),
         name: "Competitiveness",
         field: "coreAttributesCompetitiveness",
-        range: getDataRange(response.coreAttributes.coreAttributesCompetitiveness.value,
-          response.programBenchmark.coreAttributesCompetitiveness.value,
-          response.agdiagoBenchmark.coreAttributesCompetitiveness.value
-        ),
         style: "percent",
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.coreAttributesMastery.value,
-        ftick: response.programBenchmark.coreAttributesMastery.value,
-        stick: response.agdiagoBenchmark.coreAttributesMastery.value,
+        value: response.attributes.player.coreAttributesMastery,
+        ftick: response.attributes.program.coreAttributesMastery,
+        stick: response.attributes.agdiago.coreAttributesMastery,
         name: "Mastery",
         field: "coreAttributesMastery",
         range: getDataRange(
-          response.coreAttributes.coreAttributesMastery.value,
-          response.programBenchmark.coreAttributesMastery.value,
-          response.agdiagoBenchmark.coreAttributesMastery.value
+          response.attributes.player.coreAttributesMastery,
+          response.attributes.program.coreAttributesMastery,
+          response.attributes.agdiago.coreAttributesMastery
         ),
         style: "percent",
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.coreAttributesPersistence.value,
-        ftick: response.programBenchmark.coreAttributesPersistence.value,
-        stick: response.agdiagoBenchmark.coreAttributesPersistence.value,
+        value: response.attributes.player.coreAttributesPersistence,
+        ftick: response.attributes.program.coreAttributesPersistence,
+        stick: response.attributes.agdiago.coreAttributesPersistence,
+        range: getDataRange(
+          response.attributes.player.coreAttributesPersistence,
+          response.attributes.program.coreAttributesPersistence,
+          response.attributes.agdiago.coreAttributesPersistence,
+        ),
         name: "Persistence",
         field: "coreAttributesPersistence",
-        range: getDataRange(response.coreAttributes.coreAttributesPersistence.value,
-          response.programBenchmark.coreAttributesPersistence.value,
-          response.agdiagoBenchmark.coreAttributesPersistence.value
-        ),
         style: "percent",
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.coreAttributesTeamOrientation.value,
-        ftick: response.programBenchmark.coreAttributesTeamOrientation.value,
-        stick: response.agdiagoBenchmark.coreAttributesTeamOrientation.value,
+        value: response.attributes.player.coreAttributesTeamOrientation,
+        ftick: response.attributes.program.coreAttributesTeamOrientation,
+        stick: response.attributes.agdiago.coreAttributesTeamOrientation,
+        range: getDataRange(
+          response.attributes.player.coreAttributesTeamOrientation,
+          response.attributes.program.coreAttributesTeamOrientation,
+          response.attributes.agdiago.coreAttributesTeamOrientation,
+        ),
         name: "Team Orientation",
         field: "coreAttributesTeamOrientation",
-        range: getDataRange(response.coreAttributes.coreAttributesTeamOrientation.value,
-          response.programBenchmark.coreAttributesTeamOrientation.value,
-          response.agdiagoBenchmark.coreAttributesTeamOrientation.value
-        ),
         style: "percent",
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.coreAttributesWorkethic.value,
-        ftick: response.programBenchmark.coreAttributesWorkethic.value,
-        stick: response.agdiagoBenchmark.coreAttributesWorkethic.value,
+        value: response.attributes.player.coreAttributesWorkethic,
+        ftick: response.attributes.program.coreAttributesWorkethic,
+        stick: response.attributes.agdiago.coreAttributesWorkethic,
+        range: getDataRange(
+          response.attributes.player.coreAttributesWorkethic,
+          response.attributes.program.coreAttributesWorkethic,
+          response.attributes.agdiago.coreAttributesWorkethic,
+        ),
         name: "Work Ethic",
         field: "coreAttributesWorkethic",
-        range: getDataRange(response.coreAttributes.coreAttributesWorkethic.value,
-          response.programBenchmark.coreAttributesWorkethic.value,
-          response.agdiagoBenchmark.coreAttributesWorkethic.value
-        ),
         style: "percent",
         fractiondigits: 1
       }
     ];
+    function sortByValue(a, b) { return b.value - a.value; }
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(label) {
@@ -103,26 +174,26 @@ var handleCoreAttributes = (function() {
       $.post(
         "/api/dashboard-data",
         {
-          type: "core_attributes",
-          playerPosition: position
+          type: "pillar",
+          pillar: "coreAttributes",
+          position: position
         },
-        function(response) {
+        function (response) {
           const data = getCoreAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
-            let elem = document.getElementById("coreAttributesBlock");
-            elem.style.display = "none";
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("core-attributes");
+            elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#core-attributes",
               position,
               getTooltip,
-              getPlayersData
+              getPlayersData,
             );
           }
         },
@@ -132,79 +203,71 @@ var handleCoreAttributes = (function() {
   };
 })();
 
-function getPlayersData(position, field, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "players_data",
-      playerPosition: position,
-      field: field
-    },
-    function(response) {
-      cb(response.players);
-    },
-    "json"
-  );
-}
-
-var handleAcademicAttributes = (function() {
+var handleAcademicAttributes = (function () {
   "use strict";
 
   function getAcademicAttributesData(response) {
-    return [
+    let res = [
       {
-        value: response.academic.sat.value,
-        ftick: response.programBenchmark.sat.value,
-        stick: response.agdiagoBenchmark.sat.value,
+        value: response.attributes.player.sat,
+        ftick: response.attributes.program.sat,
+        stick: response.attributes.agdiago.sat,
         name: "SAT",
         field: "sat",
-        range: getDataRange(response.academic.sat.value,
-          response.programBenchmark.sat.value,
-          response.agdiagoBenchmark.sat.value
+        range: getDataRange(
+          response.attributes.player.sat,
+          response.attributes.program.sat,
+          response.attributes.agdiago.sat
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.academic.coreGpa.value,
-        ftick: response.programBenchmark.coreGpa.value,
-        stick: response.agdiagoBenchmark.coreGpa.value,
+        value: response.attributes.player.coreGpa,
+        ftick: response.attributes.program.coreGpa,
+        stick: response.attributes.agdiago.coreGpa,
         name: "Core GPA",
         field: "coreGpa",
-        range: getDataRange(response.academic.coreGpa.value,
-          response.programBenchmark.coreGpa.value,
-          response.agdiagoBenchmark.coreGpa.value
+        range: getDataRange(
+          response.attributes.player.coreGpa,
+          response.attributes.program.coreGpa,
+          response.attributes.agdiago.cor
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.academic.gpa.value,
-        ftick: response.programBenchmark.gpa.value,
-        stick: response.agdiagoBenchmark.gpa.value,
+        value: response.attributes.player.gpa,
+        ftick: response.attributes.program.gpa,
+        stick: response.attributes.agdiago.gpa,
         name: "GPA",
         field: "gpa",
-        range: getDataRange(response.academic.gpa.value,
-          response.programBenchmark.gpa.value,
-          response.agdiagoBenchmark.gpa.value
+        range: getDataRange(
+          response.attributes.player.gpa,
+          response.attributes.program.gpa,
+          response.attributes.agdiago.gpa
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.academic.act.value,
-        ftick: response.programBenchmark.act.value,
-        stick: response.agdiagoBenchmark.act.value,
+        value: response.attributes.player.act,
+        ftick: response.attributes.program.act,
+        stick: response.attributes.agdiago.act,
         name: "ACT",
         field: "act",
-        range: getDataRange(response.academic.act.value,
-          response.programBenchmark.act.value,
-          response.agdiagoBenchmark.act.value
+        range: getDataRange(
+          response.attributes.player.act,
+          response.attributes.program.act,
+          response.attributes.agdiago.act
         ),
         style: "number",
         fractiondigits: 0
       }
     ];
+    function sortByValue(a, b) { return b.value - a.value; }
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(field) {
@@ -223,26 +286,26 @@ var handleAcademicAttributes = (function() {
       $.post(
         "/api/dashboard-data",
         {
-          type: "academic",
-          playerPosition: position
+          type: "pillar",
+          pillar: "academic",
+          position: position
         },
-        function(response) {
+        function (response) {
           const data = getAcademicAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
-            let elem = document.getElementById("academicBlock");
-            elem.style.display = "none";
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("academic");
+            elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
               "#academic",
               position,
               getTooltip,
-              getPlayersData
+              getPlayersData,
             );
           }
         },
@@ -251,177 +314,170 @@ var handleAcademicAttributes = (function() {
     }
   };
 })();
-// var handleModalWindow = (function () {
-//   "use strict";
 
-//   return function handleModalWindow() {
-//     if ($('#players').length !== 0) {
-//         drawtable(playersdata, '#players');
-//     }
-//   }
-// })();
-// function HandleDropDownAlert(selector) {
-//   if ($(selector).length !== 0) {
-//     // $(selector).on("click", dropdowncont);
-//     // function dropdowncont() {
-//     //   return alert(selector);
-//     // }
-//   }
-// }
-var handleSocialProfileAttributes = (function() {
+var handleSocialProfileAttributes = (function () {
   "use strict";
 
   function getSocialProfileAttributesData(response) {
-    return [
+    let res = [
       {
-        value: response.socialProfile.facebookSentiment.value,
-        ftick: response.programBenchmark.facebookSentiment.value,
-        stick: response.agdiagoBenchmark.facebookSentiment.value,
+        value: response.attributes.player.facebookSentiment,
+        ftick: response.attributes.program.facebookSentiment,
+        stick: response.attributes.agdiago.facebookSentiment,
         name: "Facebook Sentiment",
         field: "facebookSentiment",
-        range: getDataRange(response.socialProfile.facebookSentiment.value,
-          response.programBenchmark.facebookSentiment.value,
-          response.agdiagoBenchmark.facebookSentiment.value
+        range: getDataRange(
+          response.attributes.player.facebookSentiment,
+          response.attributes.program.facebookSentiment,
+          response.attributes.agdiago.facebookSentiment
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.instagramFollowers.value,
-        ftick: response.programBenchmark.instagramFollowers.value,
-        stick: response.agdiagoBenchmark.instagramFollowers.value,
+        value: response.attributes.player.instagramFollowers,
+        ftick: response.attributes.program.instagramFollowers,
+        stick: response.attributes.agdiago.instagramFollowers,
         name: "Instagram Followers",
         field: "instagramFollowers",
-        range: getDataRange(response.socialProfile.instagramFollowers.value,
-          response.programBenchmark.instagramFollowers.value,
-          response.agdiagoBenchmark.instagramFollowers.value
+        range: getDataRange(
+          response.attributes.player.instagramFollowers,
+          response.attributes.program.instagramFollowers,
+          response.attributes.agdiago.instagramFollowers
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMedaiCoveragementions.value,
-        ftick: response.programBenchmark.newsMedaiCoveragementions.value,
-        stick: response.agdiagoBenchmark.newsMedaiCoveragementions.value,
+        value: response.attributes.player.newsMedaiCoveragementions,
+        ftick: response.attributes.program.newsMedaiCoveragementions,
+        stick: response.attributes.agdiago.newsMedaiCoveragementions,
         name: "News Medai Coverage mentions",
         field: "newsMedaiCoveragementions",
-        range: getDataRange(response.socialProfile.newsMedaiCoveragementions.value,
-          response.programBenchmark.newsMedaiCoveragementions.value,
-          response.agdiagoBenchmark.newsMedaiCoveragementions.value
+        range: getDataRange(
+          response.attributes.player.newsMedaiCoveragementions,
+          response.attributes.program.newsMedaiCoveragementions,
+          response.attributes.agdiago.newsMedaiCoveragementions
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMediaCoverageRegional.value,
-        ftick: response.programBenchmark.newsMediaCoverageRegional.value,
-        stick: response.agdiagoBenchmark.newsMediaCoverageRegional.value,
+        value: response.attributes.player.newsMediaCoverageRegional,
+        ftick: response.attributes.program.newsMediaCoverageRegional,
+        stick: response.attributes.agdiago.newsMediaCoverageRegional,
         name: "News Media Coverage Regional",
         field: "newsMediaCoverageRegional",
-        range: getDataRange(response.socialProfile.newsMediaCoverageRegional.value,
-          response.programBenchmark.newsMediaCoverageRegional.value,
-          response.agdiagoBenchmark.newsMediaCoverageRegional.value
+        range: getDataRange(
+          response.attributes.player.newsMediaCoverageRegional,
+          response.attributes.program.newsMediaCoverageRegional,
+          response.attributes.agdiago.newsMediaCoverageRegional
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMediaCoverageSentiment.value,
-        ftick: response.programBenchmark.newsMediaCoverageSentiment.value,
-        stick: response.agdiagoBenchmark.newsMediaCoverageSentiment.value,
+        value: response.attributes.player.newsMediaCoverageSentiment,
+        ftick: response.attributes.program.newsMediaCoverageSentiment,
+        stick: response.attributes.agdiago.newsMediaCoverageSentiment,
         name: "News Media Coverage Sentiment",
         field: "newsMediaCoverageSentiment",
-        range: getDataRange(response.socialProfile.newsMediaCoverageSentiment.value,
-          response.programBenchmark.newsMediaCoverageSentiment.value,
-          response.agdiagoBenchmark.newsMediaCoverageSentiment.value
+        range: getDataRange(
+          response.attributes.player.newsMediaCoverageSentiment,
+          response.attributes.program.newsMediaCoverageSentiment,
+          response.attributes.agdiago.newsMediaCoverageSentiment
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMediacoverageNational.value,
-        ftick: response.programBenchmark.newsMediacoverageNational.value,
-        stick: response.agdiagoBenchmark.newsMediacoverageNational.value,
+        value: response.attributes.player.newsMediacoverageNational,
+        ftick: response.attributes.program.newsMediacoverageNational,
+        stick: response.attributes.agdiago.newsMediacoverageNational,
         name: "News Media coverage National",
         field: "newsMediacoverageNational",
-        range: getDataRange(response.socialProfile.newsMediacoverageNational.value,
-          response.programBenchmark.newsMediacoverageNational.value,
-          response.agdiagoBenchmark.newsMediacoverageNational.value
+        range: getDataRange(
+          response.attributes.player.newsMediacoverageNational,
+          response.attributes.program.newsMediacoverageNational,
+          response.attributes.agdiago.newsMediacoverageNational
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.pressReleaseSentiment.value,
-        ftick: response.programBenchmark.pressReleaseSentiment.value,
-        stick: response.agdiagoBenchmark.pressReleaseSentiment.value,
+        value: response.attributes.player.pressReleaseSentiment,
+        ftick: response.attributes.program.pressReleaseSentiment,
+        stick: response.attributes.agdiago.pressReleaseSentiment,
         name: "Press Release Sentiment",
         field: "pressReleaseSentiment",
         range: getDataRange(
-          response.socialProfile.pressReleaseSentiment.value,
-          response.programBenchmark.pressReleaseSentiment.value,
-          response.agdiagoBenchmark.pressReleaseSentiment.value
+          response.attributes.player.pressReleaseSentiment,
+          response.attributes.program.pressReleaseSentiment,
+          response.attributes.agdiago.pressReleaseSentiment
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.pressReleaseSentimentCounter.value,
-        ftick: response.programBenchmark.pressReleaseSentimentCounter.value,
-        stick: response.agdiagoBenchmark.pressReleaseSentimentCounter.value,
+        value: response.attributes.player.pressReleaseSentimentCounter,
+        ftick: response.attributes.program.pressReleaseSentimentCounter,
+        stick: response.attributes.agdiago.pressReleaseSentimentCounter,
         name: "Press Release Sentiment Counter",
         field: "pressReleaseSentimentCounter",
         range: getDataRange(
-          response.socialProfile.pressReleaseSentimentCounter.value,
-          response.programBenchmark.pressReleaseSentimentCounter.value,
-          response.agdiagoBenchmark.pressReleaseSentimentCounter.value,
+          response.attributes.player.pressReleaseSentimentCounter,
+          response.attributes.program.pressReleaseSentimentCounter,
+          response.attributes.agdiago.pressReleaseSentimentCounter
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.socialInstagramSentiment.value,
-        ftick: response.programBenchmark.socialInstagramSentiment.value,
-        stick: response.agdiagoBenchmark.socialInstagramSentiment.value,
+        value: response.attributes.player.socialInstagramSentiment,
+        ftick: response.attributes.program.socialInstagramSentiment,
+        stick: response.attributes.agdiago.socialInstagramSentiment,
         name: "Social Instagram Sentiment",
         field: "socialInstagramSentiment",
         range: getDataRange(
-          response.socialProfile.socialInstagramSentiment.value,
-          response.programBenchmark.socialInstagramSentiment.value,
-          response.agdiagoBenchmark.socialInstagramSentiment.value,
+          response.attributes.player.socialInstagramSentiment,
+          response.attributes.program.socialInstagramSentiment,
+          response.attributes.agdiago.socialInstagramSentiment
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.socialTwitterSentiment.value,
-        ftick: response.programBenchmark.socialTwitterSentiment.value,
-        stick: response.agdiagoBenchmark.socialTwitterSentiment.value,
+        value: response.attributes.player.socialTwitterSentiment,
+        ftick: response.attributes.program.socialTwitterSentiment,
+        stick: response.attributes.agdiago.socialTwitterSentiment,
         name: "Social Twitter Sentiment",
         field: "socialTwitterSentiment",
         range: getDataRange(
-          response.socialProfile.socialTwitterSentiment.value,
-          response.programBenchmark.socialTwitterSentiment.value,
-          response.agdiagoBenchmark.socialTwitterSentiment.value,
+          response.attributes.player.socialTwitterSentiment,
+          response.attributes.program.socialTwitterSentiment,
+          response.attributes.agdiago.socialTwitterSentiment
         ),
         style: "number",
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.twitterFollowers.value,
-        ftick: response.programBenchmark.twitterFollowers.value,
-        stick: response.agdiagoBenchmark.twitterFollowers.value,
+        value: response.attributes.player.twitterFollowers,
+        ftick: response.attributes.program.twitterFollowers,
+        stick: response.attributes.agdiago.twitterFollowers,
         name: "Twitter Followers",
         field: "twitterFollowers",
         range: getDataRange(
-          response.socialProfile.twitterFollowers.value,
-          response.programBenchmark.twitterFollowers.value,
-          response.agdiagoBenchmark.twitterFollowers.value,
+          response.attributes.player.twitterFollowers,
+          response.attributes.program.twitterFollowers,
+          response.attributes.agdiago.twitterFollowers
         ),
         style: "number",
         fractiondigits: 1
       }
     ];
+    function sortByValue(a, b) { return b.value - a.value; }
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(field) {
@@ -456,19 +512,19 @@ var handleSocialProfileAttributes = (function() {
       $.post(
         "/api/dashboard-data",
         {
-          type: "social_profile",
-          playerPosition: position
+          type: "pillar",
+          pillar: "socialProfile",
+          position: position
         },
-        function(response) {
+        function (response) {
           const data = getSocialProfileAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
-            let elem = document.getElementById("socialProfileBlock");
-            elem.style.display = "none";
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("social-profile");
+            elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
@@ -485,110 +541,113 @@ var handleSocialProfileAttributes = (function() {
   };
 })();
 
-var handleEmotionalIntelAttributes = (function() {
+var handleEmotionalIntelAttributes = (function () {
   "use strict";
 
   function getEmotionalIntelAttributesData(response) {
-    return [
+    let res = [
       {
-        value: response.emotionalIntel.emotionalIntelAccountability.value,
-        ftick: response.programBenchmark.emotionalIntelAccountability.value,
-        stick: response.agdiagoBenchmark.emotionalIntelAccountability.value,
+        value: response.attributes.player.emotionalIntelAccountability,
+        ftick: response.attributes.program.emotionalIntelAccountability,
+        stick: response.attributes.agdiago.emotionalIntelAccountability,
         name: "Emotional Intel Accountability",
         field: "emotionalIntelAccountability",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelAccountability.value,
-          response.programBenchmark.emotionalIntelAccountability.value,
-          response.agdiagoBenchmark.emotionalIntelAccountability.value,
+          response.attributes.player.emotionalIntelAccountability,
+          response.attributes.program.emotionalIntelAccountability,
+          response.attributes.agdiago.emotionalIntelAccountability
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelBehavior.value,
-        ftick: response.programBenchmark.emotionalIntelBehavior.value,
-        stick: response.agdiagoBenchmark.emotionalIntelBehavior.value,
+        value: response.attributes.player.emotionalIntelBehavior,
+        ftick: response.attributes.program.emotionalIntelBehavior,
+        stick: response.attributes.agdiago.emotionalIntelBehavior,
         name: "Emotional Intel Behavior",
         field: "emotionalIntelBehavior",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelBehavior.value,
-          response.programBenchmark.emotionalIntelBehavior.value,
-          response.agdiagoBenchmark.emotionalIntelBehavior.value,
+          response.attributes.player.emotionalIntelBehavior,
+          response.attributes.program.emotionalIntelBehavior,
+          response.attributes.agdiago.emotionalIntelBehavior
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelIndependence.value,
-        ftick: response.programBenchmark.emotionalIntelIndependence.value,
-        stick: response.agdiagoBenchmark.emotionalIntelIndependence.value,
+        value: response.attributes.player.emotionalIntelIndependence,
+        ftick: response.attributes.program.emotionalIntelIndependence,
+        stick: response.attributes.agdiago.emotionalIntelIndependence,
         name: "Eotional Intel Independence",
         field: "emotionalIntelIndependence",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelIndependence.value,
-          response.programBenchmark.emotionalIntelIndependence.value,
-          response.agdiagoBenchmark.emotionalIntelIndependence.value,
+          response.attributes.player.emotionalIntelIndependence,
+          response.attributes.program.emotionalIntelIndependence,
+          response.attributes.agdiago.emotionalIntelIndependence
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelReflection.value,
-        ftick: response.programBenchmark.emotionalIntelReflection.value,
-        stick: response.agdiagoBenchmark.emotionalIntelReflection.value,
+        value: response.attributes.player.emotionalIntelReflection,
+        ftick: response.attributes.program.emotionalIntelReflection,
+        stick: response.attributes.agdiago.emotionalIntelReflection,
         name: "Emotional Intel Reflection",
         field: "emotionalIntelReflection",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelReflection.value,
-          response.programBenchmark.emotionalIntelReflection.value,
-          response.agdiagoBenchmark.emotionalIntelReflection.value,
+          response.attributes.player.emotionalIntelReflection,
+          response.attributes.program.emotionalIntelReflection,
+          response.attributes.agdiago.emotionalIntelReflection
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelRelationships.value,
-        ftick: response.programBenchmark.emotionalIntelRelationships.value,
-        stick: response.agdiagoBenchmark.emotionalIntelRelationships.value,
+        value: response.attributes.player.emotionalIntelRelationships,
+        ftick: response.attributes.program.emotionalIntelRelationships,
+        stick: response.attributes.agdiago.emotionalIntelRelationships,
         name: "Emotional Intel Relationships",
         field: "emotionalIntelRelationships",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelRelationships.value,
-          response.programBenchmark.emotionalIntelRelationships.value,
-          response.agdiagoBenchmark.emotionalIntelRelationships.value,
+          response.attributes.player.emotionalIntelRelationships,
+          response.attributes.program.emotionalIntelRelationships,
+          response.attributes.agdiago.emotionalIntelRelationships
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelResponsibility.value,
-        ftick: response.programBenchmark.emotionalIntelResponsibility.value,
-        stick: response.agdiagoBenchmark.emotionalIntelResponsibility.value,
+        value: response.attributes.player.emotionalIntelResponsibility,
+        ftick: response.attributes.program.emotionalIntelResponsibility,
+        stick: response.attributes.agdiago.emotionalIntelResponsibility,
         name: "Emotional Intel Responsibility",
         field: "emotionalIntelResponsibility",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelResponsibility.value,
-          response.programBenchmark.emotionalIntelResponsibility.value,
-          response.agdiagoBenchmark.emotionalIntelResponsibility.value,
+          response.attributes.player.emotionalIntelResponsibility,
+          response.attributes.program.emotionalIntelResponsibility,
+          response.attributes.agdiago.emotionalIntelResponsibility
         ),
         style: "number",
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelteamWork.value,
-        ftick: response.programBenchmark.emotionalIntelteamWork.value,
-        stick: response.agdiagoBenchmark.emotionalIntelteamWork.value,
+        value: response.attributes.player.emotionalIntelteamWork,
+        ftick: response.attributes.program.emotionalIntelteamWork,
+        stick: response.attributes.agdiago.emotionalIntelteamWork,
         name: "Emotional Intel teamWork",
         field: "emotionalIntelteamWork",
         range: getDataRange(
-          response.emotionalIntel.emotionalIntelteamWork.value,
-          response.programBenchmark.emotionalIntelteamWork.value,
-          response.agdiagoBenchmark.emotionalIntelteamWork.value,
+          response.attributes.player.emotionalIntelteamWork,
+          response.attributes.program.emotionalIntelteamWork,
+          response.attributes.agdiago.emotionalIntelteamWork
         ),
         style: "number",
         fractiondigits: 0
       }
     ];
+    function sortByValue(a, b) { return b.value - a.value; }
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(field) {
@@ -617,19 +676,19 @@ var handleEmotionalIntelAttributes = (function() {
       $.post(
         "/api/dashboard-data",
         {
-          type: "emotional_intel",
-          playerPosition: position
+          type: "pillar",
+          pillar: "emotionalIntel",
+          position: position
         },
-        function(response) {
+        function (response) {
           const data = getEmotionalIntelAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
-            let elem = document.getElementById("emotionalIntelBlock");
-            elem.style.display = "none";
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("emotional-intel");
+            elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
@@ -646,20 +705,20 @@ var handleEmotionalIntelAttributes = (function() {
   };
 })();
 
-var handleAthleticAttributes = (function() {
+var handleAthleticAttributes = (function () {
   "use strict";
   function getAthleticAttributesData(response, playerPosition) {
     function getCarries() {
       return {
-        value: response.athletic.carries.value,
-        ftick: response.programBenchmark.carries.value,
-        stick: response.agdiagoBenchmark.carries.value,
+        value: response.attributes.player.carries,
+        ftick: response.attributes.program.carries,
+        stick: response.attributes.agdiago.carries,
         name: "Carries",
         field: "carries",
         range: getDataRange(
-          response.athletic.carries.value,
-          response.programBenchmark.carries.value,
-          response.agdiagoBenchmark.carries.value,
+          response.attributes.player.carries,
+          response.attributes.program.carries,
+          response.attributes.agdiago.carries
         ),
         style: "number",
         fractiondigits: 0
@@ -667,15 +726,15 @@ var handleAthleticAttributes = (function() {
     }
     function getCompletions() {
       return {
-        value: response.athletic.completions.value,
-        ftick: response.programBenchmark.completions.value,
-        stick: response.agdiagoBenchmark.completions.value,
+        value: response.attributes.player.completions,
+        ftick: response.attributes.program.completions,
+        stick: response.attributes.agdiago.completions,
         name: "Completions",
         field: "completions",
         range: getDataRange(
-          response.athletic.completions.value,
-          response.programBenchmark.completions.value,
-          response.agdiagoBenchmark.completions.value,
+          response.attributes.player.completions,
+          response.attributes.program.completions,
+          response.attributes.agdiago.completions
         ),
         style: "number",
         fractiondigits: 0
@@ -683,47 +742,47 @@ var handleAthleticAttributes = (function() {
     }
     function getInterceptionsThrown() {
       return {
-        value: response.athletic.interceptionsThrown.value,
-        ftick: response.programBenchmark.interceptionsThrown.value,
-        stick: response.agdiagoBenchmark.interceptionsThrown.value,
+        value: response.attributes.player.interceptionsThrown,
+        ftick: response.attributes.program.interceptionsThrown,
+        stick: response.attributes.agdiago.interceptionsThrown,
         name: "Interceptions Thrown",
         field: "interceptionsThrown",
         range: getDataRange(
-          response.athletic.interceptionsThrown.value,
-          response.programBenchmark.interceptionsThrown.value,
-          response.agdiagoBenchmark.interceptionsThrown.value,
-      ),
+          response.attributes.player.interceptionsThrown,
+          response.attributes.program.interceptionsThrown,
+          response.attributes.agdiago.interceptionsThrown
+        ),
         style: "number",
         fractiondigits: 0
       };
     }
     function getPassingYards() {
       return {
-        value: response.athletic.passingYards.value,
-        ftick: response.programBenchmark.passingYards.value,
-        stick: response.agdiagoBenchmark.passingYards.value,
+        value: response.attributes.player.passingYards,
+        ftick: response.attributes.program.passingYards,
+        stick: response.attributes.agdiago.passingYards,
         name: "Passing Yards",
         field: "passingYards",
         range: getDataRange(
-          response.athletic.passingYards.value,
-          response.programBenchmark.passingYards.value,
-          response.agdiagoBenchmark.passingYards.value,
-      ),
+          response.attributes.player.passingYards,
+          response.attributes.program.passingYards,
+          response.attributes.agdiago.passingYards
+        ),
         style: "number",
         fractiondigits: 0
       };
     }
     function getRecievingYards() {
       return {
-        value: response.athletic.recievingYards.value,
-        ftick: response.programBenchmark.recievingYards.value,
-        stick: response.agdiagoBenchmark.recievingYards.value,
+        value: response.attributes.player.recievingYards,
+        ftick: response.attributes.program.recievingYards,
+        stick: response.attributes.agdiago.recievingYards,
         name: "Recieving Yards",
         field: "recievingYards",
         range: getDataRange(
-          response.athletic.recievingYards.value,
-          response.programBenchmark.recievingYards.value,
-          response.agdiagoBenchmark.recievingYards.value,
+          response.attributes.player.recievingYards,
+          response.attributes.program.recievingYards,
+          response.attributes.agdiago.recievingYards
         ),
         style: "number",
         fractiondigits: 0
@@ -731,15 +790,15 @@ var handleAthleticAttributes = (function() {
     }
     function getReceptions() {
       return {
-        value: response.athletic.receptions.value,
-        ftick: response.programBenchmark.receptions.value,
-        stick: response.agdiagoBenchmark.receptions.value,
+        value: response.attributes.player.receptions,
+        ftick: response.attributes.program.receptions,
+        stick: response.attributes.agdiago.receptions,
         name: "Receptions",
         field: "receptions",
         range: getDataRange(
-          response.athletic.receptions.value,
-          response.programBenchmark.receptions.value,
-          response.agdiagoBenchmark.receptions.value,
+          response.attributes.player.receptions,
+          response.attributes.program.receptions,
+          response.attributes.agdiago.receptions
         ),
         style: "number",
         fractiondigits: 0
@@ -747,15 +806,15 @@ var handleAthleticAttributes = (function() {
     }
     function getrushingTouchdowns() {
       return {
-        value: response.athletic.rushingTouchdowns.value,
-        ftick: response.programBenchmark.rushingTouchdowns.value,
-        stick: response.agdiagoBenchmark.rushingTouchdowns.value,
+        value: response.attributes.player.rushingTouchdowns,
+        ftick: response.attributes.program.rushingTouchdowns,
+        stick: response.attributes.agdiago.rushingTouchdowns,
         name: "rushingTouchdowns",
         field: "rushingTouchdowns",
         range: getDataRange(
-          response.athletic.rushingTouchdowns.value,
-          response.programBenchmark.rushingTouchdowns.value,
-          response.agdiagoBenchmark.rushingTouchdowns.value,
+          response.attributes.player.rushingTouchdowns,
+          response.attributes.program.rushingTouchdowns,
+          response.attributes.agdiago.rushingTouchdowns
         ),
         style: "number",
         fractiondigits: 0
@@ -763,15 +822,15 @@ var handleAthleticAttributes = (function() {
     }
     function getRushingYards() {
       return {
-        value: response.athletic.rushingYards.value,
-        ftick: response.programBenchmark.rushingYards.value,
-        stick: response.agdiagoBenchmark.rushingYards.value,
+        value: response.attributes.player.rushingYards,
+        ftick: response.attributes.program.rushingYards,
+        stick: response.attributes.agdiago.rushingYards,
         name: "Rushing Yards",
         field: "rushingYards",
         range: getDataRange(
-          response.athletic.rushingYards.value,
-          response.programBenchmark.rushingYards.value,
-          response.agdiagoBenchmark.rushingYards.value,
+          response.attributes.player.rushingYards,
+          response.attributes.program.rushingYards,
+          response.attributes.agdiago.rushingYards
         ),
         style: "number",
         fractiondigits: 0
@@ -779,15 +838,15 @@ var handleAthleticAttributes = (function() {
     }
     function getSacks() {
       return {
-        value: response.athletic.sacks.value,
-        ftick: response.programBenchmark.sacks.value,
-        stick: response.agdiagoBenchmark.sacks.value,
+        value: response.attributes.player.sacks,
+        ftick: response.attributes.program.sacks,
+        stick: response.attributes.agdiago.sacks,
         name: "Sacks",
         field: "sacks",
         range: getDataRange(
-          response.athletic.sacks.value,
-          response.programBenchmark.sacks.value,
-          response.agdiagoBenchmark.sacks.value,
+          response.attributes.player.sacks,
+          response.attributes.program.sacks,
+          response.attributes.agdiago.sacks
         ),
         style: "number",
         fractiondigits: 0
@@ -795,15 +854,15 @@ var handleAthleticAttributes = (function() {
     }
     function getSoloTackle() {
       return {
-        value: response.athletic.soloTackle.value,
-        ftick: response.programBenchmark.soloTackle.value,
-        stick: response.agdiagoBenchmark.soloTackle.value,
+        value: response.attributes.player.soloTackle,
+        ftick: response.attributes.program.soloTackle,
+        stick: response.attributes.agdiago.soloTackle,
         name: "Solo Tackle",
         field: "soloTackle",
         range: getDataRange(
-          response.athletic.soloTackle.value,
-          response.programBenchmark.soloTackle.value,
-          response.agdiagoBenchmark.soloTackle.value,
+          response.attributes.player.soloTackle,
+          response.attributes.program.soloTackle,
+          response.attributes.agdiago.soloTackle
         ),
         style: "number",
         fractiondigits: 0
@@ -811,15 +870,15 @@ var handleAthleticAttributes = (function() {
     }
     function getTacklesForLoss() {
       return {
-        value: response.athletic.tacklesForLoss.value,
-        ftick: response.programBenchmark.tacklesForLoss.value,
-        stick: response.agdiagoBenchmark.tacklesForLoss.value,
+        value: response.attributes.player.tacklesForLoss,
+        ftick: response.attributes.program.tacklesForLoss,
+        stick: response.attributes.agdiago.tacklesForLoss,
         name: "Tackles For Loss",
         field: "tacklesForLoss",
         range: getDataRange(
-          response.athletic.tacklesForLoss.value,
-          response.programBenchmark.tacklesForLoss.value,
-          response.agdiagoBenchmark.tacklesForLoss.value,
+          response.attributes.player.tacklesForLoss,
+          response.attributes.program.tacklesForLoss,
+          response.attributes.agdiago.tacklesForLoss
         ),
         style: "number",
         fractiondigits: 0
@@ -827,15 +886,15 @@ var handleAthleticAttributes = (function() {
     }
     function gettotalTackles() {
       return {
-        value: response.athletic.totalTackles.value,
-        ftick: response.programBenchmark.totalTackles.value,
-        stick: response.agdiagoBenchmark.totalTackles.value,
+        value: response.attributes.player.totalTackles,
+        ftick: response.attributes.program.totalTackles,
+        stick: response.attributes.agdiago.totalTackles,
         name: "Total Tackles",
         field: "totalTackles",
         range: getDataRange(
-          response.athletic.totalTackles.value,
-          response.programBenchmark.totalTackles.value,
-          response.agdiagoBenchmark.totalTackles.value,
+          response.attributes.player.totalTackles,
+          response.attributes.program.totalTackles,
+          response.attributes.agdiago.totalTackles
         ),
         style: "number",
         fractiondigits: 0
@@ -843,15 +902,15 @@ var handleAthleticAttributes = (function() {
     }
     function getTouchdownsThrown() {
       return {
-        value: response.athletic.touchdownsThrown.value,
-        ftick: response.programBenchmark.touchdownsThrown.value,
-        stick: response.agdiagoBenchmark.touchdownsThrown.value,
+        value: response.attributes.player.touchdownsThrown,
+        ftick: response.attributes.program.touchdownsThrown,
+        stick: response.attributes.agdiago.touchdownsThrown,
         name: "Touchdowns Thrown",
         field: "touchdownsThrown",
         range: getDataRange(
-          response.athletic.touchdownsThrown.value,
-          response.programBenchmark.touchdownsThrown.value,
-          response.agdiagoBenchmark.touchdownsThrown.value,
+          response.attributes.player.touchdownsThrown,
+          response.attributes.program.touchdownsThrown,
+          response.attributes.agdiago.touchdownsThrown
         ),
         style: "number",
         fractiondigits: 0
@@ -859,15 +918,15 @@ var handleAthleticAttributes = (function() {
     }
     function getForty() {
       return {
-        value: response.athletic.forty.value,
-        ftick: response.programBenchmark.forty.value,
-        stick: response.agdiagoBenchmark.forty.value,
+        value: response.attributes.player.forty,
+        ftick: response.attributes.program.forty,
+        stick: response.attributes.agdiago.forty,
         name: "Forty",
         field: "forty",
         range: getDataRange(
-          response.athletic.forty.value,
-          response.programBenchmark.forty.value,
-          response.agdiagoBenchmark.forty.value,
+          response.attributes.player.forty,
+          response.attributes.program.forty,
+          response.attributes.agdiago.forty
         ),
         style: "number",
         fractiondigits: 0
@@ -875,15 +934,15 @@ var handleAthleticAttributes = (function() {
     }
     function getGamesPlayed() {
       return {
-        value: response.athletic.gamesPlayed.value,
-        ftick: response.programBenchmark.gamesPlayed.value,
-        stick: response.agdiagoBenchmark.gamesPlayed.value,
+        value: response.attributes.player.gamesPlayed,
+        ftick: response.attributes.program.gamesPlayed,
+        stick: response.attributes.agdiago.gamesPlayed,
         name: "Games Played",
         field: "gamesPlayed",
         range: getDataRange(
-          response.athletic.gamesPlayed.value,
-          response.programBenchmark.gamesPlayed.value,
-          response.agdiagoBenchmark.gamesPlayed.value,
+          response.attributes.player.gamesPlayed,
+          response.attributes.program.gamesPlayed,
+          response.attributes.agdiago.gamesPlayed
         ),
         style: "number",
         fractiondigits: 0
@@ -891,15 +950,15 @@ var handleAthleticAttributes = (function() {
     }
     function getGamesStarted() {
       return {
-        value: response.athletic.gamesStarted.value,
-        ftick: response.programBenchmark.gamesStarted.value,
-        stick: response.agdiagoBenchmark.gamesStarted.value,
+        value: response.attributes.player.gamesStarted,
+        ftick: response.attributes.program.gamesStarted,
+        stick: response.attributes.agdiago.gamesStarted,
         name: "Games Started",
         field: "gamesStarted",
         range: getDataRange(
-          response.athletic.gamesStarted.value,
-          response.programBenchmark.gamesStarted.value,
-          response.agdiagoBenchmark.gamesStarted.value,
+          response.attributes.player.gamesStarted,
+          response.attributes.program.gamesStarted,
+          response.attributes.agdiago.gamesStarted
         ),
         style: "number",
         fractiondigits: 0
@@ -907,15 +966,15 @@ var handleAthleticAttributes = (function() {
     }
     function getHeight() {
       return {
-        value: response.athletic.height.value,
-        ftick: response.programBenchmark.height.value,
-        stick: response.agdiagoBenchmark.height.value,
+        value: response.attributes.player.height,
+        ftick: response.attributes.program.height,
+        stick: response.attributes.agdiago.height,
         name: "Height",
         field: "height",
         range: getDataRange(
-          response.athletic.height.value,
-          response.programBenchmark.height.value,
-          response.agdiagoBenchmark.height.value,
+          response.attributes.player.height,
+          response.attributes.program.height,
+          response.attributes.agdiago.height
         ),
         style: "number",
         fractiondigits: 0
@@ -923,15 +982,15 @@ var handleAthleticAttributes = (function() {
     }
     function getVertical() {
       return {
-        value: response.athletic.vertical.value,
-        ftick: response.programBenchmark.vertical.value,
-        stick: response.agdiagoBenchmark.vertical.value,
+        value: response.attributes.player.vertical,
+        ftick: response.attributes.program.vertical,
+        stick: response.attributes.agdiago.vertical,
         name: "Vertical",
         field: "vertical",
         range: getDataRange(
-          response.athletic.vertical.value,
-          response.programBenchmark.vertical.value,
-          response.agdiagoBenchmark.vertical.value,
+          response.attributes.player.vertical,
+          response.attributes.program.vertical,
+          response.attributes.agdiago.vertical
         ),
         style: "number",
         fractiondigits: 0
@@ -939,35 +998,40 @@ var handleAthleticAttributes = (function() {
     }
     function getWeight() {
       return {
-        value: response.athletic.weight.value,
-        ftick: response.programBenchmark.weight.value,
-        stick: response.agdiagoBenchmark.weight.value,
+        value: response.attributes.player.weight,
+        ftick: response.attributes.program.weight,
+        stick: response.attributes.agdiago.weight,
         name: "Weight",
         field: "weight",
         range: getDataRange(
-          response.athletic.weight.value,
-          response.programBenchmark.weight.value,
-          response.agdiagoBenchmark.weight.value,
+          response.attributes.player.weight,
+          response.attributes.program.weight,
+          response.attributes.agdiago.weight
         ),
         style: "number",
         fractiondigits: 0
       };
     }
+    let res;
     switch (playerPosition) {
       case "RB":
-      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getReceptions(),getRecievingYards(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getReceptions(), getRecievingYards(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
+        break;
       case "QBPRO":
       case "QBDUAL":
-      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getCompletions(),getPassingYards(),getTouchdownsThrown(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getCompletions(), getPassingYards(), getTouchdownsThrown(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
+        break;
       case "DE":
       case "DT":
-      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
+        break;
       case "ILB":
       case "OLB":
       case "MLB":
-      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
+        break;
       default:
-        return [
+        res = [
           getForty(),
           getGamesPlayed(),
           getGamesStarted(),
@@ -989,6 +1053,9 @@ var handleAthleticAttributes = (function() {
           getTouchdownsThrown()
         ];
     }
+    function sortByValue(a, b) { return b.value - a.value; }
+    res.sort(sortByValue)
+    return res;
   }
 
   function getTooltip(label) {
@@ -1015,19 +1082,20 @@ var handleAthleticAttributes = (function() {
       $.post(
         "/api/dashboard-data",
         {
-          type: "athletic",
-          playerPosition: position
+          type: "pillar",
+          pillar: "athletic",
+          position: position
         },
-        function(response) {
-          const data = getAthleticAttributesData(response, position);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+        function (response) {
+          const data = getAthleticAttributesData(response, window.position);
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
           if ((data.every(checkifnull))
           ) {
-            let elem = document.getElementById("athleticBlock");
-            elem.style.display = "none";
+            let elem = document.getElementById("athletic");
+            elem.innerHTML = "Not Available";
           } else {
             drawbarchart(
               data,
@@ -1044,98 +1112,130 @@ var handleAthleticAttributes = (function() {
   };
 })();
 
-
-var handleOverallScoreAttributes = (function() {
+var handleDashboardPosition = (function () {
   "use strict";
-
-  function getOverallAttributesData(response) {
-    return [
-      {
-        value: 10,
-        stick: 8,
-        // stick: response.agdiagoBenchmark.sat.value,
-        name: "Overall Core Attributes",
-        field: "overallScore",
-        contentId: "core-attributes",
-        range: getDataRange(10,8),
-        style: "percent",
-        fractiondigits: 1
-      },
-      {
-        value: 50,
-        stick: 55,
-        // stick: response.agdiagoBenchmark.coreGpa.value,
-        name: "Overall Academic",
-        field: "overallAcademic",
-        contentId: "academic",
-        range: getDataRange(50,55),
-        style: "percent",
-        fractiondigits: 1
-      },
-      {
-        value: 61,
-        stick: 33,
-        // stick: response.agdiagoBenchmark.gpa.value,
-        name: "Overall Emotional",
-        field: "overallEmotional",
-        contentId: "emotional-intel",
-        range: getDataRange(61,33),
-        style: "percent",
-        fractiondigits: 1
-      },
-      {
-        value: 33,
-        stick: 66,
-        // stick: response.agdiagoBenchmark.act.value,
-        name: "Overall Athletic",
-        field: "overallAthletic",
+  function getDashboardData(response) {
+    function getAthletic() {
+      return {
+        value: response.scores.player.athletic,
+        stick: response.scores.agdiago.athletic,
+        name: "Athletic",
+        field: "athletic",
         contentId: "athletic",
-        range: getDataRange(33,66),
+        range: getDataRange(
+          response.scores.player.athletic,
+          response.scores.agdiago.athletic
+        ),
         style: "percent",
         fractiondigits: 1
-      },
-      {
-        value: 99,
-        stick: 16,
-        // stick: response.agdiagoBenchmark.act.value,
-        name: "Overall Social",
-        field: "overallSocial",
+      };
+    }
+    function getEmotionalIntel() {
+      return {
+        value: response.scores.player.emotionalIntel,
+        stick: response.scores.agdiago.emotionalIntel,
+        name: "Emotional Intel",
+        field: "emotionalIntel",
+        contentId: "emotional-intel",
+        range: getDataRange(
+          response.scores.player.emotionalIntel,
+          response.scores.agdiago.emotionalIntel
+        ),
+        style: "percent",
+        fractiondigits: 1
+      };
+    }
+    function getAcademic() {
+      return {
+        value: response.scores.player.academic,
+        stick: response.scores.agdiago.academic,
+        name: "Academic",
+        field: "academic",
+        contentId: "academic",
+        range: getDataRange(
+          response.scores.player.academic,
+          response.scores.agdiago.academic
+        ),
+        style: "percent",
+        fractiondigits: 1
+      };
+    }
+    function getSocialProfile() {
+      return {
+        value: response.scores.player.socialProfile,
+        stick: response.scores.agdiago.socialProfile,
+        name: "Social Profile",
+        field: "socialProfile",
         contentId: "social-profile",
-        range: getDataRange(99,16),
+        range: getDataRange(
+          response.scores.player.socialProfile,
+          response.scores.agdiago.socialProfile
+        ),
         style: "percent",
         fractiondigits: 1
-      }
+      };
+    }
+    function getCoreAttributes() {
+      return {
+        value: response.scores.player.coreAttributes,
+        stick: response.scores.agdiago.coreAttributes,
+        name: "Core Attributes",
+        field: "coreAttributes",
+        contentId: "core-attributes",
+        range: getDataRange(
+          response.scores.player.coreAttributes,
+          response.scores.agdiago.coreAttributes
+        ),
+        style: "percent",
+        fractiondigits: 1
+      };
+    }
+
+    return [
+      getAthletic(),
+      getEmotionalIntel(),
+      getAcademic(),
+      getSocialProfile(),
+      getCoreAttributes()
     ];
   }
 
-  function getTooltip(field) {
-    switch (field) {
-      case "overallSocial":
+  function getTooltip(label) {
+    switch (label) {
+      case "academic":
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
-      case "overallCore":
+      case "gamesPlayed":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      case "gamesStarted":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      case "height":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      case "vertical":
+        return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
+      case "weight":
         return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
       default:
         return "";
     }
   }
 
-  return function handleOverallAttributes(position) {
+  return function handleDashboardPosition(position) {
     if ($("#accordionExample").length !== 0) {
       $.post(
         "/api/dashboard-data",
         {
-          type: "academic",
-          playerPosition: position
+          type: "scores",
+          position: position
         },
-        function(response) {
-          const data = getOverallAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+        function (response) {
+          const data = getDashboardData(response);
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
-            let elem = document.getElementById("overallBlock");
+
+          if (data.every(checkifnull)) {
+            let elem = document.getElementById("overallBlock1");
             elem.style.display = "none";
           } else {
             drawOverall(
@@ -1143,7 +1243,7 @@ var handleOverallScoreAttributes = (function() {
               "#accordionExample",
               position,
               getTooltip,
-              getPlayersData
+              undefined
             );
           }
         },
@@ -1153,158 +1253,14 @@ var handleOverallScoreAttributes = (function() {
   };
 })();
 
-function getDataRange(value, ftick, stick){
-  let res = [0];
-  let i = 0;
-  do {i = i + 100;}
-  while (i < value || i < ftick || i < stick)
-  res.push(i);
-  return res;
-}
-
-
-function getUrlParameters(data) {
-  let res = {};
-  let urlParams = new URLSearchParams(window.location.search);
-  let myParam = urlParams.get("position");
-  let category = urlParams.get("category");
-  if (myParam == null) {
-    res.position = undefined;
-  } else {
-    res.position = myParam.toUpperCase();
-  }
-  if (category == null) {
-    res.category = undefined;
-    return res;
-  } else {
-    res.category = myParam.toUpperCase();
-    return res;
-}}
-var handleCulturalFit = (function() {
-  "use strict";
-
-  function getCulturalFitData(response) {
-    return [
-      {
-        label: "Low Fit",
-        value: response.culturalFit[0].count,
-        start: response.culturalFit[0].percentileStart,
-        end: response.culturalFit[0].percentileEnd
-      },
-      {
-        label: "Med Fit",
-        value: response.culturalFit[1].count,
-        start: response.culturalFit[1].percentileStart,
-        end: response.culturalFit[1].percentileEnd
-      },
-      {
-        label: "Top Fit",
-        value: response.culturalFit[2].count,
-        start: response.culturalFit[2].percentileStart,
-        end: response.culturalFit[2].percentileEnd
-      }
-    ];
-  }
-
-  function getTooltip(data) {
-    return (
-      data.label +
-      " (" +
-      data.start +
-      " - " +
-      data.end +
-      " percentile)" +
-      " = " +
-      data.value +
-      " players"
-    );
-  }
-
-  return function handleCulturalFit(position) {
-    if ($("#cultural-fit").length !== 0) {
-      $.post(
-        "/api/dashboard-data",
-        {
-          type: "cultural_fit",
-          playerPosition: position
-        },
-        function(response) {
-          const data = getCulturalFitData(response);
-          drawpiechart(data, "#cultural-fit", getTooltip);
-        },
-        "json"
-      );
-    }
-  };
-})();
-
-function drawloader(selector){
-  let parent = d3.select(selector);
-  parent.selectAll("*").remove();
-  let elLoader = parent.append("div");
-  elLoader.attr("class", "elLoader");
-  let loader = elLoader.append("div");
-  loader.attr("class", "loader");
-}
-
-// var handleDashboardGritterNotification = function() {
-//   $(window).on("load", function() {
-//     setTimeout(function() {
-//       $.gritter.add({
-//         title: "Welcome back, Admin!",
-//         text:
-//           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus lacus ut lectus rutrum placerat.",
-//         image: "../assets/img/user/user-2.jpg",
-//         sticky: true,
-//         time: "",
-//         class_name: "my-sticky-class"
-//       });
-//     }, 1000);
-//   });
-// };
-
-var Dashboard = (function() {
+var Dashboard = (function () {
   "use strict";
   return {
     //main function
-    init: function() {
-      // handleDashboardGritterNotification();
-      // HandleDropDownAlert("#defensiveLineDE");
-      // HandleDropDownAlert("#defensiveLineDT");
-      // HandleDropDownAlert("#defensiveLineOG");
-      // HandleDropDownAlert("#defensiveLineOT");
-      // HandleDropDownAlert("#defensiveLineOC");
-      // HandleDropDownAlert("#defensiveLineOt");
-      // HandleDropDownAlert("#defensiveLineDB");
-      // HandleDropDownAlert("#defensiveLineP");
-      // HandleDropDownAlert("#defensiveLineS");
-      // HandleDropDownAlert("#defensiveLineLS");
-      // HandleDropDownAlert("#offensiveLineOG");
-      // HandleDropDownAlert("#offensiveLineOT");
-      // HandleDropDownAlert("#offensiveLineOC");
-      // HandleDropDownAlert("#offensiveLineOt");
-      // HandleDropDownAlert("#offensiveLineLS");
-      // HandleDropDownAlert("#runningBacks");
-      // HandleDropDownAlert("#tightEnds");
-      // HandleDropDownAlert("#wideReceivers");
-      // HandleDropDownAlert("#kickingP");
-      // HandleDropDownAlert("#kickingK");
-      // HandleDropDownAlert("#defensiveBacksC");
-      // HandleDropDownAlert("#defensiveBacksB");
-      // HandleDropDownAlert("#defensiveBacksS");
-      // HandleDropDownAlert("#quaterBacks");
-      // HandleDropDownAlert("#ilb");
-      // HandleDropDownAlert("#olb");
-      // HandleDropDownAlert("#mlb");
-      getUrlParameters();
+    init: function () {
       let urlParams = getUrlParameters();
-      handleOverallScoreAttributes(urlParams.position);
-      handleSocialProfileAttributes(urlParams.position);
-      handleEmotionalIntelAttributes(urlParams.position);
-      handleCoreAttributes(urlParams.position);
-      handleAthleticAttributes(urlParams.position);
-      handleCulturalFit(urlParams.position);
-      handleAcademicAttributes(urlParams.position);
+      handleCulturalFit();
+      handleDashboardPosition();
     }
   };
 })();
