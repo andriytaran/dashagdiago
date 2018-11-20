@@ -17,7 +17,7 @@ npm run converter -- ./data/cincinnati-benchmarks.json --url http://localhost:92
 ```
 
 To stop ElasticSearch and clear data:
-
+ 
 ```sh
 docker-compose down -v
 ```

@@ -43,9 +43,25 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
       newel.setAttribute("data-target", dataTarget);
       newel.setAttribute("aria-controls", ariacont);
       newel.style.width = "100%" ;
+     
       let bar = createbar(d);
       newel.appendChild(bar);
       parentel.appendChild(newel);
+
+     var leftnode = document.createElement("div"); 
+          leftnode.className = "pull-left";
+   
+  
+      var node = document.createElement("I"); 
+
+      var textToShow=document.createTextNode(" Show Sub Categories"); 
+          node.className = "fas fa-arrow-alt-circle-down";
+          node.appendChild(textToShow);  
+          leftnode.appendChild(node);
+
+        newel.appendChild(node);
+
+
     }
     let newcardid = "card" + i.toString();
     let newcard = creatediv(null, "card", newcardid);
