@@ -1,3 +1,16 @@
+# local db
+
+To start it with memory db, create `server/datasources.local.json` with content:
+
+```
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  }
+}
+```
+
 # local elasticsearch
 
 To start local ElasticSearch using docker:
@@ -17,7 +30,7 @@ npm run converter -- ./data/cincinnati-benchmarks.json --url http://localhost:92
 ```
 
 To stop ElasticSearch and clear data:
- 
+
 ```sh
 docker-compose down -v
 ```
