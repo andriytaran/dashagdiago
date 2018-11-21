@@ -60,7 +60,7 @@ var handleCulturalFit = (function () {
         {
           type: "percentile_groups",
           position: position,
-          attribute: "culturalFit"
+          attribute: "athletic"
         },
         function (response) {
           const data = getCulturalFitData(response);
