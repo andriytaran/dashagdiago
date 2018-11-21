@@ -343,6 +343,18 @@ module.exports = app => {
       case 'percentile_groups': {
         const attribute = parser.parseRequiredParameter('attribute');
 
+        const pillars = Object.keys(domain.pillarsObj);
+
+        if (~pillars.indexOf(attribute)) {
+          const query = queryBuilder.cloneQuery();
+          const programBenchmarks = await es.fetchProgramBenchmarks(
+            query,
+            team,
+            [attribute]
+          );
+          queryBuilder.add(es.queryScoreField(attribute, programBenchmarks));
+        }
+
         const query = queryBuilder.build();
 
         const percentileGroups = await es.fetchPercentileGroups(

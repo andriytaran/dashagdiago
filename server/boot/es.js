@@ -177,7 +177,7 @@ async function fetchCount(query, team) {
 }
 
 /**
- * Calculate average overall score for given parameters.
+ * Calculate average pillar score for given parameters.
  * @param {Object} query ES Query object to filter results.
  * @param {string} team Team to query for.
  * @param {string} pillar Pillar to calculate score for
@@ -186,84 +186,37 @@ async function fetchCount(query, team) {
  * @return {number} 0-100 range percent score.
  */
 async function fetchScore(query, team, pillar, programBenchmarks) {
-  programBenchmarks = programBenchmarks ||
-    await fetchProgramBenchmarks({}, team);
+  programBenchmarks = typeof programBenchmarks === 'undefined' ?
+    await fetchProgramBenchmarks({}, team) :
+    programBenchmarks;
   if (!programBenchmarks) return null;
 
-  const attributes = R.map(
-    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
-    programBenchmarks.positions
-  );
-
   const aggregationBuilder = new AggregationBuilder()
-    .addAvg({
-      'script': {
-
-        'lang': 'painless',
-        'source': `
-def position = params._source.position;
-if (position == null) return 0;
-position = position.toLowerCase();
-
-def attributes = params['attributes'][position];
-if (attributes == null) return 0;
-
-def attributeObjs = params['benchmarks'][position];
-
-float totalScore = 0;
-float totalFactor = 0;
-
-for (int i = 0; i < attributes.length; ++i) {
-def attribute = attributes[i];
-def value = (float)doc[attribute]?.value;
-float score = 0;
-if (value == null) {
-score = score;
-} else {
-def attributeObj = attributeObjs[attribute];
-def programValue = (float)attributeObj.value;
-def reverse = attributeObj.reverse;
-def factor = (float)attributeObj.factor;
-if (reverse) {
-  score += factor * (programValue / value);
-} else {
-  score += factor * (value / programValue);
-}
-totalScore += score;
-totalFactor += factor;
-}
-}
-
-if (totalFactor > 0) {
-return totalScore / totalFactor;
-} else {
-return 0;
-}
-`,
-        'params': {
-          'attributes': attributes,
-          'benchmarks': programBenchmarks.positions,
-        },
+    .addAvg(
+      {
+        'script': buildScoreScript(pillar, programBenchmarks),
       },
-    }, 'score');
-
-  // TODO: remove _source here in painless script! optimization problem
+      pillar
+    );
 
   const fetchObj = new QueryBuilder()
+    .add({
+      'index': team,
+    })
     .add(aggregationBuilder.build())
     .add(query)
     .build();
 
-  const fetchResponse = await client.search(mergeQuery({
-    'index': team,
-  }, fetchObj));
+  const fetchResponse = await client.search(fetchObj);
 
-  const {score} = aggregationBuilder.parseResponse(fetchResponse);
-  return score ? score * 100 : null;
+  const {[pillar]: score} = aggregationBuilder.parseResponse(fetchResponse);
+
+  return score;
 }
 
 /**
- * Calculate average overall score for given parameters.
+ * Calculate 75 percentile of pillar score for agdiago
+ * baseline players for given parameters.
  * @param {Object} query ES Query object to filter results.
  * @param {string} team Team to query for.
  * @param {string} pillar Pillar to calculate score for
@@ -272,85 +225,33 @@ return 0;
  * @return {number} 0-100 range percent score.
  */
 async function fetchAgdiagoScore(query, team, pillar, programBenchmarks) {
-  programBenchmarks = programBenchmarks ||
-    await fetchProgramBenchmarks({}, team);
+  programBenchmarks = typeof programBenchmarks === 'undefined' ?
+    await fetchProgramBenchmarks({}, team) :
+    programBenchmarks;
   if (!programBenchmarks) return null;
 
-  const attributes = R.map(
-    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
-    programBenchmarks.positions
-  );
-
-  // TODO: remove _source here in painless script! optimization problem
-  const fetchObj = {
-    'size': 0,
-    'aggs': {
-      'score': {
-        'percentiles': {
-          'keyed': false,
-          'percents': [75],
-          'script': {
-
-            'lang': 'painless',
-            'source': `
-def position = params._source.position;
-if (position == null) return 0;
-position = position.toLowerCase();
-
-def attributes = params['attributes'][position];
-if (attributes == null) return 0;
-
-def attributeObjs = params['benchmarks'][position];
-
-float totalScore = 0;
-float totalFactor = 0;
-
-for (int i = 0; i < attributes.length; ++i) {
-  def attribute = attributes[i];
-  def value = (float)doc[attribute]?.value;
-  float score = 0;
-  if (value == null) {
-    score = score;
-  } else {
-    def attributeObj = attributeObjs[attribute];
-    def programValue = (float)attributeObj.value;
-    def reverse = attributeObj.reverse;
-    def factor = (float)attributeObj.factor;
-    if (reverse) {
-      score += factor * (programValue / value);
-    } else {
-      score += factor * (value / programValue);
-    }
-    totalScore += score;
-    totalFactor += factor;
-  }
-}
-
-if (totalFactor > 0) {
-  return totalScore / totalFactor;
-} else {
-  return 0;
-}
-`,
-            'params': {
-              'attributes': attributes,
-              'benchmarks': programBenchmarks.positions,
-            },
-          },
-        },
+  const aggregationBuilder = new AggregationBuilder()
+    .addPercentile(
+      {
+        'script': buildScoreScript(pillar, programBenchmarks),
       },
-    },
-  };
+      75,
+      pillar
+    );
 
-  const fetchResponse = await client.search(mergeQuery({
-    'index': 'baseline',
-    'body': fetchObj,
-  }, query));
+  const fetchObj = new QueryBuilder()
+    .add({
+      'index': 'baseline',
+    })
+    .add(aggregationBuilder.build())
+    .add(query)
+    .build();
 
-  const [agg] =
-    fetchResponse.aggregations.score.values;
-  const value = agg.value;
-  return value ? value * 100 : null;
+  const fetchResponse = await client.search(fetchObj);
+
+  const {[pillar]: score} = aggregationBuilder.parseResponse(fetchResponse);
+
+  return score;
 }
 
 /**
@@ -362,8 +263,9 @@ if (totalFactor > 0) {
  * @return {number} 0-100 range percent score.
  */
 async function fetchOverallScore(query, team, programBenchmarks) {
-  programBenchmarks = programBenchmarks ||
-    await fetchProgramBenchmarks({}, team);
+  programBenchmarks = typeof programBenchmarks === 'undefined' ?
+    await fetchProgramBenchmarks({}, team) :
+    programBenchmarks;
   if (!programBenchmarks) return null;
 
   const pillars = Object.keys(programBenchmarks.pillars);
@@ -689,6 +591,77 @@ function queryByTerm(term, value) {
   } : {};
 }
 
+function queryScriptField(field, script) {
+  return {
+    'body': {
+      'script_fields': {
+        [field]: {
+          'script': script,
+        },
+      },
+    },
+  };
+}
+
+function buildScoreScript(pillar, programBenchmarks) {
+  const attributes = R.map(
+    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+    programBenchmarks.positions
+  );
+
+  return {
+    'lang': 'painless',
+    'source': `
+def position = params._source.position;
+if (position == null) return null;
+position = position.toLowerCase();
+
+def attributes = params['attributes'][position];
+if (attributes == null) return null;
+
+def attributeObjs = params['benchmarks'][position];
+
+float totalScore = 0;
+float totalFactor = 0;
+
+for (int i = 0; i < attributes.length; ++i) {
+  def attribute = attributes[i];
+  def value = (float)doc[attribute]?.value;
+  float score = 0;
+  if (value == null) {
+    score = score;
+  } else {
+    def attributeObj = attributeObjs[attribute];
+    def programValue = (float)attributeObj.value;
+    def reverse = attributeObj.reverse;
+    def factor = (float)attributeObj.factor;
+    if (reverse) {
+      score += factor * (programValue / value);
+    } else {
+      score += factor * (value / programValue);
+    }
+    totalScore += score;
+    totalFactor += factor;
+  }
+}
+
+if (totalFactor > 0) {
+  return 100 * totalScore / totalFactor;
+} else {
+  return null;
+}
+`,
+    'params': {
+      'attributes': attributes,
+      'benchmarks': programBenchmarks.positions,
+    },
+  };
+}
+
+function queryScoreField(pillar, programBenchmarks) {
+  return queryScriptField(pillar, buildScoreScript(pillar, programBenchmarks));
+}
+
 module.exports = {
   QueryBuilder,
   fetchCount,
@@ -703,4 +676,6 @@ module.exports = {
   fetchAgdiagoPillarAttributes,
   fetchPercentileGroups,
   queryByTerm,
+  queryScriptField,
+  queryScoreField,
 };
