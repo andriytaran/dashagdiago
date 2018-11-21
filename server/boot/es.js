@@ -520,11 +520,17 @@ async function fetchAgdiagoPillarAttributes(query, pillar) {
 }
 
 async function fetchPercentileGroups(query, team, attribute) {
-  // HACK: fix it
-  attribute = 'weight';
-
   const aggregationBuilder = new AggregationBuilder()
     .addPercentiles(attribute, [45, 75], 'percentiles');
+
+  let attributeObj;
+  if (typeof attribute === 'string') {
+    attributeObj = {
+      'field': attribute,
+    };
+  } else {
+    attributeObj = attribute;
+  }
 
   const fetchObj = new QueryBuilder()
     .add({
@@ -543,14 +549,13 @@ async function fetchPercentileGroups(query, team, attribute) {
     'body': {
       'aggs': {
         'ranges': {
-          'range': {
-            'field': attribute,
+          'range': Object.assign({}, attributeObj, {
             'ranges': [
               {'to': percentilesArr[0]},
               {'from': percentilesArr[0], 'to': percentilesArr[1]},
               {'from': percentilesArr[1]},
             ],
-          },
+          }),
         },
       },
     },
@@ -675,6 +680,7 @@ module.exports = {
   fetchProgramPillarAttributes,
   fetchAgdiagoPillarAttributes,
   fetchPercentileGroups,
+  buildScoreScript,
   queryByTerm,
   queryScriptField,
   queryScoreField,

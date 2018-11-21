@@ -345,6 +345,7 @@ module.exports = app => {
 
         const pillars = Object.keys(domain.pillarsObj);
 
+        let attributeParam;
         if (~pillars.indexOf(attribute)) {
           const query = queryBuilder.cloneQuery();
           const programBenchmarks = await es.fetchProgramBenchmarks(
@@ -352,7 +353,11 @@ module.exports = app => {
             team,
             [attribute]
           );
-          queryBuilder.add(es.queryScoreField(attribute, programBenchmarks));
+          attributeParam = {
+            'script': es.buildScoreScript(attribute, programBenchmarks),
+          };
+        } else {
+          attributeParam = attribute;
         }
 
         const query = queryBuilder.build();
@@ -360,7 +365,7 @@ module.exports = app => {
         const percentileGroups = await es.fetchPercentileGroups(
           query,
           team,
-          attribute,
+          attributeParam,
         );
 
         response.groups = percentileGroups;
