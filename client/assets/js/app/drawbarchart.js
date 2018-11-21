@@ -20,7 +20,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
   function createbar(d) {
     // const maxwidth = 300;
     // const widthPerPercent = maxwidth / 100;
-    if (d.value == null){return document.createElement("div")};
+    if (d.value == null) { return document.createElement("div") };
     function perccheck(value, ranges, rangee) {
       let singleperc = (rangee - ranges) / 100;
       return (value - ranges) / singleperc;
@@ -45,7 +45,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
       function showmodal() {
         drawloader("#players");
         $("#chartmodal").modal("show");
-        getPlayersData(position, d.field, function(players) {
+        getPlayersData(position, d.field, function (players) {
           drawtable(players, "#players")
         });
       }
@@ -54,27 +54,32 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     let barEnter = mbar.append("div");
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
-
     if (d.value < d.ftick && d.value < d.stick) {
+      barEnter.style("background-color", "orange");
+    }
+    if (d.ftick == null && d.value < d.stick) {
+      barEnter.style("background-color", "orange");
+    }
+    if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
     }
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
-    if (d.value == null){gbar.style("display", "none");}
+    if (d.value == null) { gbar.style("display", "none"); }
     let ftick = mbar.append("div");
     ftick.attr("class", "tick red");
 
-    ftick.style("left", function() {
+    ftick.style("left", function () {
       return perccheck(d.ftick, d.range[0], d.range[1]) + "%";
     });
-    if (d.ftick == null){ftick.style("display", "none");}
+    if (d.ftick == null) { ftick.style("display", "none"); }
     let stick = mbar.append("div");
     stick.attr("class", "tick");
 
-    stick.style("left", function() {
+    stick.style("left", function () {
       return perccheck(d.stick, d.range[0], d.range[1]) + "%";
     });
-    if (d.stick == null){stick.style("display", "none");}
+    if (d.stick == null) { stick.style("display", "none"); }
     function displayvalue(value, style, fractiondigits) {
       let fractiondigitsval = 1;
       if (d.fractiondigits != null) {

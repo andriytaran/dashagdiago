@@ -144,6 +144,12 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
     }
+    if (d.ftick == null && d.value < d.stick) {
+      barEnter.style("background-color", "orange");
+    }
+    if (d.value < d.ftick && d.stick == null) {
+      barEnter.style("background-color", "orange");
+    }
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
     if (d.value == null) {

@@ -19,6 +19,12 @@
   animation: spin 2s linear infinite;
 }
 
+.culturalFdiv {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

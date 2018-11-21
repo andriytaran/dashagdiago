@@ -1,4 +1,4 @@
-var handleCoreAttributes = (function() {
+var handleCoreAttributes = (function () {
   "use strict";
   // function getrange(){
   //   if (value < 100 && ftick < 100 && stick < 100){return "[0 - 100]";}
@@ -90,14 +90,13 @@ var handleCoreAttributes = (function() {
           type: "core_attributes",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getCoreAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
+          if (data.every(checkifnull)) {
             let elem = document.getElementById("coreAttributesBlock");
             elem.style.display = "none";
           } else {
@@ -124,14 +123,14 @@ function getPlayersData(position, field, cb) {
       playerPosition: position,
       field: field
     },
-    function(response) {
+    function (response) {
       cb(response.players);
     },
     "json"
   );
 }
 
-var handleAcademicAttributes = (function() {
+var handleAcademicAttributes = (function () {
   "use strict";
 
   function getAcademicAttributesData(response) {
@@ -198,14 +197,13 @@ var handleAcademicAttributes = (function() {
           type: "academic",
           playerPosition: position,
         },
-        function(response) {
+        function (response) {
           const data = getAcademicAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
+          if (data.every(checkifnull)) {
             let elem = document.getElementById("academicBlock");
             elem.style.display = "none";
           } else {
@@ -240,7 +238,7 @@ var handleAcademicAttributes = (function() {
 //     // }
 //   }
 // }
-var handleSocialProfileAttributes = (function() {
+var handleSocialProfileAttributes = (function () {
   "use strict";
 
   function getSocialProfileAttributesData(response) {
@@ -393,14 +391,13 @@ var handleSocialProfileAttributes = (function() {
           type: "social_profile",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getSocialProfileAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
+          if (data.every(checkifnull)) {
             let elem = document.getElementById("socialProfileBlock");
             elem.style.display = "none";
           } else {
@@ -419,7 +416,7 @@ var handleSocialProfileAttributes = (function() {
   };
 })();
 
-var handleEmotionalIntelAttributes = (function() {
+var handleEmotionalIntelAttributes = (function () {
   "use strict";
 
   function getEmotionalIntelAttributesData(response) {
@@ -526,14 +523,13 @@ var handleEmotionalIntelAttributes = (function() {
           type: "emotional_intel",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getEmotionalIntelAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
+          if (data.every(checkifnull)) {
             let elem = document.getElementById("emotionalIntelBlock");
             elem.style.display = "none";
           } else {
@@ -552,7 +548,7 @@ var handleEmotionalIntelAttributes = (function() {
   };
 })();
 
-var handleAthleticAttributes = (function() {
+var handleAthleticAttributes = (function () {
   "use strict";
   function getAthleticAttributesData(response, playerPosition) {
     function getCarries() {
@@ -785,17 +781,17 @@ var handleAthleticAttributes = (function() {
     }
     switch (playerPosition) {
       case "RB":
-      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getReceptions(),getRecievingYards(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        return [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getReceptions(), getRecievingYards(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
       case "QBPRO":
       case "QBDUAL":
-      return [getForty(),getVertical(),getCarries(),getrushingTouchdowns(),getRushingYards(),getCompletions(),getPassingYards(),getTouchdownsThrown(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        return [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getCompletions(), getPassingYards(), getTouchdownsThrown(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
       case "DE":
       case "DT":
-      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        return [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
       case "ILB":
       case "OLB":
       case "MLB":
-      return [getForty(),getVertical(),getSoloTackle(),gettotalTackles(),getSacks(),getTacklesForLoss(),getInterceptionsThrown(),getGamesPlayed(),getGamesStarted(),getHeight(),getWeight()];
+        return [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
       default:
         return [
           getForty(),
@@ -848,11 +844,11 @@ var handleAthleticAttributes = (function() {
           type: "athletic",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getAthleticAttributesData(response, position);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
           if ((data.every(checkifnull))
           ) {
@@ -875,7 +871,7 @@ var handleAthleticAttributes = (function() {
 })();
 
 
-var handleOverallScoreAttributes = (function() {
+var handleOverallScoreAttributes = (function () {
   "use strict";
 
   function getOverallAttributesData(response) {
@@ -957,14 +953,13 @@ var handleOverallScoreAttributes = (function() {
           type: "academic",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getOverallAttributesData(response);
-          function checkifnull(datael){
-            if (datael.value === null){return true;}
-            else{return false;}
+          function checkifnull(datael) {
+            if (datael.value === null) { return true; }
+            else { return false; }
           }
-          if (data.every(checkifnull))
-           {
+          if (data.every(checkifnull)) {
             let elem = document.getElementById("overallBlock");
             elem.style.display = "none";
           } else {
@@ -999,8 +994,9 @@ function getUrlParameters(data) {
   } else {
     res.category = myParam.toUpperCase();
     return res;
-}}
-var handleCulturalFit = (function() {
+  }
+}
+var handleCulturalFit = (function () {
   "use strict";
 
   function getCulturalFitData(response) {
@@ -1048,7 +1044,7 @@ var handleCulturalFit = (function() {
           type: "cultural_fit",
           playerPosition: position
         },
-        function(response) {
+        function (response) {
           const data = getCulturalFitData(response);
           drawpiechart(data, "#cultural-fit", getTooltip);
         },
@@ -1058,7 +1054,7 @@ var handleCulturalFit = (function() {
   };
 })();
 
-function drawloader(selector){
+function drawloader(selector) {
   let parent = d3.select(selector);
   parent.selectAll("*").remove();
   let elLoader = parent.append("div");
@@ -1067,9 +1063,9 @@ function drawloader(selector){
   loader.attr("class", "loader");
 }
 
-var handleDashboardGritterNotification = function() {
-  $(window).on("load", function() {
-    setTimeout(function() {
+var handleDashboardGritterNotification = function () {
+  $(window).on("load", function () {
+    setTimeout(function () {
       $.gritter.add({
         title: "Welcome back, Admin!",
         text:
@@ -1083,11 +1079,11 @@ var handleDashboardGritterNotification = function() {
   });
 };
 
-var Dashboard = (function() {
+var Dashboard = (function () {
   "use strict";
   return {
     //main function
-    init: function() {
+    init: function () {
       handleDashboardGritterNotification();
       // HandleDropDownAlert("#defensiveLineDE");
       // HandleDropDownAlert("#defensiveLineDT");

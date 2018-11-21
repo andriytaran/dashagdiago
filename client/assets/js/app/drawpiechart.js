@@ -1,19 +1,19 @@
-function drawpiechart(data, selector, getTooltip) {
+function drawpiechart(data, selector, position, getTooltip) {
   let block = d3.select(selector)
   block.selectAll(".elLoader").remove()
-  nv.addGraph(function() {
+  nv.addGraph(function () {
     var pieChart = nv.models
       .pieChart()
-      .x(function(d) {
+      .x(function (d) {
         return d.label;
       })
-      .y(function(d) {
+      .y(function (d) {
         return d.value;
       })
       // .showLabels(true)
       .labelThreshold(0.05);
 
-    pieChart.tooltip.contentGenerator(function(obj) {
+    pieChart.tooltip.contentGenerator(function (obj) {
       return getTooltip(obj.data);
     });
 
@@ -24,7 +24,21 @@ function drawpiechart(data, selector, getTooltip) {
       .transition()
       .duration(300)
       .call(pieChart);
+    if (getPlayersData) {
+      pieChart.pie.dispatch.on("elementClick", function (obj) {
+        showmodal(position, obj.data);
+      });
+    }
+
 
     return pieChart;
+  });
+}
+
+function showmodal(position, data) {
+  drawloader("#players");
+  $("#chartmodal").modal("show");
+  getCulturalPlayersData(position, data.start, data.end, function (players) {
+    drawtable(players, "#players")
   });
 }
