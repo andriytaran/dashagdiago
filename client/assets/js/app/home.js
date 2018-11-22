@@ -12,92 +12,97 @@ function getPlayersData(position, attribute, cb) {
     "json"
   );
 }
+
 function getCulturalPlayersData(position, percentilestart, percentileEnd, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "players",
-      position: position,
-      // bucket: [percentilestart, percentileEnd]
-      attribute: "passingYards"
-    },
-    function (response) {
-      cb([
-        {
-          fname: "Bruce",
-          lname: "Willis",
-          position: "asdasd",
-          score: 60,
-          id: 140,
-        },
-        {
-          fname: "Arnold",
-          lname: "Swartsbsadad",
-          position: "position",
-          score: 23,
-          id: 141,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "John",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        },
-        {
-          fname: "Mark",
-          lname: "Hamil",
-          position: "lord",
-          score: 100,
-          id: 13,
-        }
-      ]);
-    },
-    "json"
-  );
+  setTimeout(function () {
+    cb([
+      {
+        fname: "Bruce",
+        lname: "Willis",
+        position: "asdasd",
+        score: 60,
+        id: 140,
+      },
+      {
+        fname: "Arnold",
+        lname: "Swartsbsadad",
+        position: "position",
+        score: 23,
+        id: 141,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "John",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      },
+      {
+        fname: "Mark",
+        lname: "Hamil",
+        position: "lord",
+        score: 100,
+        id: 13,
+      }
+    ]);
+  }, 1500);
+  // $.post(
+  //   "/api/dashboard-data",
+  //   {
+  //     type: "players",
+  //     position: position,
+  //     // bucket: [percentilestart, percentileEnd]
+  //     attribute: "passingYards"
+  //   },
+  //   function (response) {
+  //     cb(response.players);
+  //   },
+  //   "json"
+  // );
 }
+
 var handleCulturalFit = (function () {
   "use strict";
 
@@ -262,23 +267,26 @@ var handleCulturalFitTable = (function () {
 
   return function handleCulturalFitTable(position) {
     if ($("#culturaltop").length !== 0) {
-      $.post(
-        "/api/dashboard-data",
-        {
-          type: "percentile_groups",
-          position: position,
-          attribute: "culturalFit"
-        },
-        function (response) {
-          const data = getCulturalFitData(response);
+      setTimeout(function () {
+        const data = getCulturalFitData();
           drawtopculturals(data, "#culturaltop");
-        },
-        "json"
-      );
+      }, 1500);
+      // $.post(
+      //   "/api/dashboard-data",
+      //   {
+      //     type: "percentile_groups",
+      //     position: position,
+      //     attribute: "athletic"
+      //   },
+      //   function (response) {
+      //     const data = getCulturalFitData(response);
+      //     drawtopculturals(data, "#culturaltop");
+      //   },
+      //   "json"
+      // );
     }
   };
 })();
-
 
 var handleCoreAttributes = (function () {
   "use strict";
@@ -1468,8 +1476,8 @@ var Dashboard = (function () {
     init: function () {
       let urlParams = getUrlParameters();
       handleCulturalFit();
-      handleDashboardPosition();
       handleCulturalFitTable();
+      handleDashboardPosition();
     }
   };
 })();
