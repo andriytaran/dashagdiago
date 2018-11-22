@@ -59,7 +59,7 @@ Supported extensions: ${supportedExtensions}`,
     alias: 'url',
     default: urlDefault,
     describe: 'ElasticSearch url',
-    type: 'string'
+    type: 'string',
   })
   .help('h')
   .alias('h', 'help')
