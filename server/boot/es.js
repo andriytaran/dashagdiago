@@ -425,15 +425,27 @@ async function fetchPlayer(query, team, id) {
   return player;
 }
 
-async function fetchPlayers(query, team, attribute) {
+async function fetchPlayers(query, team, attributeParam) {
+  const isScript = typeof attributeParam !== 'string';
+
+  const sourceAttributes = ['fname', 'lname', 'position'];
+  if (!isScript) {
+    sourceAttributes.push(attributeParam);
+  }
+
   const fetchObj = new QueryBuilder()
     .add({
       'index': team,
       'body': {
         'size': 10000,
-        '_source': ['fname', 'lname', 'position', attribute],
+        '_source': sourceAttributes,
       },
     })
+    .add(isScript ? {
+      'body': {
+        'script_fields': attributeParam,
+      },
+    } : {})
     .add(query)
     .build();
 
@@ -444,7 +456,9 @@ async function fetchPlayers(query, team, attribute) {
     fname: hit._source.fname,
     lname: hit._source.lname,
     position: hit._source.position,
-    value: hit._source[attribute],
+    value: isScript ?
+      hit.fields[Object.keys(attributeParam)[0]][0] :
+      hit._source[attributeParam],
   }));
 
   return players;
@@ -608,7 +622,7 @@ function queryScriptField(field, script) {
   };
 }
 
-function buildScoreScript(pillar, programBenchmarks) {
+function buildScoreScript(pillar, programBenchmarks, {defaultValue = null}) {
   const attributes = R.map(
     p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
     programBenchmarks.positions
@@ -618,11 +632,11 @@ function buildScoreScript(pillar, programBenchmarks) {
     'lang': 'painless',
     'source': `
 def position = params._source.position;
-if (position == null) return null;
+if (position == null) return ${defaultValue};
 position = position.toLowerCase();
 
 def attributes = params['attributes'][position];
-if (attributes == null) return null;
+if (attributes == null) return ${defaultValue};
 
 def attributeObjs = params['benchmarks'][position];
 
@@ -653,7 +667,7 @@ for (int i = 0; i < attributes.length; ++i) {
 if (totalFactor > 0) {
   return 100 * totalScore / totalFactor;
 } else {
-  return null;
+  return ${defaultValue};
 }
 `,
     'params': {

@@ -374,10 +374,80 @@ module.exports = app => {
       }
       case 'players': {
         const attribute = parser.parseRequiredParameter('attribute');
+        const sort = parser.parseParameter('sort');
+        if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
+
+        // TODO: implement limit
+        // TODO: implement between
+        const limit = parser.parseParameter('limit');
+        const between = parser.parseParameter('between');
+        if (between && !(between instanceof Array)) throw new Error(`Unsupported between: ${between}`);
+
+        const pillars = Object.keys(domain.pillarsObj);
+
+        const defaultValueIfScript = 0;
+        const isScript = ~pillars.indexOf(attribute);
+
+        let attributeParam;
+        if (isScript) {
+          const query = queryBuilder.cloneQuery();
+          const programBenchmarks = await es.fetchProgramBenchmarks(
+            query,
+            team,
+            [attribute]
+          );
+          attributeParam = {
+            [attribute]: {
+              'script': es.buildScoreScript(
+                attribute,
+                programBenchmarks,
+                {defaultValue: defaultValueIfScript}
+                // HACK: sort doesn't work on nulls, so
+                // have to supply default value
+              ),
+            },
+          };
+        } else {
+          attributeParam = attribute;
+        }
+
+        if (sort) {
+          let sortParam;
+          if (attributeParam[attribute]) {
+            sortParam = {
+              '_script': {
+                'type': 'number',
+                'script': attributeParam[attribute]['script'],
+                'order': sort,
+              },
+            };
+          } else {
+            sortParam = [
+              {
+                [attribute]: sort,
+              },
+            ];
+          }
+          queryBuilder.add({
+            'body': {
+              'sort': sortParam,
+            },
+          });
+        }
 
         const query = queryBuilder.build();
 
-        const players = await es.fetchPlayers(query, team, attribute);
+        const players = await es.fetchPlayers(query, team, attributeParam);
+
+        // HACK: sort doesn't work on nulls, so
+        // have to supply default value and here revert it
+        if (isScript) {
+          players.forEach(player => {
+            if (player.value === defaultValueIfScript) {
+              player.value = null;
+            }
+          });
+        }
 
         response.players = players;
 
