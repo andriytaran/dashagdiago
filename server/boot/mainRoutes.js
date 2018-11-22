@@ -377,7 +377,6 @@ module.exports = app => {
         const sort = parser.parseParameter('sort');
         if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
 
-        // TODO: implement limit
         // TODO: implement between
         const limit = parser.parseParameter('limit');
         const between = parser.parseParameter('between');
@@ -409,6 +408,14 @@ module.exports = app => {
           };
         } else {
           attributeParam = attribute;
+        }
+
+        if (limit != null) {
+          queryBuilder.add({
+            'body': {
+              'size': limit,
+            },
+          });
         }
 
         if (sort) {
