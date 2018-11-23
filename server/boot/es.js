@@ -682,7 +682,19 @@ for (int i = 0; i < attributes.length; ++i) {
 
 if (totalFactor > 0) {
   def res = 100 * totalScore / totalFactor;
-  return res > params['from'] && res < params['to'];
+  if (params['from'] == null) {
+    if (params['to'] == null) {
+      return true;
+    } else {
+      return res <= params['to'];
+    }
+  } else {
+    if (params['to'] == null) {
+      return res > params['from'];
+    } else {
+      return res > params['from'] && res < params['to'];
+    }
+  }
 } else {
   return false;
 }
@@ -702,7 +714,11 @@ if (totalFactor > 0) {
   };
 }
 
-function buildScoreScript(pillar, programBenchmarks, {defaultValue = null}) {
+function buildScoreScript(
+  pillar,
+  programBenchmarks,
+  {defaultValue = null} = {}
+) {
   const attributes = R.map(
     p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
     programBenchmarks.positions
