@@ -395,6 +395,17 @@ module.exports = app => {
             team,
             [attribute]
           );
+
+          if (between) {
+            const [from, to] = between;
+            queryBuilder.add(es.queryScoreRange(
+              attribute,
+              programBenchmarks,
+              from,
+              to
+            ));
+          }
+
           attributeParam = {
             [attribute]: {
               'script': es.buildScoreScript(
@@ -407,6 +418,15 @@ module.exports = app => {
             },
           };
         } else {
+          if (between) {
+            const [from, to] = between;
+            queryBuilder.add(es.queryRange(
+              attribute,
+              from,
+              to
+            ));
+          }
+
           attributeParam = attribute;
         }
 

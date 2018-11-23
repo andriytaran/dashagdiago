@@ -275,8 +275,6 @@ async function fetchOverallScore(query, team, programBenchmarks) {
     p => Object.keys(p),
     programBenchmarks.positions
   );
-
-  // TODO: remove _source here in painless script! optimization problem
   const fetchObj = {
     'size': 0,
     'aggs': {
@@ -286,7 +284,7 @@ async function fetchOverallScore(query, team, programBenchmarks) {
 
             'lang': 'painless',
             'source': `
-def position = params._source.position;
+def position = doc['position.keyword'].value;
 if (position == null) return 0;
 position = position.toLowerCase();
 
@@ -448,9 +446,7 @@ async function fetchPlayers(query, team, attributeParam) {
     } : {})
     .add(query)
     .build();
-
   const fetchResponse = await client.search(fetchObj);
-
   const players = fetchResponse.hits.hits.map(hit => ({
     id: hit._id,
     fname: hit._source.fname,
@@ -622,6 +618,90 @@ function queryScriptField(field, script) {
   };
 }
 
+function queryRange(field, from, to) {
+  return {
+    'body': {
+      'query': {
+        'range': {
+          [field]: {
+            'gte': from,
+            'lte': to,
+          },
+        },
+      },
+    },
+  };
+}
+
+function queryScoreRange(pillar, programBenchmarks, from, to) {
+  const attributes = R.map(
+    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+    programBenchmarks.positions
+  );
+  return {
+    'body': {
+      'query': {
+        'bool': {
+          'filter': {
+            'script': {
+              'script': {
+                'lang': 'painless',
+                'source': `
+def position = doc['position.keyword'].value;
+if (position == null) return false;
+position = position.toLowerCase();
+
+def attributes = params['attributes'][position];
+if (attributes == null) return false;
+
+def attributeObjs = params['benchmarks'][position];
+
+float totalScore = 0;
+float totalFactor = 0;
+
+for (int i = 0; i < attributes.length; ++i) {
+  def attribute = attributes[i];
+  def value = (float)doc[attribute]?.value;
+  float score = 0;
+  if (value == null) {
+    score = score;
+  } else {
+    def attributeObj = attributeObjs[attribute];
+    def programValue = (float)attributeObj.value;
+    def reverse = attributeObj.reverse;
+    def factor = (float)attributeObj.factor;
+    if (reverse) {
+      score += factor * (programValue / value);
+    } else {
+      score += factor * (value / programValue);
+    }
+    totalScore += score;
+    totalFactor += factor;
+  }
+}
+
+if (totalFactor > 0) {
+  def res = 100 * totalScore / totalFactor;
+  return res > params['from'] && res < params['to'];
+} else {
+  return false;
+}
+            `,
+                'params': {
+                  'attributes': attributes,
+                  'benchmarks': programBenchmarks.positions,
+                  'from': from,
+                  'to': to,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+}
+
 function buildScoreScript(pillar, programBenchmarks, {defaultValue = null}) {
   const attributes = R.map(
     p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
@@ -631,12 +711,12 @@ function buildScoreScript(pillar, programBenchmarks, {defaultValue = null}) {
   return {
     'lang': 'painless',
     'source': `
-def position = params._source.position;
-if (position == null) return ${defaultValue};
+def position = doc['position.keyword'].value;
+if (position == null) return params['defaultValue'];
 position = position.toLowerCase();
 
 def attributes = params['attributes'][position];
-if (attributes == null) return ${defaultValue};
+if (attributes == null) return params['defaultValue'];
 
 def attributeObjs = params['benchmarks'][position];
 
@@ -667,12 +747,13 @@ for (int i = 0; i < attributes.length; ++i) {
 if (totalFactor > 0) {
   return 100 * totalScore / totalFactor;
 } else {
-  return ${defaultValue};
+  return params['defaultValue'];
 }
 `,
     'params': {
       'attributes': attributes,
       'benchmarks': programBenchmarks.positions,
+      'defaultValue': defaultValue,
     },
   };
 }
@@ -698,4 +779,6 @@ module.exports = {
   queryByTerm,
   queryScriptField,
   queryScoreField,
+  queryRange,
+  queryScoreRange,
 };
