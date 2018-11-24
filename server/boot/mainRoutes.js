@@ -60,6 +60,8 @@ module.exports = app => {
         Math.round(100 * offenseCount / overallCount) :
         null,
       overallScore: Math.round(overallScore),
+      team: 'Cincinnati Bearcats',
+      teamDisplay: 'Cincinnati Bearcats',
     });
   });
 

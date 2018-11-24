@@ -13,206 +13,64 @@ function getPlayersData(position, attribute, cb) {
   );
 }
 
-function getCulturalPlayersData(position, percentilestart, percentileEnd, cb) {
-  setTimeout(function () {
-    cb([
-      {
-        fname: "Bruce",
-        lname: "Willis",
-        position: "asdasd",
-        score: 60,
-        id: 140,
-      },
-      {
-        fname: "Arnold",
-        lname: "Swartsbsadad",
-        position: "position",
-        score: 23,
-        id: 141,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "John",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-      }
-    ]);
-  }, 1500);
-  // $.post(
-  //   "/api/dashboard-data",
-  //   {
-  //     type: "players",
-  //     position: position,
-  //     // bucket: [percentilestart, percentileEnd]
-  //     attribute: "passingYards"
-  //   },
-  //   function (response) {
-  //     cb(response.players);
-  //   },
-  //   "json"
-  // );
-}
-
-var handleCulturalFitTable = (function () {
-  "use strict";
-
-  function getCulturalFitData(response) {
-    return [
-      {
-        fname: "Bruce",
-        lname: "Willis",
-        position: "asdasd",
-        score: 60,
-        id: 140,
-        rate: 1
-      },
-      {
-        fname: "Arnold",
-        lname: "Swartsbsadad",
-        position: "position",
-        score: 23,
-        id: 141,
-        rate: 2
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 3
-      },
-      {
-        fname: "John",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 4
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 5
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 6
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 7
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 8
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 9
-      },
-      {
-        fname: "Mark",
-        lname: "Hamil",
-        position: "lord",
-        score: 100,
-        id: 13,
-        rate: 10
-      }
-    ];
+function getCulturalPlayersData(position, valueStart, valueEnd, cb) {
+  function mapPlayer (player) {
+    return {
+      fname: player.fname,
+      lname: player.lname,
+      position: player.position,
+      score: player.value,
+      id: player.id,
+    };
   }
 
-  return function handleCulturalFitTable(position) {
-    if ($("#culturaltop").length !== 0) {
-      setTimeout(function () {
-        const data = getCulturalFitData();
-        drawtopculturals(data, "#culturaltop");
-      }, 1500);
-      // $.post(
-      //   "/api/dashboard-data",
-      //   {
-      //     type: "percentile_groups",
-      //     position: position,
-      //     attribute: "athletic"
-      //   },
-      //   function (response) {
-      //     const data = getCulturalFitData(response);
-      //     drawtopculturals(data, "#culturaltop");
-      //   },
-      //   "json"
-      // );
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data",
+    data: JSON.stringify({
+      type: "players",
+      position: position,
+      sort: "desc",
+      attribute: "athletic",
+      between: [valueStart, valueEnd]
+    }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+      cb(response.players.map(mapPlayer));
     }
-  };
-})();
+  });
+}
+
+function getTopCulturalPlayersData(position, cb) {
+  function mapPlayer (player, i) {
+    return {
+      fname: player.fname,
+      lname: player.lname,
+      position: player.position,
+      score: player.value,
+      id: player.id,
+      rate: i + 1
+    };
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data",
+    data: JSON.stringify({
+      type: "players",
+      position: position,
+      sort: "desc",
+      attribute: "athletic",
+      limit: 10
+    }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+      cb(response.players.map(mapPlayer));
+    }
+  });
+}
 
 var handleCulturalFit = (function () {
   "use strict";
@@ -223,19 +81,25 @@ var handleCulturalFit = (function () {
         label: "Low Fit",
         value: response.groups[0].count,
         start: response.groups[0].percentileStart,
-        end: response.groups[0].percentileEnd
+        end: response.groups[0].percentileEnd,
+        rangeStart: response.groups[0].rangeStart,
+        rangeEnd: response.groups[0].rangeEnd,
       },
       {
         label: "Med Fit",
         value: response.groups[1].count,
         start: response.groups[1].percentileStart,
-        end: response.groups[1].percentileEnd
+        end: response.groups[1].percentileEnd,
+        rangeStart: response.groups[1].rangeStart,
+        rangeEnd: response.groups[1].rangeEnd,
       },
       {
         label: "Top Fit",
         value: response.groups[2].count,
         start: response.groups[2].percentileStart,
-        end: response.groups[2].percentileEnd
+        end: response.groups[2].percentileEnd,
+        rangeStart: response.groups[2].rangeStart,
+        rangeEnd: response.groups[2].rangeEnd,
       }
     ];
   }
@@ -265,10 +129,37 @@ var handleCulturalFit = (function () {
         },
         function (response) {
           const data = getCulturalFitData(response);
-          drawpiechart(data, "#cultural-fit", getTooltip);
+          drawpiechart(data, "#cultural-fit", position, getTooltip);
         },
         "json"
       );
+    }
+  };
+})();
+
+function getPlayersData(position, attribute, cb) {
+  $.post(
+    "/api/dashboard-data",
+    {
+      type: "players",
+      position: position,
+      attribute: attribute
+    },
+    function (response) {
+      cb(response.players);
+    },
+    "json"
+  );
+}
+
+var handleCulturalFitTable = (function () {
+  "use strict";
+
+  return function handleCulturalFitTable(position) {
+    if ($("#culturaltop").length !== 0) {
+      getTopCulturalPlayersData(position, function (players) {
+        drawtopculturals(players, "#culturaltop");
+      });
     }
   };
 })();

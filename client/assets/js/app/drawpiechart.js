@@ -38,7 +38,7 @@ function drawpiechart(data, selector, position, getTooltip) {
 function showmodal(position, data) {
   drawloader("#players");
   $("#chartmodal").modal("show");
-  getCulturalPlayersData(position, data.start, data.end, function (players) {
+  getCulturalPlayersData(position, data.rangeStart, data.rangeEnd, function (players) {
     drawtable(players, "#players")
   });
 }
