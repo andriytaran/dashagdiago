@@ -598,8 +598,12 @@ function queryByTerm(term, value) {
   return value ? {
     'body': {
       'query': {
-        'term': {
-          [term]: value,
+        'bool': {
+          'filter': [{
+            'term': {
+              [term]: value,
+            },
+          }],
         },
       },
     },
@@ -633,7 +637,7 @@ function queryRange(field, from, to) {
   };
 }
 
-function queryScoreRange(pillar, programBenchmarks, from, to) {
+function queryScoreRange(pillar, programBenchmarks, from = null, to = null) {
   const attributes = R.map(
     p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
     programBenchmarks.positions
@@ -642,7 +646,7 @@ function queryScoreRange(pillar, programBenchmarks, from, to) {
     'body': {
       'query': {
         'bool': {
-          'filter': {
+          'filter': [{
             'script': {
               'script': {
                 'lang': 'painless',
@@ -707,13 +711,12 @@ if (totalFactor > 0) {
                 },
               },
             },
-          },
+          }],
         },
       },
     },
   };
 }
-
 function buildScoreScript(
   pillar,
   programBenchmarks,
