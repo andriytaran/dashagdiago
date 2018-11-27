@@ -39,8 +39,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     mbar.attr("data-toggle", "tooltip");
     mbar.attr("data-html", "true");
     // mbar.attr("data-placement", "top");
-    mbar.attr("title", getTooltip(d.field));
-    $(mbar.node()).tooltip({ container: chart.node() });
+    // $(mbar.node()).tooltip({ container: chart.node() });
     if (getPlayersData) {
       function showmodal() {
         drawloader("#players");
@@ -54,15 +53,22 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
     let barEnter = mbar.append("div");
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
+    let valueColor = "green";
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange";
     }
     if (d.ftick == null && d.value < d.stick) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange";
     }
     if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange";
     }
+    mbar.attr("title", getTooltip(valueColor));
+    debugger;
+    $(mbar.node()).tooltip({ container: chart.node() });
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
     if (d.value == null) { gbar.style("display", "none"); }

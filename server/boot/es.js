@@ -398,16 +398,12 @@ async function fetchProgramBenchmarks(
     return res;
   }, R.groupBy(hit => hit.position.toLowerCase(), agg));
 
-  const res = {
+  return {
     positions: positions,
     pillars: R.map(pillar => ({
       factor: pillar.factor,
     }), pillarsObj),
   };
-
-  domain.normalizeProgramBenchmarks(res);
-
-  return res;
 }
 
 async function fetchPlayer(query, team, id) {

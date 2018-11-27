@@ -2,44 +2,6 @@
 
 const R = require('ramda');
 
-const positionsHierarchy = {
-  'dl': [
-    'de',
-    'dt',
-  ],
-  'ol': [
-    'og',
-    'oc',
-    'ot',
-    'ls',
-  ],
-  'st': [
-    'p',
-    'k',
-  ],
-  'db': [
-    'cb',
-    's',
-  ],
-  'qb': [
-    'qbpro',
-    'qbdual',
-  ],
-  'lb': [
-    'ilb',
-    'olb',
-    'mlb',
-  ],
-};
-
-const positionsHierarchyReversed = {};
-Object.entries(positionsHierarchy)
-  .forEach(([parentPosition, childPositions]) => {
-    childPositions.forEach(p => {
-      positionsHierarchyReversed[p] = parentPosition;
-    });
-  });
-
 const pillarsObj = {
   'athletic': {
     factor: 55,
@@ -172,20 +134,8 @@ function calculatePlayerOverallScore(playerScores, programBenchmarks) {
   }
 }
 
-function normalizeProgramBenchmarks(programBenchmarks) {
-  Object.entries(positionsHierarchyReversed)
-    .forEach(([position, parentPosition]) => {
-      if (programBenchmarks.positions[position]) return;
-      if (programBenchmarks.positions[parentPosition]) {
-        programBenchmarks.positions[position] =
-          programBenchmarks.positions[parentPosition];
-      }
-    });
-}
-
 module.exports = {
   pillarsObj,
   calculatePlayerScores,
   calculatePlayerOverallScore,
-  normalizeProgramBenchmarks,
 };
