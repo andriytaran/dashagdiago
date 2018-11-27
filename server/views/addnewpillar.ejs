@@ -1,0 +1,105 @@
+<% layout('layout_main') -%>
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">
+    <%=team %> Creating new pillar...</h1>
+  <!-- end page-header -->
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-6 -->
+    <div class="col-lg-12">
+      <!-- begin panel -->
+      <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
+        <div class="panel-heading">
+          <h4 class="panel-title">Custom pillar parameters</h4>
+        </div>
+        <div class="panel-body">
+          <form id="coreform">
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="pos">New Pillar name </label>
+              <div class="col-md-9">
+                <input class="form-control m-b-5" type="text" placeholder="Pillar name*" id="pillarName" />
+              </div>
+            </div>
+            <div class="form-group row m-b-15">
+                <label class="col-form-label col-md-3" for="pos">New Pillar term </label>
+                <div class="col-md-9">
+                  <input class="form-control m-b-5" type="text" placeholder="Pillar term*" id="pillarTerm" />
+                </div>
+            </div>
+            <div class="form-group row m-b-15">
+                <label class="col-form-label col-md-3" for="pos">New Pillar factor </label>
+                <div class="col-md-9">
+                  <input class="form-control m-b-5" type="text" placeholder="Pillar factor*" id="pillarF" />
+                </div>
+            </div>
+
+            <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="pos">New Pillar attributes </label>
+              <!-- <div class="col m-b-15"> -->
+                <div class="col-md-9" id="newAttributesList">
+                  <div class="form-group row m-b-15">
+                    <label class="col-form-label col-md-3" for="pos">Pillar attribute name: </label>
+                    <div class="col-md-9">
+                      <input class="form-control m-b-5" type="text" placeholder="Pillar attributes*" id="pillarAttr" />
+                    </div>
+                  </div>
+                </div>
+              <!-- </div> -->
+              <div class="addbtn" style="margin: 10px auto;"><button class="btn btn-lime" id="addNewAttribute" type="button" style="margin-bottom: 20px;">add attribute</button></div>
+            </div>
+
+            <!-- <div class="form-group row m-b-15">
+              <label class="col-form-label col-md-3" for="workEthic">Work Ethic Benchmark</label>
+              <div class="col-md-5">
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic" id="workEthic" />
+              </div>
+              <div class="col-md-4">
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic Factor" id="workEthicF" />
+              </div>
+            </div> -->
+
+            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Create"></div>
+          </form>
+        </div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- end col-6 -->
+  </div>
+  <!-- end row -->
+</div>
+
+<script>
+    document.getElementById('coreform').addEventListener('submit', function () {
+    submit();
+  });
+
+
+
+  function submit() {
+    let res = [];
+    let pillarName = document.getElementById("pillarName").value;
+    let pillarF = document.getElementById("pillarF").value;
+    let pillarTerm = document.getElementById("pillarTerm").value;
+    // let pillarAttributes = document.getElementById("pillarAttr").value;
+    let pillarAttributes = addAllAttributes();
+    pillarAttributes = pillarAttributes.map(function(el){let res="";return res + el.tostring()});
+    res.push(pillarName);
+    res.push(pillarF);
+    res.push(pillarTerm);
+    res.push(pillarAttributes);
+    alert(res);
+  }
+</script>
+<% stylesheet('/../assets/css/common.css') -%>
+<% stylesheet('/../assets/css/bench.css') -%>
+<% stylesheet('/../assets/css/home.css') -%>
+<% script('/../assets/js/app/home.js') -%>
+<% script('/../assets/js/app/addnewpillar.js') -%>

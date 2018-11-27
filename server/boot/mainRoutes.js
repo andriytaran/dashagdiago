@@ -134,6 +134,14 @@ module.exports = app => {
     res.render('register');
   });
 
+  // create custom pillar
+  app.get('/addnewpillar', function(req, res, next) {
+    res.render('addnewpillar', {
+      team: 'Cincinnati Bearcats',
+      positions: positionF,
+    });
+  });
+
   // academic benchmark setup
   app.get('/academbench', function(req, res, next) {
     res.render('academbench', {

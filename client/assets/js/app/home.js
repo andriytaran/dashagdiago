@@ -246,10 +246,10 @@ var handleCoreAttributes = (function () {
 
   function getTooltip(label) {
     switch (label) {
-      case "green":
-        return "<p class='dashboard-tooltip' style='color:green;'><strong>The score is above program Benchmark</strong><hr></p>";
-      case "orange":
-        return "<p class='dashboard-tooltip' style='color:orange;'><strong>The score is below program Benchmark</strong><hr></p>";
+        case "green":
+          return "<p class='dashboard-tooltip' style='color:green;'><strong>The score is above program Benchmark</strong><hr></p>";
+        case "orange":
+          return "<p class='dashboard-tooltip' style='color:orange;'><strong>The score is below program Benchmark</strong><hr></p>";
       default:
         return "";
     }
