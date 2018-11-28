@@ -66,8 +66,7 @@ function drawbarchart(data, selector, position, getTooltip, getPlayersData) {
       barEnter.style("background-color", "orange");
       valueColor =  "orange";
     }
-    mbar.attr("title", getTooltip(valueColor));
-    debugger;
+    mbar.attr("title", getTooltip(valueColor, d.field));
     $(mbar.node()).tooltip({ container: chart.node() });
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");

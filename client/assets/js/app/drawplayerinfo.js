@@ -27,7 +27,7 @@ function drawplayerinfo(data, selector) {
   let hometown = "Hometown: " + (data.hometown || "Not Available");
   let scout = "Scout Date: " + (data.scoutDate || "Not Available");
   let coach = "Athletic Coach: " + (data.coach || "Not Available");
-  let school = "Hight School: " + (data.school || "Not Available");
+  let school = "High School: " + (data.school || "Not Available");
   creatediv("furtherinfo", null, hometown);
   creatediv("furtherinfo", null, scout);
   creatediv("furtherinfo", null, coach);
