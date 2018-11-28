@@ -43,20 +43,20 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
       newel.setAttribute("data-target", dataTarget);
       newel.setAttribute("aria-controls", ariacont);
       newel.style.width = "100%" ;
-     
+
       let bar = createbar(d);
       newel.appendChild(bar);
       parentel.appendChild(newel);
 
-     var leftnode = document.createElement("div"); 
+     var leftnode = document.createElement("div");
           leftnode.className = "pull-left";
-   
-  
-      var node = document.createElement("I"); 
 
-      var textToShow=document.createTextNode(" Show Sub Categories"); 
+
+      var node = document.createElement("I");
+
+      var textToShow=document.createTextNode(" Show Sub Categories");
           node.className = "fas fa-arrow-alt-circle-down";
-          node.appendChild(textToShow);  
+          node.appendChild(textToShow);
           leftnode.appendChild(node);
 
         newel.appendChild(node);
@@ -124,8 +124,7 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     mbar.attr("data-toggle", "tooltip");
     mbar.attr("data-html", "true");
     // mbar.attr("data-placement", "top");
-    mbar.attr("title", getTooltip(d.field));
-    $(mbar.node()).tooltip({ container: chart.node() });
+
     if (getPlayersData) {
       function showmodal(event) {
         event.stopPropagation();
@@ -141,15 +140,21 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
 
+    let valueColor = "green";
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange"
     }
     if (d.ftick == null && d.value < d.stick) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange"
     }
     if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
+      valueColor =  "orange"
     }
+    mbar.attr("title", getTooltip(valueColor, d.field));
+    $(mbar.node()).tooltip({ container: chart.node() });
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
     if (d.value == null) {
