@@ -1,4 +1,4 @@
-function drawtopculturals(data, selector) {
+function drawTable(data, selector) {
   function f() {
     var functions = arguments;
 
@@ -10,8 +10,8 @@ function drawtopculturals(data, selector) {
         typeof functions[i] === "string" ||
         typeof functions[i] === "number"
       ) {
-        functions[i] = (function (str) {
-          return function (d) {
+        functions[i] = (function(str) {
+          return function(d) {
             return d[str];
           };
         })(functions[i]);
@@ -20,7 +20,7 @@ function drawtopculturals(data, selector) {
     }
 
     //return composition of functions
-    return function (d) {
+    return function(d) {
       var i = 0,
         l = functions.length;
       while (i++ < l) d = functions[i - 1].call(this, d);
@@ -29,12 +29,11 @@ function drawtopculturals(data, selector) {
   }
   // column definitions
   var columns = [
-    { head: "Rate", cl: "title", html: f("rate") },
     { head: "First Name", cl: "title", html: f("fname") },
     { head: "Last Name", cl: "center", html: f("lname") },
     { head: "Position", cl: "center", html: f("position") },
     { head: "Score", cl: "num", html: f("score") },
-    { head: "Show Details", cl: "title", html: function (d) { return "<a href='/dashboard-player/?id=" + d.id + "'>Show Details</a>" } }
+    { head: "Show Details", cl: "title", html: function(d){return "<a href='/dashboard-player/?id=" + d.id + "'>Show Details</a>" }}
   ];
   // create table
   $(selector).empty();
@@ -57,11 +56,11 @@ function drawtopculturals(data, selector) {
     .enter()
     .append("tr")
     .selectAll("td")
-    .data(function (row, i) {
-      return columns.map(function (c) {
+    .data(function(row, i) {
+      return columns.map(function(c) {
         // compute cell values for this specific row
         var cell = {};
-        d3.keys(c).forEach(function (k) {
+        d3.keys(c).forEach(function(k) {
           cell[k] = typeof c[k] == "function" ? c[k](row, i) : c[k];
         });
         return cell;
@@ -73,7 +72,7 @@ function drawtopculturals(data, selector) {
     .attr("class", f("cl"));
   function length() {
     var fmt = d3.format("02d");
-    return function (l) {
+    return function(l) {
       return Math.floor(l / 60) + ":" + fmt(l % 60) + "";
     };
   }

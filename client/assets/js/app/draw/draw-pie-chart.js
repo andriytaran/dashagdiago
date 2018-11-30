@@ -1,4 +1,4 @@
-function drawpiechart(data, selector, position, getTooltip) {
+function drawPieChart(data, selector, position, getTooltip) {
   let block = d3.select(selector)
   block.selectAll(".elLoader").remove()
   nv.addGraph(function () {
@@ -39,6 +39,6 @@ function showmodal(position, data) {
   drawloader("#players");
   $("#chartmodal").modal("show");
   getCulturalPlayersData(position, data.rangeStart, data.rangeEnd, function (players) {
-    drawtable(players, "#players")
+    drawTable(players, "#players")
   });
 }

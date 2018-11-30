@@ -1,4 +1,4 @@
-function drawplayerinfo(data, selector) {
+function drawPlayerInfo(data, selector) {
   function creatediv(parentid, newelclass, newelcont) {
     let parentel = document.getElementById(parentid);
     let newel = document.createElement("div");

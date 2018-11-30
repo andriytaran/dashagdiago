@@ -1046,7 +1046,7 @@ var handleCulturalFit = (function () {
         },
         function (response) {
           const data = getCulturalFitData(response);
-          drawpiechart(data, "#cultural-fit", getTooltip);
+          drawPieChart(data, "#cultural-fit", getTooltip);
         },
         "json"
       );

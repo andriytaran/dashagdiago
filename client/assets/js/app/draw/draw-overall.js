@@ -131,7 +131,7 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
         drawloader("#players");
         $("#chartmodal").modal("show");
         getPlayersData(position, d.field, function(players) {
-          drawtable(players, "#players");
+          drawTable(players, "#players");
         });
       }
       $(mbar.node()).on("click", showmodal);
@@ -140,20 +140,21 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
 
     barEnter.style("width", perccheck(d.value, d.range[0], d.range[1]) + "%");
 
-    let valueColor = "green";
+    let props = {}
+    props.color = "green";
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      valueColor =  "orange"
+      props.color =  "orange"
     }
     if (d.ftick == null && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      valueColor =  "orange"
+      props.color =  "orange"
     }
     if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
-      valueColor =  "orange"
+      props.color =  "orange"
     }
-    mbar.attr("title", getTooltip(valueColor, d.field));
+    mbar.attr("title", getTooltip(d.field, props));
     $(mbar.node()).tooltip({ container: chart.node() });
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");

@@ -48,8 +48,8 @@ button.addEventListener("click",function(e){
     timescalled++;
     // button.disabled = "true";
     createElem("div", "newAttributesList", "form-group row m-b-15", nextattributeid(timescalled, "newattr"));
-    createElem("label", nextattributeid(timescalled, "newattr"), "col-form-label col-md-3", "label", "Pillar attribute name: ");
+    createElem("label", nextattributeid(timescalled, "newattr"), "col-form-label col-md-3", "label", "Additional attribute name: ");
     createElem("div", nextattributeid(timescalled, "newattr"), "col-md-9", nextattributeid(timescalled, "col"));
-    createInput(nextattributeid(timescalled, "col"), "form-control m-b-5", nextattributeid(timescalled, "pillarAttr"), "text", "Pillar attributes*");
+    createInput(nextattributeid(timescalled, "col"), "form-control m-b-5", nextattributeid(timescalled, "pillarAttr"), "text", "e.g. Touchdowns Thrown");
 },false);
 
