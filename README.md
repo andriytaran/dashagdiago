@@ -1,3 +1,11 @@
+# local setup
+
+Do instructions from following sections in the following order:
+
+1. `# local db`
+2. `# elasticsearch mappings`
+3. `# local elasticsearch`
+
 # local db
 
 To start it with memory db, create `server/datasources.local.json` with content:
@@ -13,27 +21,16 @@ To start it with memory db, create `server/datasources.local.json` with content:
 
 # elasticsearch mappings
 
-Before uploading data to ES you need to set up dynamic mappings like so (for all indices - `cincinnati`, `cincinnati-benchmarks`, `baseline`):
+Before uploading data to ES you need to set up dynamic mappings like so:
 
 ```sh
-curl -X PUT "${ELASTICSEARCH_URL}:9200/${index}" -H 'Content-Type: application/json' -d'
-{
-  "mappings": {
-    "post": {
-      "dynamic_templates": [
-        {
-          "floats": {
-            "match_mapping_type": "long",
-            "mapping": {
-              "type": "float"
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-'
+npm run reset
+```
+
+or (for local elasticsearch)
+
+```sh
+npm run reset -- --url http://localhost:9200
 ```
 
 # local elasticsearch

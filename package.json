@@ -7,7 +7,8 @@
     "start": "node .",
     "debug": "nodemon --inspect .",
     "posttest": "npm run lint && nsp check",
-    "converter": "node ./data/converter.js"
+    "converter": "node ./data/converter.js",
+    "reset": "node ./data/reset.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
