@@ -157,7 +157,12 @@ class AggregationBuilder {
 }
 
 function mergeQuery(def, query) {
-  return R.mergeDeepRight(def, query);
+  return R.mergeDeepWith((l, r) => {
+    if (l instanceof Array && r instanceof Array) {
+      return l.concat(r);
+    }
+    return r;
+  }, def, query);
 }
 
 /**
@@ -631,10 +636,19 @@ function queryRange(field, from, to) {
     'body': {
       'query': {
         'range': {
-          [field]: {
-            'gte': from,
-            'lte': to,
-          },
+          [field]: Object.assign(
+            {},
+            from != null ?
+              {
+                'gte': from,
+              } :
+              {},
+            to != null ?
+              {
+                'lt': to,
+              } :
+              {}
+          ),
         },
       },
     },
@@ -694,13 +708,13 @@ if (totalFactor > 0) {
     if (params['to'] == null) {
       return true;
     } else {
-      return res <= params['to'];
+      return res < params['to'];
     }
   } else {
     if (params['to'] == null) {
-      return res > params['from'];
+      return res >= params['from'];
     } else {
-      return res > params['from'] && res < params['to'];
+      return res >= params['from'] && res < params['to'];
     }
   }
 } else {
