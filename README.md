@@ -11,6 +11,31 @@ To start it with memory db, create `server/datasources.local.json` with content:
 }
 ```
 
+# elasticsearch mappings
+
+Before uploading data to ES you need to set up dynamic mappings like so (for all indices - `cincinnati`, `cincinnati-benchmarks`, `baseline`):
+
+```sh
+curl -X PUT "${ELASTICSEARCH_URL}:9200/${index}" -H 'Content-Type: application/json' -d'
+{
+  "mappings": {
+    "post": {
+      "dynamic_templates": [
+        {
+          "floats": {
+            "match_mapping_type": "long",
+            "mapping": {
+              "type": "float"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+'
+```
+
 # local elasticsearch
 
 To start local ElasticSearch using docker:

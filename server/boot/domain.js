@@ -21,6 +21,11 @@ const positionsHierarchy = {
     'cb',
     's',
   ],
+  // HACK: until client fixes data
+  'cb': [
+    'db',
+    's',
+  ],
   'qb': [
     'qbpro',
     'qbdual',
@@ -53,7 +58,7 @@ const pillarsObj = {
       'rushingYards': {factor: 10},
       'rushingTouchdowns': {factor: 10},
       'receptions': {factor: 10},
-      'recievingYards': {factor: 10},
+      'receivingYards': {factor: 10},
       'gamesPlayed': {factor: 10},
       'gamesStarted': {factor: 10},
       'height': {factor: 10},
@@ -73,7 +78,7 @@ const pillarsObj = {
     fields: {
       'emotionalIntelBehavior': {factor: 10},
       'emotionalIntelReflection': {factor: 10},
-      'emotionalIntelteamWork': {factor: 10},
+      'emotionalIntelTeamWork': {factor: 10},
       'emotionalIntelRelationships': {factor: 10},
       'emotionalIntelAccountability': {factor: 10},
       'emotionalIntelResponsibility': {factor: 10},
@@ -98,8 +103,8 @@ const pillarsObj = {
       'instagramFollowers': {factor: 10},
       'facebookSentiment': {factor: 10},
       'newsMediaCoverageSentiment': {factor: 10},
-      'newsMedaiCoveragementions': {factor: 10},
-      'newsMediacoverageNational': {factor: 10},
+      'newsMediaCoverageMentions': {factor: 10},
+      'newsMediaCoverageNational': {factor: 10},
       'newsMediaCoverageRegional': {factor: 10},
       'pressReleaseSentiment': {factor: 10},
       'pressReleaseSentimentCounter': {factor: 10},
@@ -110,7 +115,7 @@ const pillarsObj = {
     fields: {
       'coreAttributesCompetitiveness': {factor: 10},
       'coreAttributesPersistence': {factor: 10},
-      'coreAttributesWorkethic': {factor: 10},
+      'coreAttributesWorkEthic': {factor: 10},
       'coreAttributesTeamOrientation': {factor: 10},
       'coreAttributesMastery': {factor: 10},
     },

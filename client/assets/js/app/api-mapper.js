@@ -58,16 +58,16 @@ function mapCoreAttributesForBarChart(response) {
       fractiondigits: 1
     },
     {
-      value: response.attributes.player.coreAttributesWorkethic,
-      ftick: response.attributes.program.coreAttributesWorkethic,
-      stick: response.attributes.agdiago.coreAttributesWorkethic,
+      value: response.attributes.player.coreAttributesWorkEthic,
+      ftick: response.attributes.program.coreAttributesWorkEthic,
+      stick: response.attributes.agdiago.coreAttributesWorkEthic,
       range: getDataRange(
-        response.attributes.player.coreAttributesWorkethic,
-        response.attributes.program.coreAttributesWorkethic,
-        response.attributes.agdiago.coreAttributesWorkethic,
+        response.attributes.player.coreAttributesWorkEthic,
+        response.attributes.program.coreAttributesWorkEthic,
+        response.attributes.agdiago.coreAttributesWorkEthic,
       ),
       name: "Work Ethic",
-      field: "coreAttributesWorkethic",
+      field: "coreAttributesWorkEthic",
       style: "percent",
       fractiondigits: 1
     }
@@ -174,15 +174,15 @@ function mapSocialProfileAttributesForBarChart(response) {
       fractiondigits: 1
     },
     {
-      value: response.attributes.player.newsMedaiCoveragementions,
-      ftick: response.attributes.program.newsMedaiCoveragementions,
-      stick: response.attributes.agdiago.newsMedaiCoveragementions,
+      value: response.attributes.player.newsMediaCoverageMentions,
+      ftick: response.attributes.program.newsMediaCoverageMentions,
+      stick: response.attributes.agdiago.newsMediaCoverageMentions,
       name: "News Media Coverage mentions",
-      field: "newsMedaiCoveragementions",
+      field: "newsMediaCoverageMentions",
       range: getDataRange(
-        response.attributes.player.newsMedaiCoveragementions,
-        response.attributes.program.newsMedaiCoveragementions,
-        response.attributes.agdiago.newsMedaiCoveragementions
+        response.attributes.player.newsMediaCoverageMentions,
+        response.attributes.program.newsMediaCoverageMentions,
+        response.attributes.agdiago.newsMediaCoverageMentions
       ),
       style: "number",
       fractiondigits: 1
@@ -216,15 +216,15 @@ function mapSocialProfileAttributesForBarChart(response) {
       fractiondigits: 1
     },
     {
-      value: response.attributes.player.newsMediacoverageNational,
-      ftick: response.attributes.program.newsMediacoverageNational,
-      stick: response.attributes.agdiago.newsMediacoverageNational,
+      value: response.attributes.player.newsMediaCoverageNational,
+      ftick: response.attributes.program.newsMediaCoverageNational,
+      stick: response.attributes.agdiago.newsMediaCoverageNational,
       name: "News Media coverage National",
-      field: "newsMediacoverageNational",
+      field: "newsMediaCoverageNational",
       range: getDataRange(
-        response.attributes.player.newsMediacoverageNational,
-        response.attributes.program.newsMediacoverageNational,
-        response.attributes.agdiago.newsMediacoverageNational
+        response.attributes.player.newsMediaCoverageNational,
+        response.attributes.program.newsMediaCoverageNational,
+        response.attributes.agdiago.newsMediaCoverageNational
       ),
       style: "number",
       fractiondigits: 1
@@ -393,15 +393,15 @@ function mapEmotionalIntelAttributesForBarChart(response) {
       fractiondigits: 0
     },
     {
-      value: response.attributes.player.emotionalIntelteamWork,
-      ftick: response.attributes.program.emotionalIntelteamWork,
-      stick: response.attributes.agdiago.emotionalIntelteamWork,
+      value: response.attributes.player.emotionalIntelTeamWork,
+      ftick: response.attributes.program.emotionalIntelTeamWork,
+      stick: response.attributes.agdiago.emotionalIntelTeamWork,
       name: "Emotional Intel teamWork",
-      field: "emotionalIntelteamWork",
+      field: "emotionalIntelTeamWork",
       range: getDataRange(
-        response.attributes.player.emotionalIntelteamWork,
-        response.attributes.program.emotionalIntelteamWork,
-        response.attributes.agdiago.emotionalIntelteamWork
+        response.attributes.player.emotionalIntelTeamWork,
+        response.attributes.program.emotionalIntelTeamWork,
+        response.attributes.agdiago.emotionalIntelTeamWork
       ),
       style: "number",
       fractiondigits: 0
@@ -480,15 +480,15 @@ function mapAthleticAttributesForBarchart(response, playerPosition) {
   }
   function getRecievingYards() {
     return {
-      value: response.attributes.player.recievingYards,
-      ftick: response.attributes.program.recievingYards,
-      stick: response.attributes.agdiago.recievingYards,
+      value: response.attributes.player.receivingYards,
+      ftick: response.attributes.program.receivingYards,
+      stick: response.attributes.agdiago.receivingYards,
       name: "Recieving Yards",
-      field: "recievingYards",
+      field: "receivingYards",
       range: getDataRange(
-        response.attributes.player.recievingYards,
-        response.attributes.program.recievingYards,
-        response.attributes.agdiago.recievingYards
+        response.attributes.player.receivingYards,
+        response.attributes.program.receivingYards,
+        response.attributes.agdiago.receivingYards
       ),
       style: "number",
       fractiondigits: 0

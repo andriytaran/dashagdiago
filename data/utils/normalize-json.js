@@ -6,7 +6,27 @@ const uniqueId = require('./unique-id');
 
 function normalizeKey(key) {
   key = key.trim();
-  return key[0].toLowerCase() + key.slice(1);
+  const res = key[0].toLowerCase() + key.slice(1);
+  switch (res) {
+    case 'coreAttributesWorkethic':
+      return 'coreAttributesWorkEthic';
+    case 'coreAttributesOverallscore':
+      return 'coreAttributesOverallScore';
+    case 'emotionalIntelteamWork':
+      return 'emotionalIntelTeamWork';
+    case 'avgeragePunt':
+      return 'averagePunt';
+    case '40':
+      return 'forty';
+    case 'newsMedaiCoveragementions':
+      return 'newsMediaCoverageMentions';
+    case 'newsMediacoverageNational':
+      return 'newsMediaCoverageNational';
+    case 'recievingYards':
+      return 'receivingYards';
+    default:
+      return res;
+  }
 }
 
 function normalizeValue(value) {

@@ -53,11 +53,11 @@ var handleCoreAttributes = (function () {
         fractiondigits: 1
       },
       {
-        value: response.coreAttributes.coreAttributesWorkethic.value,
-        ftick: response.programBenchmark.coreAttributesWorkethic.value,
-        stick: response.agdiagoBenchmark.coreAttributesWorkethic.value,
+        value: response.coreAttributes.coreAttributesWorkEthic.value,
+        ftick: response.programBenchmark.coreAttributesWorkEthic.value,
+        stick: response.agdiagoBenchmark.coreAttributesWorkEthic.value,
         name: "Work Ethic",
-        field: "coreAttributesWorkethic",
+        field: "coreAttributesWorkEthic",
         range: [0, 100],
         style: "percent",
         fractiondigits: 1
@@ -75,7 +75,7 @@ var handleCoreAttributes = (function () {
         return "<h4>Persistence</h4><p class='dashboard-tooltip'>Not everything in football comes easily and some games or plays can be difficult or more complicated than expected. In these situations, success comes from resiliency and an unwillingness to give up. Athletes with persistence persevere in the face of obstacles and do not give up. It’s in their nature to keep working and try harder to overcome adversity in whatever they do. Their natural intensity and resolve allow them to find success.</p>";
       case "coreAttributesTeamOrientation":
         return "<h4>Team Orientation</h4><p class='dashboard-tooltip'>Some athletes naturally possess a “team first” mindset, seeking to build collaboration that leads to success. These individuals are often the glue that holds the team together, fostering positive relationships within the group. When there is work to be done, these athletes jump in to help others even when it means going beyond the scope of their own expectations. Seen as dependable, they take ownership for their work and follow through, which builds trust and leads to close relationships with their team members.</p>";
-      case "coreAttributesWorkethic":
+      case "coreAttributesWorkEthic":
         return "<h4>Work Ethic</h4><p class='dashboard-tooltip'>Athletes with strong work ethic create structure in their lives to ensure follow through and success. These individuals are punctual, focused and organized; they often create plans to ensure that they meet attendance and performance expectations. Naturally goal-oriented, they set priorities and tune out distractions to accomplish the objectives. For athletes with work ethic, they believe in getting the work done and doing it right.</p>";
       default:
         return "";
@@ -264,11 +264,11 @@ var handleSocialProfileAttributes = (function () {
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMedaiCoveragementions.value,
-        ftick: response.programBenchmark.newsMedaiCoveragementions.value,
-        stick: response.agdiagoBenchmark.newsMedaiCoveragementions.value,
+        value: response.socialProfile.newsMediaCoverageMentions.value,
+        ftick: response.programBenchmark.newsMediaCoverageMentions.value,
+        stick: response.agdiagoBenchmark.newsMediaCoverageMentions.value,
         name: "News Medai Coverage mentions",
-        field: "newsMedaiCoveragementions",
+        field: "newsMediaCoverageMentions",
         range: [0, 10],
         style: "number",
         fractiondigits: 1
@@ -294,11 +294,11 @@ var handleSocialProfileAttributes = (function () {
         fractiondigits: 1
       },
       {
-        value: response.socialProfile.newsMediacoverageNational.value,
-        ftick: response.programBenchmark.newsMediacoverageNational.value,
-        stick: response.agdiagoBenchmark.newsMediacoverageNational.value,
+        value: response.socialProfile.newsMediaCoverageNational.value,
+        ftick: response.programBenchmark.newsMediaCoverageNational.value,
+        stick: response.agdiagoBenchmark.newsMediaCoverageNational.value,
         name: "News Media coverage National",
-        field: "newsMediacoverageNational",
+        field: "newsMediaCoverageNational",
         range: [0, 10],
         style: "number",
         fractiondigits: 1
@@ -362,7 +362,7 @@ var handleSocialProfileAttributes = (function () {
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
       case "instagramFollowers":
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
-      case "newsMedaiCoveragementions":
+      case "newsMediaCoverageMentions":
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
       case "newsMediaCoverageRegional":
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
@@ -482,11 +482,11 @@ var handleEmotionalIntelAttributes = (function () {
         fractiondigits: 0
       },
       {
-        value: response.emotionalIntel.emotionalIntelteamWork.value,
-        ftick: response.programBenchmark.emotionalIntelteamWork.value,
-        stick: response.agdiagoBenchmark.emotionalIntelteamWork.value,
+        value: response.emotionalIntel.emotionalIntelTeamWork.value,
+        ftick: response.programBenchmark.emotionalIntelTeamWork.value,
+        stick: response.agdiagoBenchmark.emotionalIntelTeamWork.value,
         name: "Emotional Intel teamWork",
-        field: "emotionalIntelteamWork",
+        field: "emotionalIntelTeamWork",
         range: [0, 100],
         style: "number",
         fractiondigits: 0
@@ -508,7 +508,7 @@ var handleEmotionalIntelAttributes = (function () {
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
       case "emotionalIntelResponsibility":
         return "<h4>Competitiveness</h4><p class='dashboard-tooltip'>Highly competitive football athletes don’t just want to win — they need to win. Contests and matchups drive them to perform with excellence because their performance is clearly measured. These athletes possess a sense of confidence and are passionate about succeeding both on and off the field. They always strive to improve and they thrive on opportunities to put their talents to the test to claim the top prize.</p>";
-      case "emotionalIntelteamWork":
+      case "emotionalIntelTeamWork":
         return "<h4>Mastery</h4><p class='dashboard-tooltip'>Athletes with a drive for mastery seek to continually build on their knowledge and refine their skills. They are fueled by learning opportunities and seek out information to stay up to date on their understanding of all elements of the game. In addition to using the knowledge they’ve acquired, these athletes assess their opponents to strategize their play on game day. Often, success is a result of their investment in and application of this ongoing learning.</p>";
       default:
         return "";
@@ -601,11 +601,11 @@ var handleAthleticAttributes = (function () {
     }
     function getRecievingYards() {
       return {
-        value: response.athletic.recievingYards.value,
-        ftick: response.programBenchmark.recievingYards.value,
-        stick: response.agdiagoBenchmark.recievingYards.value,
+        value: response.athletic.receivingYards.value,
+        ftick: response.programBenchmark.receivingYards.value,
+        stick: response.agdiagoBenchmark.receivingYards.value,
         name: "Recieving Yards",
-        field: "recievingYards",
+        field: "receivingYards",
         range: [0, 1000],
         style: "number",
         fractiondigits: 0
