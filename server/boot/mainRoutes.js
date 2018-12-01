@@ -227,7 +227,7 @@ module.exports = app => {
           programBenchmarks,
           player,
         ] = await Promise.all([
-          es.fetchProgramBenchmarks(query, team),
+          es.fetchProgramBenchmarks({}, team),
           es.fetchPlayer(query, team, id),
         ]);
 
@@ -310,7 +310,7 @@ module.exports = app => {
         const pillars = Object.keys(domain.pillarsObj);
 
         const programBenchmarks = await es.fetchProgramBenchmarks(
-          query,
+          {},
           team,
           pillars
         );
@@ -357,9 +357,8 @@ module.exports = app => {
 
         let attributeParam;
         if (~pillars.indexOf(attribute)) {
-          const query = queryBuilder.cloneQuery();
           const programBenchmarks = await es.fetchProgramBenchmarks(
-            query,
+            {},
             team,
             [attribute]
           );
@@ -399,9 +398,8 @@ module.exports = app => {
 
         let attributeParam;
         if (isScript) {
-          const query = queryBuilder.cloneQuery();
           const programBenchmarks = await es.fetchProgramBenchmarks(
-            query,
+            {},
             team,
             [attribute]
           );
