@@ -235,7 +235,10 @@ module.exports = app => {
         const agdiagoScoresArr = await Promise.all(
           pillars.map(
             pillar => es.fetchAgdiagoScore(
-              query,
+              new es.QueryBuilder()
+                .add(query)
+                .add(es.queryByTerm('position', player.position.toLowerCase()))
+                .build(),
               team,
               pillar,
               programBenchmarks
