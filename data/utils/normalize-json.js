@@ -24,6 +24,8 @@ function normalizeKey(key) {
       return 'newsMediaCoverageNational';
     case 'recievingYards':
       return 'receivingYards';
+    case 'soloTackle':
+      return 'soloTackles';
     default:
       return res;
   }

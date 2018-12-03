@@ -272,6 +272,8 @@ module.exports = app => {
         queryBuilder.add(es.queryByTerm('_id', id));
         const query = queryBuilder.build();
 
+        const player = await es.fetchPlayer(query, team, id);
+
         const [
           pillarAttributes,
           programPillarAttributes,
@@ -280,16 +282,19 @@ module.exports = app => {
           await es.fetchPillarAttributes(
             query,
             team,
-            pillar
+            pillar,
+            player.position
           ),
           await es.fetchProgramPillarAttributes(
             benchmarkQuery,
             team,
-            pillar
+            pillar,
+            player.position
           ),
           await es.fetchAgdiagoPillarAttributes(
             benchmarkQuery,
-            pillar
+            pillar,
+            player.position
           ),
         ]);
 
@@ -371,7 +376,7 @@ module.exports = app => {
         const percentileGroups = await es.fetchPercentileGroups(
           query,
           team,
-          attributeParam,
+          attributeParam
         );
 
         response.groups = percentileGroups;

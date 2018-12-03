@@ -14,17 +14,25 @@ const domain = require('./domain');
 
 const pillarsObj = domain.pillarsObj;
 
-function getAttributeInfo(attribute) {
+function getAttributeInfo(attribute, position = '_all', visitedPositions = {}) {
   for (let pillar in pillarsObj) {
     const pillarObj = pillarsObj[pillar];
-    const attributeObj = pillarObj.fields[attribute];
-    if (attributeObj) return Object.assign({
-      pillar,
-      reverse: false,
-      factor: 10,
-    }, attributeObj);
+    const positionObj = pillarObj.fields[position];
+    if (!positionObj) continue;
+    const attributeObj = positionObj[attribute];
+    if (attributeObj) {
+      return Object.assign({
+        pillar,
+        reverse: false,
+        factor: 10,
+      }, attributeObj);
+    }
   }
-  return null;
+  visitedPositions[position] = true;
+  const parentPosition = domain.getParentPosition(position);
+  if (!parentPosition) return null;
+  if (visitedPositions[parentPosition]) return null;
+  return getAttributeInfo(attribute, parentPosition, visitedPositions);
 }
 
 class QueryBuilder {
@@ -383,9 +391,7 @@ async function fetchProgramBenchmarks(
   team,
   pillars = Object.keys(pillarsObj)
 ) {
-  const fields = R.flatten(
-    pillars.map(pillar => Object.keys(pillarsObj[pillar].fields))
-  );
+  const fields = domain.getPillarsAttributes(pillars);
 
   const fetchResponse = await client.search(mergeQuery({
     'index': team + '-benchmarks',
@@ -393,14 +399,18 @@ async function fetchProgramBenchmarks(
 
   const agg = fetchResponse.hits.hits.map(hit => hit._source);
 
-  const positions = R.map(([group]) => {
+  const positions = R.mapObjIndexed(([group], position) => {
     const res = {};
     fields.forEach(field => {
-      if (group[field] != null && group[field] > 0)
-        res[field] = Object.assign(
-          getAttributeInfo(field),
-          {value: group[field]},
-        );
+      if (group[field] != null) {
+        const attributeInfo = getAttributeInfo(field, position);
+        if (attributeInfo) {
+          res[field] = Object.assign(
+            attributeInfo,
+            {value: group[field]},
+          );
+        }
+      }
     });
     return res;
   }, R.groupBy(hit => hit.position.toLowerCase(), agg));
@@ -409,6 +419,7 @@ async function fetchProgramBenchmarks(
     positions: positions,
     pillars: R.map(pillar => ({
       factor: pillar.factor,
+      agdiagoFactor: pillar.agdiagoFactor,
     }), pillarsObj),
   };
 
@@ -471,8 +482,8 @@ async function fetchPlayers(query, team, attributeParam) {
   return players;
 }
 
-async function fetchPillarAttributes(query, team, pillar) {
-  const pillarAttributesList = Object.keys(domain.pillarsObj[pillar].fields);
+async function fetchPillarAttributes(query, team, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -494,8 +505,8 @@ async function fetchPillarAttributes(query, team, pillar) {
   return pillarAttributes;
 }
 
-async function fetchProgramPillarAttributes(query, team, pillar) {
-  const pillarAttributesList = Object.keys(domain.pillarsObj[pillar].fields);
+async function fetchProgramPillarAttributes(query, team, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -517,8 +528,8 @@ async function fetchProgramPillarAttributes(query, team, pillar) {
   return pillarAttributes;
 }
 
-async function fetchAgdiagoPillarAttributes(query, pillar) {
-  const pillarAttributesList = Object.keys(domain.pillarsObj[pillar].fields);
+async function fetchAgdiagoPillarAttributes(query, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -540,7 +551,11 @@ async function fetchAgdiagoPillarAttributes(query, pillar) {
   return pillarAttributes;
 }
 
-async function fetchPercentileGroups(query, team, attribute) {
+async function fetchPercentileGroups(
+  query,
+  team,
+  attribute
+) {
   const aggregationBuilder = new AggregationBuilder()
     .addPercentiles(attribute, [45, 75], 'percentiles');
 
@@ -739,6 +754,7 @@ if (totalFactor > 0) {
     },
   };
 }
+
 function buildScoreScript(
   pillar,
   programBenchmarks,
