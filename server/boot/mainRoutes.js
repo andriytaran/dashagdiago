@@ -97,16 +97,10 @@ module.exports = app => {
     const position = req.query.position != null ?
       req.query.position.toLowerCase() :
       null;
-
-    const overallScore = await es.fetchOverallScore({
-      'body': {
-        'query': {
-          'term': {
-            'position': position,
-          },
-        },
-      },
-    }, team);
+    const overallScore = await es.fetchOverallScore(
+      es.queryByTerm('position', position),
+      team
+    );
 
     res.render('dashboard-position', {
       position: position.toUpperCase(),

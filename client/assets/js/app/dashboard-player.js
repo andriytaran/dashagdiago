@@ -174,14 +174,19 @@ var handleSinglePlayer = (function () {
 
 function drawOverallBar(scoreval) {
   let scoreboard = document.getElementById("overallscore");
-  let str = scoreval / 100;
-  str = str.toLocaleString(undefined, {
-    useGrouping: false,
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-    style: "percent"
-  });
-  scoreboard.innerHTML = str;
+  if (scoreval == null) {
+    scoreboard.innerHTML = 'Not Available';
+  } else {
+    let str = scoreval / 100;
+    str = str.toLocaleString(undefined, {
+      useGrouping: false,
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+      style: "percent"
+    });
+
+    scoreboard.innerHTML = str;
+  }
 }
 
 var Dashboard = (function () {

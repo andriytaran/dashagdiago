@@ -280,6 +280,7 @@ async function fetchOverallScore(query, team, programBenchmarks) {
     p => Object.keys(p),
     programBenchmarks.positions
   );
+
   const fetchObj = {
     'size': 0,
     'aggs': {
@@ -290,11 +291,11 @@ async function fetchOverallScore(query, team, programBenchmarks) {
             'lang': 'painless',
             'source': `
 def position = doc['position.keyword'].value;
-if (position == null) return 0;
+if (position == null) return null;
 position = position.toLowerCase();
 
 def attributes = params['attributes'][position];
-if (attributes == null) return 0;
+if (attributes == null) return null;
 
 def attributeObjs = params['benchmarks'].positions[position];
 
@@ -310,16 +311,17 @@ for (int i = 0; i < params['pillars'].length; ++i) {
 
 for (int i = 0; i < attributes.length; ++i) {
   def attribute = attributes[i];
-  def value = (float)doc[attribute]?.value;
-  float score = 0;
-  if (value == null) {
-    score = score;
+  float value;
+  if (doc[attribute].empty) {
+    value = value;
   } else {
+    value = (float)doc[attribute].value;
     def attributeObj = attributeObjs[attribute];
+    def pillar = attributeObj.pillar;
     def programValue = (float)attributeObj.value;
     def reverse = attributeObj.reverse;
     def factor = (float)attributeObj.factor;
-    def pillar = attributeObj.pillar;
+    def score = (float)0;
     if (reverse) {
       score += factor * (programValue / value);
     } else {
@@ -335,16 +337,16 @@ float totalFactor = 0;
 for (int i = 0; i < params['pillars'].length; ++i) {
   def pillar = params['pillars'][i];
   def score = scores[pillar];
-  if (score > 0) {
+  if (factors[pillar] > 0) {
     def factor = (float)params['benchmarks'].pillars[pillar].factor;
     totalScore += factor * score / factors[pillar];
     totalFactor += factor;
   }
 }
 if (totalFactor > 0) {
-  return totalScore / totalFactor;
+  return 100 * totalScore / totalFactor;
 } else {
-  return 0;
+  return null;
 }
 `,
             'params': {
@@ -365,7 +367,7 @@ if (totalFactor > 0) {
 
   const agg =
     fetchResponse.aggregations.overallScore.value;
-  return agg ? agg * 100 : null;
+  return agg;
 }
 
 /**
@@ -683,15 +685,17 @@ float totalFactor = 0;
 
 for (int i = 0; i < attributes.length; ++i) {
   def attribute = attributes[i];
-  def value = (float)doc[attribute]?.value;
-  float score = 0;
-  if (value == null) {
-    score = score;
+  float value;
+  if (doc[attribute].empty) {
+    totalScore = totalScore;
+    totalFactor = totalFactor;
   } else {
+    value = (float)doc[attribute].value;
     def attributeObj = attributeObjs[attribute];
     def programValue = (float)attributeObj.value;
     def reverse = attributeObj.reverse;
     def factor = (float)attributeObj.factor;
+    def score = (float)0;
     if (reverse) {
       score += factor * (programValue / value);
     } else {
@@ -762,15 +766,18 @@ float totalFactor = 0;
 
 for (int i = 0; i < attributes.length; ++i) {
   def attribute = attributes[i];
-  def value = (float)doc[attribute]?.value;
-  float score = 0;
-  if (value == null) {
-    score = score;
+  float value;
+
+  if (doc[attribute].empty) {
+    totalScore = totalScore;
+    totalFactor = totalFactor;
   } else {
+    value = (float)doc[attribute].value;
     def attributeObj = attributeObjs[attribute];
     def programValue = (float)attributeObj.value;
     def reverse = attributeObj.reverse;
     def factor = (float)attributeObj.factor;
+    def score = (float)0;
     if (reverse) {
       score += factor * (programValue / value);
     } else {

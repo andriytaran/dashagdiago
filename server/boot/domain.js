@@ -131,10 +131,10 @@ function calculatePlayerScores(player, programBenchmarks) {
   const factors = R.map(() => 0, pillarsObj);
   for (let attribute in benchmark) {
     const value = player[attribute];
-    if (value == null || value <= 0) continue;
+    if (value == null) continue;
 
     const programValue = benchmark[attribute].value;
-    if (programValue == null || programValue <= 0) continue;
+    if (programValue == null) continue;
 
     const reverse = benchmark[attribute].reverse;
     const factor = benchmark[attribute].factor;
