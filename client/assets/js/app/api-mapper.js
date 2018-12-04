@@ -947,7 +947,7 @@ function mapSinglePlayerData(response) {
       getAthletic(),
       getEmotionalIntel(),
       getAcademic(),
-      getSocialProfile(),
+      // getSocialProfile(), // temporary
       getCoreAttributes()
     ]
   };
