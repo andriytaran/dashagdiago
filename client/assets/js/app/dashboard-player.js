@@ -30,7 +30,7 @@ var handleAcademicAttributes = (function () {
   "use strict";
   return function handleAcademicAttributes(id) {
     if ($("#academic").length !== 0) {
-      getPlayerAthleticAttributesData(id, cb);
+      getPlayerAcademicAttributesData(id, cb);
         function cb (response) {
           const data = mapAcademicAttributesForBarСhart(response);
           function checkifnull(datael) {
