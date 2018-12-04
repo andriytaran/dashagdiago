@@ -560,15 +560,15 @@ function mapAthleticAttributesForBarchart(response, playerPosition) {
   }
   function getSoloTackle() {
     return {
-      value: response.attributes.player.soloTackle,
-      ftick: response.attributes.program.soloTackle,
-      stick: response.attributes.agdiago.soloTackle,
-      name: "Solo Tackle",
-      field: "soloTackle",
+      value: response.attributes.player.soloTackles,
+      ftick: response.attributes.program.soloTackles,
+      stick: response.attributes.agdiago.soloTackles,
+      name: "Solo Tackles",
+      field: "soloTackles",
       range: getDataRange(
-        response.attributes.player.soloTackle,
-        response.attributes.program.soloTackle,
-        response.attributes.agdiago.soloTackle
+        response.attributes.player.soloTackles,
+        response.attributes.program.soloTackles,
+        response.attributes.agdiago.soloTackles
       ),
       style: "number",
       fractiondigits: 0

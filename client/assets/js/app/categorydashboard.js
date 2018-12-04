@@ -661,11 +661,11 @@ var handleAthleticAttributes = (function () {
     }
     function getSoloTackle() {
       return {
-        value: response.athletic.soloTackle.value,
-        ftick: response.programBenchmark.soloTackle.value,
-        stick: response.agdiagoBenchmark.soloTackle.value,
+        value: response.athletic.soloTackles.value,
+        ftick: response.programBenchmark.soloTackles.value,
+        stick: response.agdiagoBenchmark.soloTackles.value,
         name: "Solo Tackle",
-        field: "soloTackle",
+        field: "soloTackles",
         range: [0, 100],
         style: "number",
         fractiondigits: 0

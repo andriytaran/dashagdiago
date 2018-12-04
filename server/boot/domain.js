@@ -72,7 +72,7 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'soloTackle': {factor: 10},
+        'soloTackles': {factor: 10},
         'totalTackles': {factor: 10},
         'sacks': {factor: 10},
         'tacklesForLoss': {factor: 10},
@@ -89,7 +89,7 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'soloTackle': {factor: 10},
+        'soloTackles': {factor: 10},
         'totalTackles': {factor: 10},
         'sacks': {factor: 10},
         'tacklesForLoss': {factor: 10},
