@@ -72,11 +72,11 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'soloTackles': {factor: 10},
-        'totalTackles': {factor: 10},
-        'sacks': {factor: 10},
-        'tacklesForLoss': {factor: 10},
-        'interceptions': {factor: 10},
+        // 'soloTackles': {factor: 10},
+        // 'totalTackles': {factor: 10},
+        // 'sacks': {factor: 10},
+        // 'tacklesForLoss': {factor: 10},
+        // 'interceptions': {factor: 10},
       },
       'lb': {
         'forty': {
@@ -89,11 +89,11 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'soloTackles': {factor: 10},
-        'totalTackles': {factor: 10},
-        'sacks': {factor: 10},
-        'tacklesForLoss': {factor: 10},
-        'interceptions': {factor: 10},
+        // 'soloTackles': {factor: 10},
+        // 'totalTackles': {factor: 10},
+        // 'sacks': {factor: 10},
+        // 'tacklesForLoss': {factor: 10},
+        // 'interceptions': {factor: 10},
       },
       'qb': {
         'forty': {
@@ -106,13 +106,14 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'completions': {factor: 5},
-        'passingYards': {factor: 5},
-        'touchdownsThrown': {factor: 5},
-        'interceptionsThrown': {factor: 5},
-        'totalCarries': {factor: 5},
-        'rushingYards': {factor: 5},
-        'rushingTouchdowns': {factor: 5},
+        // 'completions': {factor: 5},
+        // 'passingYards': {factor: 5},
+        // 'touchdownsThrown': {factor: 5},
+        // 'interceptionsThrown': {factor: 5},
+        // // TODO: check carries in UI
+        // 'carries': {factor: 5},
+        // 'rushingYards': {factor: 5},
+        // 'rushingTouchdowns': {factor: 5},
       },
       'rb': {
         'forty': {
@@ -125,29 +126,29 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        'totalCarries': {factor: 10},
-        'rushingYards': {factor: 10},
-        'rushingTouchdowns': {factor: 10},
-        'receptions': {factor: 10},
-        'receivingYards': {factor: 10},
+        // 'carries': {factor: 10},
+        // 'rushingYards': {factor: 10},
+        // 'rushingTouchdowns': {factor: 10},
+        // 'receptions': {factor: 10},
+        // 'receivingYards': {factor: 10},
       },
     },
   },
-  'emotionalIntel': {
-    factor: 5,
-    agdiagoFactor: 5,
-    fields: {
-      '_all': {
-        'emotionalIntelBehavior': {factor: 10},
-        'emotionalIntelReflection': {factor: 10},
-        'emotionalIntelTeamWork': {factor: 10},
-        'emotionalIntelRelationships': {factor: 10},
-        'emotionalIntelAccountability': {factor: 10},
-        'emotionalIntelResponsibility': {factor: 10},
-        'emotionalIntelIndependence': {factor: 10},
-      },
-    },
-  },
+  // 'emotionalIntel': {
+  //   factor: 5,
+  //   agdiagoFactor: 5,
+  //   fields: {
+  //     '_all': {
+  //       'emotionalIntelBehavior': {factor: 10},
+  //       'emotionalIntelReflection': {factor: 10},
+  //       'emotionalIntelTeamWork': {factor: 10},
+  //       'emotionalIntelRelationships': {factor: 10},
+  //       'emotionalIntelAccountability': {factor: 10},
+  //       'emotionalIntelResponsibility': {factor: 10},
+  //       'emotionalIntelIndependence': {factor: 10},
+  //     },
+  //   },
+  // },
   'academic': {
     factor: 10,
     agdiagoFactor: 15,
@@ -179,19 +180,19 @@ const pillarsObj = {
   //     },
   //   },
   // },
-  'coreAttributes': {
-    factor: 25,
-    agdiagoFactor: 25,
-    fields: {
-      '_all': {
-        'coreAttributesCompetitiveness': {factor: 10},
-        'coreAttributesPersistence': {factor: 10},
-        'coreAttributesWorkEthic': {factor: 10},
-        'coreAttributesTeamOrientation': {factor: 10},
-        'coreAttributesMastery': {factor: 10},
-      },
-    },
-  },
+  // 'coreAttributes': {
+  //   factor: 25,
+  //   agdiagoFactor: 25,
+  //   fields: {
+  //     '_all': {
+  //       'coreAttributesCompetitiveness': {factor: 10},
+  //       'coreAttributesPersistence': {factor: 10},
+  //       'coreAttributesWorkEthic': {factor: 10},
+  //       'coreAttributesTeamOrientation': {factor: 10},
+  //       'coreAttributesMastery': {factor: 10},
+  //     },
+  //   },
+  // },
 };
 
 function getParentPosition(position) {
@@ -288,7 +289,9 @@ function calculatePlayerOverallScore(playerScores, programBenchmarks) {
   if (totalFactor === 0) {
     return null;
   } else {
-    return totalScore / totalFactor;
+    // HACK: until client fixes calculation
+    return totalScore / 100;
+    // return totalScore / totalFactor;
   }
 }
 

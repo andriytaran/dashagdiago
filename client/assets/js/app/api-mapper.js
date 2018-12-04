@@ -844,10 +844,10 @@ function getDashboardData(response) {
 
   return [
     getAthletic(),
-    getEmotionalIntel(),
+    // getEmotionalIntel(),
     getAcademic(),
     // getSocialProfile(),
-    getCoreAttributes()
+    // getCoreAttributes()
   ];
 }
 
@@ -945,10 +945,10 @@ function mapSinglePlayerData(response) {
     playerInfo: getBasicPlayerInfo(),
     playerAttributes: [
       getAthletic(),
-      getEmotionalIntel(),
+      // getEmotionalIntel(),
       getAcademic(),
       // getSocialProfile(), // temporary
-      getCoreAttributes()
+      // getCoreAttributes()
     ]
   };
 }

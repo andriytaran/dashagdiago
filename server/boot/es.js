@@ -352,11 +352,13 @@ for (int i = 0; i < params['pillars'].length; ++i) {
   }
 }
 if (totalFactor > 0) {
-  return 100 * totalScore / totalFactor;
+  return 100 * totalScore / 100;
 } else {
   return null;
 }
 `,
+            // HACK: totalScore / 100 instead of totalScore / totalFactor
+            // until client fixes score calculation
             'params': {
               'pillars': pillars,
               'attributes': attributes,
