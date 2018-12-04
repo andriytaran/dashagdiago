@@ -846,7 +846,7 @@ function getDashboardData(response) {
     getAthletic(),
     getEmotionalIntel(),
     getAcademic(),
-    getSocialProfile(),
+    // getSocialProfile(),
     getCoreAttributes()
   ];
 }
