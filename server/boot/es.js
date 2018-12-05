@@ -623,43 +623,41 @@ async function fetchPercentileGroups(
 }
 
 function queryByTerm(term, value) {
-  if (
-    value == 'qb' ||
-    value == 'dl' ||
-    value == 'ol' ||
-    value == 'st' ||
-    value == 'db' ||
-    value == 'cb' ||
-    value == 'lb') {
-    let arr = [];
-    let tmp = positionsHierarchy[value];
-    arr = tmp.concat(value);
-    return value ? {
-      'body': {
-        'query': {
-          'bool': {
-            'filter': [{
-              'terms': {'position': arr},
-            }],
+  if (term === 'position') {
+    const childPositions = positionsHierarchy[value];
+    const hasChildren = !!childPositions && !!childPositions.length;
+
+    if (hasChildren) {
+      const positions = childPositions.concat(value);
+      return {
+        'body': {
+          'query': {
+            'bool': {
+              'filter': [{
+                'terms': {
+                  [term]: positions,
+                },
+              }],
+            },
           },
         },
-      },
-    } : {};
-  } else {
-    return value ? {
-      'body': {
-        'query': {
-          'bool': {
-            'filter': [{
-              'term': {
-                [term]: value,
-              },
-            }],
-          },
-        },
-      },
-    } : {};
+      };
+    }
   }
+
+  return value ? {
+    'body': {
+      'query': {
+        'bool': {
+          'filter': [{
+            'term': {
+              [term]: value,
+            },
+          }],
+        },
+      },
+    },
+  } : {};
 }
 
 function queryScriptField(field, script) {
