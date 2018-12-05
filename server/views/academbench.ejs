@@ -7,7 +7,8 @@
   </ol>
   <!-- end breadcrumb -->
   <!-- begin page-header -->
-  <h1 class="page-header"><%=team %> Benchmark Input Page</h1>
+  <h1 class="page-header">
+    <%=team %> Benchmark Input Page</h1>
   <!-- end page-header -->
   <!-- begin row -->
   <div class="row">
@@ -23,7 +24,13 @@
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="pos">Position: </label>
               <div class="col-md-9">
-                <select class="form-control" id="pos"><% for(let i=0; i<positions.length; i++) { %><option><%= positions[i] %></option><% } -%></select>
+                <select class="form-control" id="pos">
+                  <% for(let i=0; i<positions.length; i++) { %>
+                  <option>
+                    <%= positions[i] %>
+                  </option>
+                  <% } -%>
+                </select>
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -32,7 +39,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="SAT" id="sat" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="SAT Factor" id="satF" />
+                <input class="form-control m-b-5" type="text" placeholder="SAT Factor" id="satF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -41,7 +48,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="ACT" id="act" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="ACT Factor" id="actF" />
+                <input class="form-control m-b-5" type="text" placeholder="ACT Factor" id="actF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -50,7 +57,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="GPA" id="gpa" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="GPA Factor" id="gpaF" />
+                <input class="form-control m-b-5" type="text" placeholder="GPA Factor" id="gpaF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -59,10 +66,13 @@
                 <input class="form-control m-b-5" type="text" placeholder="coreGpa" id="coreGpa" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="coreGpa Factor" id="coreGpaF" />
+                <input class="form-control m-b-5" type="text" placeholder="coreGpa Factor" id="coreGpaF" />
               </div>
             </div>
-            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Submit"></div>
+            <div class="form-group row m-b-15" style="display: flex;flex-direction: row;align-items: center;">
+              <div class="subbtn col-md-5"><input type="submit" class="btn btn-lime" id="submit" value="Submit"></div>
+              <div class="col-md-7" style="text-align: right"><a href="/addnewpillar">Add new Pillar</a></div>
+            </div>
           </form>
           <!-- <div class="singlepar">
             <div class="formf"><input class="form-control" type="text" id="sat"></div>

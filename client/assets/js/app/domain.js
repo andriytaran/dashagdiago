@@ -1,6 +1,6 @@
-function getTooltip(term, {color} ) {
+function getTooltip(term, { color }) {
   let res = "";
-  switch (color){
+  switch (color) {
     case "green":
       res = res + "<p class='dashboard-tooltip' style='color:green;'><strong>Green Bar: Athlete has met School and Agdiago min benchmarks</strong>";
       break;

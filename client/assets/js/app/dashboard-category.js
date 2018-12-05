@@ -51,9 +51,9 @@ var Dashboard = (function () {
     //main function
     init: function () {
       let urlParams = getUrlParameters();
-      handleCulturalFit(urlParams.position);
-      handleCulturalFitTable(urlParams.position);
-      handleOverallScoreSection(urlParams.position);
+      handleCulturalFit(urlParams.category);
+      handleCulturalFitTable(urlParams.category);
+      handleOverallScoreSection(urlParams.category);
     }
   };
 })();

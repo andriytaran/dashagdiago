@@ -44,8 +44,8 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
       function showmodal() {
         drawloader("#players");
         $("#chartmodal").modal("show");
-        getPlayersData(position, d.field, function (players) {
-          drawTable(players, "#players")
+        getPlayersData(position, d.field, function (response) {
+          drawTable(response.players, "#players")
         });
       }
       $(mbar.node()).on("click", showmodal);
@@ -57,15 +57,15 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
     props.color = "green";
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange";
+      props.color = "orange";
     }
     if (d.ftick == null && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange";
+      props.color = "orange";
     }
     if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange";
+      props.color = "orange";
     }
     mbar.attr("title", getTooltip(d.field, props));
     $(mbar.node()).tooltip({ container: chart.node() });

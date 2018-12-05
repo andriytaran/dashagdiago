@@ -87,8 +87,20 @@ module.exports = app => {
   });
 
   //dashboard-category
-  app.get('/dashboard-category', function(req, res, next) {
-    res.render('dashboard-category', {position: req.query.category});
+  app.get('/dashboard-category', async function(req, res, next) {
+    const team = 'cincinnati';
+    const position = req.query.category != null ?
+      req.query.category.toLowerCase() :
+      null;
+    const overallScore = await es.fetchOverallScore(
+      es.queryByTerm('position', position),
+      team
+    );
+
+    res.render('dashboard-category', {
+      position: position.toUpperCase(),
+      overallScore: Math.round(overallScore),
+    });
   });
 
   //dashboard-position

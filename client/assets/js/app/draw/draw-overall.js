@@ -1,4 +1,4 @@
-function drawOverall(data, selector, position, getTooltip, getPlayersData) {
+function drawOverall(data, selector, props, getTooltip, getPlayersData) {
   var chart = d3.select(selector);
   chart.selectAll(".elLoader").remove();
   // let cleaner = document.querySelector(selector);
@@ -34,7 +34,7 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
       return newel;
     }
 
-    function createbutt(parentel, dataTarget, ariacont) {
+    function createbutt(parentel, dataTarget, ariacont, parentid) {
       parentel.querySelector("h5");
       let newel = document.createElement("button");
       newel.className = "btn btn-link";
@@ -42,24 +42,25 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
       newel.setAttribute("aria-expanded", "false");
       newel.setAttribute("data-target", dataTarget);
       newel.setAttribute("aria-controls", ariacont);
-      newel.style.width = "100%" ;
+      newel.style.width = "100%";
 
-      let bar = createbar(d);
+      let bar = createbar(d, parentid);
+      if (bar == false){return false;}
       newel.appendChild(bar);
       parentel.appendChild(newel);
 
-     var leftnode = document.createElement("div");
-          leftnode.className = "pull-left";
+      var leftnode = document.createElement("div");
+      leftnode.className = "pull-left";
 
 
       var node = document.createElement("I");
 
-      var textToShow=document.createTextNode(" Show Sub Categories");
-          node.className = "fas fa-arrow-alt-circle-down";
-          node.appendChild(textToShow);
-          leftnode.appendChild(node);
+      var textToShow = document.createTextNode(" Show Sub Categories");
+      node.className = "fas fa-arrow-alt-circle-down";
+      node.appendChild(textToShow);
+      leftnode.appendChild(node);
 
-        newel.appendChild(node);
+      newel.appendChild(node);
 
 
     }
@@ -74,26 +75,31 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     heading.appendChild(newh);
     let datatar = "#collapse" + i.toString();
     let ariacon = "collapse" + i.toString();
-    createbutt(heading, datatar, ariacon);
+    let newbutt = createbutt(heading, datatar, ariacon, newcardid);
+    if (newbutt == false){
+      newcard.setAttribute("display", "none");
+    }
+    // let checkfordisplay = document.getElementsByClassName("gbar");
+    // if (checkfordisplay == null){newcard == null;}
     let bodywrap = creatediv(newcard, "collapse", ariacon);
     bodywrap.setAttribute("aria-labelledby", headingid);
-    bodywrap.setAttribute("data-parent", "#accordionExample");
-    $(bodywrap).one('show.bs.collapse', function(){
-      switch (d.field){
-      case "coreAttributes":
-      return handleCoreAttributes(position);
-      case "academic":
-      return handleAcademicAttributes(position);
-      case "emotionalIntel":
-      return handleEmotionalIntelAttributes(position);
-      case "athletic":
-      return handleAthleticAttributes(position);
-      case "socialProfile":
-      return handleSocialProfileAttributes(position);
+    bodywrap.setAttribute("data-parent", selector);
+    $(bodywrap).one('show.bs.collapse', function () {
+      switch (d.field) {
+        case "coreAttributes":
+          return  new ComponentCoreAttributesSection(d.contentId, props).mount();
+        case "academic":
+          return  new ComponentAcademicAttributesSection(d.contentId, props).mount();
+        case "emotionalIntel":
+          return  new ComponentEmotionalIntelAttributesSection(d.contentId, props).mount();
+        case "athletic":
+          return  new ComponentAthleticAttributesSection(d.contentId, props).mount();
+        case "socialProfile":
+          return  new ComponentSocialProfileAttributesSection(d.contentId, props).mount();
       }
     });
     let body = creatediv(bodywrap, "card-body", d.contentId);
-    let elLoado = creatediv(body,"elLoader");
+    let elLoado = creatediv(body, "elLoader");
     let loader = creatediv(elLoado, "loader");
     elLoado.appendChild(loader);
     body.appendChild(elLoado);
@@ -130,8 +136,8 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
         event.stopPropagation();
         drawloader("#players");
         $("#chartmodal").modal("show");
-        getPlayersData(position, d.field, function(players) {
-          drawTable(players, "#players");
+        getPlayersData(position, d.field, function (response) {
+          drawTable(response.players, "#players");
         });
       }
       $(mbar.node()).on("click", showmodal);
@@ -144,27 +150,28 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     props.color = "green";
     if (d.value < d.ftick && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange"
+      props.color = "orange"
     }
     if (d.ftick == null && d.value < d.stick) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange"
+      props.color = "orange"
     }
     if (d.value < d.ftick && d.stick == null) {
       barEnter.style("background-color", "orange");
-      props.color =  "orange"
+      props.color = "orange"
     }
     mbar.attr("title", getTooltip(d.field, props));
     $(mbar.node()).tooltip({ container: chart.node() });
     // barEnter.text(function () { return d.perc + "%"; });
     barEnter.attr("class", "perc");
     if (d.value == null) {
-      gbar.style("display", "none");
+      // gbar.style("display", "none");
+      return false;
     }
     let ftick = mbar.append("div");
     ftick.attr("class", "tick red");
 
-    ftick.style("left", function() {
+    ftick.style("left", function () {
       return perccheck(d.ftick, d.range[0], d.range[1]) + "%";
     });
     if (d.ftick == null) {
@@ -173,7 +180,7 @@ function drawOverall(data, selector, position, getTooltip, getPlayersData) {
     let stick = mbar.append("div");
     stick.attr("class", "tick");
 
-    stick.style("left", function() {
+    stick.style("left", function () {
       return perccheck(d.stick, d.range[0], d.range[1]) + "%";
     });
     if (d.stick == null) {

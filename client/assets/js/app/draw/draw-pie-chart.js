@@ -1,4 +1,13 @@
 function drawPieChart(data, selector, position, getTooltip) {
+
+  function showmodal(position, data) {
+    drawloader("#players");
+    $("#chartmodal").modal("show");
+    getCulturalFitModalTableData(position, data.rangeStart, data.rangeEnd, function (response) {
+      drawTable(mapCulturalFitForTable(response), '#players')
+    });
+  }
+
   let block = d3.select(selector)
   block.selectAll(".elLoader").remove()
   nv.addGraph(function () {
@@ -35,10 +44,3 @@ function drawPieChart(data, selector, position, getTooltip) {
   });
 }
 
-function showmodal(position, data) {
-  drawloader("#players");
-  $("#chartmodal").modal("show");
-  getCulturalPlayersData(position, data.rangeStart, data.rangeEnd, function (players) {
-    drawTable(players, "#players")
-  });
-}

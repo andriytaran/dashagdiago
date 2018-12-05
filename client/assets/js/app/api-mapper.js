@@ -1,4 +1,3 @@
-//getCoreAttributesData
 function mapCoreAttributesForBarChart(response) {
   let res = [
     {
@@ -77,7 +76,6 @@ function mapCoreAttributesForBarChart(response) {
   return res;
 }
 
-//getAcademicAttributesData
 function mapAcademicAttributesForBarСhart(response) {
   let res = [
     {
@@ -142,7 +140,6 @@ function mapAcademicAttributesForBarСhart(response) {
   return res;
 }
 
-//getSocialProfileAttributesData
 function mapSocialProfileAttributesForBarChart(response) {
   let res = [
     {
@@ -305,7 +302,6 @@ function mapSocialProfileAttributesForBarChart(response) {
   return res;
 }
 
-//getEmotionalIntelAttributesData
 function mapEmotionalIntelAttributesForBarChart(response) {
   let res = [
     {
@@ -412,8 +408,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
   return res;
 }
 
-//getAthleticAttributesData
-function mapAthleticAttributesForBarchart(response, playerPosition) {
+function mapAthleticAttributesForBarchart(response) {
   function getCarries() {
     return {
       value: response.attributes.player.carries,
@@ -515,7 +510,7 @@ function mapAthleticAttributesForBarchart(response, playerPosition) {
       value: response.attributes.player.rushingTouchdowns,
       ftick: response.attributes.program.rushingTouchdowns,
       stick: response.attributes.agdiago.rushingTouchdowns,
-      name: "rushingTouchdowns",
+      name: "Rushing Touchdowns",
       field: "rushingTouchdowns",
       range: getDataRange(
         response.attributes.player.rushingTouchdowns,
@@ -719,53 +714,33 @@ function mapAthleticAttributesForBarchart(response, playerPosition) {
     };
   }
   let res;
-  switch (playerPosition) {
-    case "RB":
-      res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getReceptions(), getRecievingYards(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-      break;
-    case "QBPRO":
-    case "QBDUAL":
-      res = [getForty(), getVertical(), getCarries(), getrushingTouchdowns(), getRushingYards(), getCompletions(), getPassingYards(), getTouchdownsThrown(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-      break;
-    case "DE":
-    case "DT":
-      res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-      break;
-    case "ILB":
-    case "OLB":
-    case "MLB":
-      res = [getForty(), getVertical(), getSoloTackle(), gettotalTackles(), getSacks(), getTacklesForLoss(), getInterceptionsThrown(), getGamesPlayed(), getGamesStarted(), getHeight(), getWeight()];
-      break;
-    default:
-      res = [
-        getForty(),
-        getGamesPlayed(),
-        getGamesStarted(),
-        getHeight(),
-        getVertical(),
-        getWeight(),
-        getCarries(),
-        getCompletions(),
-        getInterceptionsThrown(),
-        getPassingYards(),
-        getRecievingYards(),
-        getReceptions(),
-        getrushingTouchdowns(),
-        getRushingYards(),
-        getSacks(),
-        getSoloTackle(),
-        getTacklesForLoss(),
-        gettotalTackles(),
-        getTouchdownsThrown()
-      ];
-  }
+  res = [
+    getForty(),
+    getGamesPlayed(),
+    getGamesStarted(),
+    getHeight(),
+    getVertical(),
+    getWeight(),
+    getCarries(),
+    getCompletions(),
+    getInterceptionsThrown(),
+    getPassingYards(),
+    getRecievingYards(),
+    getReceptions(),
+    getrushingTouchdowns(),
+    getRushingYards(),
+    getSacks(),
+    getSoloTackle(),
+    getTacklesForLoss(),
+    gettotalTackles(),
+    getTouchdownsThrown()
+  ];
   function sortByValue(a, b) { return b.value - a.value; }
   res.sort(sortByValue)
   return res;
 }
 
-//getDashboardData
-function getDashboardData(response) {
+function mapOverallScoresForBarchart(response) {
   function getAthletic() {
     return {
       value: response.scores.player.athletic,
@@ -851,20 +826,64 @@ function getDashboardData(response) {
   ];
 }
 
+function mapCulturalFitForPieChart(response) {
+  return [
+    {
+      label: "Low Fit",
+      value: response.groups[0].count,
+      start: response.groups[0].percentileStart,
+      end: response.groups[0].percentileEnd,
+      rangeStart: response.groups[0].rangeStart,
+      rangeEnd: response.groups[0].rangeEnd,
+    },
+    {
+      label: "Med Fit",
+      value: response.groups[1].count,
+      start: response.groups[1].percentileStart,
+      end: response.groups[1].percentileEnd,
+      rangeStart: response.groups[1].rangeStart,
+      rangeEnd: response.groups[1].rangeEnd,
+    },
+    {
+      label: "Top Fit",
+      value: response.groups[2].count,
+      start: response.groups[2].percentileStart,
+      end: response.groups[2].percentileEnd,
+      rangeStart: response.groups[2].rangeStart,
+      rangeEnd: response.groups[2].rangeEnd,
+    }
+  ];
+}
 
-function mapSinglePlayerData(response) {
-  function getBasicPlayerInfo() {
+function mapTopCulturalFitForTable(response) {
+  return response.players.map(cb);
+  function cb(player, i) {
     return {
-      fname: response.player.fname,
-      lname: response.player.lname,
-      hometown: response.player.hometown,
-      school: response.player.school,
-      team: response.player.teamName,
-      coach: response.player.coach,
-      scoutdate: response.player.scoutdate,
-      university: response.player.university,
+      fname: player.fname,
+      lname: player.lname,
+      position: player.position,
+      score: player.value,
+      id: player.id,
+      rate: i + 1
     };
   }
+}
+
+function mapCulturalFitForTable(response) {
+  return response.players.map(cb);
+  function cb(player) {
+    return {
+      fname: player.fname,
+      lname: player.lname,
+      position: player.position,
+      score: player.value,
+      id: player.id,
+    };
+  }
+
+}
+
+function mapSinglePlayerForBarchart(response) {
   function getAthletic() {
     return {
       value: response.scores.player.athletic,
@@ -942,7 +961,6 @@ function mapSinglePlayerData(response) {
   }
 
   return {
-    playerInfo: getBasicPlayerInfo(),
     playerAttributes: [
       getAthletic(),
       // getEmotionalIntel(),
@@ -951,4 +969,20 @@ function mapSinglePlayerData(response) {
       // getCoreAttributes()
     ]
   };
+}
+
+function mapSinglePlayerForOverallInfo(response) {
+  function getBasicPlayerInfo() {
+    return {
+      fname: response.player.fname,
+      lname: response.player.lname,
+      hometown: response.player.hometown,
+      school: response.player.school,
+      team: response.player.teamName,
+      coach: response.player.coach,
+      scoutdate: response.player.scoutdate,
+      university: response.player.university,
+    };
+  }
+  return getBasicPlayerInfo()
 }

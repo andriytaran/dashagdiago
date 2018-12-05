@@ -13,8 +13,7 @@ function getCoreAttributesData(position, cb) {
   );
 }
 
-
-function getAcademicAttributesData(position, cb){
+function getAcademicAttributesData(position, cb) {
   $.post(
     "/api/dashboard-data",
     {
@@ -29,8 +28,7 @@ function getAcademicAttributesData(position, cb){
   );
 }
 
-
-function getSocialProfileAttributesData(position, cb){
+function getSocialProfileAttributesData(position, cb) {
   $.post(
     "/api/dashboard-data",
     {
@@ -45,8 +43,7 @@ function getSocialProfileAttributesData(position, cb){
   );
 }
 
-
-function getEmotionalIntelAttributesData(position, cb){
+function getEmotionalIntelAttributesData(position, cb) {
   $.post(
     "/api/dashboard-data",
     {
@@ -61,8 +58,7 @@ function getEmotionalIntelAttributesData(position, cb){
   );
 }
 
-
-function getAthleticAttributesData(position, cb){
+function getAthleticAttributesData(position, cb) {
   $.post(
     "/api/dashboard-data",
     {
@@ -77,8 +73,7 @@ function getAthleticAttributesData(position, cb){
   );
 }
 
-
-function getDashboardAttributesData(position, cb){
+function getOverallScoresData(position, cb) {
   $.post(
     "/api/dashboard-data",
     {
@@ -92,6 +87,60 @@ function getDashboardAttributesData(position, cb){
   );
 }
 
+function getCulturalFitData(position, cb){
+
+  $.post(
+    "/api/dashboard-data",
+    {
+      type: "percentile_groups",
+      position: position,
+      attribute: "athletic"
+    },
+    function (response) {
+      cb(response);
+    },
+    "json"
+  );
+}
+
+function getCulturalFitModalTableData(position, valueStart, valueEnd, cb){
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data",
+    data: JSON.stringify({
+      type: "players",
+      position: position,
+      sort: "desc",
+      attribute: "athletic",
+      between: [valueStart, valueEnd]
+    }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+      cb(response);
+    }
+  });
+}
+
+function getTopCulturalFitData(position, cb){
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data",
+    data: JSON.stringify({
+      type: "players",
+      position: position,
+      sort: "desc",
+      attribute: "athletic",
+      limit: 10
+    }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+      cb(response);
+    }
+  });
+}
+
 function getPlayersData(position, attribute, cb) {
   $.post(
     "/api/dashboard-data",
@@ -101,20 +150,19 @@ function getPlayersData(position, attribute, cb) {
       attribute: attribute
     },
     function (response) {
-      cb(response.players);
+      cb(response);
     },
     "json"
   );
 }
 
-
-function getPlayerCoreAttributesData(id, cb){
+function getPlayerCoreAttributesData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {
       type: "pillar",
       pillar: "coreAttributes",
-      id : id
+      id: id
     },
     function (response) {
       cb(response);
@@ -123,14 +171,13 @@ function getPlayerCoreAttributesData(id, cb){
   );
 }
 
-
-function getPlayerAcademicAttributesData(id, cb){
+function getPlayerAcademicAttributesData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {
       type: "pillar",
       pillar: "academic",
-      id : id
+      id: id
     },
     function (response) {
       cb(response);
@@ -139,14 +186,13 @@ function getPlayerAcademicAttributesData(id, cb){
   );
 }
 
-
-function getPlayerSocialProfileAttributesData(id, cb){
+function getPlayerSocialProfileAttributesData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {
       type: "pillar",
       pillar: "socialProfile",
-      id : id
+      id: id
     },
     function (response) {
       cb(response);
@@ -155,14 +201,13 @@ function getPlayerSocialProfileAttributesData(id, cb){
   );
 }
 
-
-function getPlayerEmotionalIntelAttributesData(id, cb){
+function getPlayerEmotionalIntelAttributesData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {
       type: "pillar",
       pillar: "emotionalIntel",
-      id : id
+      id: id
     },
     function (response) {
       cb(response);
@@ -171,14 +216,13 @@ function getPlayerEmotionalIntelAttributesData(id, cb){
   );
 }
 
-
-function getPlayerAthleticAttributesData(id, cb){
+function getPlayerAthleticAttributesData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {
       type: "pillar",
       pillar: "athletic",
-      id : id
+      id: id
     },
     function (response) {
       cb(response);
@@ -187,8 +231,7 @@ function getPlayerAthleticAttributesData(id, cb){
   );
 }
 
-
-function getSinglePlayerData(id, cb){
+function getSinglePlayerData(id, cb) {
   $.post(
     "/api/dashboard-data",
     {

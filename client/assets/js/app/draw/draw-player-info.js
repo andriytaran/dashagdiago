@@ -18,10 +18,10 @@ function drawPlayerInfo(data, selector) {
   let univer = data.university || "Not Available";
   creatediv("playerinfoblock", "univer", univer);
   let fullname;
-  if (data.fname == null && data.lname == null){fullname = "Not Available"};
-  if (data.lname == null && data.fname != null){fullname = data.fname};
-  if (data.fname == null && data.lname != null){fullname = data.lname};
-  if (data.fname != null && data.lname != null){fullname = data.fname + " " + data.lname};
+  if (data.fname == null && data.lname == null) { fullname = "Not Available" };
+  if (data.lname == null && data.fname != null) { fullname = data.fname };
+  if (data.fname == null && data.lname != null) { fullname = data.lname };
+  if (data.fname != null && data.lname != null) { fullname = data.fname + " " + data.lname };
   creatediv("detailedinfo", "fullname", fullname);
   creatediv("detailedinfo", "furtherinfo");
   let hometown = "Hometown: " + (data.hometown || "Not Available");

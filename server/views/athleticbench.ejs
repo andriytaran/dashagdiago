@@ -24,7 +24,13 @@
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="pos">Position: </label>
               <div class="col-md-9">
-                <select class="form-control" id="pos"><% for(let i=0; i<positions.length; i++) { %><option><%= positions[i] %></option><% } -%></select>
+                <select class="form-control" id="pos">
+                  <% for(let i=0; i<positions.length; i++) { %>
+                  <option>
+                    <%= positions[i] %>
+                  </option>
+                  <% } -%>
+                </select>
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -33,7 +39,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Carries" id="carries" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Carries Factor" id="carriesF" />
+                <input class="form-control m-b-5" type="text" placeholder="Carries Factor" id="carriesF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -42,7 +48,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Completions" id="completions" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Completions Factor" id="completionsF" />
+                <input class="form-control m-b-5" type="text" placeholder="Completions Factor" id="completionsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -51,7 +57,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Interceptions Thrown" id="interceptionsThrown" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Interceptions Thrown Factor" id="interceptionsThrownF" />
+                <input class="form-control m-b-5" type="text" placeholder="Interceptions Thrown Factor" id="interceptionsThrownF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -62,14 +68,14 @@
               <div class="col-md-4">
                 <input class="form-control m-b-5" type="text" placeholder="Passing Yards Factor" id="passingYardsF" />
               </div>
-              </div>
+            </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="receivingYards">Recieving Yards Benchmark</label>
               <div class="col-md-5">
                 <input class="form-control m-b-5" type="text" placeholder="Recieving Yards" id="receivingYards" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Recieving Yards Factor" id="recievingYardsF" />
+                <input class="form-control m-b-5" type="text" placeholder="Recieving Yards Factor" id="recievingYardsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -78,7 +84,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Receptions" id="receptions" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Receptions Factor" id="receptionsF" />
+                <input class="form-control m-b-5" type="text" placeholder="Receptions Factor" id="receptionsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -87,7 +93,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Rushing Yards" id="rushingYards" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Rushing Yards Factor" id="rushingYardsF" />
+                <input class="form-control m-b-5" type="text" placeholder="Rushing Yards Factor" id="rushingYardsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -96,7 +102,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Sacks" id="sacks" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Sacks Factor" id="sacksF" />
+                <input class="form-control m-b-5" type="text" placeholder="Sacks Factor" id="sacksF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -105,7 +111,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Rushing Touchdowns" id="rushingTouchdowns" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Rushing Touchdowns Factor" id="rushingTouchdownsF" />
+                <input class="form-control m-b-5" type="text" placeholder="Rushing Touchdowns Factor" id="rushingTouchdownsF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -114,7 +120,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Solo Tackle" id="soloTackles" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Solo Tackle Factor" id="soloTacklesF" />
+                <input class="form-control m-b-5" type="text" placeholder="Solo Tackle Factor" id="soloTacklesF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -123,7 +129,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Tackles For Loss" id="tacklesForLoss" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Tackles For Loss Factor" id="tacklesForLossF" />
+                <input class="form-control m-b-5" type="text" placeholder="Tackles For Loss Factor" id="tacklesForLossF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -132,7 +138,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Total Tackles" id="totalTackles" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Total Tackles Factor" id="totalTacklesF" />
+                <input class="form-control m-b-5" type="text" placeholder="Total Tackles Factor" id="totalTacklesF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -141,7 +147,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Touchfowns Thrown" id="touchdownsThrown" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Touchfowns Thrown Factor" id="touchdownsThrownF" />
+                <input class="form-control m-b-5" type="text" placeholder="Touchfowns Thrown Factor" id="touchdownsThrownF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -150,7 +156,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Forty" id="forty" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Forty Factor" id="fortyF" />
+                <input class="form-control m-b-5" type="text" placeholder="Forty Factor" id="fortyF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -159,7 +165,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Games Played" id="gamesPlayed" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Games Played Factor" id="gamesPlayedF" />
+                <input class="form-control m-b-5" type="text" placeholder="Games Played Factor" id="gamesPlayedF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -168,7 +174,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Games Started" id="gamesStarted" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Games Started Factor" id="gamesStartedF" />
+                <input class="form-control m-b-5" type="text" placeholder="Games Started Factor" id="gamesStartedF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -177,7 +183,7 @@
                 <input class="form-control m-b-5" type="text" placeholder="Height" id="height" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Height Factor" id="heightF" />
+                <input class="form-control m-b-5" type="text" placeholder="Height Factor" id="heightF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
@@ -186,19 +192,22 @@
                 <input class="form-control m-b-5" type="text" placeholder="Vertical" id="vertical" />
               </div>
               <div class="col-md-4">
-                  <input class="form-control m-b-5" type="text" placeholder="Vertical Factor" id="verticalF" />
+                <input class="form-control m-b-5" type="text" placeholder="Vertical Factor" id="verticalF" />
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="weight">Weight Benchmark</label>
               <div class="col-md-5">
-              <input class="form-control m-b-5" type="text" placeholder="Weight" id="weight" />
+                <input class="form-control m-b-5" type="text" placeholder="Weight" id="weight" />
               </div>
               <div class="col-md-4">
                 <input class="form-control m-b-5" type="text" placeholder="Weight Factor" id="weightF" />
               </div>
             </div>
-            <div class="subbtn"><input type="submit" class="btn btn-lime" id="submit" value="Submit"></div>
+            <div class="form-group row m-b-15" style="display: flex;flex-direction: row;align-items: center;">
+                <div class="subbtn col-md-5"><input type="submit" class="btn btn-lime" id="submit" value="Submit"></div>
+                <div class="col-md-7" style="text-align: right"><a href="/addnewpillar">Add new Pillar</a></div>
+              </div>
           </form>
           <!-- <div class="singlepar">
             <div class="formf"><input class="form-control" type="text" id="sat"></div>
