@@ -136,7 +136,10 @@ function drawOverall(data, selector, props, getTooltip, getPlayersData) {
         event.stopPropagation();
         drawloader("#players");
         $("#chartmodal").modal("show");
-        getPlayersData(position, d.field, function (response) {
+        getPlayersData({
+          position: position,
+          attribute: d.field
+        }, function (response) {
           drawTable(response.players, "#players");
         });
       }

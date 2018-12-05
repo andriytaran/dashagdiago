@@ -44,7 +44,10 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
       function showmodal() {
         drawloader("#players");
         $("#chartmodal").modal("show");
-        getPlayersData(position, d.field, function (response) {
+        getPlayersData({
+          position: position,
+          attribute: d.field
+        }, function (response) {
           drawTable(response.players, "#players")
         });
       }

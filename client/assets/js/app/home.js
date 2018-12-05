@@ -25,8 +25,6 @@ var handleCulturalFit = (function () {
   };
 })();
 
-
-
 var handleCulturalFitTable = (function () {
   "use strict";
 
@@ -45,8 +43,11 @@ function handleOffenseListBlock(){
     function showmodal() {
       drawloader("#players");
       $("#chartmodal").modal("show");
-      getPlayersData('OG', null, function (players) {
-        drawTable(players.players, "#players")
+      getPlayersData({
+        position: 'OG',
+        attribute: null
+      }, function (response) {
+        drawTable(response.players, "#players")
       });
     };
     showmodal();
@@ -59,8 +60,11 @@ function handleDefenseListBlock(){
     function showmodal() {
       drawloader("#players");
       $("#chartmodal").modal("show");
-      getPlayersData('DT', null, function (players) {
-        drawTable(players.players, "#players")
+      getPlayersData({
+        position: 'DT',
+        attribute: null
+      }, function (response) {
+        drawTable(response.players, "#players")
       });
     };
     showmodal();
@@ -73,21 +77,15 @@ function handleFullListBlock(){
     function showmodal() {
       drawloader("#players");
       $("#chartmodal").modal("show");
-      getPlayersData(null, null, function (players) {
-        drawTable(players.players, "#players")
+      getPlayersData({
+        position: null,
+        attribute: null
+      }, function (response) {
+        drawTable(response.players, "#players")
       });
     };
     showmodal();
   }, false);
-}
-
-
-function showmodal() {
-  drawloader("#players");
-  $("#chartmodal").modal("show");
-  getPlayersData(position, 'act', function (players) {
-    drawTable(players.players, "#players")
-  });
 }
 
 function handleOverallScoreSection(position) {

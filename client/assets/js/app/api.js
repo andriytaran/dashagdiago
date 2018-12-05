@@ -141,13 +141,15 @@ function getTopCulturalFitData(position, cb){
   });
 }
 
-function getPlayersData(position, attribute, cb) {
+function getPlayersData(props, cb) {
+  props = props || {};
+
   $.post(
     "/api/dashboard-data",
     {
       type: "players",
-      position: position,
-      attribute: attribute
+      position: props.position,
+      attribute: props.attribute
     },
     function (response) {
       cb(response);

@@ -1,8 +1,8 @@
 function drawPieChart(data, selector, position, getTooltip) {
-
   function showmodal(position, data) {
     drawloader("#players");
     $("#chartmodal").modal("show");
+    // TODO: remove cultural fit references
     getCulturalFitModalTableData(position, data.rangeStart, data.rangeEnd, function (response) {
       drawTable(mapCulturalFitForTable(response), '#players')
     });
@@ -33,12 +33,10 @@ function drawPieChart(data, selector, position, getTooltip) {
       .transition()
       .duration(300)
       .call(pieChart);
-    if (getPlayersData) {
-      pieChart.pie.dispatch.on("elementClick", function (obj) {
-        showmodal(position, obj.data);
-      });
-    }
 
+    pieChart.pie.dispatch.on("elementClick", function (obj) {
+      showmodal(position, obj.data);
+    });
 
     return pieChart;
   });
