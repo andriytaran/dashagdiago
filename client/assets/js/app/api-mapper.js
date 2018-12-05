@@ -1,3 +1,18 @@
+function normalizeBarChartData(data, props) {
+  props = props || {};
+  const sort = props.sort == null ? true : props.sort;
+
+  const withoutNulls = data.filter(d => d.value != null);
+  if (sort) {
+    const sortedByValue = withoutNulls.sort(sortByValue);
+    return sortedByValue;
+  } else {
+    return withoutNulls;
+  }
+
+  function sortByValue(a, b) { return b.value - a.value; }
+}
+
 function mapCoreAttributesForBarChart(response) {
   let res = [
     {
@@ -71,9 +86,7 @@ function mapCoreAttributesForBarChart(response) {
       fractiondigits: 1
     }
   ];
-  function sortByValue(a, b) { return b.value - a.value; }
-  res.sort(sortByValue)
-  return res;
+  return normalizeBarChartData(res);
 }
 
 function mapAcademicAttributesForBarСhart(response) {
@@ -135,9 +148,7 @@ function mapAcademicAttributesForBarСhart(response) {
       fractiondigits: 0
     }
   ];
-  function sortByValue(a, b) { return b.value - a.value; }
-  res.sort(sortByValue)
-  return res;
+  return normalizeBarChartData(res);
 }
 
 function mapSocialProfileAttributesForBarChart(response) {
@@ -297,9 +308,7 @@ function mapSocialProfileAttributesForBarChart(response) {
       fractiondigits: 1
     }
   ];
-  function sortByValue(a, b) { return b.value - a.value; }
-  res.sort(sortByValue)
-  return res;
+  return normalizeBarChartData(res);
 }
 
 function mapEmotionalIntelAttributesForBarChart(response) {
@@ -403,9 +412,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
       fractiondigits: 0
     }
   ];
-  function sortByValue(a, b) { return b.value - a.value; }
-  res.sort(sortByValue)
-  return res;
+  return normalizeBarChartData(res);
 }
 
 function mapAthleticAttributesForBarchart(response) {
@@ -735,9 +742,7 @@ function mapAthleticAttributesForBarchart(response) {
     gettotalTackles(),
     getTouchdownsThrown()
   ];
-  function sortByValue(a, b) { return b.value - a.value; }
-  res.sort(sortByValue)
-  return res;
+  return normalizeBarChartData(res);
 }
 
 function mapOverallScoresForBarchart(response) {
@@ -817,13 +822,15 @@ function mapOverallScoresForBarchart(response) {
     };
   }
 
-  return [
+  const res = [
     getAthletic(),
-    // getEmotionalIntel(),
+    getEmotionalIntel(),
     getAcademic(),
-    // getSocialProfile(),
-    // getCoreAttributes()
+    getSocialProfile(),
+    getCoreAttributes()
   ];
+
+  return normalizeBarChartData(res, { sort: false });
 }
 
 function mapCulturalFitForPieChart(response) {
@@ -960,15 +967,15 @@ function mapSinglePlayerForBarchart(response) {
     };
   }
 
-  return {
-    playerAttributes: [
-      getAthletic(),
-      // getEmotionalIntel(),
-      getAcademic(),
-      // getSocialProfile(), // temporary
-      // getCoreAttributes()
-    ]
-  };
+  const res = [
+    getAthletic(),
+    getEmotionalIntel(),
+    getAcademic(),
+    getSocialProfile(),
+    getCoreAttributes()
+  ];
+
+  return normalizeBarChartData(res, { sort: false });
 }
 
 function mapSinglePlayerForOverallInfo(response) {

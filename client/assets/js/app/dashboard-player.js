@@ -6,7 +6,7 @@ var handleSinglePlayer = (function () {
       function cb(response) {
         window.position = response.player.position;
         const overallPlayerInfo = mapSinglePlayerForOverallInfo(response);
-        const data = mapSinglePlayerForBarchart(response);
+        const barChartData = mapSinglePlayerForBarchart(response);
         drawPlayerInfo(overallPlayerInfo, "#basic-player-info");
         drawOverallBar(response.overallScore.player);
         function checkifnull(datael) {
@@ -14,12 +14,12 @@ var handleSinglePlayer = (function () {
           else { return false; }
         }
 
-        if (data.playerAttributes.every(checkifnull)) {
+        if (barChartData.every(checkifnull)) {
           let elem = document.getElementById("playerAttributesBlock");
           elem.style.display = "none";
         } else {
           drawOverall(
-            data.playerAttributes,
+            barChartData,
             "#accordionExample",
             {id:id},
             getTooltip,
