@@ -11,7 +11,7 @@ const domain = require('./domain');
 /**
  * @typedef {Object} ProgramBenchmarks
 */
-
+const positionsHierarchy = domain.positionsHierarchy;
 const pillarsObj = domain.pillarsObj;
 
 function getAttributeInfo(attribute, position = '_all', visitedPositions = {}) {
@@ -623,19 +623,43 @@ async function fetchPercentileGroups(
 }
 
 function queryByTerm(term, value) {
-  return value ? {
-    'body': {
-      'query': {
-        'bool': {
-          'filter': [{
-            'term': {
-              [term]: value,
-            },
-          }],
+  if (
+    value == 'qb' ||
+    value == 'dl' ||
+    value == 'ol' ||
+    value == 'st' ||
+    value == 'db' ||
+    value == 'cb' ||
+    value == 'lb') {
+    let arr = [];
+    let tmp = positionsHierarchy[value];
+    arr = tmp.concat(value);
+    return value ? {
+      'body': {
+        'query': {
+          'bool': {
+            'filter': [{
+              'terms': {'position': arr},
+            }],
+          },
         },
       },
-    },
-  } : {};
+    } : {};
+  } else {
+    return value ? {
+      'body': {
+        'query': {
+          'bool': {
+            'filter': [{
+              'term': {
+                [term]: value,
+              },
+            }],
+          },
+        },
+      },
+    } : {};
+  }
 }
 
 function queryScriptField(field, script) {

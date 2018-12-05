@@ -310,6 +310,7 @@ function normalizeProgramBenchmarks(programBenchmarks) {
 }
 
 module.exports = {
+  positionsHierarchy,
   pillarsObj,
   getParentPosition,
   getPillarAttributes,
