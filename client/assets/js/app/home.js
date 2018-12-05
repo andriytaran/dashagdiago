@@ -44,7 +44,7 @@ function handleOffenseListBlock(){
       drawloader("#players");
       $("#chartmodal").modal("show");
       getPlayersData({
-        position: 'OG',
+        offense: true,
         attribute: null
       }, function (response) {
         drawTable(response.players, "#players")
@@ -61,7 +61,7 @@ function handleDefenseListBlock(){
       drawloader("#players");
       $("#chartmodal").modal("show");
       getPlayersData({
-        position: 'DT',
+        defense: true,
         attribute: null
       }, function (response) {
         drawTable(response.players, "#players")
@@ -78,7 +78,6 @@ function handleFullListBlock(){
       drawloader("#players");
       $("#chartmodal").modal("show");
       getPlayersData({
-        position: null,
         attribute: null
       }, function (response) {
         drawTable(response.players, "#players")

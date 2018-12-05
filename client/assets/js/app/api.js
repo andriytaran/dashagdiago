@@ -144,18 +144,35 @@ function getTopCulturalFitData(position, cb){
 function getPlayersData(props, cb) {
   props = props || {};
 
+  const offenseDefense = props.offense ? 1 : (props.defense ? 0 : null);
+
   $.post(
     "/api/dashboard-data",
     {
       type: "players",
       position: props.position,
-      attribute: props.attribute
+      attribute: props.attribute,
+      offenseDefense: offenseDefense
     },
     function (response) {
       cb(response);
     },
     "json"
   );
+
+  function calculateOffenseDefense (offense, defense) {
+    if (props.offense && props.defense) {
+      throw new Error("Both `offense` and `defense` is not supported.");
+    }
+
+    if (props.offense) {
+      return 1;
+    } else if (props.defense) {
+      return 0;
+    } else {
+      return null
+    }
+  }
 }
 
 function getPlayerCoreAttributesData(id, cb) {
