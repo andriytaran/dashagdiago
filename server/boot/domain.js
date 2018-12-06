@@ -195,9 +195,10 @@ const pillarsObj = {
   // },
 };
 
-function getParentPosition(position) {
+function getParentPosition(position, visited) {
   if (position === '_all') return null;
   const parentPosition = positionsHierarchyReversed[position] || '_all';
+  if (visited[parentPosition]) return '_all';
   return parentPosition;
 }
 
@@ -223,7 +224,7 @@ function getPillarAttributes(pillar, position, visited = {}) {
     return attributes;
   } else {
     visited[position] = true;
-    const parentPosition = getParentPosition(position);
+    const parentPosition = getParentPosition(position, visited);
     if (!parentPosition) return attributes;
     if (visited[parentPosition]) return attributes;
     return getPillarAttributes(pillar, parentPosition, visited);

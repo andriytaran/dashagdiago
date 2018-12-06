@@ -29,7 +29,7 @@ function getAttributeInfo(attribute, position = '_all', visitedPositions = {}) {
     }
   }
   visitedPositions[position] = true;
-  const parentPosition = domain.getParentPosition(position);
+  const parentPosition = domain.getParentPosition(position, visitedPositions);
   if (!parentPosition) return null;
   if (visitedPositions[parentPosition]) return null;
   return getAttributeInfo(attribute, parentPosition, visitedPositions);
