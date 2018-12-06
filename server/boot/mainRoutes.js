@@ -422,14 +422,15 @@ module.exports = app => {
         const pillars = Object.keys(domain.pillarsObj);
 
         const defaultValueIfScript = 0;
-        const isScript = ~pillars.indexOf(attribute);
+        const isScript = ~pillars.indexOf(attribute) ||
+          attribute === 'overallScore';
 
         let attributeParam;
         if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             {},
             team,
-            [attribute]
+            attribute === 'overallScore' ? undefined : [attribute]
           );
 
           if (between) {

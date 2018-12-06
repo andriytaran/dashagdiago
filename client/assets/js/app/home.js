@@ -46,7 +46,7 @@ function handleOffenseListBlock(){
       getPlayersData({
         offense: true,
         sort: 'desc',
-        attribute: 'weight'
+        attribute: 'overallScore'
       }, function (response) {
         const players = mapPlayersForTable(response);
         drawTable(players, "#players")
@@ -65,7 +65,7 @@ function handleDefenseListBlock(){
       getPlayersData({
         defense: true,
         sort: 'desc',
-        attribute: 'weight'
+        attribute: 'overallScore'
       }, function (response) {
         const players = mapPlayersForTable(response);
         drawTable(players, "#players")
@@ -82,7 +82,7 @@ function handleFullListBlock(){
       drawloader("#players");
       $("#chartmodal").modal("show");
       getPlayersData({
-        attribute: 'weight',
+        attribute: 'overallScore',
         sort: 'desc'
       }, function (response) {
         const players = mapPlayersForTable(response);

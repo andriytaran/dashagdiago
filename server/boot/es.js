@@ -697,19 +697,126 @@ function queryRange(field, from, to) {
 }
 
 function queryScoreRange(pillar, programBenchmarks, from = null, to = null) {
-  const attributes = R.map(
-    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
-    programBenchmarks.positions
-  );
-  return {
-    'body': {
-      'query': {
-        'bool': {
-          'filter': [{
-            'script': {
+  if (pillar === 'overallScore') {
+    const pillars = Object.keys(programBenchmarks.pillars);
+    if (!pillars.length) return null;
+
+    const attributes = R.map(
+      p => Object.keys(p),
+      programBenchmarks.positions
+    );
+
+    return {
+      'body': {
+        'query': {
+          'bool': {
+            'filter': [{
               'script': {
-                'lang': 'painless',
-                'source': `
+                'script': {
+                  'lang': 'painless',
+                  'source': `
+def position = doc['position.keyword'].value;
+if (position == null) return false;
+position = position.toLowerCase();
+
+def attributes = params['attributes'][position];
+if (attributes == null) return false;
+
+def attributeObjs = params['benchmarks'].positions[position];
+
+Map scores = new HashMap();
+for (int i = 0; i < params['pillars'].length; ++i) {
+  scores[params['pillars'][i]] = (float)0;
+}
+
+Map factors = new HashMap();
+for (int i = 0; i < params['pillars'].length; ++i) {
+  factors[params['pillars'][i]] = (float)0;
+}
+
+for (int i = 0; i < attributes.length; ++i) {
+  def attribute = attributes[i];
+  float value;
+  if (doc[attribute].empty) {
+    value = value;
+  } else {
+    value = (float)doc[attribute].value;
+    def attributeObj = attributeObjs[attribute];
+    def pillar = attributeObj.pillar;
+    def programValue = (float)attributeObj.value;
+    def reverse = attributeObj.reverse;
+    def factor = (float)attributeObj.factor;
+    def score = (float)0;
+    if (reverse) {
+      score += factor * (programValue / value);
+    } else {
+      score += factor * (value / programValue);
+    }
+    scores[pillar] = scores[pillar] + score;
+    factors[pillar] = factors[pillar] + factor;
+  }
+}
+
+float totalScore = 0;
+float totalFactor = 0;
+for (int i = 0; i < params['pillars'].length; ++i) {
+  def pillar = params['pillars'][i];
+  def score = scores[pillar];
+  if (factors[pillar] > 0) {
+    def factor = (float)params['benchmarks'].pillars[pillar].factor;
+    totalScore += factor * score / factors[pillar];
+    totalFactor += factor;
+  }
+}
+if (totalFactor > 0) {
+  def res = 100 * totalScore / 100;
+  if (params['from'] == null) {
+    if (params['to'] == null) {
+      return true;
+    } else {
+      return res < params['to'];
+    }
+  } else {
+    if (params['to'] == null) {
+      return res >= params['from'];
+    } else {
+      return res >= params['from'] && res < params['to'];
+    }
+  }
+} else {
+  return false;
+}
+`,
+                  // HACK: totalScore / 100 instead of totalScore / totalFactor
+                  // until client fixes score calculation
+                  'params': {
+                    'pillars': pillars,
+                    'attributes': attributes,
+                    'benchmarks': programBenchmarks.positions,
+                    'from': from,
+                    'to': to,
+                  },
+                },
+              },
+            }],
+          },
+        },
+      },
+    };
+  } else {
+    const attributes = R.map(
+      p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+      programBenchmarks.positions
+    );
+    return {
+      'body': {
+        'query': {
+          'bool': {
+            'filter': [{
+              'script': {
+                'script': {
+                  'lang': 'painless',
+                  'source': `
 def position = doc['position.keyword'].value;
 if (position == null) return false;
 position = position.toLowerCase();
@@ -763,20 +870,21 @@ if (totalFactor > 0) {
 } else {
   return false;
 }
-            `,
-                'params': {
-                  'attributes': attributes,
-                  'benchmarks': programBenchmarks.positions,
-                  'from': from,
-                  'to': to,
+`,
+                  'params': {
+                    'attributes': attributes,
+                    'benchmarks': programBenchmarks.positions,
+                    'from': from,
+                    'to': to,
+                  },
                 },
               },
-            },
-          }],
+            }],
+          },
         },
       },
-    },
-  };
+    };
+  }
 }
 
 function buildScoreScript(
@@ -784,14 +892,95 @@ function buildScoreScript(
   programBenchmarks,
   {defaultValue = null} = {}
 ) {
-  const attributes = R.map(
-    p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
-    programBenchmarks.positions
-  );
+  if (pillar === 'overallScore') {
+    const pillars = Object.keys(programBenchmarks.pillars);
+    if (!pillars.length) return null;
 
-  return {
-    'lang': 'painless',
-    'source': `
+    const attributes = R.map(
+      p => Object.keys(p),
+      programBenchmarks.positions
+    );
+
+    return {
+      'lang': 'painless',
+      'source': `
+def position = doc['position.keyword'].value;
+if (position == null) return params['defaultValue'];
+position = position.toLowerCase();
+
+def attributes = params['attributes'][position];
+if (attributes == null) return params['defaultValue'];
+
+def attributeObjs = params['benchmarks'].positions[position];
+
+Map scores = new HashMap();
+for (int i = 0; i < params['pillars'].length; ++i) {
+  scores[params['pillars'][i]] = (float)0;
+}
+
+Map factors = new HashMap();
+for (int i = 0; i < params['pillars'].length; ++i) {
+  factors[params['pillars'][i]] = (float)0;
+}
+
+for (int i = 0; i < attributes.length; ++i) {
+  def attribute = attributes[i];
+  float value;
+  if (doc[attribute].empty) {
+    value = value;
+  } else {
+    value = (float)doc[attribute].value;
+    def attributeObj = attributeObjs[attribute];
+    def pillar = attributeObj.pillar;
+    def programValue = (float)attributeObj.value;
+    def reverse = attributeObj.reverse;
+    def factor = (float)attributeObj.factor;
+    def score = (float)0;
+    if (reverse) {
+      score += factor * (programValue / value);
+    } else {
+      score += factor * (value / programValue);
+    }
+    scores[pillar] = scores[pillar] + score;
+    factors[pillar] = factors[pillar] + factor;
+  }
+}
+
+float totalScore = 0;
+float totalFactor = 0;
+for (int i = 0; i < params['pillars'].length; ++i) {
+  def pillar = params['pillars'][i];
+  def score = scores[pillar];
+  if (factors[pillar] > 0) {
+    def factor = (float)params['benchmarks'].pillars[pillar].factor;
+    totalScore += factor * score / factors[pillar];
+    totalFactor += factor;
+  }
+}
+if (totalFactor > 0) {
+  return 100 * totalScore / 100;
+} else {
+  return params['defaultValue'];
+}
+`,
+      // HACK: totalScore / 100 instead of totalScore / totalFactor
+      // until client fixes score calculation
+      'params': {
+        'pillars': pillars,
+        'attributes': attributes,
+        'benchmarks': programBenchmarks,
+        'defaultValue': defaultValue,
+      },
+    };
+  } else {
+    const attributes = R.map(
+      p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+      programBenchmarks.positions
+    );
+
+    return {
+      'lang': 'painless',
+      'source': `
 def position = doc['position.keyword'].value;
 if (position == null) return params['defaultValue'];
 position = position.toLowerCase();
@@ -834,12 +1023,13 @@ if (totalFactor > 0) {
   return params['defaultValue'];
 }
 `,
-    'params': {
-      'attributes': attributes,
-      'benchmarks': programBenchmarks.positions,
-      'defaultValue': defaultValue,
-    },
-  };
+      'params': {
+        'attributes': attributes,
+        'benchmarks': programBenchmarks.positions,
+        'defaultValue': defaultValue,
+      },
+    };
+  }
 }
 
 function queryScoreField(pillar, programBenchmarks) {
