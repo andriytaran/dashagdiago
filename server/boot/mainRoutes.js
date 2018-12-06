@@ -397,13 +397,27 @@ module.exports = app => {
       }
       case 'players': {
         const attribute = parser.parseRequiredParameter('attribute');
+
         const sort = parser.parseParameter('sort');
         if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
 
-        // TODO: implement between
         const limit = parser.parseParameter('limit');
+
         const between = parser.parseParameter('between');
         if (between && !(between instanceof Array)) throw new Error(`Unsupported between: ${between}`);
+
+        const offenseDefense = parser.parseParameter('offenseDefense');
+        if (
+          offenseDefense != null &&
+          offenseDefense !== 0 &&
+          offenseDefense !== 1
+        ) {
+          throw new Error(`Unsupported offenseDefense: ${offenseDefense}`);
+        }
+
+        if (offenseDefense != null) {
+          queryBuilder.add(es.queryByTerm('offenseDefense', offenseDefense));
+        }
 
         const pillars = Object.keys(domain.pillarsObj);
 

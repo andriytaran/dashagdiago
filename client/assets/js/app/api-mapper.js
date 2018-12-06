@@ -876,6 +876,19 @@ function mapTopCulturalFitForTable(response) {
   }
 }
 
+function mapPlayersForTable(response) {
+  return response.players.map(cb);
+  function cb(player) {
+    return {
+      fname: player.fname,
+      lname: player.lname,
+      position: player.position,
+      score: player.value,
+      id: player.id,
+    };
+  }
+}
+
 function mapCulturalFitForTable(response) {
   return response.players.map(cb);
   function cb(player) {
@@ -887,7 +900,6 @@ function mapCulturalFitForTable(response) {
       id: player.id,
     };
   }
-
 }
 
 function mapSinglePlayerForBarchart(response) {

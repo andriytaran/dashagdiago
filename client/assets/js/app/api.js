@@ -93,6 +93,7 @@ function getPlayersData(props, cb) {
     type: "players",
     position: props.position,
     attribute: props.attribute,
+    sort: props.sort,
     offenseDefense: offenseDefense
   }, cb);
 

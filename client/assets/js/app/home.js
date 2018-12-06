@@ -45,9 +45,11 @@ function handleOffenseListBlock(){
       $("#chartmodal").modal("show");
       getPlayersData({
         offense: true,
-        attribute: null
+        sort: 'desc',
+        attribute: 'weight'
       }, function (response) {
-        drawTable(response.players, "#players")
+        const players = mapPlayersForTable(response);
+        drawTable(players, "#players")
       });
     };
     showmodal();
@@ -62,9 +64,11 @@ function handleDefenseListBlock(){
       $("#chartmodal").modal("show");
       getPlayersData({
         defense: true,
-        attribute: null
+        sort: 'desc',
+        attribute: 'weight'
       }, function (response) {
-        drawTable(response.players, "#players")
+        const players = mapPlayersForTable(response);
+        drawTable(players, "#players")
       });
     };
     showmodal();
@@ -78,9 +82,11 @@ function handleFullListBlock(){
       drawloader("#players");
       $("#chartmodal").modal("show");
       getPlayersData({
-        attribute: null
+        attribute: 'weight',
+        sort: 'desc'
       }, function (response) {
-        drawTable(response.players, "#players")
+        const players = mapPlayersForTable(response);
+        drawTable(players, "#players")
       });
     };
     showmodal();

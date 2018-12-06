@@ -645,7 +645,7 @@ function queryByTerm(term, value) {
     }
   }
 
-  return value ? {
+  return value != null ? {
     'body': {
       'query': {
         'bool': {
