@@ -1,166 +1,102 @@
+function getAPIData (props, cb) {
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data",
+    data: JSON.stringify(props),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
+
 function getCoreAttributesData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "coreAttributes",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "coreAttributes",
+    position: position
+  }, cb);
 }
 
 function getAcademicAttributesData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "academic",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "academic",
+    position: position
+  }, cb);
 }
 
 function getSocialProfileAttributesData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "socialProfile",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "socialProfile",
+    position: position
+  }, cb);
 }
 
 function getEmotionalIntelAttributesData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "emotionalIntel",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "emotionalIntel",
+    position: position
+  }, cb);
 }
 
 function getAthleticAttributesData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "athletic",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "athletic",
+    position: position
+  }, cb);
 }
 
 function getOverallScoresData(position, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "scores",
-      position: position
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "scores",
+    position: position
+  }, cb);
 }
 
 function getCulturalFitData(position, cb){
-
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "percentile_groups",
-      position: position,
-      attribute: "athletic"
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "percentile_groups",
+    position: position,
+    attribute: "athletic"
+  }, cb);
 }
 
 function getCulturalFitModalTableData(position, valueStart, valueEnd, cb){
-  $.ajax({
-    type: "POST",
-    url: "/api/dashboard-data",
-    data: JSON.stringify({
-      type: "players",
-      position: position,
-      sort: "desc",
-      attribute: "athletic",
-      between: [valueStart, valueEnd]
-    }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: function (response) {
-      cb(response);
-    }
-  });
+  getAPIData({
+    type: "players",
+    position: position,
+    sort: "desc",
+    attribute: "athletic",
+    between: [valueStart, valueEnd]
+  }, cb);
 }
 
 function getTopCulturalFitData(position, cb){
-  $.ajax({
-    type: "POST",
-    url: "/api/dashboard-data",
-    data: JSON.stringify({
-      type: "players",
-      position: position,
-      sort: "desc",
-      attribute: "athletic",
-      limit: 10
-    }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: function (response) {
-      cb(response);
-    }
-  });
+  getAPIData({
+    type: "players",
+    position: position,
+    sort: "desc",
+    attribute: "athletic",
+    limit: 10
+  }, cb);
 }
 
 function getPlayersData(props, cb) {
   props = props || {};
 
-  const offenseDefense = props.offense ? 1 : (props.defense ? 0 : null);
+  const offenseDefense = calculateOffenseDefense(props);
 
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "players",
-      position: props.position,
-      attribute: props.attribute,
-      offenseDefense: offenseDefense
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "players",
+    position: props.position,
+    attribute: props.attribute,
+    offenseDefense: offenseDefense
+  }, cb);
 
-  function calculateOffenseDefense (offense, defense) {
+  function calculateOffenseDefense (props) {
     if (props.offense && props.defense) {
       throw new Error("Both `offense` and `defense` is not supported.");
     }
@@ -170,96 +106,54 @@ function getPlayersData(props, cb) {
     } else if (props.defense) {
       return 0;
     } else {
-      return null
+      return null;
     }
   }
 }
 
 function getPlayerCoreAttributesData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "coreAttributes",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "coreAttributes",
+    id: id
+  }, cb);
 }
 
 function getPlayerAcademicAttributesData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "academic",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "academic",
+    id: id
+  }, cb);
 }
 
 function getPlayerSocialProfileAttributesData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "socialProfile",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "socialProfile",
+    id: id
+  }, cb);
 }
 
 function getPlayerEmotionalIntelAttributesData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "emotionalIntel",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "emotionalIntel",
+    id: id
+  }, cb);
 }
 
 function getPlayerAthleticAttributesData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "pillar",
-      pillar: "athletic",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "pillar",
+    pillar: "athletic",
+    id: id
+  }, cb);
 }
 
 function getSinglePlayerData(id, cb) {
-  $.post(
-    "/api/dashboard-data",
-    {
-      type: "single_player",
-      id: id
-    },
-    function (response) {
-      cb(response);
-    },
-    "json"
-  );
+  getAPIData({
+    type: "single_player",
+    id: id
+  }, cb);
 }
