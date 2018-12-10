@@ -48,7 +48,7 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
           position: position,
           attribute: d.field
         }, function (response) {
-          drawTable(response.players, "#players")
+          drawTable(mapPlayersForTable(response), "#players")
         });
       }
       $(mbar.node()).on("click", showmodal);

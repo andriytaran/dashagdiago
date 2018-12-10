@@ -103,9 +103,9 @@ function getPlayersData(props, cb) {
     }
 
     if (props.offense) {
-      return 1;
-    } else if (props.defense) {
       return 0;
+    } else if (props.defense) {
+      return 1;
     } else {
       return null;
     }
