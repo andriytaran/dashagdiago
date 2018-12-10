@@ -72,11 +72,11 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        // 'soloTackles': {factor: 10},
-        // 'totalTackles': {factor: 10},
-        // 'sacks': {factor: 10},
-        // 'tacklesForLoss': {factor: 10},
-        // 'interceptions': {factor: 10},
+        'soloTackles': {factor: 5},
+        'totalTackles': {factor: 10},
+        'sacks': {factor: 10},
+        'tacklesForLoss': {factor: 10},
+        'interceptions': {factor: 5},
       },
       'lb': {
         'forty': {
@@ -89,11 +89,11 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        // 'soloTackles': {factor: 10},
-        // 'totalTackles': {factor: 10},
-        // 'sacks': {factor: 10},
-        // 'tacklesForLoss': {factor: 10},
-        // 'interceptions': {factor: 10},
+        'soloTackles': {factor: 10},
+        'totalTackles': {factor: 10},
+        'sacks': {factor: 10},
+        'tacklesForLoss': {factor: 10},
+        'interceptions': {factor: 5},
       },
       'qb': {
         'forty': {
@@ -106,14 +106,13 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        // 'completions': {factor: 5},
-        // 'passingYards': {factor: 5},
-        // 'touchdownsThrown': {factor: 5},
-        // 'interceptionsThrown': {factor: 5},
-        // // TODO: check carries in UI
-        // 'carries': {factor: 5},
-        // 'rushingYards': {factor: 5},
-        // 'rushingTouchdowns': {factor: 5},
+        'completions': {factor: 5},
+        'passingYards': {factor: 5},
+        'touchdownsThrown': {factor: 5},
+        'interceptionsThrown': {factor: 5},
+        'carries': {factor: 10},
+        'rushingYards': {factor: 10},
+        'rushingTouchdowns': {factor: 10},
       },
       'rb': {
         'forty': {
@@ -126,11 +125,11 @@ const pillarsObj = {
         'height': {factor: 5},
         'weight': {factor: 1},
 
-        // 'carries': {factor: 10},
-        // 'rushingYards': {factor: 10},
-        // 'rushingTouchdowns': {factor: 10},
-        // 'receptions': {factor: 10},
-        // 'receivingYards': {factor: 10},
+        'carries': {factor: 5},
+        'rushingYards': {factor: 10},
+        'rushingTouchdowns': {factor: 5},
+        'receptions': {factor: 5},
+        'receivingYards': {factor: 5},
       },
     },
   },

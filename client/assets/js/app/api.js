@@ -60,7 +60,7 @@ function getCulturalFitData(position, cb){
   getAPIData({
     type: "percentile_groups",
     position: position,
-    attribute: "athletic"
+    attribute: "overallScore"
   }, cb);
 }
 
@@ -69,7 +69,7 @@ function getCulturalFitModalTableData(position, valueStart, valueEnd, cb){
     type: "players",
     position: position,
     sort: "desc",
-    attribute: "athletic",
+    attribute: "overallScore",
     between: [valueStart, valueEnd]
   }, cb);
 }
@@ -79,7 +79,7 @@ function getTopCulturalFitData(position, cb){
     type: "players",
     position: position,
     sort: "desc",
-    attribute: "athletic",
+    attribute: "overallScore",
     limit: 10
   }, cb);
 }

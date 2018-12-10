@@ -768,6 +768,7 @@ for (int i = 0; i < params['pillars'].length; ++i) {
     totalFactor += factor;
   }
 }
+
 if (totalFactor > 0) {
   def res = 100 * totalScore / 100;
   if (params['from'] == null) {
@@ -792,7 +793,7 @@ if (totalFactor > 0) {
                   'params': {
                     'pillars': pillars,
                     'attributes': attributes,
-                    'benchmarks': programBenchmarks.positions,
+                    'benchmarks': programBenchmarks,
                     'from': from,
                     'to': to,
                   },

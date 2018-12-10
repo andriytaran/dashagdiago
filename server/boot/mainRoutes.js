@@ -370,11 +370,15 @@ module.exports = app => {
         const pillars = Object.keys(domain.pillarsObj);
 
         let attributeParam;
-        if (~pillars.indexOf(attribute)) {
+
+        const isScript = ~pillars.indexOf(attribute) ||
+          attribute === 'overallScore';
+
+        if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             {},
             team,
-            [attribute]
+            attribute === 'overallScore' ? undefined : [attribute]
           );
           attributeParam = {
             'script': es.buildScoreScript(attribute, programBenchmarks),
