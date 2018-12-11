@@ -53,12 +53,14 @@ module.exports = app => {
 
     res.render('home', {
       overallCount,
-      defensePercent: overallCount ?
-        Math.round(100 * defenseCount / overallCount) :
-        null,
-      offensePercent: overallCount ?
-        Math.round(100 * offenseCount / overallCount) :
-        null,
+      defenseCount,
+      offenseCount,
+      // defensePercent: overallCount ?
+      //   Math.round(100 * defenseCount / overallCount) :
+      //   null,
+      // offensePercent: overallCount ?
+      //   Math.round(100 * offenseCount / overallCount) :
+      //   null,
       overallScore: Math.round(overallScore),
       team: 'Cincinnati Bearcats',
       teamDisplay: 'Cincinnati Bearcats',
