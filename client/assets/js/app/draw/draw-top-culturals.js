@@ -27,6 +27,27 @@ function drawTopCulturals(data, selector) {
       return d;
     };
   }
+
+  function displayvalue(value, style, fractiondigits) {
+    let fractiondigitsval = 0;
+    if (fractiondigits != null) {
+      fractiondigitsval = d.fractiondigits;
+    }
+    if (style == "percent") {
+      return (value / 100).toLocaleString(undefined, {
+        style: "percent",
+        useGrouping: false,
+        maximumFractionDigits: fractiondigitsval,
+        minimumFractionDigits: fractiondigitsval
+      });
+    } else {
+      return value.toLocaleString(undefined, {
+        useGrouping: false,
+        maximumFractionDigits: fractiondigitsval,
+        minimumFractionDigits: fractiondigitsval
+      });
+    }
+  }
   // column definitions
   var columns = [
     { head: "Rate", cl: "title", html: f("rate") },
@@ -62,6 +83,7 @@ function drawTopCulturals(data, selector) {
         // compute cell values for this specific row
         var cell = {};
         d3.keys(c).forEach(function (k) {
+          row.score = displayvalue(row.score);
           cell[k] = typeof c[k] == "function" ? c[k](row, i) : c[k];
         });
         return cell;

@@ -27,7 +27,7 @@ function mapCoreAttributesForBarChart(response) {
       name: "Competitiveness",
       field: "coreAttributesCompetitiveness",
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.coreAttributesMastery,
@@ -41,7 +41,7 @@ function mapCoreAttributesForBarChart(response) {
         response.attributes.agdiago.coreAttributesMastery
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.coreAttributesPersistence,
@@ -55,7 +55,7 @@ function mapCoreAttributesForBarChart(response) {
       name: "Persistence",
       field: "coreAttributesPersistence",
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.coreAttributesTeamOrientation,
@@ -69,7 +69,7 @@ function mapCoreAttributesForBarChart(response) {
       name: "Team Orientation",
       field: "coreAttributesTeamOrientation",
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.coreAttributesWorkEthic,
@@ -83,7 +83,7 @@ function mapCoreAttributesForBarChart(response) {
       name: "Work Ethic",
       field: "coreAttributesWorkEthic",
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 2
     }
   ];
   return normalizeBarChartData(res);
@@ -103,7 +103,7 @@ function mapAcademicAttributesForBarСhart(response) {
         response.attributes.agdiago.sat
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.coreGpa,
@@ -117,7 +117,7 @@ function mapAcademicAttributesForBarСhart(response) {
         response.attributes.agdiago.cor
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.gpa,
@@ -131,7 +131,7 @@ function mapAcademicAttributesForBarСhart(response) {
         response.attributes.agdiago.gpa
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.act,
@@ -145,7 +145,7 @@ function mapAcademicAttributesForBarСhart(response) {
         response.attributes.agdiago.act
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     }
   ];
   return normalizeBarChartData(res);
@@ -165,7 +165,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.facebookSentiment
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.instagramFollowers,
@@ -179,7 +179,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.instagramFollowers
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.newsMediaCoverageMentions,
@@ -193,7 +193,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.newsMediaCoverageMentions
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.newsMediaCoverageRegional,
@@ -207,7 +207,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.newsMediaCoverageRegional
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.newsMediaCoverageSentiment,
@@ -221,7 +221,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.newsMediaCoverageSentiment
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.newsMediaCoverageNational,
@@ -235,7 +235,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.newsMediaCoverageNational
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.pressReleaseSentiment,
@@ -249,7 +249,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.pressReleaseSentiment
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.pressReleaseSentimentCounter,
@@ -263,7 +263,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.pressReleaseSentimentCounter
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.socialInstagramSentiment,
@@ -277,7 +277,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.socialInstagramSentiment
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.socialTwitterSentiment,
@@ -291,7 +291,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.socialTwitterSentiment
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.twitterFollowers,
@@ -305,7 +305,7 @@ function mapSocialProfileAttributesForBarChart(response) {
         response.attributes.agdiago.twitterFollowers
       ),
       style: "number",
-      fractiondigits: 1
+      fractiondigits: 2
     }
   ];
   return normalizeBarChartData(res);
@@ -325,7 +325,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelAccountability
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelBehavior,
@@ -339,7 +339,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelBehavior
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelIndependence,
@@ -353,7 +353,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelIndependence
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelReflection,
@@ -367,7 +367,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelReflection
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelRelationships,
@@ -381,7 +381,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelRelationships
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelResponsibility,
@@ -395,7 +395,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelResponsibility
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     },
     {
       value: response.attributes.player.emotionalIntelTeamWork,
@@ -409,7 +409,7 @@ function mapEmotionalIntelAttributesForBarChart(response) {
         response.attributes.agdiago.emotionalIntelTeamWork
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     }
   ];
   return normalizeBarChartData(res);
@@ -429,7 +429,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.carries
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getCompletions() {
@@ -445,7 +445,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.completions
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getInterceptionsThrown() {
@@ -461,7 +461,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.interceptionsThrown
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getPassingYards() {
@@ -477,7 +477,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.passingYards
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getRecievingYards() {
@@ -493,7 +493,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.receivingYards
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getReceptions() {
@@ -509,7 +509,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.receptions
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getrushingTouchdowns() {
@@ -525,7 +525,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.rushingTouchdowns
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getRushingYards() {
@@ -541,7 +541,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.rushingYards
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getSacks() {
@@ -557,7 +557,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.sacks
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getSoloTackle() {
@@ -573,7 +573,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.soloTackles
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getTacklesForLoss() {
@@ -589,7 +589,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.tacklesForLoss
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function gettotalTackles() {
@@ -605,7 +605,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.totalTackles
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getTouchdownsThrown() {
@@ -621,7 +621,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.touchdownsThrown
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getForty() {
@@ -637,7 +637,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.forty
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getGamesPlayed() {
@@ -653,7 +653,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.gamesPlayed
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getGamesStarted() {
@@ -669,7 +669,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.gamesStarted
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getHeight() {
@@ -685,7 +685,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.height
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getVertical() {
@@ -701,7 +701,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.vertical
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   function getWeight() {
@@ -717,7 +717,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.weight
       ),
       style: "number",
-      fractiondigits: 0
+      fractiondigits: 2
     };
   }
   let res;

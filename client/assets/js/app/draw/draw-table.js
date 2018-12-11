@@ -27,6 +27,27 @@ function drawTable(data, selector) {
       return d;
     };
   }
+
+  function displayvalue(value, style, fractiondigits) {
+    let fractiondigitsval = 0;
+    if (fractiondigits != null) {
+      fractiondigitsval = d.fractiondigits;
+    }
+    if (style == "percent") {
+      return (value / 100).toLocaleString(undefined, {
+        style: "percent",
+        useGrouping: false,
+        maximumFractionDigits: fractiondigitsval,
+        minimumFractionDigits: fractiondigitsval
+      });
+    } else {
+      return value.toLocaleString(undefined, {
+        useGrouping: false,
+        maximumFractionDigits: fractiondigitsval,
+        minimumFractionDigits: fractiondigitsval
+      });
+    }
+  }
   // column definitions
   var columns = [
     { head: "First Name", cl: "title", html: f("fname") },
@@ -61,6 +82,7 @@ function drawTable(data, selector) {
         // compute cell values for this specific row
         var cell = {};
         d3.keys(c).forEach(function (k) {
+          if (row.score != null) { row.score = displayvalue(row.score); }
           cell[k] = typeof c[k] == "function" ? c[k](row, i) : c[k];
         });
         return cell;
