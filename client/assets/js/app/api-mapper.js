@@ -758,7 +758,7 @@ function mapOverallScoresForBarchart(response) {
         response.scores.agdiago.athletic
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getEmotionalIntel() {
@@ -773,7 +773,7 @@ function mapOverallScoresForBarchart(response) {
         response.scores.agdiago.emotionalIntel
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getAcademic() {
@@ -788,7 +788,7 @@ function mapOverallScoresForBarchart(response) {
         response.scores.agdiago.academic
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getSocialProfile() {
@@ -803,7 +803,7 @@ function mapOverallScoresForBarchart(response) {
         response.scores.agdiago.socialProfile
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getCoreAttributes() {
@@ -818,7 +818,7 @@ function mapOverallScoresForBarchart(response) {
         response.scores.agdiago.coreAttributes
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
 
@@ -915,7 +915,7 @@ function mapSinglePlayerForBarchart(response) {
         response.scores.agdiago.athletic
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getEmotionalIntel() {
@@ -930,7 +930,7 @@ function mapSinglePlayerForBarchart(response) {
         response.scores.agdiago.emotionalIntel
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getAcademic() {
@@ -945,7 +945,7 @@ function mapSinglePlayerForBarchart(response) {
         response.scores.agdiago.academic
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getSocialProfile() {
@@ -960,7 +960,7 @@ function mapSinglePlayerForBarchart(response) {
         response.scores.agdiago.socialProfile
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
   function getCoreAttributes() {
@@ -975,7 +975,7 @@ function mapSinglePlayerForBarchart(response) {
         response.scores.agdiago.coreAttributes
       ),
       style: "percent",
-      fractiondigits: 1
+      fractiondigits: 0
     };
   }
 
