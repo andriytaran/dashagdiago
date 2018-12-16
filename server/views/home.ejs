@@ -17,8 +17,8 @@
       <div class="widget widget-stats bg-black-darker">
         <div class="stats-icon"><i class="fa fa-child"></i></div>
         <div class="stats-info">
-          <h4>TOTAL
-            <%= team %> PLAYERS</h4>
+          <h4>
+            <%= team %> Potential Recruits <br><strong><i>matches based on coach benchmarks</i></strong></h4>
           <p>
             <%= overallCount %>
           </p>
@@ -34,7 +34,7 @@
       <div class="widget widget-stats bg-gradient-purple">
         <div class="stats-icon"><i class="fa fa-link"></i></div>
         <div class="stats-info">
-          <h4>Defensive Recruits</h4>
+          <h4><%= team %> Potential Defensive Recruits</h4>
           <p>
             <%= defenseCount %></p>
         </div>
@@ -49,7 +49,7 @@
       <div class="widget widget-stats bg-grey-darker">
         <div class="stats-icon"><i class="fa fa-users"></i></div>
         <div class="stats-info">
-          <h4>Offensive Recruits</h4>
+          <h4><%= team %> Potential Offensive Recruits</h4>
           <p>
             <%= offenseCount %></p>
         </div>
@@ -60,7 +60,7 @@
     </div>
     <!-- end col-3 -->
     <!-- begin col-3 -->
-    <div class="col-lg-3 col-md-6">
+    <!-- <div class="col-lg-3 col-md-6">
       <div class="widget widget-stats bg-grey-darker">
         <div class="stats-icon"><i class="fa fa-users"></i></div>
         <div class="stats-info">
@@ -76,7 +76,7 @@
           <p> <br></p>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- end col-3 -->
   </div>
   <!-- end row -->
@@ -87,10 +87,10 @@
       <!-- begin panel -->
       <div class="panel panel-inverse" data-sortable-id="index-1">
         <div class="panel-heading">
-          <h4 class="panel-title">Cultural Fit</h4>
+          <h4 class="panel-title">Cultural Fit | <i> Recruits most lieky to fit best with your current roster </i></h4>
         </div>
         <div class="panel-body panel-height-5 culturalFdiv">
-          <div class="height-xs">Top 10 players
+          <div class="height-xs"><h2>Top potential recruits to review </h2>
             <div id="culturaltop">
               <div class="elLoader">
                 <div class="loader"></div>
@@ -111,33 +111,6 @@
     <!-- end row -->
   </div>
   <!-- begin row -->
-  <div class="row">
-    <!-- begin col-8 -->
-    <div class="col-lg-12">
-      <!-- begin panel -->
-      <div class="panel panel-inverse" data-sortable-id="index-1">
-        <div class="panel-heading">
-          <h4 class="panel-title">categories</h4>
-        </div>
-        <div class="panel-body panel-height-5">
-          <a id="defensiveL" href="/dashboard-category/?category=DL"><button type="button" class="btn"
-              aria-haspopup="true" aria-expanded="false">Defensive Line</button></a>
-          <a id="offensiveL" href="/dashboard-category/?category=OL"><button type="button" class="btn"
-              aria-haspopup="true" aria-expanded="false">Offensive Line</button></a>
-          <a id="special" href="/dashboard-category/?category=ST"><button type="button" class="btn" aria-haspopup="true"
-              aria-expanded="false">Special teams</button></a>
-          <a id="defensiveB" href="/dashboard-category/?category=DB"><button type="button" class="btn"
-              aria-haspopup="true" aria-expanded="false">Defensive Backs</button></a>
-          <a id="quaterbacks" href="/dashboard-category/?category=QB"><button type="button" class="btn"
-              aria-haspopup="true" aria-expanded="false">Quaterbacks</button></a>
-          <a id="linebackers" href="/dashboard-category/?category=LB"><button type="button" class="btn"
-              aria-haspopup="true" aria-expanded="false">Linebackers</button></a>
-        </div>
-      </div>
-      <!-- end panel -->
-    </div>
-    <!-- end col-6 -->
-  </div>
   <!-- end row -->
 
   <!-- start row -->
