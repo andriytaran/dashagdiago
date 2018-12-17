@@ -290,8 +290,8 @@ function calculatePlayerOverallScore(playerScores, programBenchmarks) {
     return null;
   } else {
     // HACK: until client fixes calculation
-    return totalScore / 100;
-    // return totalScore / totalFactor;
+   // return totalScore / 100;
+     return totalScore / totalFactor;
   }
 }
 

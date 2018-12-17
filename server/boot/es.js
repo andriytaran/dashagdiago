@@ -352,7 +352,7 @@ for (int i = 0; i < params['pillars'].length; ++i) {
   }
 }
 if (totalFactor > 0) {
-  return 100 * totalScore / 100;
+  return 100 * totalScore / totalFactor;
 } else {
   return null;
 }
@@ -770,7 +770,7 @@ for (int i = 0; i < params['pillars'].length; ++i) {
 }
 
 if (totalFactor > 0) {
-  def res = 100 * totalScore / 100;
+  def res = 100 * totalScore / totalFactor;
   if (params['from'] == null) {
     if (params['to'] == null) {
       return true;
@@ -959,7 +959,7 @@ for (int i = 0; i < params['pillars'].length; ++i) {
   }
 }
 if (totalFactor > 0) {
-  return 100 * totalScore / 100;
+  return 100 * totalScore / totalFactor;
 } else {
   return params['defaultValue'];
 }
