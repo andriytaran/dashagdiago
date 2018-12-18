@@ -23,6 +23,7 @@ const ComponentAthleticAttributesSection = (function () {
 
   ComponentAthleticAttributesSection.prototype.onData = function onData(response) {
     const data = mapAthleticAttributesForBarchart(response);
+    console.log(data)
     function checkifnull(datael) {
       if (datael.value === null) { return true; }
       else { return false; }

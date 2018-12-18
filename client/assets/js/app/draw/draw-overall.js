@@ -195,12 +195,12 @@ function drawOverall(data, selector, props, getTooltip, getPlayersData) {
         fractiondigitsval = d.fractiondigits;
       }
       if (d.style == "percent") {
-        return (d.value / 100).toLocaleString(undefined, {
+        return "AG Score: "+ (d.value / 100).toLocaleString(undefined, {
           style: "percent",
           useGrouping: false,
           maximumFractionDigits: fractiondigitsval,
           minimumFractionDigits: fractiondigitsval
-        });
+        }).replace("%","") + " ";
       } else {
         return d.value.toLocaleString(undefined, {
           useGrouping: false,

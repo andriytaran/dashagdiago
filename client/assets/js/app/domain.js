@@ -2,7 +2,7 @@ function getTooltip(term, { color }) {
   let res = "";
   switch (color) {
     case "green":
-      res = res + "<p class='dashboard-tooltip' style='color:green;'><strong>Green Bar: Athlete has met School and Agdiago min benchmarks</strong>";
+      res = res + "<p class='dashboard-tooltip' style='color:green;'><strong>Green Bar: Athlete has met School and / or Agdiago min benchmarks</strong>";
       break;
     case "orange":
       res = res + "<p class='dashboard-tooltip' style='color:orange;'><strong>Orange Bar: Athlete failed to meet School and Agdiago min benchmarks</strong>";

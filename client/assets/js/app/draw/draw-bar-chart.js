@@ -30,8 +30,18 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
     let namefield = gbar.append("div");
     namefield.attr("class", "namef");
     namefield.style("width", "30%");
+    var unit='';
+
+
+      if (d.name == 'Weight') {unit = ' lbs'}
+      if (d.name == 'Height') {unit = ' in '}
+      if (d.name == 'Vertical') {unit = ' in '}
+      if (d.name == 'Forty') {unit = ' sec '}
+
 
     namefield.text(d.name);
+    
+           
     let mbar = gbar.append("div");
     // let mainbar = d3.select(mbar).attr("class", "mbar");
     mbar.attr("class", "mbar");
@@ -100,13 +110,13 @@ function drawBarChart(data, selector, position, getTooltip, getPlayersData) {
           useGrouping: false,
           maximumFractionDigits: fractiondigitsval,
           minimumFractionDigits: fractiondigitsval
-        });
+        })+ unit;
       } else {
         return d.value.toLocaleString(undefined, {
           useGrouping: false,
           maximumFractionDigits: fractiondigitsval,
           minimumFractionDigits: fractiondigitsval
-        });
+        }) + unit;
       }
     }
     // const percentText = (d.value / 100).toLocaleString(undefined, {

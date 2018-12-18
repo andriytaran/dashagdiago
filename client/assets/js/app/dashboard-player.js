@@ -43,7 +43,7 @@ function drawOverallBar(scoreval) {
       minimumFractionDigits: 0,
       style: "percent"
     });
-
+    str=str.replace("%","");
     scoreboard.innerHTML = str;
   }
 }

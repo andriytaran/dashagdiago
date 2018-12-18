@@ -541,7 +541,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.rushingYards
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getSacks() {
@@ -557,7 +557,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.sacks
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getSoloTackle() {
@@ -573,7 +573,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.soloTackles
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getTacklesForLoss() {
@@ -589,7 +589,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.tacklesForLoss
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function gettotalTackles() {
@@ -605,7 +605,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.totalTackles
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getTouchdownsThrown() {
@@ -621,7 +621,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.touchdownsThrown
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getForty() {
@@ -637,7 +637,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.forty
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 1
     };
   }
   function getGamesPlayed() {
@@ -653,7 +653,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.gamesPlayed
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getGamesStarted() {
@@ -669,7 +669,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.gamesStarted
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getHeight() {
@@ -685,7 +685,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.height
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getVertical() {
@@ -701,7 +701,7 @@ function mapAthleticAttributesForBarchart(response) {
         response.attributes.agdiago.vertical
       ),
       style: "number",
-      fractiondigits: 2
+      fractiondigits: 0
     };
   }
   function getWeight() {

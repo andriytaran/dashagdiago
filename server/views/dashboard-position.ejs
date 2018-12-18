@@ -9,30 +9,34 @@
   <!-- begin page-header -->
   <h1 class="page-header">
     <%=position %> position dashboard</h1>
+    <hr>
+    <strong><i>Note this data represents public  <%=position %>  players from schools accross the USA based on your registered Athletic and Academic benchmarks</i></strong>
   <!-- end page-header -->
 
   <!-- begin row -->
-  <div class="row">
-    <!-- begin col-3 -->
+  <!-- <div class="row">
+
     <div class="col-lg-3 col-md-6">
       <div class="widget widget-stats bg-grey-darker">
         <div class="stats-icon"><i class="fa fa-users"></i></div>
         <div class="stats-info">
           <h4>Average score</h4>
           <p>
+
             <% if (overallScore) { %>
-            <%= overallScore %>%
+            <%= overallScore %>
             <% } else { %>Not available
             <% } %>
+
           </p>
-        </div>
+        </div> 
         <div class="stats-link">
           <p> <br></p>
         </div>
       </div>
     </div>
-    <!-- end col-3 -->
-  </div>
+ 
+  </div> -->
   <!-- end row -->
 
   <!-- begin row -->
@@ -42,10 +46,10 @@
       <!-- begin panel -->
       <div class="panel panel-inverse" data-sortable-id="index-1">
         <div class="panel-heading">
-          <h4 class="panel-title">Cultural Fit</h4>
+          <h4 class="panel-title">Cultural Fit | Top <%=position %> potential recruits to review</h4>
         </div>
         <div class="panel-body panel-height-5 culturalFdiv">
-          <div class="height-xs">Top 10 players
+          <div class="height-xs">Top 10 <%=position %> players
             <div id="culturaltop">
               <div class="elLoader">
                 <div class="loader"></div>
