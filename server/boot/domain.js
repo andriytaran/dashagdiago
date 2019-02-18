@@ -238,6 +238,14 @@ function getPillarsAttributes(pillars) {
   )(pillars);
 }
 
+/**
+ * Calculate scores for each of the pillar.
+ * @param {Object} player Player Info Object.
+ * @param {Object} programBenchmarks Result of
+ * {@see fetchProgramBenchmarks} function.
+ * @return {Object} A dictionary where each field is a pillar name,
+ * and value is a corresponding pillar score.
+ */
 function calculatePlayerScores(player, programBenchmarks) {
   const position = player.position;
   const benchmark = programBenchmarks.positions[position];
@@ -274,6 +282,13 @@ function calculatePlayerScores(player, programBenchmarks) {
   return scores;
 }
 
+/**
+ * Calculates Overall Score based on the pillar scores.
+ * @param {Object} playerScores Result of {@see calculatePlayerScores} function.
+ * @param {Object} programBenchmarks Result of
+ * {@see fetchProgramBenchmarks} function.
+ * @returns {number} Overall Score value.
+ */
 function calculatePlayerOverallScore(playerScores, programBenchmarks) {
   let totalScore = 0;
   let totalFactor = 0;
