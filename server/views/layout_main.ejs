@@ -221,14 +221,19 @@
               </i></center>
             <hr>
 
+
+
+
             <center>
               <div class="dropdown">
                 <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">Defensive Line</button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" id="defensiveLineDE" href="/dashboard-position/?position=DE">Defensive End</a>
-                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DT">Defensive
-                    Tackle</a>
+                  <a class="dropdown-item" id="defensiveLineDE" href="/dashboard-position/?position=DE&school=<%= teamName %>">Defensive End</a>
+                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DT&school=<%= teamName %>">Defensive Tackle</a>
+                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DL&school=<%= teamName %>">Defensive Line</a>
+                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=DB&school=<%= teamName %>">Defensive Back</a>
+                  <a class="dropdown-item" id="defensiveLineDT" href="/dashboard-position/?position=LS&school=<%= teamName %>">Long Snapper</a>
                 </div>
               </div>
             </center>
@@ -238,34 +243,29 @@
                 <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">Offensive Line</button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" id="offensiveLineOG" href="/dashboard-position/?position=OG">Offensive Guard</a>
-                  <a class="dropdown-item" id="offensiveLineOC" href="/dashboard-position/?position=OC">Offensive
-                    Center</a>
-                  <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=OT">Offensive
-                    Tackle</a>
-                  <a class="dropdown-item" id="offensiveLineLS" href="/dashboard-position/?position=LS">Long Snapper</a>
+                  <a class="dropdown-item" id="offensiveLineOG" href="/dashboard-position/?position=OL&school=<%= teamName %>">Offensive Line</a>
+                  <a class="dropdown-item" id="offensiveLineOC" href="/dashboard-position/?position=LB&school=<%= teamName %>">Linebacker</a>
+                  <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=CB&school=<%= teamName %>">Corner Back</a>
+                  <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=OG&school=<%= teamName %>">Offensive Guard</a>
+                  <a class="dropdown-item" id="offensiveLineOt" href="/dashboard-position/?position=OT&school=<%= teamName %>">Offensive Tackler</a>
                 </div>
               </div>
             </center>
 
-
             <hr>
-            <center> <a href="/dashboard-position/?position=RB"><button type="button" id="runningBacks" class="btn btn-grey lmenu">Running
-                  Backs</button></a> </center>
+            <center> <a href="/dashboard-position/?position=RB&school=<%= teamName %>"><button type="button" id="runningBacks" class="btn btn-grey lmenu">Running Backs</button></a> </center>
             <hr>
-            <center> <a href="/dashboard-position/?position=TE"><button type="button" id="tightEnds" class="btn btn-grey lmenu">Tight
-                  Ends</button></a> </center>
+            <center> <a href="/dashboard-position/?position=TE&school=<%= teamName %>"><button type="button" id="tightEnds" class="btn btn-grey lmenu">Tight Ends</button></a> </center>
             <hr>
-            <center> <a href="/dashboard-position/?position=WR"><button type="button" id="wideReceivers" class="btn btn-grey lmenu">Wide
-                  Receivers</button> </a> </center>
+            <center> <a href="/dashboard-position/?position=WR&school=<%= teamName %>"><button type="button" id="wideReceivers" class="btn btn-grey lmenu">Wide Receivers</button> </a> </center>
             <hr>
             <center>
               <div class="dropdown">
                 <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">Special teams</button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" id="kickingP" href="/dashboard-position/?position=P">Punter</a>
-                  <a class="dropdown-item" id="kickingK" href="/dashboard-position/?position=K">Kicker</a>
+                  <a class="dropdown-item" id="kickingP" href="/dashboard-position/?position=P&school=<%= teamName %>">Punter</a>
+                  <a class="dropdown-item" id="kickingK" href="/dashboard-position/?position=K&school=<%= teamName %>">Kicker</a>
                 </div>
               </div>
             </center>
@@ -275,35 +275,39 @@
                 <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">Defensive Backs</button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" id="defensiveBacksC" href="/dashboard-position/?position=CB">Corner Backs</a>
-                  <a class="dropdown-item" id="defensiveBacksS" href="/dashboard-position/?position=S">Safety</a>
+                  <a class="dropdown-item" id="defensiveBacksC" href="/dashboard-position/?position=QB&school=<%= teamName %>">Quarterback</a>
+                  <a class="dropdown-item" id="defensiveBacksS" href="/dashboard-position/?position=S&school=<%= teamName %>">Safety</a>
                 </div>
               </div>
             </center>
             <hr>
-            <center>
-              <div class="dropdown">
-                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">Quaterbacks</button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" id="QBPro" href="/dashboard-position/?position=QBPro">Pro Style</a>
-                  <a class="dropdown-item" id="QBDual" href="/dashboard-position/?position=QBDual">Dual Threat</a>
-                </div>
-              </div>
-            </center>
-            <!-- <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center> -->
+
+            <center> <a href="/new"><button type="button" id="wideReceivers" class="btn btn-grey lmenu">ImportNewSchool</button> </a> </center>
             <hr>
-            <center>
-              <div class="dropdown">
-                <button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">Linebackers</button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" id="ilb" href="/dashboard-position/?position=ILB">Inside Linebacker</a>
-                  <a class="dropdown-item" id="olb" href="/dashboard-position/?position=OLB">Outside Linebacker</a>
-                  <a class="dropdown-item" id="mlb" href="/dashboard-position/?position=MLB">Middle Linebacker</a>
-                </div>
-              </div>
-            </center>
+
+            <!--<center>-->
+              <!--<div class="dropdown">-->
+                <!--<button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"-->
+                  <!--aria-expanded="false">Quaterbacks</button>-->
+                <!--<div class="dropdown-menu">-->
+                  <!--<a class="dropdown-item" id="QBPro" href="/dashboard-position/?position=QBPro">Pro Style</a>-->
+                  <!--<a class="dropdown-item" id="QBDual" href="/dashboard-position/?position=QBDual">Dual Threat</a>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</center>-->
+            <!--&lt;!&ndash; <center> <button type="button" id="quaterBacks" class="btn btn-grey">Quaterbacks</button>  </center> &ndash;&gt;-->
+            <!--<hr>-->
+            <!--<center>-->
+              <!--<div class="dropdown">-->
+                <!--<button type="button" class="btn btn-grey dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"-->
+                  <!--aria-expanded="false">Linebackers</button>-->
+                <!--<div class="dropdown-menu">-->
+                  <!--<a class="dropdown-item" id="ilb" href="/dashboard-position/?position=ILB">Inside Linebacker</a>-->
+                  <!--<a class="dropdown-item" id="olb" href="/dashboard-position/?position=OLB">Outside Linebacker</a>-->
+                  <!--<a class="dropdown-item" id="mlb" href="/dashboard-position/?position=MLB">Middle Linebacker</a>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</center>-->
 
             <hr>
 

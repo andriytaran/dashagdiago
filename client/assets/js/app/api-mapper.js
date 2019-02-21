@@ -867,6 +867,7 @@ function mapTopCulturalFitForTable(response) {
   function cb(player, i) {
     return {
       fname: player.fname,
+      team: player.team,
       lname: player.lname,
       position: player.position,
       score: player.value,
@@ -885,6 +886,7 @@ function mapPlayersForTable(response) {
       position: player.position,
       score: player.value,
       id: player.id,
+      team: player.team,
     };
   }
 }
@@ -898,6 +900,7 @@ function mapCulturalFitForTable(response) {
       position: player.position,
       score: player.value,
       id: player.id,
+      team: player.team,
     };
   }
 }

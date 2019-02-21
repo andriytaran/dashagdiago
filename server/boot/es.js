@@ -285,7 +285,7 @@ async function fetchOverallScore(query, team, programBenchmarks) {
   if (!pillars.length) return null;
 
   const attributes = R.map(
-    p => Object.keys(p),
+    p => Object.keys(p || {}),
     programBenchmarks.positions
   );
 
@@ -450,7 +450,7 @@ async function fetchPlayer(query, team, id) {
 async function fetchPlayers(query, team, attributeParam) {
   const isScript = typeof attributeParam !== 'string';
 
-  const sourceAttributes = ['fname', 'lname', 'position'];
+  const sourceAttributes = ['fname', 'lname', 'position', 'teamName'];
   if (!isScript) {
     sourceAttributes.push(attributeParam);
   }
@@ -476,6 +476,7 @@ async function fetchPlayers(query, team, attributeParam) {
     fname: hit._source.fname,
     lname: hit._source.lname,
     position: hit._source.position,
+    teamName: hit._source.teamName,
     value: isScript ?
       hit.fields[Object.keys(attributeParam)[0]][0] :
       hit._source[attributeParam],
@@ -702,7 +703,7 @@ function queryScoreRange(pillar, programBenchmarks, from = null, to = null) {
     if (!pillars.length) return null;
 
     const attributes = R.map(
-      p => Object.keys(p),
+      p => Object.keys(p || {}),
       programBenchmarks.positions
     );
 
@@ -806,7 +807,7 @@ if (totalFactor > 0) {
     };
   } else {
     const attributes = R.map(
-      p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+      p => Object.keys(p || {}).filter(attr => p[attr].pillar === pillar),
       programBenchmarks.positions
     );
     return {
@@ -898,7 +899,7 @@ function buildScoreScript(
     if (!pillars.length) return null;
 
     const attributes = R.map(
-      p => Object.keys(p),
+      p => Object.keys(p || {}),
       programBenchmarks.positions
     );
 
@@ -975,7 +976,7 @@ if (totalFactor > 0) {
     };
   } else {
     const attributes = R.map(
-      p => Object.keys(p).filter(attr => p[attr].pillar === pillar),
+      p => Object.keys(p || {}).filter(attr => p[attr].pillar === pillar),
       programBenchmarks.positions
     );
 
@@ -1037,6 +1038,45 @@ function queryScoreField(pillar, programBenchmarks) {
   return queryScriptField(pillar, buildScoreScript(pillar, programBenchmarks));
 }
 
+async function updateDocument(index, id, type, body){
+  const res = await client.update({index, type, id, body});
+  return res;
+}
+
+async function addDocument(index, id, type, body) {
+  const res = await client.index({index, type, id, body});
+  return res;
+}
+
+async function addOrUpdateDocument(index, query, type, body) {
+
+  const res = await client.search({
+    index,
+    type,
+    body: {
+      query
+    }
+  });
+  if (res.hits.total){
+    const id = res.hits.hits[0]._id;
+    const oldBody = (res.hits.hits[0] || {})._source || {};
+    await client.index({
+      index,
+      type,
+      id,
+      body: Object.assign(oldBody, body)
+    });
+  } else {
+    await client.index({index, type, body});
+  }
+}
+
+async function addPlayer(team, body) {
+
+  await client.index({index: team, type: 'post', body, id: body.id});
+
+}
+
 module.exports = {
   QueryBuilder,
   fetchCount,
@@ -1056,4 +1096,8 @@ module.exports = {
   queryScoreField,
   queryRange,
   queryScoreRange,
+  updateDocument,
+  addDocument,
+  addOrUpdateDocument,
+  addPlayer,
 };

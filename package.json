@@ -11,6 +11,7 @@
     "reset": "node ./data/reset.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "compression": "^1.0.3",
     "cookie-parser": "^1.4.3",
@@ -30,7 +31,6 @@
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^4.0.0",
-    "ramda": "^0.25.0",
     "loopback-component-passport": "^3.10.0",
     "loopback-connector-mongodb": "^3.9.2",
     "loopback-connector-sendgrid": "^2.2.4",
@@ -40,8 +40,10 @@
     "passport-instagram": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-oauth2": "^1.4.0",
+    "ramda": "^0.25.0",
     "request-promise": "^4.2.2",
     "serve-favicon": "^2.0.1",
+    "ssh2-sftp-client": "^2.4.3",
     "strong-error-handler": "^1.0.1",
     "unirest": "^0.5.1",
     "url-parse": "^1.4.4"

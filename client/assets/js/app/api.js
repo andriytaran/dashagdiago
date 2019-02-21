@@ -1,8 +1,44 @@
 function getAPIData (props, cb) {
+  var url = new URL(document.URL);
+  var query_string = url.search;
+  var search_params = new URLSearchParams(query_string);
+  var school = search_params.get('school');
+
   $.ajax({
     type: "POST",
-    url: "/api/dashboard-data",
+    url: `/api/dashboard-data?school=${school}`,
     data: JSON.stringify(props),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
+
+function updateAPIData (props, cb) {
+  $.ajax({
+    type: "POST",
+    url: "/api/dashboard-data-update",
+    data: JSON.stringify(props),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
+
+function updateBenchmarks(position, benchmarks, factors, cb) {
+  updateAPIData({
+    type: "benchmarks",
+    position: position,
+    benchmarks: benchmarks,
+    factors: factors,
+  }, cb);
+}
+
+function createNewSchool(schoolName, folderName, cb) {
+  $.ajax({
+    type: "POST",
+    url: "/api/createNewSchool",
+    data: JSON.stringify({schoolName, folderName}),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: cb

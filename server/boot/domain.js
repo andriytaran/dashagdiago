@@ -133,21 +133,21 @@ const pillarsObj = {
       },
     },
   },
-  // 'emotionalIntel': {
-  //   factor: 5,
-  //   agdiagoFactor: 5,
-  //   fields: {
-  //     '_all': {
-  //       'emotionalIntelBehavior': {factor: 10},
-  //       'emotionalIntelReflection': {factor: 10},
-  //       'emotionalIntelTeamWork': {factor: 10},
-  //       'emotionalIntelRelationships': {factor: 10},
-  //       'emotionalIntelAccountability': {factor: 10},
-  //       'emotionalIntelResponsibility': {factor: 10},
-  //       'emotionalIntelIndependence': {factor: 10},
-  //     },
-  //   },
-  // },
+  'emotionalIntel': {
+    factor: 5,
+    agdiagoFactor: 5,
+    fields: {
+      '_all': {
+        'emotionalIntelBehavior': {factor: 10},
+        'emotionalIntelReflection': {factor: 10},
+        'emotionalIntelTeamWork': {factor: 10},
+        'emotionalIntelRelationships': {factor: 10},
+        'emotionalIntelAccountability': {factor: 10},
+        'emotionalIntelResponsibility': {factor: 10},
+        'emotionalIntelIndependence': {factor: 10},
+      },
+    },
+  },
   'academic': {
     factor: 10,
     agdiagoFactor: 15,
@@ -160,38 +160,38 @@ const pillarsObj = {
       },
     },
   },
-  // 'socialProfile': {
-  //   factor: 5,
-  //   agdiagoFactor: 5,
-  //   fields: {
-  //     '_all': {
-  //       'socialTwitterSentiment': {factor: 10},
-  //       'twitterFollowers': {factor: 10},
-  //       'socialInstagramSentiment': {factor: 10},
-  //       'instagramFollowers': {factor: 10},
-  //       'facebookSentiment': {factor: 10},
-  //       'newsMediaCoverageSentiment': {factor: 10},
-  //       'newsMediaCoverageMentions': {factor: 10},
-  //       'newsMediaCoverageNational': {factor: 10},
-  //       'newsMediaCoverageRegional': {factor: 10},
-  //       'pressReleaseSentiment': {factor: 10},
-  //       'pressReleaseSentimentCounter': {factor: 10},
-  //     },
-  //   },
-  // },
-  // 'coreAttributes': {
-  //   factor: 25,
-  //   agdiagoFactor: 25,
-  //   fields: {
-  //     '_all': {
-  //       'coreAttributesCompetitiveness': {factor: 10},
-  //       'coreAttributesPersistence': {factor: 10},
-  //       'coreAttributesWorkEthic': {factor: 10},
-  //       'coreAttributesTeamOrientation': {factor: 10},
-  //       'coreAttributesMastery': {factor: 10},
-  //     },
-  //   },
-  // },
+  'socialProfile': {
+    factor: 5,
+    agdiagoFactor: 5,
+    fields: {
+      '_all': {
+        'socialTwitterSentiment': {factor: 10},
+        'twitterFollowers': {factor: 10},
+        'socialInstagramSentiment': {factor: 10},
+        'instagramFollowers': {factor: 10},
+        'facebookSentiment': {factor: 10},
+        'newsMediaCoverageSentiment': {factor: 10},
+        'newsMediaCoverageMentions': {factor: 10},
+        'newsMediaCoverageNational': {factor: 10},
+        'newsMediaCoverageRegional': {factor: 10},
+        'pressReleaseSentiment': {factor: 10},
+        'pressReleaseSentimentCounter': {factor: 10},
+      },
+    },
+  },
+  'coreAttributes': {
+    factor: 25,
+    agdiagoFactor: 25,
+    fields: {
+      '_all': {
+        'coreAttributesCompetitiveness': {factor: 10},
+        'coreAttributesPersistence': {factor: 10},
+        'coreAttributesWorkEthic': {factor: 10},
+        'coreAttributesTeamOrientation': {factor: 10},
+        'coreAttributesMastery': {factor: 10},
+      },
+    },
+  },
 };
 
 function getParentPosition(position, visited) {
