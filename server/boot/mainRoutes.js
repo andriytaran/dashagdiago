@@ -20,7 +20,7 @@ const parseTeamFromQuery = (req) => {
   if (team === 'null') {
     team = 'cincinnati';
   }
-  return team
+  return team;
 };
 
 module.exports = app => {
@@ -80,7 +80,7 @@ module.exports = app => {
       //   Math.round(100 * offenseCount / overallCount) :
       //   null,
       overallScore: Math.round(overallScore),
-      team: 'Cincinnati Bearcats',
+      team: team,
       teamDisplay: 'Cincinnati Bearcats',
       teamName: team,
     });
@@ -88,18 +88,38 @@ module.exports = app => {
 
   app.get('/profile', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/profile',{
+    res.render('pages/profile', {
       teamName: team,
     });
   });
 
   app.post('/api/createNewSchool', async function (req, res, next) {
-    const { folderName } = req.body;
+    const folderName = req.body.folderName || 'testSchool';
     const schoolName = req.body.schoolName.toLowerCase();
+    try {
+      await ftp.importPlayersData(folderName)
+        .then(res => {
+          return BluebirdPromise.mapSeries(res, (elem, i) => {
+            console.log(schoolName);
+            const player = {
+              id: elem.id,
+              position: elem.position || 'DE',
+              "fname": elem.fname,
+              "lname": elem.lname,
+              "coreAttributesCompetitiveness": parseFloat(elem.Competitiveness),
+              "coreAttributesPersistence": parseFloat(elem.Persistence),
+              "coreAttributesWorkEthic": parseFloat(elem['Work Ethic']),
+              "coreAttributesTeamOrientation": parseFloat(elem['Team Orientation']),
+              "coreAttributesMastery": parseFloat(elem.Mastery),
+              "coreAttributesOverallScore": parseFloat(elem.Score),
+            };
+            return es.addPlayer(schoolName, player);
+          });
+        });
 
-    await BluebirdPromise.mapSeries(positionF, (elem, i)=>{
-      console.log(schoolName + '-benchmarks')
-        return es.addDocument(schoolName + '-benchmarks', i+1, 'post', {
+      await BluebirdPromise.mapSeries(positionF, (elem, i) => {
+        console.log(schoolName + '-benchmarks');
+        return es.addDocument(schoolName + '-benchmarks', i + 1, 'post', {
           "position": elem.value,
           "coreAttributesPersistence": 87,
           "coreAttributesWorkEthic": 63,
@@ -108,28 +128,10 @@ module.exports = app => {
           "coreAttributesCompetitiveness": 55,
           "coreAttributesOverallScore": 59
         });
-      })
-
-    await ftp.importPlayersData('testSchool', folderName)
-      .then(res => {
-        return BluebirdPromise.mapSeries(res, (elem, i)=>{
-          console.log(schoolName)
-          const player = {
-            id: elem.id,
-            position: elem.position || 'DE',
-            "fname": elem.fname,
-            "lname": elem.lname,
-            "coreAttributesCompetitiveness": parseFloat(elem.Competitiveness),
-            "coreAttributesPersistence": parseFloat(elem.Persistence),
-            "coreAttributesWorkEthic": parseFloat(elem['Work Ethic']),
-            "coreAttributesTeamOrientation": parseFloat(elem['Team Orientation']),
-            "coreAttributesMastery": parseFloat(elem.Mastery),
-            "coreAttributesOverallScore": parseFloat(elem.Score),
-          };
-          return es.addPlayer(schoolName, player);
-        });
       });
-
+    } catch (err){
+      return res.status(500).send('Please check file name');
+    }
     res.send({});
   });
 
@@ -140,23 +142,23 @@ module.exports = app => {
 
   app.get('/contact', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/contact', {teamName: team,});
+    res.render('pages/contact', { teamName: team, });
   });
 
   app.get('/faq', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/faq', {teamName: team,});
+    res.render('pages/faq', { teamName: team, });
   });
 
   app.get('/branding', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/branding_page', {teamName: team,});
+    res.render('pages/branding_page', { teamName: team, });
   });
 
   // Cultural Fit
   app.get('/cultural_fit', (req, res, next) => {
     const team = parseTeamFromQuery(req);
-    res.render('pages/cultural_fit', {teamName: team,});
+    res.render('pages/cultural_fit', { teamName: team, });
   });
 
   //dashboard-category
@@ -198,13 +200,13 @@ module.exports = app => {
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('dashboard-player', {teamName: team,});
+    res.render('dashboard-player', { teamName: team, });
   });
 
   // Player Assessment
   app.get('/player_assessment', (req, res, next) => {
     const team = parseTeamFromQuery(req);
-    res.render('pages/player_assessment', {teamName: team,});
+    res.render('pages/player_assessment', { teamName: team, });
   });
 
   // Login
@@ -223,7 +225,7 @@ module.exports = app => {
   app.get('/addnewpillar', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('addnewpillar', {
-      team: 'Cincinnati Bearcats',
+      team: team,
       positions: positionF,
       teamName: team,
     });
@@ -233,7 +235,7 @@ module.exports = app => {
   app.get('/academbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('academbench', {
-      team: 'Cincinnati Bearcats',
+      team: team,
       positions: positionF,
       teamName: team,
     });
@@ -250,12 +252,16 @@ module.exports = app => {
   });
 
   // core attributes benchmark setup
-  app.get('/corebench', function (req, res, next) {
+  app.get('/corebench', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
+
+    const benchmarks = await es.getBenchmarks(team, 'QB');
+
     res.render('corebench', {
-      team: 'Cincinnati Bearcats',
+      team: team,
       positions: positionF,
       teamName: team,
+      attr: benchmarks,
     });
   });
 
@@ -263,7 +269,7 @@ module.exports = app => {
   app.get('/socialbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('socialbench', {
-      team: 'Cincinnati Bearcats',
+      team: team,
       positions: positionF,
       teamName: team,
     });
@@ -315,307 +321,312 @@ module.exports = app => {
     queryBuilder.add(es.queryByTerm('position', position));
 
     switch (type) {
-    case 'single_player': {
-      const id = parser.parseRequiredParameter('id');
+      case 'single_player': {
+        const id = parser.parseRequiredParameter('id');
 
-      const query = queryBuilder.build();
-      const [
-        programBenchmarks,
-        player,
-      ] = await Promise.all([
-        es.fetchProgramBenchmarks({}, team),
-        es.fetchPlayer(query, team, id),
-      ]);
+        const query = queryBuilder.build();
+        const [
+          programBenchmarks,
+          player,
+        ] = await Promise.all([
+          es.fetchProgramBenchmarks({}, team),
+          es.fetchPlayer(query, team, id),
+        ]);
 
-      const scores = domain.calculatePlayerScores(player, programBenchmarks);
-      const overallScore = domain.calculatePlayerOverallScore(
-        scores,
-        programBenchmarks
-      );
+        const scores = domain.calculatePlayerScores(player, programBenchmarks);
+        const overallScore = domain.calculatePlayerOverallScore(
+          scores,
+          programBenchmarks
+        );
 
-      const pillars = Object.keys(scores);
-      const agdiagoScoresArr = await Promise.all(
-        pillars.map(
-          pillar => es.fetchAgdiagoScore(
-            new es.QueryBuilder()
-              .add(query)
-              .add(es.queryByTerm('position', player.position.toLowerCase()))
-              .build(),
+        const pillars = Object.keys(scores);
+        const agdiagoScoresArr = await Promise.all(
+          pillars.map(
+            pillar => es.fetchAgdiagoScore(
+              new es.QueryBuilder()
+                .add(query)
+                .add(es.queryByTerm('position', player.position.toLowerCase()))
+                .build(),
+              team,
+              pillar,
+              programBenchmarks
+            )
+          )
+        );
+        const agdiagoScores = {};
+        for (let index in pillars) {
+          const pillar = pillars[index];
+          agdiagoScores[pillar] = agdiagoScoresArr[index];
+        }
+
+        response.player = player;
+        response.scores = {
+          player: scores,
+          agdiago: agdiagoScores,
+        };
+        response.overallScore = {
+          player: overallScore,
+          agdiago: null, // TODO: maybe implement
+        };
+        break;
+      }
+      case 'pillar': {
+        const pillar = parser.parseParameter('pillar');
+        const id = parser.parseParameter('id');
+
+        if (!pillar) throw new Error('Unsupported pillar: ' + pillar);
+
+        const benchmarkQuery = queryBuilder.cloneQuery();
+        queryBuilder.add(es.queryByTerm('_id', id));
+        const query = queryBuilder.build();
+
+        const player = await es.fetchPlayer(query, team, id);
+
+        const [
+          pillarAttributes,
+          programPillarAttributes,
+          agdiagoPillarAttributes,
+        ] = await Promise.all([
+          await es.fetchPillarAttributes(
+            query,
             team,
             pillar,
-            programBenchmarks
-          )
-        )
-      );
-      const agdiagoScores = {};
-      for (let index in pillars) {
-        const pillar = pillars[index];
-        agdiagoScores[pillar] = agdiagoScoresArr[index];
+            player.position
+          ),
+          await es.fetchProgramPillarAttributes(
+            benchmarkQuery,
+            team,
+            pillar,
+            player.position
+          ),
+          await es.fetchAgdiagoPillarAttributes(
+            benchmarkQuery,
+            pillar,
+            player.position
+          ),
+        ]);
+
+        response.attributes = {
+          player: pillarAttributes,
+          program: programPillarAttributes,
+          agdiago: agdiagoPillarAttributes,
+        };
+
+        break;
       }
+      case 'scores': {
+        const query = queryBuilder.build();
 
-      response.player = player;
-      response.scores = {
-        player: scores,
-        agdiago: agdiagoScores,
-      };
-      response.overallScore = {
-        player: overallScore,
-        agdiago: null, // TODO: maybe implement
-      };
-      break;
-    }
-    case 'pillar': {
-      const pillar = parser.parseParameter('pillar');
-      const id = parser.parseParameter('id');
+        const pillars = Object.keys(domain.pillarsObj);
 
-      if (!pillar) throw new Error('Unsupported pillar: ' + pillar);
+        const programBenchmarks = await es.fetchProgramBenchmarks(
+          {},
+          team,
+          pillars
+        );
 
-      const benchmarkQuery = queryBuilder.cloneQuery();
-      queryBuilder.add(es.queryByTerm('_id', id));
-      const query = queryBuilder.build();
+        const [scoresArr, agdiagoScoresArr] = await Promise.all([
+          Promise.all(pillars.map(
+            pillar => es.fetchScore(
+              query,
+              team,
+              pillar,
+              programBenchmarks
+            )
+          )),
+          Promise.all(pillars.map(
+            pillar => es.fetchAgdiagoScore(
+              query,
+              team,
+              pillar,
+              programBenchmarks
+            )
+          )),
+        ]);
 
-      const player = await es.fetchPlayer(query, team, id);
+        const scores = {
+          player: {},
+          agdiago: {},
+        };
+        for (let i in pillars) {
+          const pillar = pillars[i];
+          const score = scoresArr[i];
+          const agdiagoScore = agdiagoScoresArr[i];
+          scores.player[pillar] = score;
+          scores.agdiago[pillar] = agdiagoScore;
+        }
 
-      const [
-        pillarAttributes,
-        programPillarAttributes,
-        agdiagoPillarAttributes,
-      ] = await Promise.all([
-        await es.fetchPillarAttributes(
+        response.scores = scores;
+
+        break;
+      }
+      case 'percentile_groups': {
+        const attribute = parser.parseRequiredParameter('attribute');
+
+        const pillars = Object.keys(domain.pillarsObj);
+
+        let attributeParam;
+
+        const isScript = ~pillars.indexOf(attribute) ||
+          attribute === 'overallScore';
+
+        if (isScript) {
+          const programBenchmarks = await es.fetchProgramBenchmarks(
+            {},
+            team,
+            attribute === 'overallScore' ? undefined : [attribute]
+          );
+          attributeParam = {
+            'script': es.buildScoreScript(attribute, programBenchmarks),
+          };
+        } else {
+          attributeParam = attribute;
+        }
+
+        const query = queryBuilder.build();
+
+        const percentileGroups = await es.fetchPercentileGroups(
           query,
           team,
-          pillar,
-          player.position
-        ),
-        await es.fetchProgramPillarAttributes(
-          benchmarkQuery,
-          team,
-          pillar,
-          player.position
-        ),
-        await es.fetchAgdiagoPillarAttributes(
-          benchmarkQuery,
-          pillar,
-          player.position
-        ),
-      ]);
-
-      response.attributes = {
-        player: pillarAttributes,
-        program: programPillarAttributes,
-        agdiago: agdiagoPillarAttributes,
-      };
-
-      break;
-    }
-    case 'scores': {
-      const query = queryBuilder.build();
-
-      const pillars = Object.keys(domain.pillarsObj);
-
-      const programBenchmarks = await es.fetchProgramBenchmarks(
-        {},
-        team,
-        pillars
-      );
-
-      const [scoresArr, agdiagoScoresArr] = await Promise.all([
-        Promise.all(pillars.map(
-          pillar => es.fetchScore(
-            query,
-            team,
-            pillar,
-            programBenchmarks
-          )
-        )),
-        Promise.all(pillars.map(
-          pillar => es.fetchAgdiagoScore(
-            query,
-            team,
-            pillar,
-            programBenchmarks
-          )
-        )),
-      ]);
-
-      const scores = {
-        player: {},
-        agdiago: {},
-      };
-      for (let i in pillars) {
-        const pillar = pillars[i];
-        const score = scoresArr[i];
-        const agdiagoScore = agdiagoScoresArr[i];
-        scores.player[pillar] = score;
-        scores.agdiago[pillar] = agdiagoScore;
-      }
-
-      response.scores = scores;
-
-      break;
-    }
-    case 'percentile_groups': {
-      const attribute = parser.parseRequiredParameter('attribute');
-
-      const pillars = Object.keys(domain.pillarsObj);
-
-      let attributeParam;
-
-      const isScript = ~pillars.indexOf(attribute) ||
-        attribute === 'overallScore';
-
-      if (isScript) {
-        const programBenchmarks = await es.fetchProgramBenchmarks(
-          {},
-          team,
-          attribute === 'overallScore' ? undefined : [attribute]
-        );
-        attributeParam = {
-          'script': es.buildScoreScript(attribute, programBenchmarks),
-        };
-      } else {
-        attributeParam = attribute;
-      }
-
-      const query = queryBuilder.build();
-
-      const percentileGroups = await es.fetchPercentileGroups(
-        query,
-        team,
-        attributeParam
-      );
-
-      response.groups = percentileGroups;
-
-      break;
-    }
-    case 'players': {
-      const attribute = parser.parseRequiredParameter('attribute');
-
-      const sort = parser.parseParameter('sort');
-      if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
-
-      const limit = parser.parseParameter('limit');
-
-      const between = parser.parseParameter('between');
-      if (between && !(between instanceof Array)) throw new Error(`Unsupported between: ${between}`);
-
-      const offenseDefense = parser.parseParameter('offenseDefense');
-      if (
-        offenseDefense != null &&
-        offenseDefense !== 0 &&
-        offenseDefense !== 1
-      ) {
-        throw new Error(`Unsupported offenseDefense: ${offenseDefense}`);
-      }
-
-      if (offenseDefense != null) {
-        queryBuilder.add(es.queryByTerm('offenseDefense', offenseDefense));
-      }
-
-      const pillars = Object.keys(domain.pillarsObj);
-
-      const defaultValueIfScript = 0;
-      const isScript = ~pillars.indexOf(attribute) ||
-        attribute === 'overallScore';
-
-      let attributeParam;
-      if (isScript) {
-        const programBenchmarks = await es.fetchProgramBenchmarks(
-          {},
-          team,
-          attribute === 'overallScore' ? undefined : [attribute]
+          attributeParam
         );
 
-        if (between) {
-          const [from, to] = between;
-          queryBuilder.add(es.queryScoreRange(
-            attribute,
-            programBenchmarks,
-            from,
-            to
-          ));
+        response.groups = percentileGroups;
+
+        break;
+      }
+      case 'players': {
+        const attribute = parser.parseRequiredParameter('attribute');
+
+        const sort = parser.parseParameter('sort');
+        if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
+
+        const limit = parser.parseParameter('limit');
+
+        const between = parser.parseParameter('between');
+        if (between && !(between instanceof Array)) throw new Error(`Unsupported between: ${between}`);
+
+        const offenseDefense = parser.parseParameter('offenseDefense');
+        if (
+          offenseDefense != null &&
+          offenseDefense !== 0 &&
+          offenseDefense !== 1
+        ) {
+          throw new Error(`Unsupported offenseDefense: ${offenseDefense}`);
         }
 
-        attributeParam = {
-          [attribute]: {
-            'script': es.buildScoreScript(
+        if (offenseDefense != null) {
+          queryBuilder.add(es.queryByTerm('offenseDefense', offenseDefense));
+        }
+
+        const pillars = Object.keys(domain.pillarsObj);
+
+        const defaultValueIfScript = 0;
+        const isScript = ~pillars.indexOf(attribute) ||
+          attribute === 'overallScore';
+
+        let attributeParam;
+        if (isScript) {
+          const programBenchmarks = await es.fetchProgramBenchmarks(
+            {},
+            team,
+            attribute === 'overallScore' ? undefined : [attribute]
+          );
+
+          if (between) {
+            const [from, to] = between;
+            queryBuilder.add(es.queryScoreRange(
               attribute,
               programBenchmarks,
-              { defaultValue: defaultValueIfScript }
-              // HACK: sort doesn't work on nulls, so
-              // have to supply default value
-            ),
-          },
-        };
-      } else {
-        if (between) {
-          const [from, to] = between;
-          queryBuilder.add(es.queryRange(
-            attribute,
-            from,
-            to
-          ));
-        }
+              from,
+              to
+            ));
+          }
 
-        attributeParam = attribute;
-      }
-
-      if (limit != null) {
-        queryBuilder.add({
-          'body': {
-            'size': limit,
-          },
-        });
-      }
-
-      if (sort) {
-        let sortParam;
-        if (attributeParam[attribute]) {
-          sortParam = {
-            '_script': {
-              'type': 'number',
-              'script': attributeParam[attribute]['script'],
-              'order': sort,
+          attributeParam = {
+            [attribute]: {
+              'script': es.buildScoreScript(
+                attribute,
+                programBenchmarks,
+                { defaultValue: defaultValueIfScript }
+                // HACK: sort doesn't work on nulls, so
+                // have to supply default value
+              ),
             },
           };
         } else {
-          sortParam = [
-            {
-              [attribute]: sort,
-            },
-          ];
-        }
-        queryBuilder.add({
-          'body': {
-            'sort': sortParam,
-          },
-        });
-      }
-
-      const query = queryBuilder.build();
-
-      console.log(query, team, attributeParam);
-
-      const players = await es.fetchPlayers(query, team, attributeParam);
-
-      // HACK: sort doesn't work on nulls, so
-      // have to supply default value and here revert it
-      if (isScript) {
-        players.forEach(player => {
-          if (player.value === defaultValueIfScript) {
-            player.value = null;
+          if (between) {
+            const [from, to] = between;
+            queryBuilder.add(es.queryRange(
+              attribute,
+              from,
+              to
+            ));
           }
+
+          attributeParam = attribute;
+        }
+
+        if (limit != null) {
+          queryBuilder.add({
+            'body': {
+              'size': limit,
+            },
+          });
+        }
+
+        if (sort) {
+          let sortParam;
+          if (attributeParam[attribute]) {
+            sortParam = {
+              '_script': {
+                'type': 'number',
+                'script': attributeParam[attribute]['script'],
+                'order': sort,
+              },
+            };
+          } else {
+            sortParam = [
+              {
+                [attribute]: sort,
+              },
+            ];
+          }
+          queryBuilder.add({
+            'body': {
+              'sort': sortParam,
+            },
+          });
+        }
+
+        const query = queryBuilder.build();
+
+        const players = await es.fetchPlayers(query, team, attributeParam);
+
+        // HACK: sort doesn't work on nulls, so
+        // have to supply default value and here revert it
+        if (isScript) {
+          players.forEach(player => {
+            if (player.value === defaultValueIfScript) {
+              player.value = null;
+            }
+          });
+        }
+
+        response.players = players.map(elem => {
+          elem.team = team;
+          return elem;
         });
+
+        break;
       }
+      case 'benchmarks':
+        const sort = parser.parseParameter('sort');
+        if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
 
-      response.players = players.map(elem => {
-        elem.team = team;
-        return elem;
-      });
+        const benchmarks = await es.getBenchmarks(team, position);
 
-      break;
-    }
+        response.benchmarks = benchmarks;
     }
     ;
 
@@ -625,7 +636,8 @@ module.exports = app => {
 
   app.post('/api/dashboard-data-update', async function (req, res) {
 
-    const team = 'test';
+    const team = parseTeamFromQuery(req);
+
     const response = { team };
 
     const parser = new Parser(req, response);
@@ -635,17 +647,15 @@ module.exports = app => {
     const benchmarks = parser.parseRequiredParameter('benchmarks');
 
     switch (type) {
-    case 'benchmarks': {
-      const attr = parser.parseParameter('attr');
-      const query = {
-        match: {
-          position
-        }
-      };
-      es.addOrUpdateDocument(team + '-benchmarks', query, 'test_type', benchmarks);
-      break;
-    }
-
+      case 'benchmarks': {
+        const query = {
+          match: {
+            position
+          }
+        };
+        es.addOrUpdateDocument(team + '-benchmarks', query, 'post', benchmarks);
+        break;
+      }
     }
     ;
 

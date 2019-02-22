@@ -57,9 +57,9 @@
   });
 
   function submit() {
-    const nameSchool = document.getElementById("nameSchool").value;
+    const nameSchool = document.getElementById("nameSchool").value.toLowerCase();
     const folderName = document.getElementById("folderName").value;
-    createNewSchool(nameSchool, folderName, ()=>{ window.location.assign(`/?school=${nameSchool}`)})
+    createNewSchool(nameSchool, folderName, ()=>{ alert('School was created');window.location.assign(`/?school=${nameSchool}`)})
   }
 
 </script>

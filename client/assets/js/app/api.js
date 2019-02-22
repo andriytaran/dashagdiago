@@ -1,12 +1,14 @@
-function getAPIData (props, cb) {
-  var url = new URL(document.URL);
-  var query_string = url.search;
-  var search_params = new URLSearchParams(query_string);
-  var school = search_params.get('school');
+const getSchoolName = () => {
+  const url = new URL(document.URL);
+  const query_string = url.search;
+  const search_params = new URLSearchParams(query_string);
+  return search_params.get('school');
+};
 
+function getAPIData(props, cb) {
   $.ajax({
     type: "POST",
-    url: `/api/dashboard-data?school=${school}`,
+    url: `/api/dashboard-data?school=${getSchoolName()}`,
     data: JSON.stringify(props),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -14,10 +16,10 @@ function getAPIData (props, cb) {
   });
 }
 
-function updateAPIData (props, cb) {
+function updateAPIData(props, cb) {
   $.ajax({
     type: "POST",
-    url: "/api/dashboard-data-update",
+    url: `/api/dashboard-data-update?school=${getSchoolName()}`,
     data: JSON.stringify(props),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -34,14 +36,24 @@ function updateBenchmarks(position, benchmarks, factors, cb) {
   }, cb);
 }
 
+function getBenchmarks(position, cb) {
+  getAPIData({
+    type: "benchmarks",
+    position: position,
+  }, cb);
+}
+
 function createNewSchool(schoolName, folderName, cb) {
   $.ajax({
     type: "POST",
     url: "/api/createNewSchool",
-    data: JSON.stringify({schoolName, folderName}),
+    data: JSON.stringify({ schoolName, folderName }),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
-    success: cb
+    success: cb,
+    error: function (error) {
+      alert('error; ' + JSON.stringify(error));
+    }
   });
 }
 
@@ -92,7 +104,7 @@ function getOverallScoresData(position, cb) {
   }, cb);
 }
 
-function getCulturalFitData(position, cb){
+function getCulturalFitData(position, cb) {
   getAPIData({
     type: "percentile_groups",
     position: position,
@@ -100,7 +112,7 @@ function getCulturalFitData(position, cb){
   }, cb);
 }
 
-function getCulturalFitModalTableData(position, valueStart, valueEnd, cb){
+function getCulturalFitModalTableData(position, valueStart, valueEnd, cb) {
   getAPIData({
     type: "players",
     position: position,
@@ -110,7 +122,7 @@ function getCulturalFitModalTableData(position, valueStart, valueEnd, cb){
   }, cb);
 }
 
-function getTopCulturalFitData(position, cb){
+function getTopCulturalFitData(position, cb) {
   getAPIData({
     type: "players",
     position: position,
@@ -133,7 +145,7 @@ function getPlayersData(props, cb) {
     offenseDefense: offenseDefense
   }, cb);
 
-  function calculateOffenseDefense (props) {
+  function calculateOffenseDefense(props) {
     if (props.offense && props.defense) {
       throw new Error("Both `offense` and `defense` is not supported.");
     }
