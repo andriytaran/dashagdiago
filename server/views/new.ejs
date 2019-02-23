@@ -52,14 +52,19 @@
 
 
 <script>
-  document.getElementById('importSchoolData').addEventListener('click', function () {
+  const button = document.getElementById('importSchoolData');
+  button.addEventListener('click', function () {
     submit();
   });
 
   function submit() {
+    button.setAttribute('disabled', true);
     const nameSchool = document.getElementById("nameSchool").value.toLowerCase();
     const folderName = document.getElementById("folderName").value;
-    createNewSchool(nameSchool, folderName, ()=>{ alert('School was created');window.location.assign(`/?school=${nameSchool}`)})
+    createNewSchool(nameSchool, folderName, function () {
+      button.setAttribute('disabled', false);
+      setTimeout(function(){ window.location.assign(`/?school=${nameSchool}`) }, 1000);
+    })
   }
 
 </script>

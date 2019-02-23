@@ -27,7 +27,6 @@ module.exports = app => {
   // Home
   app.get('/', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
-
     const [
       overallCount,
       offenseCount,
@@ -97,29 +96,25 @@ module.exports = app => {
     const folderName = req.body.folderName || 'testSchool';
     const schoolName = req.body.schoolName.toLowerCase();
     try {
-      await ftp.importPlayersData(folderName)
-        .then(res => {
-          return BluebirdPromise.mapSeries(res, (elem, i) => {
-            console.log(schoolName);
-            const player = {
-              id: elem.id,
-              position: elem.position || 'DE',
-              "fname": elem.fname,
-              "lname": elem.lname,
-              "coreAttributesCompetitiveness": parseFloat(elem.Competitiveness),
-              "coreAttributesPersistence": parseFloat(elem.Persistence),
-              "coreAttributesWorkEthic": parseFloat(elem['Work Ethic']),
-              "coreAttributesTeamOrientation": parseFloat(elem['Team Orientation']),
-              "coreAttributesMastery": parseFloat(elem.Mastery),
-              "coreAttributesOverallScore": parseFloat(elem.Score),
-            };
-            return es.addPlayer(schoolName, player);
-          });
-        });
+      const players = await ftp.importPlayersData(folderName);
+      for (const elem of players) {
+        const player = {
+          id: elem.id,
+          position: elem.position || 'DE',
+          "fname": elem.fname,
+          "lname": elem.lname,
+          "coreAttributesCompetitiveness": parseFloat(elem.Competitiveness),
+          "coreAttributesPersistence": parseFloat(elem.Persistence),
+          "coreAttributesWorkEthic": parseFloat(elem['Work Ethic']),
+          "coreAttributesTeamOrientation": parseFloat(elem['Team Orientation']),
+          "coreAttributesMastery": parseFloat(elem.Mastery),
+          "coreAttributesOverallScore": parseFloat(elem.Score),
+        };
+        await es.addPlayer(schoolName, player);
+      }
 
-      await BluebirdPromise.mapSeries(positionF, (elem, i) => {
-        console.log(schoolName + '-benchmarks');
-        return es.addDocument(schoolName + '-benchmarks', i + 1, 'post', {
+      for (const elem of positionF) {
+        await es.addDocument(schoolName + '-benchmarks', elem.id, 'post', {
           "position": elem.value,
           "coreAttributesPersistence": 87,
           "coreAttributesWorkEthic": 63,
@@ -128,8 +123,8 @@ module.exports = app => {
           "coreAttributesCompetitiveness": 55,
           "coreAttributesOverallScore": 59
         });
-      });
-    } catch (err){
+      }
+    } catch (err) {
       return res.status(500).send('Please check file name');
     }
     res.send({});
@@ -286,23 +281,23 @@ module.exports = app => {
   });
 
   const positionF = [
-    { title: 'Quarterback', value: 'QB' },
-    { title: 'Running Back', value: 'RB' },
-    { title: 'Tight End', value: 'TE' },
-    { title: 'Wide Receiver', value: 'WR' },
-    { title: 'Punter', value: 'P' },
-    { title: 'Kicker', value: 'K' },
-    { title: 'Defensive Back', value: 'DB' },
-    { title: 'Defensive End', value: 'DE' },
-    { title: 'Defensive Tackle', value: 'DT' },
-    { title: 'Defensive Line', value: 'DL' },
-    { title: 'Long Snapper', value: 'LS' },
-    { title: 'Offensive Line', value: 'OL' },
-    { title: 'Linebacker', value: 'LB' },
-    { title: 'Corner Back', value: 'CB' },
-    { title: 'Offensive Guard', value: 'OG' },
-    { title: 'Offensive Tackler', value: 'OT' },
-    { title: 'Safety', value: 'S' },
+    { title: 'Quarterback', value: 'QB', id: 1 },
+    { title: 'Running Back', value: 'RB', id: 2 },
+    { title: 'Tight End', value: 'TE', id: 3 },
+    { title: 'Wide Receiver', value: 'WR', id: 4 },
+    { title: 'Punter', value: 'P', id: 5 },
+    { title: 'Kicker', value: 'K', id: 6 },
+    { title: 'Defensive Back', value: 'DB', id: 7 },
+    { title: 'Defensive End', value: 'DE', id: 8 },
+    { title: 'Defensive Tackle', value: 'DT', id: 9 },
+    { title: 'Defensive Line', value: 'DL', id: 10 },
+    { title: 'Long Snapper', value: 'LS', id: 11 },
+    { title: 'Offensive Line', value: 'OL', id: 12 },
+    { title: 'Linebacker', value: 'LB', id: 13 },
+    { title: 'Corner Back', value: 'CB', id: 14 },
+    { title: 'Offensive Guard', value: 'OG', id: 15 },
+    { title: 'Offensive Tackler', value: 'OT', id: 16 },
+    { title: 'Safety', value: 'S', id: 17 },
   ];
 
   // dashboard data ajax handler
