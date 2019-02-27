@@ -12,15 +12,16 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 
-const BluebirdPromise = require('bluebird');
-
-
 const parseTeamFromQuery = (req) => {
   let team = req.query.school || 'cincinnati';
   if (team === 'null') {
     team = 'cincinnati';
   }
   return team;
+};
+
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 module.exports = app => {
@@ -80,15 +81,15 @@ module.exports = app => {
       //   null,
       overallScore: Math.round(overallScore),
       team: team,
-      teamDisplay: 'Cincinnati Bearcats',
-      teamName: team,
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   app.get('/profile', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/profile', {
-      teamName: team,
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
@@ -101,27 +102,27 @@ module.exports = app => {
         const player = {
           id: elem.id,
           position: elem.position || 'DE',
-          "fname": elem.fname,
-          "lname": elem.lname,
-          "coreAttributesCompetitiveness": parseFloat(elem.Competitiveness),
-          "coreAttributesPersistence": parseFloat(elem.Persistence),
-          "coreAttributesWorkEthic": parseFloat(elem['Work Ethic']),
-          "coreAttributesTeamOrientation": parseFloat(elem['Team Orientation']),
-          "coreAttributesMastery": parseFloat(elem.Mastery),
-          "coreAttributesOverallScore": parseFloat(elem.Score),
+          fname: elem.fname,
+          lname: elem.lname,
+          coreAttributesCompetitiveness: parseFloat(elem.Competitiveness),
+          coreAttributesPersistence: parseFloat(elem.Persistence),
+          coreAttributesWorkEthic: parseFloat(elem['Work Ethic']),
+          coreAttributesTeamOrientation: parseFloat(elem['Team Orientation']),
+          coreAttributesMastery: parseFloat(elem.Mastery),
+          coreAttributesOverallScore: parseFloat(elem.Score),
         };
         await es.addPlayer(schoolName, player);
       }
 
       for (const elem of positionF) {
         await es.addDocument(schoolName + '-benchmarks', elem.id, 'post', {
-          "position": elem.value,
-          "coreAttributesPersistence": 87,
-          "coreAttributesWorkEthic": 63,
-          "coreAttributesTeamOrientation": 49,
-          "coreAttributesMastery": 53,
-          "coreAttributesCompetitiveness": 55,
-          "coreAttributesOverallScore": 59
+          position: elem.value,
+          coreAttributesPersistence: 87,
+          coreAttributesWorkEthic: 63,
+          coreAttributesTeamOrientation: 49,
+          coreAttributesMastery: 53,
+          coreAttributesCompetitiveness: 55,
+          coreAttributesOverallScore: 59
         });
       }
     } catch (err) {
@@ -132,28 +133,43 @@ module.exports = app => {
 
   app.get('/new', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('new', { team: 'new', teamName: team, });
+    res.render('new', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   app.get('/contact', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/contact', { teamName: team, });
+    res.render('pages/contact', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   app.get('/faq', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/faq', { teamName: team, });
+    res.render('pages/faq', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   app.get('/branding', function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('pages/branding_page', { teamName: team, });
+    res.render('pages/branding_page', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   // Cultural Fit
   app.get('/cultural_fit', (req, res, next) => {
     const team = parseTeamFromQuery(req);
-    res.render('pages/cultural_fit', { teamName: team, });
+    res.render('pages/cultural_fit', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   //dashboard-category
@@ -170,7 +186,8 @@ module.exports = app => {
     res.render('dashboard-category', {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
-      teamName: team,
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
     });
   });
 
@@ -188,20 +205,27 @@ module.exports = app => {
     res.render('dashboard-position', {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
-      teamName: team,
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
     });
   });
 
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
-    res.render('dashboard-player', { teamName: team, });
+    res.render('dashboard-player', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   // Player Assessment
   app.get('/player_assessment', (req, res, next) => {
     const team = parseTeamFromQuery(req);
-    res.render('pages/player_assessment', { teamName: team, });
+    res.render('pages/player_assessment', {
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
+    });
   });
 
   // Login
@@ -220,9 +244,9 @@ module.exports = app => {
   app.get('/addnewpillar', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('addnewpillar', {
-      team: team,
       positions: positionF,
-      teamName: team,
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
     });
   });
 
@@ -230,9 +254,9 @@ module.exports = app => {
   app.get('/academbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('academbench', {
-      team: team,
       positions: positionF,
-      teamName: team,
+      team: team,
+      teamDisplay: capitalizeFirstLetter(team)
     });
   });
 
@@ -240,9 +264,9 @@ module.exports = app => {
   app.get('/emotionalbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('emotionalbench', {
-      team: 'Cincinnati Bearcats',
+      team: team,
       positions: positionF,
-      teamName: team,
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
@@ -255,7 +279,7 @@ module.exports = app => {
     res.render('corebench', {
       team: team,
       positions: positionF,
-      teamName: team,
+      teamDisplay: capitalizeFirstLetter(team),
       attr: benchmarks,
     });
   });
@@ -265,8 +289,7 @@ module.exports = app => {
     const team = parseTeamFromQuery(req);
     res.render('socialbench', {
       team: team,
-      positions: positionF,
-      teamName: team,
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
@@ -275,8 +298,8 @@ module.exports = app => {
     const team = parseTeamFromQuery(req);
     res.render('athleticbench', {
       team: 'Cincinnati Bearcats',
+      teamDisplay: capitalizeFirstLetter(team),
       positions: positionF,
-      teamName: team,
     });
   });
 
