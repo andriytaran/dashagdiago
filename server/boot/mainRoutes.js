@@ -26,7 +26,7 @@ const capitalizeFirstLetter = (string) => {
 
 module.exports = app => {
   // Home
-  app.get('/', async function (req, res, next) {
+  app.get('/', async function(req, res, next) {
     const team = parseTeamFromQuery(req);
     const [
       overallCount,
@@ -34,36 +34,36 @@ module.exports = app => {
       defenseCount,
       overallScore,
     ] = await Promise.all([
-        es.fetchCount({}, team),
-        es.fetchCount({
-          'body': {
-            'query': {
-              'bool': {
-                'must': {
-                  'match': {
-                    'offenseDefense': 0,
-                  },
+      es.fetchCount({}, team),
+      es.fetchCount({
+        'body': {
+          'query': {
+            'bool': {
+              'must': {
+                'match': {
+                  'offenseDefense': 0,
                 },
               },
             },
           },
-        }, team),
-        es.fetchCount({
-          'body': {
-            'query': {
-              'bool': {
-                'must': {
-                  'match': {
-                    'offenseDefense': 1,
-                  },
+        },
+      }, team),
+      es.fetchCount({
+        'body': {
+          'query': {
+            'bool': {
+              'must': {
+                'match': {
+                  'offenseDefense': 1,
                 },
               },
             },
           },
-        }, team),
-        es.fetchOverallScore({}, team),
-      ])
-      .catch(function (err) {
+        },
+      }, team),
+      es.fetchOverallScore({}, team),
+    ])
+      .catch(function(err) {
         // @TODO fix
         console.log(err);
         return res.redirect('/new');
@@ -85,7 +85,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/profile', function (req, res, next) {
+  app.get('/profile', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/profile', {
       team: team,
@@ -93,7 +93,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/createNewSchool', async function (req, res, next) {
+  app.post('/api/createNewSchool', async function(req, res, next) {
     const folderName = req.body.folderName || 'testSchool';
     const schoolName = req.body.schoolName.toLowerCase();
     try {
@@ -122,7 +122,7 @@ module.exports = app => {
           coreAttributesTeamOrientation: 49,
           coreAttributesMastery: 53,
           coreAttributesCompetitiveness: 55,
-          coreAttributesOverallScore: 59
+          coreAttributesOverallScore: 59,
         });
       }
     } catch (err) {
@@ -131,35 +131,35 @@ module.exports = app => {
     res.send({});
   });
 
-  app.get('/new', function (req, res, next) {
+  app.get('/new', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('new', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
-  app.get('/contact', function (req, res, next) {
+  app.get('/contact', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/contact', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
-  app.get('/faq', function (req, res, next) {
+  app.get('/faq', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/faq', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
-  app.get('/branding', function (req, res, next) {
+  app.get('/branding', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/branding_page', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
@@ -168,12 +168,12 @@ module.exports = app => {
     const team = parseTeamFromQuery(req);
     res.render('pages/cultural_fit', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   //dashboard-category
-  app.get('/dashboard-category', async function (req, res, next) {
+  app.get('/dashboard-category', async function(req, res, next) {
     const team = parseTeamFromQuery(req);
     const position = req.query.category != null ?
       req.query.category.toLowerCase() :
@@ -187,12 +187,12 @@ module.exports = app => {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   //dashboard-position
-  app.get('/dashboard-position', async function (req, res, next) {
+  app.get('/dashboard-position', async function(req, res, next) {
     const team = parseTeamFromQuery(req);
     const position = req.query.position != null ?
       req.query.position.toLowerCase() :
@@ -206,16 +206,16 @@ module.exports = app => {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   //dashboard-player
-  app.get('/dashboard-player', async function (req, res, next) {
+  app.get('/dashboard-player', async function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('dashboard-player', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
@@ -224,44 +224,44 @@ module.exports = app => {
     const team = parseTeamFromQuery(req);
     res.render('pages/player_assessment', {
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   // Login
-  app.get('/login', function (req, res, next) {
+  app.get('/login', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('login');
   });
 
   // Register
-  app.get('/register', function (req, res, next) {
+  app.get('/register', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('register');
   });
 
   // create custom pillar
-  app.get('/addnewpillar', function (req, res, next) {
+  app.get('/addnewpillar', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('addnewpillar', {
       positions: positionF,
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   // academic benchmark setup
-  app.get('/academbench', function (req, res, next) {
+  app.get('/academbench', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('academbench', {
       positions: positionF,
       team: team,
-      teamDisplay: capitalizeFirstLetter(team)
+      teamDisplay: capitalizeFirstLetter(team),
     });
   });
 
   // emotional benchmark setup
-  app.get('/emotionalbench', function (req, res, next) {
+  app.get('/emotionalbench', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('emotionalbench', {
       team: team,
@@ -271,7 +271,7 @@ module.exports = app => {
   });
 
   // core attributes benchmark setup
-  app.get('/corebench', async function (req, res, next) {
+  app.get('/corebench', async function(req, res, next) {
     const team = parseTeamFromQuery(req);
 
     const benchmarks = await es.getBenchmarks(team, 'QB');
@@ -285,7 +285,7 @@ module.exports = app => {
   });
 
   // social benchmark setup
-  app.get('/socialbench', function (req, res, next) {
+  app.get('/socialbench', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('socialbench', {
       team: team,
@@ -294,7 +294,7 @@ module.exports = app => {
   });
 
   // athletic benchmark setup
-  app.get('/athleticbench', function (req, res, next) {
+  app.get('/athleticbench', function(req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('athleticbench', {
       team: 'Cincinnati Bearcats',
@@ -304,31 +304,31 @@ module.exports = app => {
   });
 
   const positionF = [
-    { title: 'Quarterback', value: 'QB', id: 1 },
-    { title: 'Running Back', value: 'RB', id: 2 },
-    { title: 'Tight End', value: 'TE', id: 3 },
-    { title: 'Wide Receiver', value: 'WR', id: 4 },
-    { title: 'Punter', value: 'P', id: 5 },
-    { title: 'Kicker', value: 'K', id: 6 },
-    { title: 'Defensive Back', value: 'DB', id: 7 },
-    { title: 'Defensive End', value: 'DE', id: 8 },
-    { title: 'Defensive Tackle', value: 'DT', id: 9 },
-    { title: 'Defensive Line', value: 'DL', id: 10 },
-    { title: 'Long Snapper', value: 'LS', id: 11 },
-    { title: 'Offensive Line', value: 'OL', id: 12 },
-    { title: 'Linebacker', value: 'LB', id: 13 },
-    { title: 'Corner Back', value: 'CB', id: 14 },
-    { title: 'Offensive Guard', value: 'OG', id: 15 },
-    { title: 'Offensive Tackler', value: 'OT', id: 16 },
-    { title: 'Safety', value: 'S', id: 17 },
+    {title: 'Quarterback', value: 'QB', id: 1},
+    {title: 'Running Back', value: 'RB', id: 2},
+    {title: 'Tight End', value: 'TE', id: 3},
+    {title: 'Wide Receiver', value: 'WR', id: 4},
+    {title: 'Punter', value: 'P', id: 5},
+    {title: 'Kicker', value: 'K', id: 6},
+    {title: 'Defensive Back', value: 'DB', id: 7},
+    {title: 'Defensive End', value: 'DE', id: 8},
+    {title: 'Defensive Tackle', value: 'DT', id: 9},
+    {title: 'Defensive Line', value: 'DL', id: 10},
+    {title: 'Long Snapper', value: 'LS', id: 11},
+    {title: 'Offensive Line', value: 'OL', id: 12},
+    {title: 'Linebacker', value: 'LB', id: 13},
+    {title: 'Corner Back', value: 'CB', id: 14},
+    {title: 'Offensive Guard', value: 'OG', id: 15},
+    {title: 'Offensive Tackler', value: 'OT', id: 16},
+    {title: 'Safety', value: 'S', id: 17},
   ];
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
 
-  app.post('/api/dashboard-data', async function (req, res) {
+  app.post('/api/dashboard-data', async function(req, res) {
     const team = parseTeamFromQuery(req);
-    const response = { team };
+    const response = {team};
 
     const parser = new Parser(req, response);
 
@@ -566,7 +566,7 @@ module.exports = app => {
               'script': es.buildScoreScript(
                 attribute,
                 programBenchmarks,
-                { defaultValue: defaultValueIfScript }
+                {defaultValue: defaultValueIfScript}
                 // HACK: sort doesn't work on nulls, so
                 // have to supply default value
               ),
@@ -651,12 +651,10 @@ module.exports = app => {
     return res.json(response);
   });
 
-
-  app.post('/api/dashboard-data-update', async function (req, res) {
-
+  app.post('/api/dashboard-data-update', async function(req, res) {
     const team = parseTeamFromQuery(req);
 
-    const response = { team };
+    const response = {team};
 
     const parser = new Parser(req, response);
 
@@ -668,8 +666,8 @@ module.exports = app => {
       case 'benchmarks': {
         const query = {
           match: {
-            position
-          }
+            position,
+          },
         };
         es.addOrUpdateDocument(team + '-benchmarks', query, 'post', benchmarks);
         break;

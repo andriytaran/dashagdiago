@@ -1039,12 +1039,12 @@ function queryScoreField(pillar, programBenchmarks) {
 }
 
 async function updateDocument(index, id, type, body) {
-  const res = await client.update({ index, type, id, body });
+  const res = await client.update({index, type, id, body});
   return res;
 }
 
 async function addDocument(index, id, type, body) {
-  const res = await client.index({ index, type, id, body });
+  const res = await client.index({index, type, id, body});
   return res;
 }
 
@@ -1053,8 +1053,8 @@ async function addOrUpdateDocument(index, query, type, body) {
     index,
     type,
     body: {
-      query
-    }
+      query,
+    },
   });
   if (res.hits.total) {
     const id = res.hits.hits[0]._id;
@@ -1063,17 +1063,15 @@ async function addOrUpdateDocument(index, query, type, body) {
       index,
       type,
       id,
-      body: Object.assign(oldBody, body)
+      body: Object.assign(oldBody, body),
     });
   } else {
-    await client.index({ index, type, body });
+    await client.index({index, type, body});
   }
 }
 
 async function addPlayer(team, body) {
-
-  await client.index({ index: team, type: 'post', body, id: body.id });
-
+  await client.index({index: team, type: 'post', body, id: body.id});
 }
 
 async function getBenchmarks(team, position) {
@@ -1083,10 +1081,10 @@ async function getBenchmarks(team, position) {
     body: {
       query: {
         match: {
-          position
-        }
-      }
-    }
+          position,
+        },
+      },
+    },
   });
 
   return res.hits.hits.map(hit => hit._source)[0];
