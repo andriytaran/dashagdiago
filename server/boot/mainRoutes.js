@@ -11,6 +11,7 @@ const ftp = require('./../ftp');
 
 const es = require('./es');
 const domain = require('./domain');
+const defaults = require('./defaults');
 
 const parseTeamFromQuery = (req) => {
   let team = req.query.school || 'cincinnati';
@@ -26,44 +27,45 @@ const capitalizeFirstLetter = (string) => {
 
 module.exports = app => {
   // Home
-  app.get('/', async function(req, res, next) {
+  app.get('/', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team);
     const [
       overallCount,
       offenseCount,
       defenseCount,
       overallScore,
     ] = await Promise.all([
-      es.fetchCount({}, team),
-      es.fetchCount({
-        'body': {
-          'query': {
-            'bool': {
-              'must': {
-                'match': {
-                  'offenseDefense': 0,
+        es.fetchCount({}, team),
+        es.fetchCount({
+          'body': {
+            'query': {
+              'bool': {
+                'must': {
+                  'match': {
+                    'offenseDefense': 0,
+                  },
                 },
               },
             },
           },
-        },
-      }, team),
-      es.fetchCount({
-        'body': {
-          'query': {
-            'bool': {
-              'must': {
-                'match': {
-                  'offenseDefense': 1,
+        }, team),
+        es.fetchCount({
+          'body': {
+            'query': {
+              'bool': {
+                'must': {
+                  'match': {
+                    'offenseDefense': 1,
+                  },
                 },
               },
             },
           },
-        },
-      }, team),
-      es.fetchOverallScore({}, team),
-    ])
-      .catch(function(err) {
+        }, team),
+        es.fetchOverallScore(pillarsObj, {}, team),
+      ])
+      .catch(function (err) {
         // @TODO fix
         console.log(err);
         return res.redirect('/new');
@@ -85,7 +87,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/profile', function(req, res, next) {
+  app.get('/profile', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/profile', {
       team: team,
@@ -93,7 +95,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/createNewSchool', async function(req, res, next) {
+  app.post('/api/createNewSchool', async function (req, res, next) {
     const folderName = req.body.folderName || 'testSchool';
     const schoolName = req.body.schoolName.toLowerCase();
     try {
@@ -125,13 +127,14 @@ module.exports = app => {
           coreAttributesOverallScore: 59,
         });
       }
+      await es.addDocument(schoolName + '-pillars', 1, 'post', defaults.pillarsObj);
     } catch (err) {
       return res.status(500).send('Please check file name');
     }
     res.send({});
   });
 
-  app.get('/new', function(req, res, next) {
+  app.get('/new', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('new', {
       team: team,
@@ -139,7 +142,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/contact', function(req, res, next) {
+  app.get('/contact', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/contact', {
       team: team,
@@ -147,7 +150,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/faq', function(req, res, next) {
+  app.get('/faq', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/faq', {
       team: team,
@@ -155,7 +158,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/branding', function(req, res, next) {
+  app.get('/branding', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('pages/branding_page', {
       team: team,
@@ -173,12 +176,14 @@ module.exports = app => {
   });
 
   //dashboard-category
-  app.get('/dashboard-category', async function(req, res, next) {
+  app.get('/dashboard-category', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team);
     const position = req.query.category != null ?
       req.query.category.toLowerCase() :
       null;
     const overallScore = await es.fetchOverallScore(
+      pillarsObj,
       es.queryByTerm('position', position),
       team
     );
@@ -192,12 +197,14 @@ module.exports = app => {
   });
 
   //dashboard-position
-  app.get('/dashboard-position', async function(req, res, next) {
+  app.get('/dashboard-position', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team);
     const position = req.query.position != null ?
       req.query.position.toLowerCase() :
       null;
     const overallScore = await es.fetchOverallScore(
+      pillarsObj,
       es.queryByTerm('position', position),
       team
     );
@@ -211,7 +218,7 @@ module.exports = app => {
   });
 
   //dashboard-player
-  app.get('/dashboard-player', async function(req, res, next) {
+  app.get('/dashboard-player', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('dashboard-player', {
       team: team,
@@ -229,19 +236,19 @@ module.exports = app => {
   });
 
   // Login
-  app.get('/login', function(req, res, next) {
+  app.get('/login', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('login');
   });
 
   // Register
-  app.get('/register', function(req, res, next) {
+  app.get('/register', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('register');
   });
 
   // create custom pillar
-  app.get('/addnewpillar', function(req, res, next) {
+  app.get('/addnewpillar', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('addnewpillar', {
       positions: positionF,
@@ -251,7 +258,7 @@ module.exports = app => {
   });
 
   // academic benchmark setup
-  app.get('/academbench', function(req, res, next) {
+  app.get('/academbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('academbench', {
       positions: positionF,
@@ -261,7 +268,7 @@ module.exports = app => {
   });
 
   // emotional benchmark setup
-  app.get('/emotionalbench', function(req, res, next) {
+  app.get('/emotionalbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('emotionalbench', {
       team: team,
@@ -271,21 +278,22 @@ module.exports = app => {
   });
 
   // core attributes benchmark setup
-  app.get('/corebench', async function(req, res, next) {
+  app.get('/corebench', async function (req, res, next) {
     const team = parseTeamFromQuery(req);
 
     const benchmarks = await es.getBenchmarks(team, 'QB');
-
+    const factors = await es.getFactors(team, 'coreAttributes');
     res.render('corebench', {
       team: team,
       positions: positionF,
       teamDisplay: capitalizeFirstLetter(team),
-      attr: benchmarks,
+      benchmarks,
+      factors,
     });
   });
 
   // social benchmark setup
-  app.get('/socialbench', function(req, res, next) {
+  app.get('/socialbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('socialbench', {
       team: team,
@@ -294,7 +302,7 @@ module.exports = app => {
   });
 
   // athletic benchmark setup
-  app.get('/athleticbench', function(req, res, next) {
+  app.get('/athleticbench', function (req, res, next) {
     const team = parseTeamFromQuery(req);
     res.render('athleticbench', {
       team: 'Cincinnati Bearcats',
@@ -304,31 +312,32 @@ module.exports = app => {
   });
 
   const positionF = [
-    {title: 'Quarterback', value: 'QB', id: 1},
-    {title: 'Running Back', value: 'RB', id: 2},
-    {title: 'Tight End', value: 'TE', id: 3},
-    {title: 'Wide Receiver', value: 'WR', id: 4},
-    {title: 'Punter', value: 'P', id: 5},
-    {title: 'Kicker', value: 'K', id: 6},
-    {title: 'Defensive Back', value: 'DB', id: 7},
-    {title: 'Defensive End', value: 'DE', id: 8},
-    {title: 'Defensive Tackle', value: 'DT', id: 9},
-    {title: 'Defensive Line', value: 'DL', id: 10},
-    {title: 'Long Snapper', value: 'LS', id: 11},
-    {title: 'Offensive Line', value: 'OL', id: 12},
-    {title: 'Linebacker', value: 'LB', id: 13},
-    {title: 'Corner Back', value: 'CB', id: 14},
-    {title: 'Offensive Guard', value: 'OG', id: 15},
-    {title: 'Offensive Tackler', value: 'OT', id: 16},
-    {title: 'Safety', value: 'S', id: 17},
+    { title: 'Quarterback', value: 'QB', id: 1 },
+    { title: 'Running Back', value: 'RB', id: 2 },
+    { title: 'Tight End', value: 'TE', id: 3 },
+    { title: 'Wide Receiver', value: 'WR', id: 4 },
+    { title: 'Punter', value: 'P', id: 5 },
+    { title: 'Kicker', value: 'K', id: 6 },
+    { title: 'Defensive Back', value: 'DB', id: 7 },
+    { title: 'Defensive End', value: 'DE', id: 8 },
+    { title: 'Defensive Tackle', value: 'DT', id: 9 },
+    { title: 'Defensive Line', value: 'DL', id: 10 },
+    { title: 'Long Snapper', value: 'LS', id: 11 },
+    { title: 'Offensive Line', value: 'OL', id: 12 },
+    { title: 'Linebacker', value: 'LB', id: 13 },
+    { title: 'Corner Back', value: 'CB', id: 14 },
+    { title: 'Offensive Guard', value: 'OG', id: 15 },
+    { title: 'Offensive Tackler', value: 'OT', id: 16 },
+    { title: 'Safety', value: 'S', id: 17 },
   ];
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
 
-  app.post('/api/dashboard-data', async function(req, res) {
+  app.post('/api/dashboard-data', async function (req, res) {
     const team = parseTeamFromQuery(req);
-    const response = {team};
+    const pillarsObj = await es.getPillarsObj(team);
+    const response = { team };
 
     const parser = new Parser(req, response);
 
@@ -347,11 +356,11 @@ module.exports = app => {
           programBenchmarks,
           player,
         ] = await Promise.all([
-          es.fetchProgramBenchmarks({}, team),
+          es.fetchProgramBenchmarks(pillarsObj, {}, team),
           es.fetchPlayer(query, team, id),
         ]);
 
-        const scores = domain.calculatePlayerScores(player, programBenchmarks);
+        const scores = domain.calculatePlayerScores(pillarsObj, player, programBenchmarks);
         const overallScore = domain.calculatePlayerOverallScore(
           scores,
           programBenchmarks
@@ -361,6 +370,7 @@ module.exports = app => {
         const agdiagoScoresArr = await Promise.all(
           pillars.map(
             pillar => es.fetchAgdiagoScore(
+              pillarsObj,
               new es.QueryBuilder()
                 .add(query)
                 .add(es.queryByTerm('position', player.position.toLowerCase()))
@@ -406,18 +416,21 @@ module.exports = app => {
           agdiagoPillarAttributes,
         ] = await Promise.all([
           await es.fetchPillarAttributes(
+            pillarsObj,
             query,
             team,
             pillar,
             player.position
           ),
           await es.fetchProgramPillarAttributes(
+            pillarsObj,
             benchmarkQuery,
             team,
             pillar,
             player.position
           ),
           await es.fetchAgdiagoPillarAttributes(
+            pillarsObj,
             benchmarkQuery,
             pillar,
             player.position
@@ -435,9 +448,10 @@ module.exports = app => {
       case 'scores': {
         const query = queryBuilder.build();
 
-        const pillars = Object.keys(domain.pillarsObj);
+        const pillars = Object.keys(pillarsObj);
 
         const programBenchmarks = await es.fetchProgramBenchmarks(
+          pillarsObj,
           {},
           team,
           pillars
@@ -446,6 +460,7 @@ module.exports = app => {
         const [scoresArr, agdiagoScoresArr] = await Promise.all([
           Promise.all(pillars.map(
             pillar => es.fetchScore(
+              pillarsObj,
               query,
               team,
               pillar,
@@ -454,6 +469,7 @@ module.exports = app => {
           )),
           Promise.all(pillars.map(
             pillar => es.fetchAgdiagoScore(
+              pillarsObj,
               query,
               team,
               pillar,
@@ -481,7 +497,7 @@ module.exports = app => {
       case 'percentile_groups': {
         const attribute = parser.parseRequiredParameter('attribute');
 
-        const pillars = Object.keys(domain.pillarsObj);
+        const pillars = Object.keys(pillarsObj);
 
         let attributeParam;
 
@@ -490,6 +506,7 @@ module.exports = app => {
 
         if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
+            pillarsObj,
             {},
             team,
             attribute === 'overallScore' ? undefined : [attribute]
@@ -537,7 +554,7 @@ module.exports = app => {
           queryBuilder.add(es.queryByTerm('offenseDefense', offenseDefense));
         }
 
-        const pillars = Object.keys(domain.pillarsObj);
+        const pillars = Object.keys(pillarsObj);
 
         const defaultValueIfScript = 0;
         const isScript = ~pillars.indexOf(attribute) ||
@@ -546,6 +563,7 @@ module.exports = app => {
         let attributeParam;
         if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
+            pillarsObj,
             {},
             team,
             attribute === 'overallScore' ? undefined : [attribute]
@@ -566,7 +584,7 @@ module.exports = app => {
               'script': es.buildScoreScript(
                 attribute,
                 programBenchmarks,
-                {defaultValue: defaultValueIfScript}
+                { defaultValue: defaultValueIfScript }
                 // HACK: sort doesn't work on nulls, so
                 // have to supply default value
               ),
@@ -651,16 +669,17 @@ module.exports = app => {
     return res.json(response);
   });
 
-  app.post('/api/dashboard-data-update', async function(req, res) {
+  app.post('/api/dashboard-data-update', async function (req, res) {
     const team = parseTeamFromQuery(req);
 
-    const response = {team};
+    const response = { team };
 
     const parser = new Parser(req, response);
 
     const type = parser.parseRequiredParameter('type');
     const position = parser.parseRequiredParameter('position');
     const benchmarks = parser.parseRequiredParameter('benchmarks');
+    const factors = parser.parseRequiredParameter('factors');
 
     switch (type) {
       case 'benchmarks': {
@@ -670,10 +689,10 @@ module.exports = app => {
           },
         };
         es.addOrUpdateDocument(team + '-benchmarks', query, 'post', benchmarks);
+        es.updatePillarsObj(team, 'coreAttributes', null, factors);
         break;
       }
     }
-    ;
 
     return res.json(response);
   });

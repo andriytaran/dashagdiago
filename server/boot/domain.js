@@ -201,7 +201,7 @@ function getParentPosition(position, visited) {
   return parentPosition;
 }
 
-function getPillarAttributes(pillar, position, visited = {}) {
+function getPillarAttributes(pillarsObj, pillar, position, visited = {}) {
   if (position === null) {
     position = '_all';
   }
@@ -226,15 +226,15 @@ function getPillarAttributes(pillar, position, visited = {}) {
     const parentPosition = getParentPosition(position, visited);
     if (!parentPosition) return attributes;
     if (visited[parentPosition]) return attributes;
-    return getPillarAttributes(pillar, parentPosition, visited);
+    return getPillarAttributes(pillarsObj, pillar, parentPosition, visited);
   }
 }
 
-function getPillarsAttributes(pillars) {
+function getPillarsAttributes(pillarsObj, pillars) {
   return R.compose(
     R.uniq,
     R.flatten,
-    R.map(getPillarAttributes)
+    R.map(pillar => getPillarAttributes(pillarsObj, pillar ))
   )(pillars);
 }
 
@@ -246,7 +246,7 @@ function getPillarsAttributes(pillars) {
  * @return {Object} A dictionary where each field is a pillar name,
  * and value is a corresponding pillar score.
  */
-function calculatePlayerScores(player, programBenchmarks) {
+function calculatePlayerScores(pillarsObj, player, programBenchmarks) {
   const position = player.position;
   const benchmark = programBenchmarks.positions[position];
   if (!benchmark) return R.map(() => null, pillarsObj);
@@ -326,7 +326,6 @@ function normalizeProgramBenchmarks(programBenchmarks) {
 
 module.exports = {
   positionsHierarchy,
-  pillarsObj,
   getParentPosition,
   getPillarAttributes,
   getPillarsAttributes,

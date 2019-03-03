@@ -37,46 +37,46 @@
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="competitiveness">Competitiveness Benchmark</label>
               <div class="col-md-5">
-                <input class="form-control m-b-5" type="number" placeholder="Competitiveness" id="competitiveness" value="<%= attr.coreAttributesCompetitiveness.toString() || "" %>"/>
+                <input class="form-control m-b-5" type="number" placeholder="Competitiveness" id="competitiveness" value="<%= benchmarks.coreAttributesCompetitiveness %>"/>
               </div>
               <div class="col-md-4">
-                <input class="form-control m-b-5" type="text" placeholder="Competitiveness Factor" id="competitivenessF" />
+                <input class="form-control m-b-5" type="text" placeholder="Competitiveness Factor" id="competitivenessF" value="<%= factors.coreAttributesCompetitiveness.factor %>"/>
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="mastery">Mastery Benchmark</label>
               <div class="col-md-5">
-                <input class="form-control m-b-5" type="text" placeholder="Mastery" id="mastery" value="<%= attr.coreAttributesMastery.toString() || "" %>"/>
+                <input class="form-control m-b-5" type="text" placeholder="Mastery" id="mastery" value="<%= benchmarks.coreAttributesMastery %>"/>
               </div>
               <div class="col-md-4">
-                <input class="form-control m-b-5" type="text" placeholder="Mastery Factor" id="masteryF" />
+                <input class="form-control m-b-5" type="text" placeholder="Mastery Factor" id="masteryF" value="<%= factors.coreAttributesMastery.factor %>"/>
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="persistence">Persistence Benchmark</label>
               <div class="col-md-5">
-                <input class="form-control m-b-5" type="text" placeholder="Persistence" id="persistence" value="<%= attr.coreAttributesPersistence.toString() || "" %>"/>
+                <input class="form-control m-b-5" type="text" placeholder="Persistence" id="persistence" value="<%= benchmarks.coreAttributesPersistence %>"/>
               </div>
               <div class="col-md-4">
-                <input class="form-control m-b-5" type="text" placeholder="Persistence Factor" id="persistenceF" />
+                <input class="form-control m-b-5" type="text" placeholder="Persistence Factor" id="persistenceF" value="<%= factors.coreAttributesPersistence.factor %>"/>
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="teamOrientation">Team Orientation Benchmark</label>
               <div class="col-md-5">
-                <input class="form-control m-b-5" type="text" placeholder="Team Orientation" id="teamOrientation" value="<%= attr.coreAttributesTeamOrientation.toString() || "" %>"/>
+                <input class="form-control m-b-5" type="text" placeholder="Team Orientation" id="teamOrientation" value="<%= benchmarks.coreAttributesTeamOrientation %>"/>
               </div>
               <div class="col-md-4">
-                <input class="form-control m-b-5" type="text" placeholder="Team Orientation Factor" id="teamOrientationF" />
+                <input class="form-control m-b-5" type="text" placeholder="Team Orientation Factor" id="teamOrientationF" value="<%= factors.coreAttributesTeamOrientation.factor %>"/>
               </div>
             </div>
             <div class="form-group row m-b-15">
               <label class="col-form-label col-md-3" for="workEthic">Work Ethic Benchmark</label>
               <div class="col-md-5">
-                <input class="form-control m-b-5" type="text" placeholder="Work Ethic" id="workEthic" value="<%= attr.coreAttributesWorkEthic.toString() || "" %>"/>
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic" id="workEthic" value="<%= benchmarks.coreAttributesWorkEthic %>"/>
               </div>
               <div class="col-md-4">
-                <input class="form-control m-b-5" type="text" placeholder="Work Ethic Factor" id="workEthicF" />
+                <input class="form-control m-b-5" type="text" placeholder="Work Ethic Factor" id="workEthicF" value="<%= factors.coreAttributesWorkEthic.factor %>"/>
               </div>
             </div>
             <div class="form-group row m-b-15" style="display: flex;flex-direction: row;align-items: center;">
@@ -101,7 +101,6 @@
   document.getElementById('pos').addEventListener('change', function (e) {
     const value = this.value;
     let position = positions.reduce(function(acc, elem){
-      console.log(elem);
       if (elem.title === value){
         acc = elem.value
       }
@@ -112,7 +111,6 @@
   });
 
   function updateBenchMarks(res) {
-    console.log(res.benchmarks);
     document.getElementById("competitiveness").value = res.benchmarks.coreAttributesCompetitiveness;
     document.getElementById("mastery").value = res.benchmarks.coreAttributesMastery;
     document.getElementById("persistence").value = res.benchmarks.coreAttributesPersistence;
@@ -170,12 +168,11 @@
     };
 
     const factors = {
-      position: position,
-      competitiveness: parseFloat(competitivenessFVal),
-      mastery: parseFloat(masteryFVal),
-      persistence: parseFloat(persistenceFVal),
-      teamOrientation: parseFloat(teamOrientationFVal),
-      workEthic: parseFloat(workEthicFVal),
+      coreAttributesCompetitiveness: { factor: parseFloat(competitivenessFVal) },
+      coreAttributesPersistence: { factor: parseFloat(persistenceFVal) },
+      coreAttributesWorkEthic: { factor: parseFloat(workEthicFVal) },
+      coreAttributesTeamOrientation: { factor: parseFloat(teamOrientationFVal) },
+      coreAttributesMastery: { factor: parseFloat(masteryFVal) },
     };
 
     updateBenchmarks(position, benchmarks, factors)

@@ -1,7 +1,7 @@
 'use strict';
 
 const R = require('ramda');
-const {ELASTICSEARCH_URL} = require('../env');
+const { ELASTICSEARCH_URL } = require('../env');
 const elasticsearch = require('elasticsearch');
 const client = new elasticsearch.Client({
   host: ELASTICSEARCH_URL,
@@ -10,11 +10,10 @@ const domain = require('./domain');
 
 /**
  * @typedef {Object} ProgramBenchmarks
-*/
+ */
 const positionsHierarchy = domain.positionsHierarchy;
-const pillarsObj = domain.pillarsObj;
 
-function getAttributeInfo(attribute, position = '_all', visitedPositions = {}) {
+function getAttributeInfo(pillarsObj, attribute, position = '_all', visitedPositions = {}) {
   for (let pillar in pillarsObj) {
     const pillarObj = pillarsObj[pillar];
     const positionObj = pillarObj.fields[position];
@@ -32,7 +31,7 @@ function getAttributeInfo(attribute, position = '_all', visitedPositions = {}) {
   const parentPosition = domain.getParentPosition(position, visitedPositions);
   if (!parentPosition) return null;
   if (visitedPositions[parentPosition]) return null;
-  return getAttributeInfo(attribute, parentPosition, visitedPositions);
+  return getAttributeInfo(pillarsObj, attribute, parentPosition, visitedPositions);
 }
 
 class QueryBuilder {
@@ -180,7 +179,7 @@ function mergeQuery(def, query) {
  * @return {number}
  */
 async function fetchCount(query, team) {
-  const {count} = await client.count(mergeQuery({
+  const { count } = await client.count(mergeQuery({
     'index': team,
     'body': {
       // 'size': 0,
@@ -198,9 +197,9 @@ async function fetchCount(query, team) {
  * Benchmarks to build score upon.
  * @return {number} 0-100 range percent score.
  */
-async function fetchScore(query, team, pillar, programBenchmarks) {
+async function fetchScore(pillarsObj, query, team, pillar, programBenchmarks) {
   programBenchmarks = typeof programBenchmarks === 'undefined' ?
-    await fetchProgramBenchmarks({}, team) :
+    await fetchProgramBenchmarks(pillarsObj, {}, team) :
     programBenchmarks;
   if (!programBenchmarks) return null;
 
@@ -222,7 +221,7 @@ async function fetchScore(query, team, pillar, programBenchmarks) {
 
   const fetchResponse = await client.search(fetchObj);
 
-  const {[pillar]: score} = aggregationBuilder.parseResponse(fetchResponse);
+  const { [pillar]: score } = aggregationBuilder.parseResponse(fetchResponse);
 
   return score;
 }
@@ -237,9 +236,9 @@ async function fetchScore(query, team, pillar, programBenchmarks) {
  * Benchmarks to build score upon.
  * @return {number} 0-100 range percent score.
  */
-async function fetchAgdiagoScore(query, team, pillar, programBenchmarks) {
+async function fetchAgdiagoScore(pillarsObj, query, team, pillar, programBenchmarks) {
   programBenchmarks = typeof programBenchmarks === 'undefined' ?
-    await fetchProgramBenchmarks({}, team) :
+    await fetchProgramBenchmarks(pillarsObj, {}, team) :
     programBenchmarks;
   if (!programBenchmarks) return null;
 
@@ -262,7 +261,7 @@ async function fetchAgdiagoScore(query, team, pillar, programBenchmarks) {
 
   const fetchResponse = await client.search(fetchObj);
 
-  const {[pillar]: score} = aggregationBuilder.parseResponse(fetchResponse);
+  const { [pillar]: score } = aggregationBuilder.parseResponse(fetchResponse);
 
   return score;
 }
@@ -275,9 +274,9 @@ async function fetchAgdiagoScore(query, team, pillar, programBenchmarks) {
  * Benchmarks to build overall score upon.
  * @return {number} 0-100 range percent score.
  */
-async function fetchOverallScore(query, team, programBenchmarks) {
+async function fetchOverallScore(pillarsObj, query, team, programBenchmarks) {
   programBenchmarks = typeof programBenchmarks === 'undefined' ?
-    await fetchProgramBenchmarks({}, team) :
+    await fetchProgramBenchmarks(pillarsObj, {}, team) :
     programBenchmarks;
   if (!programBenchmarks) return null;
 
@@ -388,12 +387,14 @@ if (totalFactor > 0) {
  * If omited, get all.
  * @return {ProgramBenchmarks}
  */
-async function fetchProgramBenchmarks(
-  query,
-  team,
-  pillars = Object.keys(pillarsObj)
-) {
-  const fields = domain.getPillarsAttributes(pillars);
+async function fetchProgramBenchmarks(pillarsObj,
+                                      query,
+                                      team,
+                                      pillars) {
+  if (typeof pillars === 'undefined') {
+    pillars = Object.keys(pillarsObj);
+  }
+  const fields = domain.getPillarsAttributes(pillarsObj, pillars);
 
   const fetchResponse = await client.search(mergeQuery({
     'index': team + '-benchmarks',
@@ -405,11 +406,11 @@ async function fetchProgramBenchmarks(
     const res = {};
     fields.forEach(field => {
       if (group[field] != null) {
-        const attributeInfo = getAttributeInfo(field, position);
+        const attributeInfo = getAttributeInfo(pillarsObj, field, position);
         if (attributeInfo) {
           res[field] = Object.assign(
             attributeInfo,
-            {value: group[field]},
+            { value: group[field] },
           );
         }
       }
@@ -485,8 +486,8 @@ async function fetchPlayers(query, team, attributeParam) {
   return players;
 }
 
-async function fetchPillarAttributes(query, team, pillar, position) {
-  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
+async function fetchPillarAttributes(pillarsObj, query, team, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillarsObj, pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -508,8 +509,8 @@ async function fetchPillarAttributes(query, team, pillar, position) {
   return pillarAttributes;
 }
 
-async function fetchProgramPillarAttributes(query, team, pillar, position) {
-  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
+async function fetchProgramPillarAttributes(pillarsObj, query, team, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillarsObj, pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -531,8 +532,8 @@ async function fetchProgramPillarAttributes(query, team, pillar, position) {
   return pillarAttributes;
 }
 
-async function fetchAgdiagoPillarAttributes(query, pillar, position) {
-  const pillarAttributesList = domain.getPillarAttributes(pillar, position);
+async function fetchAgdiagoPillarAttributes(pillarsObj, query, pillar, position) {
+  const pillarAttributesList = domain.getPillarAttributes(pillarsObj, pillar, position);
 
   const aggregationBuilder = new AggregationBuilder();
   pillarAttributesList.forEach(
@@ -554,11 +555,9 @@ async function fetchAgdiagoPillarAttributes(query, pillar, position) {
   return pillarAttributes;
 }
 
-async function fetchPercentileGroups(
-  query,
-  team,
-  attribute
-) {
+async function fetchPercentileGroups(query,
+                                     team,
+                                     attribute) {
   const aggregationBuilder = new AggregationBuilder()
     .addPercentiles(attribute, [45, 75], 'percentiles');
 
@@ -581,7 +580,7 @@ async function fetchPercentileGroups(
 
   const fetchResponse = await client.search(fetchObj);
 
-  const {percentiles} = aggregationBuilder.parseResponse(fetchResponse);
+  const { percentiles } = aggregationBuilder.parseResponse(fetchResponse);
   const percentilesArr = Object.values(percentiles);
 
   const rangesObj = {
@@ -590,9 +589,9 @@ async function fetchPercentileGroups(
         'ranges': {
           'range': Object.assign({}, attributeObj, {
             'ranges': [
-              {'to': percentilesArr[0]},
-              {'from': percentilesArr[0], 'to': percentilesArr[1]},
-              {'from': percentilesArr[1]},
+              { 'to': percentilesArr[0] },
+              { 'from': percentilesArr[0], 'to': percentilesArr[1] },
+              { 'from': percentilesArr[1] },
             ],
           }),
         },
@@ -889,11 +888,9 @@ if (totalFactor > 0) {
   }
 }
 
-function buildScoreScript(
-  pillar,
-  programBenchmarks,
-  {defaultValue = null} = {}
-) {
+function buildScoreScript(pillar,
+                          programBenchmarks,
+                          { defaultValue = null } = {}) {
   if (pillar === 'overallScore') {
     const pillars = Object.keys(programBenchmarks.pillars);
     if (!pillars.length) return null;
@@ -1039,12 +1036,12 @@ function queryScoreField(pillar, programBenchmarks) {
 }
 
 async function updateDocument(index, id, type, body) {
-  const res = await client.update({index, type, id, body});
+  const res = await client.update({ index, type, id, body });
   return res;
 }
 
 async function addDocument(index, id, type, body) {
-  const res = await client.index({index, type, id, body});
+  const res = await client.index({ index, type, id, body });
   return res;
 }
 
@@ -1066,12 +1063,12 @@ async function addOrUpdateDocument(index, query, type, body) {
       body: Object.assign(oldBody, body),
     });
   } else {
-    await client.index({index, type, body});
+    await client.index({ index, type, body });
   }
 }
 
 async function addPlayer(team, body) {
-  await client.index({index: team, type: 'post', body, id: body.id});
+  await client.index({ index: team, type: 'post', body, id: body.id });
 }
 
 async function getBenchmarks(team, position) {
@@ -1088,6 +1085,37 @@ async function getBenchmarks(team, position) {
   });
 
   return res.hits.hits.map(hit => hit._source)[0];
+}
+
+async function getPillarsObj(team) {
+  const res = await client.search({
+    index: team + '-pillars',
+    type: 'post',
+  });
+  return res.hits.hits.map(hit => hit._source)[0];
+}
+
+async function getFactors(team, pillar, position = '_all') {
+  const pillars = await getPillarsObj(team);
+  return pillars[pillar].fields[position];
+}
+
+async function updatePillarsObj(team, pillar, factor, value, position = '_all') {
+  const index = team + '-pillars';
+  const type = 'post';
+  const id = 1;
+
+  const res = await client.search({ index, type });
+  const pillars = res.hits.hits.map(hit => hit._source)[0];
+
+  if (factor) {
+    pillars[pillar].factor = factor;
+  }
+
+  if (value) {
+    pillars[pillar].fields[position] = value;
+  }
+  await client.index({ index, type, id, body: pillars });
 }
 
 module.exports = {
@@ -1114,4 +1142,7 @@ module.exports = {
   addOrUpdateDocument,
   addPlayer,
   getBenchmarks,
+  getPillarsObj,
+  getFactors,
+  updatePillarsObj
 };
