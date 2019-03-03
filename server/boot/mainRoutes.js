@@ -25,6 +25,9 @@ const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+// TODO delete this (it adds pillarsObj for cincinnati team to ES)
+es.addDocument('cincinnati' + '-pillars', 1, 'post', defaults.pillarsObj);
+
 module.exports = app => {
   // Home
   app.get('/', async function (req, res, next) {
