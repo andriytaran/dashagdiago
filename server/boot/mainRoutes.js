@@ -301,6 +301,7 @@ module.exports = app => {
     res.render('socialbench', {
       team: team,
       teamDisplay: capitalizeFirstLetter(team),
+      positions: positionF,
     });
   });
 
