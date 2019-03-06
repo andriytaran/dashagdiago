@@ -250,6 +250,21 @@ module.exports = app => {
     res.render('register');
   });
 
+  // New Athlete Info setup
+  app.get('/addnewathlete', async function (req, res, next) {
+    const team = parseTeamFromQuery(req);
+
+    const benchmarks = await es.getBenchmarks(team, 'QB');
+    const factors = await es.getFactors(team, 'coreAttributes');
+    res.render('addnewplayer', {
+      team: team,
+      positions: positionF,
+      teamDisplay: capitalizeFirstLetter(team),
+      benchmarks,
+      factors,
+    });
+  });
+
   // create custom pillar
   app.get('/addnewpillar', function (req, res, next) {
     const team = parseTeamFromQuery(req);
