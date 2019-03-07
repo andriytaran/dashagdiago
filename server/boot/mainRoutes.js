@@ -13,12 +13,19 @@ const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
 
-const parseTeamFromQuery = (req) => {
-  let team = req.query.school || 'cincinnati';
+const { positionF } = defaults;
+
+const parseTeamFromQuery = async(req) => {
+  const defaultValue = 'cincinnati';
+  let team = (req.query.school || '').toLowerCase() || defaultValue;
   if (team === 'null') {
-    team = 'cincinnati';
+    team = defaultValue;
   }
-  return team;
+  if (team === 'undefined') {
+    team = defaultValue;
+  }
+  const school = await es.getSchool(team);
+  return school;
 };
 
 const capitalizeFirstLetter = (string) => {
@@ -27,19 +34,27 @@ const capitalizeFirstLetter = (string) => {
 
 // TODO delete this (it adds pillarsObj for cincinnati team to ES)
 es.addDocument('cincinnati' + '-pillars', 1, 'post', defaults.pillarsObj);
+es.addDocument('schools', 'cincinnati' , 'post', {
+  fullName: 'University of Cincinnati',
+  shortName: 'cincinnati',
+  id: 'cincinnati',
+});
 
 module.exports = app => {
   // Home
   app.get('/', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
-    const pillarsObj = await es.getPillarsObj(team);
+    const team = await parseTeamFromQuery(req);
+    console.log('pillarsObj');
+
+    const pillarsObj = await es.getPillarsObj(team.id);
+    console.log('pillarsObj');
     const [
       overallCount,
       offenseCount,
       defenseCount,
       overallScore,
     ] = await Promise.all([
-        es.fetchCount({}, team),
+        es.fetchCount({}, team.id),
         es.fetchCount({
           'body': {
             'query': {
@@ -52,7 +67,7 @@ module.exports = app => {
               },
             },
           },
-        }, team),
+        }, team.id),
         es.fetchCount({
           'body': {
             'query': {
@@ -65,8 +80,8 @@ module.exports = app => {
               },
             },
           },
-        }, team),
-        es.fetchOverallScore(pillarsObj, {}, team),
+        }, team.id),
+        es.fetchOverallScore(pillarsObj, {}, team.id),
       ])
       .catch(function (err) {
         // @TODO fix
@@ -85,168 +100,140 @@ module.exports = app => {
       //   Math.round(100 * offenseCount / overallCount) :
       //   null,
       overallScore: Math.round(overallScore),
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
-  app.get('/profile', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/profile', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/profile', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   app.post('/api/createNewSchool', async function (req, res, next) {
-    const folderName = req.body.folderName || 'testSchool';
-    const schoolName = req.body.schoolName.toLowerCase();
     try {
-      const players = await ftp.importPlayersData(folderName);
-      for (const elem of players) {
-        const player = {
-          id: elem.id,
-          position: elem.position || 'DE',
-          fname: elem.fname,
-          lname: elem.lname,
-          coreAttributesCompetitiveness: parseFloat(elem.Competitiveness),
-          coreAttributesPersistence: parseFloat(elem.Persistence),
-          coreAttributesWorkEthic: parseFloat(elem['Work Ethic']),
-          coreAttributesTeamOrientation: parseFloat(elem['Team Orientation']),
-          coreAttributesMastery: parseFloat(elem.Mastery),
-          coreAttributesOverallScore: parseFloat(elem.Score),
-        };
-        await es.addPlayer(schoolName, player);
-      }
-
-      for (const elem of positionF) {
-        await es.addDocument(schoolName + '-benchmarks', elem.id, 'post', {
-          position: elem.value,
-          coreAttributesPersistence: 87,
-          coreAttributesWorkEthic: 63,
-          coreAttributesTeamOrientation: 49,
-          coreAttributesMastery: 53,
-          coreAttributesCompetitiveness: 55,
-          coreAttributesOverallScore: 59,
-        });
-      }
-      await es.addDocument(schoolName + '-pillars', 1, 'post', defaults.pillarsObj);
+      await ftp.importPlayersData(req.body);
     } catch (err) {
       return res.status(500).send('Please check file name');
     }
     res.send({});
   });
 
-  app.get('/new', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/new', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('new', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
-  app.get('/contact', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/contact', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/contact', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
-  app.get('/faq', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/faq', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/faq', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
-  app.get('/branding', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/branding', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/branding_page', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // Cultural Fit
-  app.get('/cultural_fit', (req, res, next) => {
-    const team = parseTeamFromQuery(req);
+  app.get('/cultural_fit', async (req, res, next) => {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/cultural_fit', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   //dashboard-category
   app.get('/dashboard-category', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
-    const pillarsObj = await es.getPillarsObj(team);
+    const team = await parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team.id);
     const position = req.query.category != null ?
       req.query.category.toLowerCase() :
       null;
     const overallScore = await es.fetchOverallScore(
       pillarsObj,
       es.queryByTerm('position', position),
-      team
+      team.id
     );
 
     res.render('dashboard-category', {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   //dashboard-position
   app.get('/dashboard-position', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
-    const pillarsObj = await es.getPillarsObj(team);
+    const team = await parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team.id);
     const position = req.query.position != null ?
       req.query.position.toLowerCase() :
       null;
     const overallScore = await es.fetchOverallScore(
       pillarsObj,
       es.queryByTerm('position', position),
-      team
+      team.id
     );
 
     res.render('dashboard-position', {
       position: position.toUpperCase(),
       overallScore: Math.round(overallScore),
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req);
     res.render('dashboard-player', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // Player Assessment
-  app.get('/player_assessment', (req, res, next) => {
-    const team = parseTeamFromQuery(req);
+  app.get('/player_assessment', async (req, res, next) => {
+    const team = await parseTeamFromQuery(req);
     res.render('pages/player_assessment', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // Login
-  app.get('/login', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
-    res.render('login');
+  app.get('/login', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
+    res.render('login', {
+      errorMessage: ''
+    });
   });
 
   // Register
-  app.get('/register', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/register', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('register');
   });
 
@@ -266,97 +253,79 @@ module.exports = app => {
   });
 
   // create custom pillar
-  app.get('/addnewpillar', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/addnewpillar', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('addnewpillar', {
       positions: positionF,
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // academic benchmark setup
-  app.get('/academbench', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/academbench', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('academbench', {
       positions: positionF,
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // emotional benchmark setup
-  app.get('/emotionalbench', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/emotionalbench', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('emotionalbench', {
-      team: team,
       positions: positionF,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // core attributes benchmark setup
   app.get('/corebench', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req);
 
     const benchmarks = await es.getBenchmarks(team, 'QB');
     const factors = await es.getFactors(team, 'coreAttributes');
     res.render('corebench', {
-      team: team,
       positions: positionF,
-      teamDisplay: capitalizeFirstLetter(team),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
       benchmarks,
       factors,
     });
   });
 
   // social benchmark setup
-  app.get('/socialbench', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/socialbench', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('socialbench', {
-      team: team,
-      teamDisplay: capitalizeFirstLetter(team),
       positions: positionF,
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
 
   // athletic benchmark setup
-  app.get('/athleticbench', function (req, res, next) {
-    const team = parseTeamFromQuery(req);
+  app.get('/athleticbench', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
     res.render('athleticbench', {
-      team: 'Cincinnati Bearcats',
-      teamDisplay: capitalizeFirstLetter(team),
       positions: positionF,
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
     });
   });
-
-  const positionF = [
-    { title: 'Quarterback', value: 'QB', id: 1 },
-    { title: 'Running Back', value: 'RB', id: 2 },
-    { title: 'Tight End', value: 'TE', id: 3 },
-    { title: 'Wide Receiver', value: 'WR', id: 4 },
-    { title: 'Punter', value: 'P', id: 5 },
-    { title: 'Kicker', value: 'K', id: 6 },
-    { title: 'Defensive Back', value: 'DB', id: 7 },
-    { title: 'Defensive End', value: 'DE', id: 8 },
-    { title: 'Defensive Tackle', value: 'DT', id: 9 },
-    { title: 'Defensive Line', value: 'DL', id: 10 },
-    { title: 'Long Snapper', value: 'LS', id: 11 },
-    { title: 'Offensive Line', value: 'OL', id: 12 },
-    { title: 'Linebacker', value: 'LB', id: 13 },
-    { title: 'Corner Back', value: 'CB', id: 14 },
-    { title: 'Offensive Guard', value: 'OG', id: 15 },
-    { title: 'Offensive Tackler', value: 'OT', id: 16 },
-    { title: 'Safety', value: 'S', id: 17 },
-  ];
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
 
   app.post('/api/dashboard-data', async function (req, res) {
-    const team = parseTeamFromQuery(req);
-    const pillarsObj = await es.getPillarsObj(team);
-    const response = { team };
+    console.log('/api/dashboard-data');
+    const team = await parseTeamFromQuery(req);
+    const pillarsObj = await es.getPillarsObj(team.id);
+    console.log(pillarsObj);
+    const response = { team: team.id };
 
     const parser = new Parser(req, response);
 
@@ -365,6 +334,7 @@ module.exports = app => {
 
     const queryBuilder = new es.QueryBuilder();
     queryBuilder.add(es.queryByTerm('position', position));
+    console.log('type', type);
 
     switch (type) {
       case 'single_player': {
@@ -375,8 +345,8 @@ module.exports = app => {
           programBenchmarks,
           player,
         ] = await Promise.all([
-          es.fetchProgramBenchmarks(pillarsObj, {}, team),
-          es.fetchPlayer(query, team, id),
+          es.fetchProgramBenchmarks(pillarsObj, {}, team.id),
+          es.fetchPlayer(query, team.id, id),
         ]);
 
         const scores = domain.calculatePlayerScores(pillarsObj, player, programBenchmarks);
@@ -394,7 +364,7 @@ module.exports = app => {
                 .add(query)
                 .add(es.queryByTerm('position', player.position.toLowerCase()))
                 .build(),
-              team,
+              team.id,
               pillar,
               programBenchmarks
             )
@@ -427,7 +397,7 @@ module.exports = app => {
         queryBuilder.add(es.queryByTerm('_id', id));
         const query = queryBuilder.build();
 
-        const player = await es.fetchPlayer(query, team, id);
+        const player = await es.fetchPlayer(query, team.id, id);
 
         const [
           pillarAttributes,
@@ -437,14 +407,14 @@ module.exports = app => {
           await es.fetchPillarAttributes(
             pillarsObj,
             query,
-            team,
+            team.id,
             pillar,
             player.position
           ),
           await es.fetchProgramPillarAttributes(
             pillarsObj,
             benchmarkQuery,
-            team,
+            team.id,
             pillar,
             player.position
           ),
@@ -472,7 +442,7 @@ module.exports = app => {
         const programBenchmarks = await es.fetchProgramBenchmarks(
           pillarsObj,
           {},
-          team,
+          team.id,
           pillars
         );
 
@@ -481,7 +451,7 @@ module.exports = app => {
             pillar => es.fetchScore(
               pillarsObj,
               query,
-              team,
+              team.id,
               pillar,
               programBenchmarks
             )
@@ -490,7 +460,7 @@ module.exports = app => {
             pillar => es.fetchAgdiagoScore(
               pillarsObj,
               query,
-              team,
+              team.id,
               pillar,
               programBenchmarks
             )
@@ -527,7 +497,7 @@ module.exports = app => {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             pillarsObj,
             {},
-            team,
+            team.id,
             attribute === 'overallScore' ? undefined : [attribute]
           );
           attributeParam = {
@@ -541,7 +511,7 @@ module.exports = app => {
 
         const percentileGroups = await es.fetchPercentileGroups(
           query,
-          team,
+          team.id,
           attributeParam
         );
 
@@ -584,7 +554,7 @@ module.exports = app => {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             pillarsObj,
             {},
-            team,
+            team.id,
             attribute === 'overallScore' ? undefined : [attribute]
           );
 
@@ -656,7 +626,7 @@ module.exports = app => {
 
         const query = queryBuilder.build();
 
-        const players = await es.fetchPlayers(query, team, attributeParam);
+        const players = await es.fetchPlayers(query, team.id, attributeParam);
 
         // HACK: sort doesn't work on nulls, so
         // have to supply default value and here revert it
@@ -669,7 +639,7 @@ module.exports = app => {
         }
 
         response.players = players.map(elem => {
-          elem.team = team;
+          elem.team = team.id;
           return elem;
         });
 
@@ -679,7 +649,7 @@ module.exports = app => {
         const sort = parser.parseParameter('sort');
         if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
 
-        const benchmarks = await es.getBenchmarks(team, position);
+        const benchmarks = await es.getBenchmarks(team.id, position);
 
         response.benchmarks = benchmarks;
     }
@@ -689,9 +659,9 @@ module.exports = app => {
   });
 
   app.post('/api/dashboard-data-update', async function (req, res) {
-    const team = parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req);
 
-    const response = { team };
+    const response = { team: team.id };
 
     const parser = new Parser(req, response);
 

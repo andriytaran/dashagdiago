@@ -1100,6 +1100,22 @@ async function getFactors(team, pillar, position = '_all') {
   return pillars[pillar].fields[position];
 }
 
+async function getSchool(id) {
+  const res = await client.search({
+    index: 'schools',
+    type: 'post',
+    body: {
+      query: {
+        terms: {
+          _id: [ id ],
+        }
+      }
+    },
+  });
+
+  return res.hits.hits.map(hit => hit._source)[0];
+}
+
 async function updatePillarsObj(team, pillar, factor, value, position = '_all') {
   const index = team + '-pillars';
   const type = 'post';
@@ -1144,5 +1160,6 @@ module.exports = {
   getBenchmarks,
   getPillarsObj,
   getFactors,
-  updatePillarsObj
+  updatePillarsObj,
+  getSchool
 };

@@ -43,11 +43,11 @@ function getBenchmarks(position, cb) {
   }, cb);
 }
 
-function createNewSchool(schoolName, folderName, cb) {
+function createNewSchool(body, cb) {
   $.ajax({
     type: "POST",
     url: "/api/createNewSchool",
-    data: JSON.stringify({ schoolName, folderName }),
+    data: JSON.stringify(body),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: cb,
