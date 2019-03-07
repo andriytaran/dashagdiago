@@ -16,13 +16,16 @@ const parseCsv = (content) => {
 
 const importPlayersData = (body) => {
   const sftp = new Client();
+  const { shortNameSchool, nameSchool, fileName } = body;
+  const path =  (fileName || '').split('/');
+  const nameForSaving = path[path.length - 1];
 
   return sftp.connect({
       host: 'host1.gallup.com',
       username: 'menza',
       password: 'KC1002#18',
     })
-    // TODO uncomment for FTP
+    // TODO uncomment for FTP if needed to load last file
     // .then(() => {
     //
     //   return sftp.list('/ToMenza');
@@ -39,19 +42,21 @@ const importPlayersData = (body) => {
     //   });
     //   return lastModifiedFile.name;
     // })
-    // .then(fileName => {
-    //   // console.log(fileName);
-    //   return sftp.fastGet('/ToMenza/Menza_Althete_Results 02-21-2019.csv',
-    // `./imports/${schoolName}.csv`);
-    // })
     .then(() => {
-      const { fileName = 'csv adjango.csv' } = body;
-      const contents = fs.readFileSync(`./imports/${fileName}`, 'utf8');
+      if (fileName){
+        return sftp.fastGet(fileName, `./imports/${nameForSaving}`);
+      }
+    })
+    .then(() => {
+      let pathToFile = 'csv adjango.csv';
+      if (fileName){
+        pathToFile = nameForSaving;
+      }
+      const contents = fs.readFileSync(`./imports/${pathToFile}`, 'utf8');
       return parseCsv(contents);
     })
     .then(async players => {
-      const { shortNameSchool, nameSchool } = body;
-      const schoolId = shortNameSchool.toLowerCase();
+      const schoolId = shortNameSchool.toLowerCase().replace(/ /gi, '');
       await es.addDocument('schools', schoolId, 'post', {
         fullName: nameSchool,
         shortName: shortNameSchool,
