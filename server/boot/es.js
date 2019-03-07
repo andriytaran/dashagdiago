@@ -1100,6 +1100,21 @@ async function getFactors(team, pillar, position = '_all') {
   return pillars[pillar].fields[position];
 }
 
+async function getUser(email) {
+  const res = await client.search({
+    index: 'users',
+    type: 'post',
+    body: {
+      query: {
+        match: {
+          email: email,
+        },
+      },
+    },
+  });
+  return res.hits.hits.map(hit => hit._source)[0];
+}
+
 async function getSchool(id) {
   const res = await client.search({
     index: 'schools',
@@ -1161,5 +1176,6 @@ module.exports = {
   getPillarsObj,
   getFactors,
   updatePillarsObj,
-  getSchool
+  getSchool,
+  getUser
 };

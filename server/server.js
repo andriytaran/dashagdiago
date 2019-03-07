@@ -37,7 +37,7 @@ const bodyParser = require('body-parser');
 // configure body parser
 const engine = require('ejs-locals');
 
-app.use(loopback.token());
+// app.use(loopback.token());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

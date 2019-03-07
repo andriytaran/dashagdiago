@@ -12,18 +12,23 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
-
+const authMiddleware = require('../auth');
+const auth = require('../login');
+const cookieParser = require('cookie-parser');
 const { positionF } = defaults;
 
-const parseTeamFromQuery = async(req) => {
-  const defaultValue = 'cincinnati';
-  let team = (req.query.school || '').toLowerCase() || defaultValue;
-  if (team === 'null') {
-    team = defaultValue;
-  }
-  if (team === 'undefined') {
-    team = defaultValue;
-  }
+const parseTeamFromQuery = async (req) => {
+  const team = (req.user  && req.user.school) || 'cincinnati';
+  // const defaultValue = 'cincinnati';
+  //
+  // // req.user.school
+  // let team = (req.query.school || '').toLowerCase() || defaultValue;
+  // if (team === 'null') {
+  //   team = defaultValue;
+  // }
+  // if (team === 'undefined') {
+  //   team = defaultValue;
+  // }
   const school = await es.getSchool(team);
   return school;
 };
@@ -34,14 +39,95 @@ const capitalizeFirstLetter = (string) => {
 
 // TODO delete this (it adds pillarsObj for cincinnati team to ES)
 es.addDocument('cincinnati' + '-pillars', 1, 'post', defaults.pillarsObj);
-es.addDocument('schools', 'cincinnati' , 'post', {
+es.addDocument('schools', 'cincinnati', 'post', {
   fullName: 'University of Cincinnati',
   shortName: 'cincinnati',
   id: 'cincinnati',
 });
 
+// const testUser = auth.createUser({
+//   email: 'newdeveloper2019@gmail.com',
+//   password: '1',
+//   role: 'coach',
+//   school: 'school',
+//   id: 1,
+// });
+
+const demoUsers = [
+  {
+    email: 'demo@gmail.com',
+    password: '1',
+    role: 'coach',
+    school: 'cincinnati',
+    id: 1,
+  },
+  {
+    email: 'demo2@gmail.com',
+    password: '2',
+    role: 'coach',
+    school: 'ts',
+    id: 2,
+  },
+];
+
+const putUsersToES = async () => {
+  for (const user of demoUsers) {
+    const esUser = auth.createUser(user);
+    await es.addDocument('users', esUser.id, 'post', esUser);
+  }
+};
+
+putUsersToES()
+
+const test = async () => {
+  const user = await  es.getUser('email');
+  console.log('es');
+  console.log(user);
+};
+
+// test()
+
 module.exports = app => {
   // Home
+  app.use(cookieParser());
+  app.get('/login', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req);
+    res.render('login', {
+      errorMessage: ''
+    });
+  });
+
+
+  app.post('/login', async function (req, res, next) {
+    try {
+
+      const { email, password } = req.body;
+      console.log(req.body);
+      const user = await es.getUser(email);
+
+      if (user) {
+        const token = auth.generateJWT(user);
+        console.log(token);
+        const isCorrectPassword = auth.comparePassword(user, password);
+        if (isCorrectPassword) {
+          res.cookie('jwt', token);
+          return res.redirect('/');
+        }
+      }
+      return res.render('login', {
+        errorMessage: "Login / Password Combination not correct",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.use(authMiddleware);
+  app.use((req, res, next) => {
+    console.log(req.user);
+    next();
+  });
+
   app.get('/', async function (req, res, next) {
     const team = await parseTeamFromQuery(req);
     console.log('pillarsObj');
