@@ -48,7 +48,7 @@ const importPlayersData = (body) => {
       }
     })
     .then(() => {
-      let pathToFile = 'csv adjango.csv';
+      let pathToFile = 'testSchool.csv';
       if (fileName){
         pathToFile = nameForSaving;
       }
