@@ -1,0 +1,157 @@
+{
+    "name": "user",
+    "plural": "users",
+    "base": "User",
+    "properties": {
+        "fname": {
+            "type": "string",
+            "index": false
+        },
+        "lname": {
+            "type": "string",
+            "index": false
+        },
+        "mname": {
+            "type": "string",
+            "index": false
+        },
+        "email": {
+            "type": "string",
+            "index": false
+        },
+        "image": {
+            "type": "string"
+        },
+        "gender": {
+            "type": "string"
+        },
+        "bio": {
+            "type": "string"
+        },
+        "yearBirth": {
+            "type": "number"
+        },
+        "monthBirth": {
+            "type": "number"
+        },
+        "dayBirth": {
+            "type": "number"
+        },
+        "homePhone": {
+            "type": "string"
+        },
+        "mobilePhone": {
+            "type": "string"
+        },
+        "upcOffset": {
+            "type": "string"
+        },
+        "secondaryEmailAddress": {
+            "type": "string"
+        },
+        "secondLname": {
+            "type": "string"
+        },
+        "secondFname": {
+            "type": "string"
+        },
+        "secondaryEmailAddress": {
+            "type": "string"
+        },
+        "org": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "country": {
+            "type": "string"
+        },
+        "timezone": {
+            "type": "string"
+        },
+        "activeWorkspace": {
+            "type": "string"
+        },
+        "regDate": {
+            "type": "date"
+        },
+        "stripePlan": {
+            "type": "string"
+        },
+        "stripeCustomerId": {
+            "type": "string"
+        },
+        "stripePlanStart": {
+            "type": "number"
+        },
+        "stripePlanEnd": {
+            "type": "number"
+        },
+        "stripePlanInterval": {
+            "type": "string"
+        },
+        "stripeSubscriptionId": {
+            "type": "string"
+        },
+        "stripePlanAmount": {
+            "type": "number"
+        },
+        "stripeCard": {
+            "type": "string"
+        },
+        "stripeCardLast4": {
+            "type": "string"
+        },
+        "stripeCountry": {
+            "type": "string"
+        },
+        "stripeExpMonth": {
+            "type": "string"
+        },
+        "stripeExpYear": {
+            "type": "string"
+        },
+        "stripeCardName": {
+            "type": "string"
+        },
+        "stripeState": {
+            "type": "string"
+        },
+        "notificationWeekly": {
+            "type": "string"
+        },
+        "notificationMonthly": {
+            "type": "string"
+        },
+        "notificationDefault": {
+            "type": "string"
+        },
+        "notificationUpdate": {
+            "type": "number"
+        },
+        "instagramUsername": {
+            "type": "string"
+        }
+    },
+    "relations": {
+        "accessTokens": {
+            "type": "hasMany",
+            "model": "accessToken",
+            "foreignKey": "userId"
+        },
+        "identities": {
+            "type": "hasMany",
+            "model": "userIdentity",
+            "foreignKey": "userId"
+        },
+        "credentials": {
+            "type": "hasMany",
+            "model": "userCredential",
+            "foreignKey": "userId"
+        }
+    },
+    "validations": [],
+    "acls": [],
+   "methods": {}
+}
