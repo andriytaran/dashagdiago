@@ -60,6 +60,7 @@ const demoUsers = [
     role: 'coach',
     school: 'cincinnati',
     id: 1,
+    athleteId: 1,
   },
   {
     email: 'demo2@gmail.com',
@@ -67,6 +68,7 @@ const demoUsers = [
     role: 'coach',
     school: 'ts',
     id: 2,
+    athleteId: 2,
   },
 ];
 
@@ -325,16 +327,11 @@ module.exports = app => {
 
   // New Athlete Info setup
   app.get('/addnewathlete', async function (req, res, next) {
-    const team = parseTeamFromQuery(req);
-
-    const benchmarks = await es.getBenchmarks(team, 'QB');
-    const factors = await es.getFactors(team, 'coreAttributes');
+    const team = await parseTeamFromQuery(req);
     res.render('addnewplayer', {
-      team: team,
+      team: team.shortName,
       positions: positionF,
-      teamDisplay: capitalizeFirstLetter(team),
-      benchmarks,
-      factors,
+      teamDisplay: team.fullName,
     });
   });
 
