@@ -39,7 +39,7 @@ es.addDocument('schools', 'cincinnati', 'post', {
 
 const demoUsers = [
   {
-    email: 'demo1@gmail.com',
+    email: 'player1@gmail.com',
     password: '1',
     role: 'player',
     school: 'cincinnati',
@@ -47,14 +47,14 @@ const demoUsers = [
     athleteId: 1,
   },
   {
-    email: 'demo2@gmail.com',
+    email: 'coach1@gmail.com',
     password: '1',
     role: 'coach',
     school: 'cincinnati',
     id: 2,
   },
   {
-    email: 'demo3@gmail.com',
+    email: 'player2@gmail.com',
     password: '1',
     role: 'player',
     school: 'ts',
@@ -62,7 +62,7 @@ const demoUsers = [
     athleteId: 7,
   },
   {
-    email: 'demo4@gmail.com',
+    email: 'coach2@gmail.com',
     password: '1',
     role: 'coach',
     school: 'ts',
