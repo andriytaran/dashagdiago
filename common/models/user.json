@@ -133,6 +133,8 @@
         "instagramUsername": {
             "type": "string"
         }
+
+        
     },
     "relations": {
         "accessTokens": {

@@ -54,54 +54,54 @@ module.exports = app => {
     });
 
 
-    // app.post('/login', function(req, res, next) {
-    //     try {
-    //
-    //        // req.logout();
-    //         if (validator.validate(req.body.email) !== true) {
-    //             return res.render('login', {
-    //                 errorMessage: "The Email address " + req.body.email + " is not a valid format.",
-    //             });
-    //         }
-    //         User.login({
-    //             email: req.body.email,
-    //             password: req.body.password
-    //         }, 'user', function(err, token) {
-    //
-    //             if (err) {
-    //                 var Message = String(err.code);
-    //                 console.log(err);
-    //                 if (Message.match(/LOGIN_FAILED/g)) {
-    //                     return res.render('login', {
-    //                         errorMessage: "Login / Password Combination not correct",
-    //                     });
-    //                 } else {
-    //                     return res.render('login', {
-    //                         errorMessage: "An unexpected error has taken place, please check back later or contact us at support@waypost.me for assistance",
-    //                     });
-    //                 }
-    //             }
-    //             var ttl = '3000000000000000';
-    //             const maxAge = parseInt(ttl); // Dev
-    //             //const maxAge = parseInt(process.env.npm_package_config_session_ttl); // Prod
-    //             try {
-    //                 res.cookie('userId', token.userId.toString(), {
-    //                     signed: false,
-    //                     maxAge
-    //                 });
-    //
-    //             } catch (e) {
-    //                 console.log(e);
-    //             }
-    //             res.cookie('access_token', token.id, { signed: false, maxAge });
-    //             res.cookie('user_id', token.userId.toString(), { signed: false, maxAge });
-    //             //req.signedCookies.access_token=token.id.toString();
-    //             console.log("About to got Manage - Login");
-    //             return res.redirect('/');
-    //         });
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // });
+    app.post('/login', function(req, res, next) {
+        try {
+
+           // req.logout();
+            if (validator.validate(req.body.email) !== true) {
+                return res.render('login', {
+                    errorMessage: "The Email address " + req.body.email + " is not a valid format.",
+                });
+            }
+            User.login({
+                email: req.body.email,
+                password: req.body.password
+            }, 'user', function(err, token) {
+
+                if (err) {
+                    var Message = String(err.code);
+                    console.log(err);
+                    if (Message.match(/LOGIN_FAILED/g)) {
+                        return res.render('login', {
+                            errorMessage: "Login / Password Combination not correct",
+                        });
+                    } else {
+                        return res.render('login', {
+                            errorMessage: "An unexpected error has taken place, please check back later or contact us at support@waypost.me for assistance",
+                        });
+                    }
+                }
+                var ttl = '3000000000000000';
+                const maxAge = parseInt(ttl); // Dev 
+                //const maxAge = parseInt(process.env.npm_package_config_session_ttl); // Prod
+                try {
+                    res.cookie('userId', token.userId.toString(), {
+                        signed: false,
+                        maxAge
+                    });
+
+                } catch (e) {
+                    console.log(e);
+                }
+                res.cookie('access_token', token.id, { signed: false, maxAge });
+                res.cookie('user_id', token.userId.toString(), { signed: false, maxAge });
+                //req.signedCookies.access_token=token.id.toString();
+                console.log("About to got Manage - Login");
+                return res.redirect('/');
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    });
 
 }
