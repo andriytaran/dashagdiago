@@ -17,7 +17,8 @@ const createUser = (body) => {
     encrypted_password: bcrypt.hashSync(body.password, salt),
     role: body.role,
     school: body.school,
-    id: body.id
+    id: body.id,
+    athleteId: body.athleteId,
   }
 };
 
@@ -31,6 +32,7 @@ const generateJWT = (user) => {
     role: user.role,
     school: user.school,
     id: user.id,
+    athleteId: user.athleteId,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
   }, config.auth.secret);
 };

@@ -17,19 +17,11 @@ const auth = require('../login');
 const cookieParser = require('cookie-parser');
 const { positionF } = defaults;
 
-const parseTeamFromQuery = async (req) => {
-  const team = (req.user  && req.user.school) || 'cincinnati';
-  // const defaultValue = 'cincinnati';
-  //
-  // // req.user.school
-  // let team = (req.query.school || '').toLowerCase() || defaultValue;
-  // if (team === 'null') {
-  //   team = defaultValue;
-  // }
-  // if (team === 'undefined') {
-  //   team = defaultValue;
-  // }
+const parseTeamFromQuery = async (req, res) => {
+  const team = (req.user && req.user.school) || 'cincinnati';
+
   const school = await es.getSchool(team);
+  if (!school) res.redirect('/new')
   return school;
 };
 
@@ -45,30 +37,36 @@ es.addDocument('schools', 'cincinnati', 'post', {
   id: 'cincinnati',
 });
 
-// const testUser = auth.createUser({
-//   email: 'newdeveloper2019@gmail.com',
-//   password: '1',
-//   role: 'coach',
-//   school: 'school',
-//   id: 1,
-// });
-
 const demoUsers = [
   {
-    email: 'demo@gmail.com',
+    email: 'demo1@gmail.com',
     password: '1',
-    role: 'coach',
+    role: 'player',
     school: 'cincinnati',
     id: 1,
     athleteId: 1,
   },
   {
     email: 'demo2@gmail.com',
-    password: '2',
+    password: '1',
+    role: 'coach',
+    school: 'cincinnati',
+    id: 2,
+  },
+  {
+    email: 'demo3@gmail.com',
+    password: '1',
+    role: 'player',
+    school: 'ts',
+    id: 3,
+    athleteId: 7,
+  },
+  {
+    email: 'demo4@gmail.com',
+    password: '1',
     role: 'coach',
     school: 'ts',
-    id: 2,
-    athleteId: 2,
+    id: 4,
   },
 ];
 
@@ -79,21 +77,13 @@ const putUsersToES = async () => {
   }
 };
 
-putUsersToES()
-
-const test = async () => {
-  const user = await  es.getUser('email');
-  console.log('es');
-  console.log(user);
-};
-
-// test()
+putUsersToES();
 
 module.exports = app => {
   // Home
   app.use(cookieParser());
   app.get('/login', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
     res.render('login', {
       errorMessage: ''
     });
@@ -102,14 +92,11 @@ module.exports = app => {
 
   app.post('/login', async function (req, res, next) {
     try {
-
       const { email, password } = req.body;
-      console.log(req.body);
       const user = await es.getUser(email);
 
       if (user) {
         const token = auth.generateJWT(user);
-        console.log(token);
         const isCorrectPassword = auth.comparePassword(user, password);
         if (isCorrectPassword) {
           res.cookie('jwt', token);
@@ -125,17 +112,26 @@ module.exports = app => {
   });
 
   app.use(authMiddleware);
+  app.use(function(err, req, res, next) {
+    if(401 === err.status) {
+      res.redirect('/login')
+    }
+  });
   app.use((req, res, next) => {
-    console.log(req.user);
     next();
   });
 
   app.get('/', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
-    console.log('pillarsObj');
 
+    const { athleteId, school, role } = req.user;
+
+    const user = req.user || {};
+
+    if (role === 'player') {
+      return res.redirect(`dashboard-player/?id=${athleteId}&school=${school}`);
+    }
+    const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
-    console.log('pillarsObj');
     const [
       overallCount,
       offenseCount,
@@ -190,14 +186,17 @@ module.exports = app => {
       overallScore: Math.round(overallScore),
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   app.get('/profile', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/profile', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
@@ -211,49 +210,59 @@ module.exports = app => {
   });
 
   app.get('/new', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const user = req.user || {};
     res.render('new', {
-      team: team.id,
-      teamDisplay: capitalizeFirstLetter(team.fullName),
+      team: '',
+      teamDisplay: '',
+      user,
     });
   });
 
   app.get('/contact', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/contact', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   app.get('/faq', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/faq', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   app.get('/branding', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/branding_page', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // Cultural Fit
   app.get('/cultural_fit', async (req, res, next) => {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/cultural_fit', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   //dashboard-category
   app.get('/dashboard-category', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     const pillarsObj = await es.getPillarsObj(team.id);
     const position = req.query.category != null ?
       req.query.category.toLowerCase() :
@@ -269,12 +278,20 @@ module.exports = app => {
       overallScore: Math.round(overallScore),
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   //dashboard-position
   app.get('/dashboard-position', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const user = req.user || {};
+    const { athleteId, school, role } = req.user;
+
+    if (role === 'player') {
+      return res.redirect(`/dashboard-player/?id=${athleteId}&school=${school}`);
+    }
+
+    const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
     const position = req.query.position != null ?
       req.query.position.toLowerCase() :
@@ -290,30 +307,35 @@ module.exports = app => {
       overallScore: Math.round(overallScore),
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const user = req.user || {};
+    const team = await parseTeamFromQuery(req, res);
     res.render('dashboard-player', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // Player Assessment
   app.get('/player_assessment', async (req, res, next) => {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('pages/player_assessment', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // Login
   app.get('/login', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
     res.render('login', {
       errorMessage: ''
     });
@@ -321,54 +343,62 @@ module.exports = app => {
 
   // Register
   app.get('/register', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
     res.render('register');
   });
 
   // New Athlete Info setup
   app.get('/addnewathlete', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('addnewplayer', {
       team: team.shortName,
       positions: positionF,
       teamDisplay: team.fullName,
+      user,
     });
   });
 
   // create custom pillar
   app.get('/addnewpillar', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('addnewpillar', {
       positions: positionF,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // academic benchmark setup
   app.get('/academbench', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('academbench', {
       positions: positionF,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // emotional benchmark setup
   app.get('/emotionalbench', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('emotionalbench', {
       positions: positionF,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // core attributes benchmark setup
   app.get('/corebench', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
-
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     const benchmarks = await es.getBenchmarks(team, 'QB');
     const factors = await es.getFactors(team, 'coreAttributes');
     res.render('corebench', {
@@ -377,26 +407,31 @@ module.exports = app => {
       teamDisplay: capitalizeFirstLetter(team.fullName),
       benchmarks,
       factors,
+      user,
     });
   });
 
   // social benchmark setup
   app.get('/socialbench', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('socialbench', {
       positions: positionF,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
   // athletic benchmark setup
   app.get('/athleticbench', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
     res.render('athleticbench', {
       positions: positionF,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
     });
   });
 
@@ -404,10 +439,9 @@ module.exports = app => {
   // TODO: use loopback for this? or move to '/' handler?
 
   app.post('/api/dashboard-data', async function (req, res) {
-    console.log('/api/dashboard-data');
-    const team = await parseTeamFromQuery(req);
+
+    const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
-    console.log(pillarsObj);
     const response = { team: team.id };
 
     const parser = new Parser(req, response);
@@ -417,12 +451,16 @@ module.exports = app => {
 
     const queryBuilder = new es.QueryBuilder();
     queryBuilder.add(es.queryByTerm('position', position));
-    console.log('type', type);
+
+    const { athleteId, school, role } = req.user;
+    let ID;
+    if (role === 'player'){
+      ID = athleteId;
+    }
 
     switch (type) {
       case 'single_player': {
-        const id = parser.parseRequiredParameter('id');
-
+        const id = ID || parser.parseRequiredParameter('id');
         const query = queryBuilder.build();
         const [
           programBenchmarks,
@@ -472,7 +510,7 @@ module.exports = app => {
       }
       case 'pillar': {
         const pillar = parser.parseParameter('pillar');
-        const id = parser.parseParameter('id');
+        const id = ID || parser.parseParameter('id');
 
         if (!pillar) throw new Error('Unsupported pillar: ' + pillar);
 
@@ -742,7 +780,7 @@ module.exports = app => {
   });
 
   app.post('/api/dashboard-data-update', async function (req, res) {
-    const team = await parseTeamFromQuery(req);
+    const team = await parseTeamFromQuery(req, res);
 
     const response = { team: team.id };
 

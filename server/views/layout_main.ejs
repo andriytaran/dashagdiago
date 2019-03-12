@@ -56,7 +56,7 @@
       <div class="navbar-header">
         <!--<a href="/" class="navbar-brand"><img src="/assets/img/logo.png" width="140"> </a><img src="/assets/img/logo/logo-cincinnati.png"-->
           <!--width="50" class="mb-1">-->
-        <h3 class="navbar-brand"><%= teamDisplay %></h3>
+        <h3 class="navbar-brand"><%= teamDisplay %>   <%= user.role %></h3>
         <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -67,10 +67,10 @@
 
       <!-- begin header-nav -->
       <ul class="navbar-nav navbar-right">
-        <li><a href="/?school=<%= team %>">Home</a></li>
-        <li><a href="/addnewathlete">Add new Athlete info</a></li>
-        <li><a href="/new">New School</a></li>
-        <li><a id="defensiveBacksC" href="/corebench/?school=<%= team %>">Corebench</a></li>
+        <li ><a href="/?school=<%= team %>">Home</a></li>
+        <li class="<%= user.role === 'player' ? 'd-none' : '' %>"><a href="/addnewathlete">Add new Athlete info</a></li>
+        <li class="<%= user.role === 'player' ? 'd-none' : '' %>"><a href="/new">New School</a></li>
+        <li class="<%= user.role === 'player' ? 'd-none' : '' %>"><a id="defensiveBacksC" href="/corebench/?school=<%= team %>">Corebench</a></li>
         <li><a href="/login">logout</a></li>
         <li>
           <form class="navbar-form">
@@ -87,7 +87,7 @@
     <!-- end #header -->
 
     <!-- begin #sidebar -->
-    <div id="sidebar" class="sidebar">
+    <div id="sidebar" class="sidebar <%= user.role === 'player' ? 'd-none' : '' %> ">
 
       <!-- begin sidebar scrollbar -->
       <div data-scrollbar="true" data-height="100%">
