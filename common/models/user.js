@@ -7,7 +7,7 @@ var config = require('../../server/config.json');
 var path = require('path');
 
 //Replace this address with your actual address
-var senderAddress = 'newdeveloper2019@gmail.com';
+var senderAddress = 'test';
 
 module.exports = function(User) {
   // send verification email after registration
