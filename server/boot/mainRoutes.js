@@ -12,9 +12,7 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
-const authMiddleware = require('../auth');
 const auth = require('../login');
-const cookieParser = require('cookie-parser');
 const { positionF } = defaults;
 
 const parseTeamFromQuery = async (req, res) => {
@@ -81,61 +79,49 @@ putUsersToES();
 
 module.exports = app => {
   // Home
-  app.use(cookieParser());
-  // app.use((req, res, next) => {
-  //   User.findById(req.accessToken.userId, function(err, user){
-  //     if(err) {
-  //       //handle error
-  //     }
-  //     else {
-  //       //access user object here
-  //     }
-  //   });
-  //   next();
-  // });
-
   app.get('/login', async function (req, res, next) {
-    const team = await parseTeamFromQuery(req, res);
     res.render('login', {
       errorMessage: ''
     });
   });
-  //
-  //
-  // app.post('/login', async function (req, res, next) {
-  //   try {
-  //     const { email, password } = req.body;
-  //     const user = await es.getUser(email);
-  //
-  //     if (user) {
-  //       const token = auth.generateJWT(user);
-  //       const isCorrectPassword = auth.comparePassword(user, password);
-  //       if (isCorrectPassword) {
-  //         res.cookie('jwt', token);
-  //         return res.redirect('/');
-  //       }
-  //     }
-  //     return res.render('login', {
-  //       errorMessage: "Login / Password Combination not correct",
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // });
 
-  // app.use(authMiddleware);
-  app.use(function (err, req, res, next) {
-    if (401 === err.status) {
+  app.use((req, res, next) => {
+    const User = app.models.user;
+    const AccessToken = app.models.AccessToken;
+    const accessTokenId = req.signedCookies.access_token;
+    if (!accessTokenId){
+      next();
+    }
+    AccessToken.findById(accessTokenId, function (err, token) {
+      if (err) {
+        console.log(err);
+        next();
+      } else {
+        console.log(token);
+        User.findById(token.userId, (err, user) => {
+          if (err) {
+            console.log(err);
+            next();
+          } else {
+            req.user = user;
+            console.log(user);
+            next();
+          }
+        });
+      }
+    });
+  });
+
+  app.use(function(req, res, next) {
+    console.log('req.user');
+    console.log(req.user);
+    if (!req.user) {
       res.redirect('/login');
     }
+    next();
   });
-  // app.use((req, res, next) => {
-  //   next();
-  // });
 
-  app.get('/', async function (req, res, next) {
-
-    console.log('----->', req);
+  app.get('/', async(req, res, next) => {
 
     const { athleteId, school, role } = req.user;
 

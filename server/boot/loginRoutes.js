@@ -25,7 +25,7 @@ module.exports = app => {
       password: req.body.password
     }, 'user', function(err, token) {
       if (err) {
-        if(err.details && err.code === 'LOGIN_FAILED_EMAIL_NOT_VERIFIED'){
+        if (err.details && err.code === 'LOGIN_FAILED_EMAIL_NOT_VERIFIED') {
           res.render('reponseToTriggerEmail', {
             title: 'Login failed',
             content: err,
@@ -44,9 +44,8 @@ module.exports = app => {
         }
         return;
       }
-      console.log(token);
-      res.cookie('access_token', token.id);
-      res.redirect('/')
+      res.cookie('access_token', token.id, { signed: true, maxAge: 14400000 });
+      res.redirect('/');
       // res.render('/', {
       //   email: req.body.email,
       //   accessToken: token.id,

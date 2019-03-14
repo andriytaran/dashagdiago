@@ -31,8 +31,15 @@
       "enabled": false
     }
   },
-  "session": {},
-  "auth": {},
+  "session:before": {
+    "cookie-parser": {
+      "params": "${cookieSecret}"
+    }
+  },
+  "session": {
+  },
+  "auth": {
+  },
   "parse": {},
   "routes": {
     "loopback#rest": {

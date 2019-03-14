@@ -2,6 +2,7 @@
   "restApiRoot": "/api",
   "host": "0.0.0.0",
   "port": 3000,
+  "cookieSecret": "14cd44fd792b84cb734637d8e43220e4",
   "remoting": {
     "context": false,
     "rest": {
