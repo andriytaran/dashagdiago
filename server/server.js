@@ -38,6 +38,15 @@ const bodyParser = require('body-parser');
 const engine = require('ejs-locals');
 
 app.use(loopback.token());
+
+// boot(app, __dirname);
+// app.use(cookieParser());
+//
+// app.use(loopback.token({
+//   model: app.models.accessToken,
+//   cookies: ['access_token'],
+// }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -50,7 +59,6 @@ app.set('views', path.join(__dirname, 'views'));
 // Proxy
 app.set('trust proxy', true);
 // boot scripts mount components like REST API
-boot(app, __dirname);
 
 // to support JSON-encoded bodies
 app.middleware('parse', bodyParser.json());
@@ -61,9 +69,11 @@ app.middleware('parse', bodyParser.urlencoded({
 
 app.middleware('auth', loopback.token({
   model: app.models.accessToken,
+  // cookies: ['access_token'],
 }));
 
-app.middleware('session:before', cookieParser(app.get('cookieSecret')));
+// @TODO ???? - cookieSecret
+app.middleware('session:before', cookieParser(app.get('access_token')));
 
 const maxAge = 14400000;
 app.middleware('session', session({
@@ -89,6 +99,10 @@ app.start = () => {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
+// app.use(loopback.token({ model: app.models.accessToken }));
+
+// boot(app, __dirname);
+
 boot(app, __dirname, (err) => {
   if (err) throw err;
 

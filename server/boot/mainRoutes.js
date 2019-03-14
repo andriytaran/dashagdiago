@@ -21,7 +21,7 @@ const parseTeamFromQuery = async (req, res) => {
   const team = (req.user && req.user.school) || 'cincinnati';
 
   const school = await es.getSchool(team);
-  if (!school) res.redirect('/new')
+  if (!school) res.redirect('/new');
   return school;
 };
 
@@ -82,46 +82,60 @@ putUsersToES();
 module.exports = app => {
   // Home
   app.use(cookieParser());
+  // app.use((req, res, next) => {
+  //   User.findById(req.accessToken.userId, function(err, user){
+  //     if(err) {
+  //       //handle error
+  //     }
+  //     else {
+  //       //access user object here
+  //     }
+  //   });
+  //   next();
+  // });
+
   app.get('/login', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
     res.render('login', {
       errorMessage: ''
     });
   });
+  //
+  //
+  // app.post('/login', async function (req, res, next) {
+  //   try {
+  //     const { email, password } = req.body;
+  //     const user = await es.getUser(email);
+  //
+  //     if (user) {
+  //       const token = auth.generateJWT(user);
+  //       const isCorrectPassword = auth.comparePassword(user, password);
+  //       if (isCorrectPassword) {
+  //         res.cookie('jwt', token);
+  //         return res.redirect('/');
+  //       }
+  //     }
+  //     return res.render('login', {
+  //       errorMessage: "Login / Password Combination not correct",
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // });
 
-
-  app.post('/login', async function (req, res, next) {
-    try {
-      const { email, password } = req.body;
-      const user = await es.getUser(email);
-
-      if (user) {
-        const token = auth.generateJWT(user);
-        const isCorrectPassword = auth.comparePassword(user, password);
-        if (isCorrectPassword) {
-          res.cookie('jwt', token);
-          return res.redirect('/');
-        }
-      }
-      return res.render('login', {
-        errorMessage: "Login / Password Combination not correct",
-      });
-    } catch (err) {
-      console.log(err);
+  // app.use(authMiddleware);
+  app.use(function (err, req, res, next) {
+    if (401 === err.status) {
+      res.redirect('/login');
     }
   });
-
-  app.use(authMiddleware);
-  app.use(function(err, req, res, next) {
-    if(401 === err.status) {
-      res.redirect('/login')
-    }
-  });
-  app.use((req, res, next) => {
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   next();
+  // });
 
   app.get('/', async function (req, res, next) {
+
+    console.log('----->', req);
 
     const { athleteId, school, role } = req.user;
 
@@ -454,7 +468,7 @@ module.exports = app => {
 
     const { athleteId, school, role } = req.user;
     let ID;
-    if (role === 'player'){
+    if (role === 'player') {
       ID = athleteId;
     }
 
