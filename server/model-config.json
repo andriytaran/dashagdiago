@@ -28,7 +28,7 @@
     "public": false
   },
   "Email": {
-    "dataSource": "emailDs"
+    "dataSource": "sendgrid"
   },
   "user": {
     "dataSource": "db",
