@@ -35,11 +35,8 @@ module.exports = app => {
             userId: err.details.userId
           });
         } else {
-          res.render('response', {
-            title: 'Login failed. Wrong username or password',
-            content: err,
-            redirectTo: '/',
-            redirectToLinkText: 'Please login again',
+          res.render('login', {
+            errorMessage: 'Login failed. Wrong username or password'
           });
         }
         return;
@@ -56,11 +53,13 @@ module.exports = app => {
 
   //log a user out
   app.get('/logout', function(req, res, next) {
-    if (!req.accessToken) return res.sendStatus(401);
-    User.logout(req.accessToken.id, function(err) {
-      if (err) return next(err);
-      res.redirect('/');
-    });
+    res.cookie('access_token', '', { signed: true, maxAge: 14400000 });
+    res.redirect('/');
+    // if (!req.accessToken) return res.sendStatus(401);
+    // User.logout(req.accessToken.id, function(err) {
+    //   if (err) return next(err);
+    //   res.redirect('/');
+    // });
   });
 
   //send an email with instructions to reset an existing user's password

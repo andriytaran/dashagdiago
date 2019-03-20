@@ -89,39 +89,38 @@ module.exports = app => {
     const User = app.models.user;
     const AccessToken = app.models.AccessToken;
     const accessTokenId = req.signedCookies.access_token;
-    if (!accessTokenId){
-      next();
+    if (!accessTokenId) {
+      return next();
     }
+
     AccessToken.findById(accessTokenId, function (err, token) {
-      if (err) {
-        console.log(err);
-        next();
+      if (err || !token) {
+        return next();
       } else {
         console.log(token);
         User.findById(token.userId, (err, user) => {
           if (err) {
-            console.log(err);
-            next();
+            return next();
           } else {
             req.user = user;
-            console.log(user);
-            next();
+            return next();
           }
         });
       }
     });
   });
 
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     console.log('req.user');
     console.log(req.user);
     if (!req.user) {
       res.redirect('/login');
+    } else {
+      next();
     }
-    next();
   });
 
-  app.get('/', async(req, res, next) => {
+  app.get('/', async (req, res, next) => {
 
     const { athleteId, school, role } = req.user;
 

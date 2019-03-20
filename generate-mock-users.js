@@ -1,9 +1,8 @@
-const MongoClient = require('mongodb').MongoClient;
 const axios = require('axios');
 const bluebird = require('bluebird');
-const url = 'mongodb://localhost:27017';
-const dbName = 'dashdjango';
+const app = require('./server/server');
 
+const User = app.models.user;
 
 const mockUsers = [
   {
@@ -34,34 +33,19 @@ const mockUsers = [
   },
 ];
 
-const getUsers = () => {
-  return new Promise((resolve, reject) => {
-    return MongoClient.connect(url, (err, client) => {
-      console.log('Connected successfully to server');
-
-      const db = client.db(dbName);
-      const collection = db.collection('user');
-
-      collection.find({}).toArray(function (err, docs) {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(docs);
-      });
-      client.close();
-    });
-  });
-};
-
 const verifyUsers = (docs) => {
   return bluebird.mapSeries(docs, user => axios.get(`http://0.0.0.0:3000/api/users/confirm?uid=${user._id}&redirect=%2Flogin&token=${user.verificationToken}`));
 };
 
 const fillDb = (mockUsers) => {
-  return bluebird.mapSeries(mockUsers, user => axios.post('http://localhost:3000/api/users', user));
+  return bluebird.mapSeries(mockUsers, user => {
+    return User.create(user)
+      .then(()=>console.log(user.email, 'was created'))
+      .catch(err => console.error(err.message));
+  });
 };
 
 return fillDb(mockUsers)
-  // .then(() => getUsers())
+  .then(() => console.log('finished'))
   // .then(users => verifyUsers(users))
   .catch(err => console.error(err));

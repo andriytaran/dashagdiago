@@ -1,20 +1,9 @@
-// Copyright IBM Corp. 2014,2015. All Rights Reserved.
-// Node module: loopback-example-user-management
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 var config = require('../../server/config.json');
 var path = require('path');
 
-//Replace this address with your actual address
 var senderAddress = 'test';
 
 module.exports = function(User) {
-  // send verification email after registration
-
-  // User.sendWelcomeEmail = function(obj, cb) {
-  //
-  // };
 
   User.afterRemote('create', function(context, user, next) {
     var options = {
