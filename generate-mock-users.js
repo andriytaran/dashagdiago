@@ -1,4 +1,3 @@
-const axios = require('axios');
 const bluebird = require('bluebird');
 const app = require('./server/server');
 
@@ -33,19 +32,18 @@ const mockUsers = [
   },
 ];
 
-const verifyUsers = (docs) => {
-  return bluebird.mapSeries(docs, user => axios.get(`http://0.0.0.0:3000/api/users/confirm?uid=${user._id}&redirect=%2Flogin&token=${user.verificationToken}`));
-};
-
 const fillDb = (mockUsers) => {
   return bluebird.mapSeries(mockUsers, user => {
     return User.create(user)
-      .then(()=>console.log(user.email, 'was created'))
+      .then(() => console.log(user.email, 'was created'))
       .catch(err => console.error(err.message));
   });
 };
 
 return fillDb(mockUsers)
   .then(() => console.log('finished'))
-  // .then(users => verifyUsers(users))
-  .catch(err => console.error(err));
+  .then(() => process.exit())
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
