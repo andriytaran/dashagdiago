@@ -35,48 +35,6 @@ es.addDocument('schools', 'cincinnati', 'post', {
   id: 'cincinnati',
 });
 
-const demoUsers = [
-  {
-    email: 'player1@gmail.com',
-    password: '1',
-    role: 'player',
-    school: 'cincinnati',
-    id: 1,
-    athleteId: 1,
-  },
-  {
-    email: 'coach1@gmail.com',
-    password: '1',
-    role: 'coach',
-    school: 'cincinnati',
-    id: 2,
-  },
-  {
-    email: 'player2@gmail.com',
-    password: '1',
-    role: 'player',
-    school: 'ts',
-    id: 3,
-    athleteId: 7,
-  },
-  {
-    email: 'coach2@gmail.com',
-    password: '1',
-    role: 'coach',
-    school: 'ts',
-    id: 4,
-  },
-];
-
-const putUsersToES = async () => {
-  for (const user of demoUsers) {
-    const esUser = auth.createUser(user);
-    await es.addDocument('users', esUser.id, 'post', esUser);
-  }
-};
-
-putUsersToES();
-
 module.exports = app => {
   // Home
   app.get('/login', async function (req, res, next) {
@@ -97,7 +55,6 @@ module.exports = app => {
       if (err || !token) {
         return next();
       } else {
-        console.log(token);
         User.findById(token.userId, (err, user) => {
           if (err) {
             return next();
@@ -111,7 +68,6 @@ module.exports = app => {
   });
 
   app.use(function (req, res, next) {
-    console.log('req.user');
     console.log(req.user);
     if (!req.user) {
       res.redirect('/login');
@@ -127,7 +83,7 @@ module.exports = app => {
     const user = req.user || {};
 
     if (role === 'player') {
-      return res.redirect(`dashboard-player/?id=${athleteId}&school=${school}`);
+      return res.redirect(`dashboard-player/?id=${athleteId}`);
     }
     const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
@@ -200,6 +156,8 @@ module.exports = app => {
   });
 
   app.post('/api/createNewSchool', async function (req, res, next) {
+    console.log('req.body');
+    console.log(req.body);
     try {
       await ftp.importPlayersData(req.body);
     } catch (err) {
@@ -287,7 +245,7 @@ module.exports = app => {
     const { athleteId, school, role } = req.user;
 
     if (role === 'player') {
-      return res.redirect(`/dashboard-player/?id=${athleteId}&school=${school}`);
+      return res.redirect(`/dashboard-player/?id=${athleteId}`);
     }
 
     const team = await parseTeamFromQuery(req, res);
@@ -398,8 +356,8 @@ module.exports = app => {
   app.get('/corebench', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
     const user = req.user || {};
-    const benchmarks = await es.getBenchmarks(team, 'QB');
-    const factors = await es.getFactors(team, 'coreAttributes');
+    const benchmarks = await es.getBenchmarks(team.id, 'QB');
+    const factors = await es.getFactors(team.id, 'coreAttributes');
     res.render('corebench', {
       positions: positionF,
       team: team.id,
@@ -797,8 +755,8 @@ module.exports = app => {
             position,
           },
         };
-        es.addOrUpdateDocument(team + '-benchmarks', query, 'post', benchmarks);
-        es.updatePillarsObj(team, 'coreAttributes', null, factors);
+        es.addOrUpdateDocument(team.id + '-benchmarks', query, 'post', benchmarks);
+        es.updatePillarsObj(team.id, 'coreAttributes', null, factors);
         break;
       }
     }

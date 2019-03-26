@@ -74,10 +74,10 @@
     button.setAttribute('disabled', true);
     const nameSchool = document.getElementById("nameSchool").value;
     const shortNameSchool = document.getElementById("shortNameSchool").value;
-    const folderName = document.getElementById("folderName").value;
-    createNewSchool({shortNameSchool, nameSchool, folderName}, function () {
+    const fileName = document.getElementById("folderName").value;
+    createNewSchool({shortNameSchool, nameSchool, fileName}, function () {
       button.setAttribute('disabled', false);
-      setTimeout(function(){ window.location.assign(`/?school=${shortNameSchool.toLowerCase()}`) }, 1000);
+      setTimeout(function(){ window.location.assign(`/`) }, 1000);
     })
   }
 

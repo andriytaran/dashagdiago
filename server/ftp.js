@@ -17,6 +17,7 @@ const parseCsv = (content) => {
 const importPlayersData = (body) => {
   const sftp = new Client();
   const { shortNameSchool, nameSchool, fileName } = body;
+
   const path =  (fileName || '').split('/');
   const nameForSaving = path[path.length - 1];
 
@@ -25,30 +26,13 @@ const importPlayersData = (body) => {
       username: 'menza',
       password: 'KC1002#18',
     })
-    // TODO uncomment for FTP if needed to load last file
-    // .then(() => {
-    //
-    //   return sftp.list('/ToMenza');
-    // })
-    // .then(res => {
-    //   const lastModifiedFile = res.reduce((acc, elem) => {
-    //     if (!acc) {
-    //       acc = elem;
-    //     }
-    //     if (elem.modifyTime > acc.modifyTime) {
-    //       acc = elem;
-    //     }
-    //     return acc;
-    //   });
-    //   return lastModifiedFile.name;
-    // })
     .then(() => {
       if (fileName){
         return sftp.fastGet(fileName, `./imports/${nameForSaving}`);
       }
     })
     .then(() => {
-      let pathToFile = 'testSchool.csv';
+      let pathToFile = 'Menza_Althete_Results 03-21-2019.csv';
       if (fileName){
         pathToFile = nameForSaving;
       }
@@ -80,17 +64,17 @@ const importPlayersData = (body) => {
       for (const elem of players) {
         const player = {
           id: playerId++,
-          position: elem.Postion,
-          fname: elem.Fname,
-          lname: elem.lname,
-          collegeYear: elem.Year,
+          position: elem.Position,
+          fname: elem.Name.split(', ')[0],
+          lname: elem.Name.split(', ')[1],
+          // collegeYear: elem.Year || "Senior",
           coreAttributesCompetitiveness: parseFloat(elem.Competitiveness),
           coreAttributesPersistence: parseFloat(elem.Persistence),
           coreAttributesWorkEthic: parseFloat(elem['Work Ethic']),
           coreAttributesTeamOrientation: parseFloat(elem['Team Orientation']),
           coreAttributesMastery: parseFloat(elem.Mastery),
           coreAttributesOverallScore: parseFloat(elem.Score),
-          reportLink: elem['Report Link'],
+          reportLink: elem['REPORT LINK'] || '',
         };
         await es.addPlayer(schoolId, player);
       }

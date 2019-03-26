@@ -8,7 +8,7 @@ const getSchoolName = () => {
 function getAPIData(props, cb) {
   $.ajax({
     type: "POST",
-    url: `/api/dashboard-data?school=${getSchoolName()}`,
+    url: `/api/dashboard-data`,
     data: JSON.stringify(props),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -19,7 +19,7 @@ function getAPIData(props, cb) {
 function updateAPIData(props, cb) {
   $.ajax({
     type: "POST",
-    url: `/api/dashboard-data-update?school=${getSchoolName()}`,
+    url: `/api/dashboard-data-update`,
     data: JSON.stringify(props),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
