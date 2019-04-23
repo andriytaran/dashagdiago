@@ -1,204 +1,320 @@
-<% layout('layout_main') -%>
-<div id="content" class="content">
-  <!-- begin breadcrumb -->
-  <ol class="breadcrumb pull-right">
-    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-    <li class="breadcrumb-item active">Dashboard</li>
-  </ol>
-  <!-- end breadcrumb -->
+<!DOCTYPE html>
+<html lang="en">
 
-  <!-- begin page-header -->
-  <h1 class="page-header">Player Dashboard <small>Full View of Players.</small></h1>
-  <!-- end page-header -->
+<head>
 
-  <!-- begin row -->
-  <div class="row">
+  <meta charset="utf-8">
+  <!-- <base href="/"> -->
 
-    <!-- begin col-3 -->
-    <div class="col-lg-3 col-md-6">
+  <title>AgDiago</title>
+  <meta name="description" content="">
 
-      <div class="widget widget-stats bg-black-darker">
-        <div class="stats-icon"><i class="fa fa-child"></i></div>
-        <div class="stats-info">
-          <h4>
-            <%= teamDisplay %> Potential Recruits <br><strong><i>matches based on coach benchmarks</i></strong></h4>
-          <p>
-            <%= overallCount %>
-          </p>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Template Basic Images Start -->
+  <meta property="og:image" content="path/to/image.jpg">
+  <link rel="icon" href="img/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+  <!-- Template Basic Images End -->
+
+  <!-- Custom Browsers Color Start -->
+  <meta name="theme-color" content="#F4F7FC">
+  <!-- Custom Browsers Color End -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<aside class="sidebar-wrap" id="sidebar">
+  <div class="sidebar">
+    <div class="sidebar__toggler" id="sidebarToggler">
+      <div class="sidebar__toggler-line"></div>
+      <div class="sidebar__toggler-arrow">
+        <img src="../updatedDesign/img/toggle-btn.svg" alt="">
+      </div>
+    </div>
+    <div class="sidebar__heading">
+      View By
+    </div>
+    <div class="sidebar__nav accordion" id="sidebar-nav">
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="offsense">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#offsenseCollapse" aria-expanded="false" aria-controls="offsenseCollapse">
+              Offsense
+            </button>
+          </h2>
         </div>
-        <div class="stats-link" id="overallList">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+        <div id="offsenseCollapse" class="collapse" aria-labelledby="offsense" data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list" id="sidebarCategory">
+            <div class="sidebar__dropdown dropdown">
+              <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                      data-target="#quarterback" aria-expanded="false" aria-controls="quarterback">
+                Quarterback
+              </button>
+              <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory" id="quarterback"
+                   aria-labelledby="quarterback">
+                <div class="sidebar__cat-dropdown-list">
+                  <a class="" href="#">Pro Style</a>
+                  <a class="" href="#">Dual</a>
+                </div>
+              </div>
+            </div>
+            <a class="sidebar__cat-item" href="#">Running Back</a>
+            <a class="sidebar__cat-item" href="#">Wide Receiver</a>
+            <a class="sidebar__cat-item" href="#">Offensive Guard</a>
+            <div class="sidebar__dropdown dropdown">
+              <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                      data-target="#offensiveTackle" aria-expanded="false" aria-controls="#offensiveTackle">
+                Offensive Tackle
+              </button>
+              <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory" id="offensiveTackle"
+                   aria-labelledby="offensiveTackle">
+                <div class="sidebar__cat-dropdown-list">
+                  <a class="" href="#">Zacch pickens</a>
+                  <a class="" href="#">Steven faucheux</a>
+                  <a class="" href="#">Josh Ellison</a>
+                  <a class="" href="#">Jaden mckenzie</a>
+                  <a class="" href="#">Siaki ika</a>
+                  <a class="" href="#">Jadacjs logan</a>
+                </div>
+              </div>
+            </div>
+            <a class="sidebar__cat-item" href="#">Offensive Center</a>
+            <a class="sidebar__cat-item" href="#">Tight End</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="defense">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#defenseCollapse" aria-expanded="false" aria-controls="defenseCollapse">
+              Defense
+            </button>
+          </h2>
+        </div>
+        <div id="defenseCollapse" class="collapse" aria-labelledby="defense" data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list">
+            <a class="sidebar__cat-item" href="#">Defensive Line</a>
+            <a class="sidebar__cat-item" href="#">Defensive End</a>
+            <a class="sidebar__cat-item" href="#">Defensive Tackle</a>
+            <a class="sidebar__cat-item" href="#">Outside Linebacker</a>
+            <a class="sidebar__cat-item" href="#">Middle Linebacker</a>
+            <a class="sidebar__cat-item" href="#">Inside Linebacker</a>
+            <a class="sidebar__cat-item" href="#">Defensive Back</a>
+            <a class="sidebar__cat-item" href="#">Safety</a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="specialTeams">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#specialTeamsCollapse" aria-expanded="false" aria-controls="specialTeamsCollapse">
+              Special Teams
+            </button>
+          </h2>
+        </div>
+        <div id="specialTeamsCollapse" class="collapse" aria-labelledby="specialTeams"
+             data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list">
+            <a class="sidebar__cat-item" href="#">Punter</a>
+            <a class="sidebar__cat-item" href="#">Kicker</a>
+            <a class="sidebar__cat-item" href="#">Long Snapper</a>
+          </div>
         </div>
       </div>
     </div>
-    <!-- end col-3 -->
-
-    <!-- begin col-3 -->
-    <div class="col-lg-3 col-md-6">
-      <div class="widget widget-stats bg-gradient-purple">
-        <div class="stats-icon"><i class="fa fa-link"></i></div>
-        <div class="stats-info">
-          <h4><%= teamDisplay %> Potential Defensive Recruits</h4>
-          <p>
-            <%= defenseCount %></p>
-        </div>
-        <div class="stats-link" id="defenseList">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-        </div>
-      </div>
-    </div>
-    <!-- end col-3 -->
-
-    <!-- begin col-3 -->
-    <div class="col-lg-3 col-md-6">
-      <div class="widget widget-stats bg-grey-darker">
-        <div class="stats-icon"><i class="fa fa-users"></i></div>
-        <div class="stats-info">
-          <h4><%= teamDisplay %> Potential Offensive Recruits</h4>
-          <p>
-            <%= offenseCount %></p>
-        </div>
-        <div class="stats-link" id="offenseList">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-        </div>
-      </div>
-    </div>
-    <!-- end col-3 -->
-
-    <!-- begin col-3 -->
-    <!-- <div class="col-lg-3 col-md-6">
-      <div class="widget widget-stats bg-grey-darker">
-        <div class="stats-icon"><i class="fa fa-users"></i></div>
-        <div class="stats-info">
-          <h4>Average score</h4>
-          <p>
-            <% if (overallScore) { %>
-            <%= overallScore %>%
-            <% } else { %>Not available
-            <% } %>
-          </p>
-        </div>
-        <div class="stats-link">
-          <p> <br></p>
-        </div>
-      </div>
-    </div> -->
-    <!-- end col-3 -->
-
   </div>
-  <!-- end row -->
-
-  <!-- begin row -->
-  <div class="row">
-
-    <!-- begin col-8 -->
-    <div class="col-lg-12">
-
-      <!-- begin panel -->
-      <div class="panel panel-inverse" data-sortable-id="index-1">
-
-        <div class="panel-heading">
-          <h4 class="panel-title">Cultural Fit | <i> Recruits most lieky to fit best with your current roster </i></h4>
+</aside>
+<div class="wrap" id="mainSection">
+  <header class="header">
+    <div class="container-fluid px-5">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="header__left-b">
+            <div class="header__logo"><img src="../updatedDesign/img/gobearcats-logo.svg" alt="GoBearCast.com"></div>
+            <div class="header__heading"><%= teamDisplay %> <%= user.role %></div>
+          </div>
         </div>
-        <div class="panel-body panel-height-5 culturalFdiv">
-          <div class="height-xs"><h2>Top potential recruits to review </h2>
-            <div id="culturaltop">
-              <div class="elLoader">
-                <div class="loader"></div>
+        <div class="col-md-7">
+          <div class="header__right-b">
+            <nav class="header__nav">
+              <ul class="header__nav-list">
+                <li class="header__nav-item"><a class="header__nav-link" href="#">Home</a></li>
+                <li class="header__nav-item"><a class="header__nav-link" href="#">Add new Athlete
+                    info</a></li>
+              </ul>
+            </nav>
+            <div class="header__user-block">
+              <div class="header__search">
+                <a href=""><img src="../updatedDesign/img/search-icon.svg" alt=""></a>
+              </div>
+              <div class="header__message">
+                <a href="" class="active"><img src="../updatedDesign/img/message-icon.svg" alt=""></a>
+              </div>
+              <a href="" class="header__user">
+                <img src="../updatedDesign/img/user-avatar.png" alt="Samanta" class="header__user-avatar">
+                <div class="header__user-name">Samanta</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="s-player-dashboard">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="s-player-dashboard__heading"><span>Player,</span> Dashboard</h1>
+        </div>
+        <div class="col-md-12">
+          <h4 class="s-player-dashboard__full-view">Full view of players</h4>
+          <div class="s-player-dashboard__class-block class-block">
+            <div class="row">
+              <div class="col-md-4">
+                <a href="#" class="class-block__class blue">
+                  <div class="class-block__class-heading">University of Cincinnati Potential
+                    Recruits
+                    matches based on coatch benchmarks
+                  </div>
+                  <div class="class-block__class-number"><%= overallCount %></div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#" class="class-block__class green">
+                  <div class="class-block__class-heading">University of Cincinnati Potential</br>
+                    Defensive Recruits
+                  </div>
+                  <div class="s-player-dashboard__class-number"><%= defenseCount %></div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#" class="class-block__class red">
+                  <div class="class-block__class-heading">University of Cincinnati Potential</br>
+                    Offensive Recruits
+                  </div>
+                  <div class="class-block__class-number"><%= offenseCount %></div>
+                </a>
               </div>
             </div>
           </div>
+          <div class="s-player-dashboard__table-block">
+            <div class="s-player-dashboard__table-b-heading small-desc">
+              Cultural Fit
+            </div>
+            <div class="s-player-dashboard__table-b-desc secondary-heading">
+              Top potential recruits to review
+            </div>
+            <div class="s-player-dashboard__table players-table">
+              <div class="players-table__header">
+                <div class="row align-items-center">
+                  <div class="col-md-1 offset-1">
+                    <div class="players-table__heading">
+                      Rate
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      First Name
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Last Name
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Position
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Score
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="players-table__body">
 
-          <div id="cultural-fit" class="height-sm">
-            <div class="elLoader">
-              <div class="loader"></div>
+                <div class="players-table__row">
+                  <div class="row align-items-center">
+                    <div class="col-md-1">
+                      <div class="players-table__item avatar">
+                        <img src="../updatedDesign/img/player-avatar.jpg" alt="">
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="players-table__item">
+                        1
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        Shea
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        Hoogerwerf
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        ILB
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="players-table__item">
+                        163
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="players-table__item btn-block">
+                        <button class="showdetails-btn">Show Details</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-        </div>
-        <!-- end panel -->
-
-      </div>
-      <!-- end col-6 -->
-
-    </div>
-    <!-- end row -->
-
-  </div>
-
-  <!--<div class="row">-->
-    <!--<div class="bench dropdown">-->
-      <!--<button type="button" class="btn btn-primary dropdown-toggle lmenu" data-toggle="dropdown" aria-haspopup="true"-->
-        <!--aria-expanded="false">Add new bechmarks</button>-->
-      <!--<div class="dropdown-menu">-->
-        <!--<a class="dropdown-item" id="academbench" href="/academbench">Academic attributes</a>-->
-        <!--<a class="dropdown-item" id="emotionalbench" href="/emotionalbench">Emotional intel</a>-->
-        <!--<a class="dropdown-item" id="corebench" href="/corebench">Core attributes</a>-->
-        <!--<a class="dropdown-item" id="socialbench" href="/socialbench">Scoial profile</a>-->
-        <!--<a class="dropdown-item" id="athleticbench" href="/athleticbench">Athletic attributes</a>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
-
-  <!-- begin row -->
-  <!-- OVERALL SCORE -->
-  <!--
-  <div class="row">
-
-    <div class="col-lg-12" id="overallBlock1">
-      <div class="elLoader">
-        <div class="loader"></div>
-      </div>
-    </div>
-
-  </div>
--->
-</div>
-
-<!-- start modal -->
-<div class="modal fade" id="chartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalplayerstitle">Players</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="players">
-          <div class="loader"></div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
+  </section>
 </div>
-<!-- end modal -->
+<script src="/../assets/js/app/api.js"></script>
+<script src="../updatedDesign/js/common.js"></script>
+<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
 
-<% stylesheet('/../assets/css/common.css') -%>
-<% stylesheet('/../assets/css/barchart.css') -%>
-<% stylesheet('/../assets/css/login.css') -%>
-<% stylesheet('/../assets/css/home.css') -%>
-<% stylesheet('/../assets/css/table.css') -%>
-<% script('/../assets/plugins/ejs/ejs.js') -%>
-<% script('/../assets/js/app/utils.js') -%>
-<% script('/../assets/js/app/api-mapper.js') -%>
-<% script('/../assets/js/app/api.js') -%>
-<% script('/../assets/js/app/domain.js') -%>
-<% script('/../assets/js/app/components/overall-score-section.js') -%>
-<% script('/../assets/js/app/components/core-attributes-section.js') -%>
-<% script('/../assets/js/app/components/academic-attributes-section.js') -%>
-<% script('/../assets/js/app/components/social-profile-attributes-section.js') -%>
-<% script('/../assets/js/app/components/emotional-intel-attributes-section.js') -%>
-<% script('/../assets/js/app/components/athletic-attributes-section.js') -%>
-<% script('/../assets/js/app/draw/draw-table.js') -%>
-<% script('/../assets/js/app/draw/draw-overall.js') -%>
-<% script('/../assets/js/app/draw/draw-bar-chart.js') -%>
-<% script('/../assets/js/app/draw/draw-top-culturals.js') -%>
-<% script('/../assets/js/app/draw/draw-pie-chart.js') -%>
-<% script('/../assets/js/app/home.js') -%>
+<script>
+  $(document).ready(function () {
+    getTopCulturalFitData(undefined, (res, status) => {
+      if (status === 'success'){
+        console.log(res);
+      }
+    });
+  });
+
+</script>
+
+</body>
+
+</html>
