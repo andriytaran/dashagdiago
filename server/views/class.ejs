@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <!-- <base href="/"> -->
+
+  <title>AgDiago</title>
+  <meta name="description" content="">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Template Basic Images Start -->
+  <meta property="og:image" content="path/to/image.jpg">
+  <link rel="icon" href="img/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+  <!-- Template Basic Images End -->
+
+  <!-- Custom Browsers Color Start -->
+  <meta name="theme-color" content="#F4F7FC">
+  <!-- Custom Browsers Color End -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<%-partial('./partials/sidebarPositions')%>
+
+<div class="wrap" id="mainSection">
+
+  <%-partial('./partials/header')%>
+
+  <section class="s-player-dashboard">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="s-player-dashboard__heading"><span>Player,</span> Dashboard</h1>
+        </div>
+        <div class="col-md-12">
+          <h4 class="s-player-dashboard__full-view">Full view of players</h4>
+          <div class="s-player-dashboard__class-block class-block">
+            <div class="row">
+              <div class="col-md-4">
+                <a href="#" class="class-block__class blue">
+                  <div class="class-block__class-heading">University of Cincinnati Potential
+                    Recruits
+                    matches based on coatch benchmarks
+                  </div>
+                  <div class="class-block__class-number"><%= overallCount %></div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#" class="class-block__class green">
+                  <div class="class-block__class-heading">University of Cincinnati Potential</br>
+                    Defensive Recruits
+                  </div>
+                  <div class="s-player-dashboard__class-number"><%= defenseCount %></div>
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a href="#" class="class-block__class red">
+                  <div class="class-block__class-heading">University of Cincinnati Potential</br>
+                    Offensive Recruits
+                  </div>
+                  <div class="class-block__class-number"><%= offenseCount %></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="s-player-dashboard__table-block">
+            <div class="s-player-dashboard__table-b-heading small-desc">
+              Cultural Fit
+            </div>
+            <div class="s-player-dashboard__table-b-desc secondary-heading">
+              Top potential recruits to review
+            </div>
+            <div class="s-player-dashboard__table players-table">
+              <div class="players-table__header">
+                <div class="row align-items-center">
+                  <div class="col-md-1 offset-1">
+                    <div class="players-table__heading">
+                      Rate
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      First Name
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Last Name
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Position
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="players-table__heading">
+                      Score
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="CulturalFitTable" class="players-table__body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="/../assets/js/app/api.js"></script>
+<script src="../updatedDesign/js/common.js"></script>
+<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    getTopCulturalFitData(undefined, (res, status) => {
+      if (status === 'success') {
+
+        res.players.forEach(player => {
+
+          const {
+            fname,
+            id,
+            lname,
+            position,
+            team,
+            value,
+          } = player
+
+          const row = $(`<div class="players-table__row">
+                  <div class="row align-items-center">
+                    <div class="col-md-1">
+                      <div class="players-table__item avatar">
+                        <img src="../updatedDesign/img/player-avatar.jpg" alt="">
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="players-table__item">
+                        1
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        ${fname}
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        ${lname}
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="players-table__item">
+                        ${position}
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="players-table__item">
+                        ${Math.round(value)}
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="players-table__item btn-block">
+                        <button class="showdetails-btn">Show Details</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>`);
+          $('#CulturalFitTable').append(row);
+        });
+      }
+    });
+  });
+
+</script>
+
+</body>
+
+</html>

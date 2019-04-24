@@ -1,0 +1,105 @@
+<aside class="sidebar-wrap" id="sidebar">
+  <div class="sidebar">
+    <div class="sidebar__toggler" id="sidebarToggler">
+      <div class="sidebar__toggler-line"></div>
+      <div class="sidebar__toggler-arrow">
+        <img src="../updatedDesign/img/toggle-btn.svg" alt="">
+      </div>
+    </div>
+    <div class="sidebar__heading">
+      View By
+    </div>
+    <div class="sidebar__nav accordion" id="sidebar-nav">
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="offsense">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#offsenseCollapse" aria-expanded="false" aria-controls="offsenseCollapse">
+              Offsense
+            </button>
+          </h2>
+        </div>
+        <div id="offsenseCollapse" class="collapse" aria-labelledby="offsense" data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list" id="sidebarCategory">
+            <div class="sidebar__dropdown dropdown">
+              <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                      data-target="#quarterback" aria-expanded="false" aria-controls="quarterback">
+                Quarterback
+              </button>
+              <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory" id="quarterback"
+                   aria-labelledby="quarterback">
+                <div class="sidebar__cat-dropdown-list">
+                  <a class="" href="/dashboard-position/?position=QBPRO">Pro Style</a>
+                  <a class="" href="/dashboard-position/?position=QBDUAL">Dual</a>
+                </div>
+              </div>
+            </div>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=RB">Running Back</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=WR">Wide Receiver</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=OG">Offensive Guard</a>
+            <div class="sidebar__dropdown dropdown">
+              <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                      data-target="#offensiveTackle" aria-expanded="false" aria-controls="#offensiveTackle">
+                Offensive Tackle
+              </button>
+              <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory" id="offensiveTackle"
+                   aria-labelledby="offensiveTackle">
+                <div class="sidebar__cat-dropdown-list">
+                  <a class="" href="#">Zacch pickens</a>
+                  <a class="" href="#">Steven faucheux</a>
+                  <a class="" href="#">Josh Ellison</a>
+                  <a class="" href="#">Jaden mckenzie</a>
+                  <a class="" href="#">Siaki ika</a>
+                  <a class="" href="#">Jadacjs logan</a>
+                </div>
+              </div>
+            </div>
+            <a class="sidebar__cat-item" href="#">Offensive Center</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=TE">Tight End</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="defense">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#defenseCollapse" aria-expanded="false" aria-controls="defenseCollapse">
+              Defense
+            </button>
+          </h2>
+        </div>
+        <div id="defenseCollapse" class="collapse" aria-labelledby="defense" data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list">
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=DL">Defensive Line</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=DE">Defensive End</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=DT">Defensive Tackle</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=OL">Outside Linebacker</a>
+            <a class="sidebar__cat-item" href="#">Middle Linebacker</a>
+            <a class="sidebar__cat-item" href="#">Inside Linebacker</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=DB">Defensive Back</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=S">Safety</a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar__nav-cat">
+        <div class="sidebar__cat-heading" id="specialTeams">
+          <h2 class="mb-0">
+            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                    data-target="#specialTeamsCollapse" aria-expanded="false" aria-controls="specialTeamsCollapse">
+              Special Teams
+            </button>
+          </h2>
+        </div>
+        <div id="specialTeamsCollapse" class="collapse" aria-labelledby="specialTeams"
+             data-parent="#sidebar-nav">
+          <div class="sidebar__cat-list">
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=P">Punter</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=K">Kicker</a>
+            <a class="sidebar__cat-item" href="/dashboard-position/?position=LS">Long Snapper</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>

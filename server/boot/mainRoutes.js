@@ -86,6 +86,25 @@ module.exports = app => {
       return res.redirect(`dashboard-player/?id=${athleteId}`);
     }
     const team = await parseTeamFromQuery(req, res);
+
+    res.render('welcome', {
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
+    });
+  });
+
+
+  app.get('/class', async (req, res, next) => {
+
+    const { athleteId, school, role } = req.user;
+
+    const user = req.user || {};
+
+    if (role === 'player') {
+      return res.redirect(`dashboard-player/?id=${athleteId}`);
+    }
+    const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
     const [
       overallCount,
@@ -128,7 +147,7 @@ module.exports = app => {
         return res.redirect('/new');
       });
 
-    res.render('home', {
+    res.render('class', {
       overallCount,
       defenseCount,
       offenseCount,
