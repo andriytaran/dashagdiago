@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<!-- <base href="/"> -->
+
+	<title>AgDiago</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Template Basic Images Start -->
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="icon" href="img/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+	<!-- Template Basic Images End -->
+
+	<!-- Custom Browsers Color Start -->
+	<meta name="theme-color" content="#F4F7FC">
+	<!-- Custom Browsers Color End -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+	</script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<aside class="sidebar-wrap" id="sidebar">
+		<div class="sidebar">
+			<div class="sidebar__toggler" id="sidebarToggler">
+				<div class="sidebar__toggler-line"></div>
+				<div class="sidebar__toggler-arrow">
+					<img src="img/toggle-btn.svg" alt="">
+				</div>
+			</div>
+			<div class="sidebar__heading">
+				View By
+			</div>
+			<div class="sidebar__nav accordion" id="sidebar-nav">
+				<div class="sidebar__nav-cat">
+					<div class="sidebar__cat-heading" id="offsense">
+						<h2 class="mb-0">
+							<button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+								data-target="#offsenseCollapse" aria-expanded="false" aria-controls="offsenseCollapse">
+								Offsense
+							</button>
+						</h2>
+					</div>
+					<div id="offsenseCollapse" class="collapse" aria-labelledby="offsense" data-parent="#sidebar-nav">
+						<div class="sidebar__cat-list" id="sidebarCategory">
+							<div class="sidebar__dropdown dropdown">
+								<button class="sidebar__cat-item" type="button" data-toggle="collapse"
+									data-target="#quarterback" aria-expanded="false" aria-controls="quarterback">
+									Quarterback
+								</button>
+								<div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory"
+									id="quarterback" aria-labelledby="quarterback">
+									<div class="sidebar__cat-dropdown-list">
+										<a class="" href="#">Pro Style</a>
+										<a class="" href="#">Dual</a>
+									</div>
+								</div>
+							</div>
+							<a class="sidebar__cat-item" href="#">Running Back</a>
+							<a class="sidebar__cat-item" href="#">Wide Receiver</a>
+							<a class="sidebar__cat-item" href="#">Offensive Guard</a>
+							<div class="sidebar__dropdown dropdown">
+								<button class="sidebar__cat-item" type="button" data-toggle="collapse"
+									data-target="#offensiveTackle" aria-expanded="false"
+									aria-controls="#offensiveTackle">
+									Offensive Tackle
+								</button>
+								<div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory"
+									id="offensiveTackle" aria-labelledby="offensiveTackle">
+									<div class="sidebar__cat-dropdown-list">
+										<a class="" href="#">Zacch pickens</a>
+										<a class="" href="#">Steven faucheux</a>
+										<a class="" href="#">Josh Ellison</a>
+										<a class="" href="#">Jaden mckenzie</a>
+										<a class="" href="#">Siaki ika</a>
+										<a class="" href="#">Jadacjs logan</a>
+									</div>
+								</div>
+							</div>
+							<a class="sidebar__cat-item" href="#">Offensive Center</a>
+							<a class="sidebar__cat-item" href="#">Tight End</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="sidebar__nav-cat">
+					<div class="sidebar__cat-heading" id="defense">
+						<h2 class="mb-0">
+							<button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+								data-target="#defenseCollapse" aria-expanded="false" aria-controls="defenseCollapse">
+								Defense
+							</button>
+						</h2>
+					</div>
+					<div id="defenseCollapse" class="collapse" aria-labelledby="defense" data-parent="#sidebar-nav">
+						<div class="sidebar__cat-list">
+							<a class="sidebar__cat-item" href="#">Defensive Line</a>
+							<a class="sidebar__cat-item" href="#">Defensive End</a>
+							<a class="sidebar__cat-item" href="#">Defensive Tackle</a>
+							<a class="sidebar__cat-item" href="#">Outside Linebacker</a>
+							<a class="sidebar__cat-item" href="#">Middle Linebacker</a>
+							<a class="sidebar__cat-item" href="#">Inside Linebacker</a>
+							<a class="sidebar__cat-item" href="#">Defensive Back</a>
+							<a class="sidebar__cat-item" href="#">Safety</a>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar__nav-cat">
+					<div class="sidebar__cat-heading" id="specialTeams">
+						<h2 class="mb-0">
+							<button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+								data-target="#specialTeamsCollapse" aria-expanded="false"
+								aria-controls="specialTeamsCollapse">
+								Special Teams
+							</button>
+						</h2>
+					</div>
+					<div id="specialTeamsCollapse" class="collapse" aria-labelledby="specialTeams"
+						data-parent="#sidebar-nav">
+						<div class="sidebar__cat-list">
+							<a class="sidebar__cat-item" href="#">Punter</a>
+							<a class="sidebar__cat-item" href="#">Kicker</a>
+							<a class="sidebar__cat-item" href="#">Long Snapper</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+	<div class="wrap" id="mainSection">
+		<header class="header">
+			<div class="container-fluid px-5">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="header__left-b">
+							<div class="header__logo"><img src="img/gobearcats-logo.svg" alt="GoBearCast.com"></div>
+							<div class="header__heading">University of Cincinnati Coach</div>
+						</div>
+					</div>
+					<div class="col-md-7">
+						<div class="header__right-b">
+							<nav class="header__nav">
+								<ul class="header__nav-list">
+									<li class="header__nav-item"><a class="header__nav-link" href="#">Home</a></li>
+									<li class="header__nav-item"><a class="header__nav-link" href="#">Add new Athlete
+											info</a></li>
+								</ul>
+							</nav>
+							<div class="header__user-block">
+								<div class="header__search">
+									<a href=""><img src="img/search-icon.svg" alt=""></a>
+								</div>
+								<div class="header__message">
+									<a href="" class="active"><img src="img/message-icon.svg" alt=""></a>
+								</div>
+								<a href="" class="header__user">
+									<img src="img/user-avatar.png" alt="Samanta" class="header__user-avatar">
+									<div class="header__user-name">Samanta</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section class="individual-player">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="individual-player__heading main-heading"><span>Individual</span> Player Dashboard</h1>
+					</div>
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-7">
+								<div class="individual-player__info player-info">
+									<div class="player-info__heading small-desc">Player Information 1</div>
+									<div class="player-info__box green">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="player-info__photo">
+													<img src="img/player-photo.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-md-9">
+												<div class="player-info__name">Shea Hoogerwerf</div>
+												<div class="player-info__additional-info">Hometown: Bothell</div>
+												<div class="player-info__additional-info">Atheletic Coach: Not Available</div>
+												<div class="player-info__additional-info">Scout Date: Not Available</div>
+												<div class="player-info__additional-info">High School: Bothel HS</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="individual-player__score player-info">
+									<div class="player-info__heading small-desc">Agdiago Score</div>
+									<div class="player-info__box red">
+										<div class="row">
+											<div class="col-md-5 d-flex align-items-center">
+												<div class="player-info__score-icon">
+													<img src="img/score-icon.svg" alt="">
+												</div>
+											</div>
+											<div class="col-md-7">
+												<div class="player-info__score-content">
+													<div class="player-info__score-graph">
+														<img src="img/score-graph.svg" alt="">
+													</div>
+													<div class="player-info__score-number">163</div>
+													<div class="player-info__score-based-on">Based on registered benchmarks</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="individual-player__core-attr core-attr">
+							<div class="core-attr__subheading">
+								Player Attributes
+							</div>
+							<div class="core-attr__block">
+								<div class="core-attr__heading">
+									Core Attributes
+								</div>
+								<div class="core-attr__ag-score">
+									<div class="core-attr__ag-score-progressbar orange" style="width: 80%"></div>
+									<div class="core-attr__ag-score-value">AG Score: 133</div>
+								</div>
+								<button class="core-attr__more-btn" type="button" data-toggle="collapse"
+									data-target="#coreAttrMoreBlock" aria-expanded="false"
+									aria-controls="coreAttrMoreBlock">
+									<span class="core-attr__more-btn-show">Show Sub Categories</span>
+									<span class="core-attr__more-btn-hide">Hide Sub Categories</span>
+									<div class="core-attr__more-btn-arrow">
+										<img src="img/core-attr-arrow.svg" alt="">
+									</div>
+								</button>
+								<div class="core-attr__more-block collapse" id="coreAttrMoreBlock"
+									aria-labelledby="coreAttrMoreBlock">
+									<div class="core-attr__heading">
+										Team Orientation
+									</div>
+									<div class="core-attr__ag-score">
+										<div class="core-attr__ag-score-progressbar blue" style="width: 60%">
+										</div>
+										<div class="core-attr__ag-score-value">AG Score: 133</div>
+									</div>
+									<div class="core-attr__heading">
+											Work Ethic
+									</div>
+									<div class="core-attr__ag-score">
+										<div class="core-attr__ag-score-progressbar blue" style="width: 80%">
+										</div>
+										<div class="core-attr__ag-score-value">AG Score: 133</div>
+									</div>
+									<div class="core-attr__heading">
+											Persistence
+									</div>
+									<div class="core-attr__ag-score">
+										<div class="core-attr__ag-score-progressbar blue" style="width: 45%">
+										</div>
+										<div class="core-attr__ag-score-value">AG Score: 133</div>
+									</div>
+									<div class="core-attr__heading">
+											Mastery
+									</div>
+									<div class="core-attr__ag-score">
+										<div class="core-attr__ag-score-progressbar blue" style="width: 30%">
+										</div>
+										<div class="core-attr__ag-score-value">AG Score: 133</div>
+									</div>
+									<div class="core-attr__heading">
+											Competitiveness
+									</div>
+									<div class="core-attr__ag-score">
+										<div class="core-attr__ag-score-progressbar blue" style="width: 70%">
+										</div>
+										<div class="core-attr__ag-score-value">AG Score: 133</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script src="js/common.js"></script>
+
+</body>
+
+</html>
