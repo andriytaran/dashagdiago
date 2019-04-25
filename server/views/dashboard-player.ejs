@@ -82,6 +82,7 @@
   </section>
 </div>
 
+<script src="../updatedDesign/constants.js"></script>
 <script src="../updatedDesign/js/common.js"></script>
 <script src="/../assets/js/app/api.js"></script>
 <script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
@@ -162,17 +163,9 @@
         const { player } = res.attributes || {};
         const keys = Object.keys(player);
 
-        const map = {
-          coreAttributesCompetitiveness: 'Competitiveness',
-          coreAttributesMastery: 'Mastery',
-          coreAttributesPersistence: 'Persistence',
-          coreAttributesTeamOrientation: 'Team Orientation',
-          coreAttributesWorkEthic: 'Work Ethic',
-        }
-
         const html = keys.map(key => {
           return `<div class="core-attr__heading">
-                  ${map[key] || key}
+                  ${attributesNamesMatches[key] || key}
                 </div>
                 <div class="core-attr__ag-score">
                   <div class="core-attr__ag-score-progressbar blue" style="width: ${player[key]}%">

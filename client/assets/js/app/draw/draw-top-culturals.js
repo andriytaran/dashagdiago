@@ -55,7 +55,7 @@ function drawTopCulturals(data, selector) {
     { head: "Last Name", cl: "center", html: f("lname") },
     { head: "Position", cl: "center", html: f("position") },
     { head: "Score", cl: "num", html: f("score") },
-    { head: "Show Details", cl: "title", html: function (d) { const params = `?id=${d.id}`; console.log('1', d);   return "<a href='/dashboard-player/" + params + "'>Show Details</a>" } }
+    { head: "Show Details", cl: "title", html: function (d) { const params = `?id=${d.id}`; return "<a href='/dashboard-player/" + params + "'>Show Details</a>" } }
   ];
   // create table
   $(selector).empty();
