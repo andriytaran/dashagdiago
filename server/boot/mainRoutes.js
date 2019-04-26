@@ -472,10 +472,15 @@ module.exports = app => {
     const parser = new Parser(req, response);
 
     const position = parser.parseParameter('position');
+    const highschoolGraduationYear = parser.parseOptionalParameter('highschoolGraduationYear');
     const type = parser.parseRequiredParameter('type');
 
     const queryBuilder = new es.QueryBuilder();
     queryBuilder.add(es.queryByTerm('position', position));
+    queryBuilder.add(es.queryByTerm(
+      'highschoolGraduationYear',
+      highschoolGraduationYear
+    ));
 
     const { athleteId, school, role } = req.user;
     let ID;
@@ -852,6 +857,14 @@ class Parser {
   parseParameter(param, part) {
     const value = parseParameter(param, this.req, part);
     this.response[param] = value;
+    return value;
+  }
+
+  parseOptionalParameter(param, part) {
+    const value = parseParameter(param, this.req, part);
+    if (value !== null) {
+      this.response[param] = value;
+    }
     return value;
   }
 
