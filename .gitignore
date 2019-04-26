@@ -17,6 +17,7 @@
 coverage
 node_modules
 docs
+data/*.csv
 npm-debug.log
 
 .vscode/*
