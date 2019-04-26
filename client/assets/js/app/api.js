@@ -27,6 +27,18 @@ function updateAPIData(props, cb) {
   });
 }
 
+function savePlayerInfo(props, cb) {
+  $.ajax({
+    type: "POST",
+    url: `/api/savePlayer`,
+    data: JSON.stringify(props),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
+
+
 function updateBenchmarks(position, benchmarks, factors, cb) {
   updateAPIData({
     type: "benchmarks",

@@ -1115,6 +1115,26 @@ async function getUser(email) {
   return res.hits.hits.map(hit => hit._source)[0];
 }
 
+async function getPlayer(school, athleteId) {
+  const res = await client.search({
+    index: school,
+    type: 'post',
+    body: {
+      query: {
+        match: {
+          id: athleteId,
+        },
+      },
+    },
+  });
+  return res.hits.hits.map(hit => hit._source)[0];
+}
+
+async function savePlayer(school, athleteId, player) {
+  await addOrUpdateDocument(school, { match: { id: athleteId } }, 'post', player);
+}
+
+
 async function getSchool(id) {
   const res = await client.search({
     index: 'schools',
@@ -1122,7 +1142,7 @@ async function getSchool(id) {
     body: {
       query: {
         terms: {
-          _id: [ id ],
+          _id: [id],
         }
       }
     },
@@ -1177,5 +1197,7 @@ module.exports = {
   getFactors,
   updatePillarsObj,
   getSchool,
-  getUser
+  getUser,
+  getPlayer,
+  savePlayer
 };

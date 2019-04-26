@@ -327,12 +327,25 @@ module.exports = app => {
   app.get('/addnewathlete', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
     const user = req.user || {};
+    const { athleteId, school, role } = req.user;
+
+    const athlete = await es.getPlayer(school, athleteId) || {};
+
     res.render('addnewplayer', {
       team: team.shortName,
       positions: positionF,
       teamDisplay: team.fullName,
       user,
+      athlete,
     });
+  });
+
+  app.post('/api/savePlayer', async function (req, res, next) {
+    const player = req.body;
+    const { athleteId, school, role } = req.user;
+
+    await es.savePlayer(school, athleteId, player);
+
   });
 
   // create custom pillar

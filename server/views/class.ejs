@@ -26,9 +26,7 @@
   <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
+  <script src="../updatedDesign/assets/js/jquery-3.4.0.min.js"></script>
   <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
   <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
 </head>
@@ -133,7 +131,7 @@
     getTopCulturalFitData(undefined, (res, status) => {
       if (status === 'success') {
 
-        res.players.forEach(player => {
+        res.players.forEach((player, index) => {
 
           const {
             fname,
@@ -153,7 +151,7 @@
                     </div>
                     <div class="col-md-1">
                       <div class="players-table__item">
-                        1
+                        ${index + 1}
                       </div>
                     </div>
                     <div class="col-md-2">
