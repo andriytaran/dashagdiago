@@ -19,6 +19,7 @@ node_modules
 docs
 data/*.csv
 npm-debug.log
+mydata.json
 
 .vscode/*
 !.vscode/launch.json
