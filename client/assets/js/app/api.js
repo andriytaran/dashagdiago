@@ -27,10 +27,10 @@ function updateAPIData(props, cb) {
   });
 }
 
-function savePlayerInfo(props, cb) {
+function updatePlayer(props, cb) {
   $.ajax({
     type: "POST",
-    url: `/api/savePlayer`,
+    url: `/api/updatePlayer`,
     data: JSON.stringify(props),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
@@ -38,6 +38,16 @@ function savePlayerInfo(props, cb) {
   });
 }
 
+function createPlayer(props, cb) {
+  $.ajax({
+    type: "POST",
+    url: `/api/createPlayer`,
+    data: JSON.stringify(props),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
 
 function updateBenchmarks(position, benchmarks, factors, cb) {
   updateAPIData({

@@ -329,6 +329,27 @@ module.exports = app => {
     const user = req.user || {};
     const { athleteId, school, role } = req.user;
 
+    let athlete = {};
+
+    if (athleteId) {
+      athlete = await es.getPlayer(school, athleteId) || {};
+    }
+
+
+    res.render('addnewplayer', {
+      team: team.shortName,
+      positions: positionF,
+      teamDisplay: team.fullName,
+      user,
+      athlete,
+    });
+  });
+
+  app.get('/oldAddnewathlete', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
+    const { athleteId, school, role } = req.user;
+
     const athlete = await es.getPlayer(school, athleteId) || {};
 
     res.render('addnewplayer', {
@@ -340,12 +361,16 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/savePlayer', async function (req, res, next) {
+  app.post('/api/updatePlayer', async function (req, res, next) {
     const player = req.body;
     const { athleteId, school, role } = req.user;
+    await es.updatePlayer(school, athleteId, player);
+  });
 
-    await es.savePlayer(school, athleteId, player);
-
+  app.post('/api/createPlayer', async function (req, res, next) {
+    const player = req.body;
+    const { school } = req.user;
+    await es.createPlayer(school, player);
   });
 
   // create custom pillar
@@ -423,6 +448,17 @@ module.exports = app => {
       user,
     });
   });
+
+  app.get('api/update-new-player', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
+    res.render('athleticbench', {
+      positions: positionF,
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
+    });
+  })
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?

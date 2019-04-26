@@ -10,6 +10,7 @@ $(document).ready( () => {
 
     $mainSection.on('click', () => {
         if($sidebar.hasClass('active')) {
+            $('.sidebar__dropdown .show').removeClass('show');
             $sidebar.removeClass('active');
         }
     });

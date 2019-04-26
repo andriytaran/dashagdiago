@@ -1130,10 +1130,14 @@ async function getPlayer(school, athleteId) {
   return res.hits.hits.map(hit => hit._source)[0];
 }
 
-async function savePlayer(school, athleteId, player) {
+async function updatePlayer(school, athleteId, player) {
   await addOrUpdateDocument(school, { match: { id: athleteId } }, 'post', player);
 }
 
+async function createPlayer(school, player) {
+  player.id = await fetchCount({}, school) + 1;
+  await addPlayer(school, player);
+}
 
 async function getSchool(id) {
   const res = await client.search({
@@ -1199,5 +1203,6 @@ module.exports = {
   getSchool,
   getUser,
   getPlayer,
-  savePlayer
+  createPlayer,
+  updatePlayer,
 };

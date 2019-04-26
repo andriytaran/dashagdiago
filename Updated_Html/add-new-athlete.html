@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <!-- <base href="/"> -->
+
+    <title>AgDiago</title>
+    <meta name="description" content="">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Template Basic Images Start -->
+    <meta property="og:image" content="path/to/image.jpg">
+    <link rel="icon" href="img/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+    <!-- Template Basic Images End -->
+
+    <!-- Custom Browsers Color Start -->
+    <meta name="theme-color" content="#F4F7FC">
+    <!-- Custom Browsers Color End -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.min.css">
+
+    <script src="assets/js/jquery-3.4.0.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+    <aside class="sidebar-wrap" id="sidebar">
+        <div class="sidebar">
+            <div class="sidebar__toggler" id="sidebarToggler">
+                <div class="sidebar__toggler-line"></div>
+                <div class="sidebar__toggler-arrow">
+                    <img src="img/toggle-btn.svg" alt="">
+                </div>
+            </div>
+            <div class="sidebar__heading">
+                View By
+            </div>
+            <div class="sidebar__nav accordion" id="sidebar-nav">
+                <div class="sidebar__nav-cat">
+                    <div class="sidebar__cat-heading" id="offsense">
+                        <h2 class="mb-0">
+                            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                                data-target="#offsenseCollapse" aria-expanded="false" aria-controls="offsenseCollapse">
+                                Offsense
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="offsenseCollapse" class="collapse" aria-labelledby="offsense" data-parent="#sidebar-nav">
+                        <div class="sidebar__cat-list" id="sidebarCategory">
+                            <div class="sidebar__dropdown dropdown">
+                                <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                                    data-target="#quarterback" aria-expanded="false" aria-controls="quarterback">
+                                    Quarterback
+                                </button>
+                                <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory"
+                                    id="quarterback" aria-labelledby="quarterback">
+                                    <div class="sidebar__cat-dropdown-list">
+                                        <a class="" href="#">Pro Style</a>
+                                        <a class="" href="#">Dual</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="sidebar__cat-item" href="#">Running Back</a>
+                            <a class="sidebar__cat-item" href="#">Wide Receiver</a>
+                            <a class="sidebar__cat-item" href="#">Offensive Guard</a>
+                            <div class="sidebar__dropdown dropdown">
+                                <button class="sidebar__cat-item" type="button" data-toggle="collapse"
+                                    data-target="#offensiveTackle" aria-expanded="false"
+                                    aria-controls="#offensiveTackle">
+                                    Offensive Tackle
+                                </button>
+                                <div class="sidebar__cat-item-dropdown collapse" data-parent="#sidebarCategory"
+                                    id="offensiveTackle" aria-labelledby="offensiveTackle">
+                                    <div class="sidebar__cat-dropdown-list">
+                                        <a class="" href="#">Zacch pickens</a>
+                                        <a class="" href="#">Steven faucheux</a>
+                                        <a class="" href="#">Josh Ellison</a>
+                                        <a class="" href="#">Jaden mckenzie</a>
+                                        <a class="" href="#">Siaki ika</a>
+                                        <a class="" href="#">Jadacjs logan</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="sidebar__cat-item" href="#">Offensive Center</a>
+                            <a class="sidebar__cat-item" href="#">Tight End</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar__nav-cat">
+                    <div class="sidebar__cat-heading" id="defense">
+                        <h2 class="mb-0">
+                            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                                data-target="#defenseCollapse" aria-expanded="false" aria-controls="defenseCollapse">
+                                Defense
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="defenseCollapse" class="collapse" aria-labelledby="defense" data-parent="#sidebar-nav">
+                        <div class="sidebar__cat-list">
+                            <a class="sidebar__cat-item" href="#">Defensive Line</a>
+                            <a class="sidebar__cat-item" href="#">Defensive End</a>
+                            <a class="sidebar__cat-item" href="#">Defensive Tackle</a>
+                            <a class="sidebar__cat-item" href="#">Outside Linebacker</a>
+                            <a class="sidebar__cat-item" href="#">Middle Linebacker</a>
+                            <a class="sidebar__cat-item" href="#">Inside Linebacker</a>
+                            <a class="sidebar__cat-item" href="#">Defensive Back</a>
+                            <a class="sidebar__cat-item" href="#">Safety</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar__nav-cat">
+                    <div class="sidebar__cat-heading" id="specialTeams">
+                        <h2 class="mb-0">
+                            <button class="sidebar__btn collapsed" type="button" data-toggle="collapse"
+                                data-target="#specialTeamsCollapse" aria-expanded="false"
+                                aria-controls="specialTeamsCollapse">
+                                Special Teams
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="specialTeamsCollapse" class="collapse" aria-labelledby="specialTeams"
+                        data-parent="#sidebar-nav">
+                        <div class="sidebar__cat-list">
+                            <a class="sidebar__cat-item" href="#">Punter</a>
+                            <a class="sidebar__cat-item" href="#">Kicker</a>
+                            <a class="sidebar__cat-item" href="#">Long Snapper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="wrap" id="mainSection">
+        <header class="header">
+            <div class="container-fluid px-5">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a href="index.html" class="header__left-b">
+                            <div class="header__logo"><img src="img/gobearcats-logo.svg" alt="GoBearCast.com"></div>
+                            <div class="header__heading">University of Cincinnati Coach</div>
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="header__right-b">
+                            <nav class="header__nav">
+                                <ul class="header__nav-list">
+                                    <li class="header__nav-item"><a class="header__nav-link" href="index.html">Home</a></li>
+                                    <li class="header__nav-item"><a class="header__nav-link" href="add-new-athlete.html">Add new Athlete
+                                            info</a></li>
+                                </ul>
+                            </nav>
+                            <div class="header__user-block">
+                                <div class="header__search">
+                                    <a href=""><img src="img/search-icon.svg" alt=""></a>
+                                </div>
+                                <div class="header__message">
+                                    <a href="" class="active"><img src="img/message-icon.svg" alt=""></a>
+                                </div>
+                                <a href="" class="header__user">
+                                    <img src="img/user-avatar.png" alt="Samanta" class="header__user-avatar">
+                                    <div class="header__user-name">Samanta</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="s-add-athlete">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="s-add-athlete__heading main-heading"><span>University of Cincinnati</span> New
+                            Athlete input</h1>
+                    </div>
+                    <div class="col-md-12 px-0">
+                        <form action="" method="POST" class="s-add-athlete__form form">
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">New athlete info input</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="position" class="form__group-label">Position</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="form__group-select custom-select ">
+                                                            <option value="" selected="selected">Kicker</option>
+                                                            <option>Defender</option>
+                                                            <option>Kicker</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">New athlete info input</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="firstName" class="form__group-label">First Name</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="firstName" name="firstName" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="lasttName" class="form__group-label">Last Name</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="firstName" name="lasttName" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="school" class="form__group-label">School</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="school" name="school" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="hometown" class="form__group-label">Hometown</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="hometown" name="hometown" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="state" class="form__group-label">State</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="state" name="state" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="hsgyear" class="form__group-label">High School Graduation year</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="hsgyear" name="hsgyear" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="collegeYear" class="form__group-label">College Year</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="collegeYear" name="collegeYear" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="multistportAthlete" class="form__group-label">Multisport Athelete</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="multistportAthlete" name="multistportAthlete" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="momParent" class="form__group-label">Mom Parent</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="momParent" name="momParent" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="dadParent" class="form__group-label">Dad Parent</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="dadParent" name="dadParent" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="grandmotherParent" class="form__group-label">Grandmother Parent</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="grandmotherParent" name="grandmotherParent" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="grandfatherParent" class="form__group-label">Grandfather Parent</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="grandfatherParent" name="grandfatherParent" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="twitter" class="form__group-label">Twitter</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="twitter" name="twitter" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="instagram" class="form__group-label">Instagram</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="instagram" name="instagram" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="facebook" class="form__group-label">Facebook</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="facebook" name="facebook" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="school" class="form__group-label">School</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="school" name="school" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="snapchat" class="form__group-label">Snapchat</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="snapchat" name="snapchat" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">Academic Info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="SAT" class="form__group-label">SAT</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="SAT" name="SAT" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="ACT" class="form__group-label">ACT</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="ACT" name="ACT" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="GPA" class="form__group-label">GPA</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="GPA" name="GPA" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="coreGPA" class="form__group-label">Core GPA</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="coreGPA" name="coreGPA" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">Academic Info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="SAT" class="form__group-label">SAT</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="SAT" name="SAT" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="ACT" class="form__group-label">ACT</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="ACT" name="ACT" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="GPA" class="form__group-label">GPA</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="GPA" name="GPA" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="coreGPA" class="form__group-label">Core GPA</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="coreGPA" name="coreGPA" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">Core attributes info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="competitiveness" class="form__group-label">Competitiveness</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="competitiveness" name="competitiveness" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="mastery" class="form__group-label">Mastery</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="mastery" name="mastery" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="persistence" class="form__group-label">Persistence</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="persistence" name="persistence" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="teamOrentation" class="form__group-label">Team orentation</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="teamOrentation" name="teamOrentation" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="workEthic" class="form__group-label">Work Ethic</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="workEthic" name="workEthic" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">Athletic info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="carries" class="form__group-label">Carries</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="carries" name="carries" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="mastery" class="form__group-label">Mastery</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="mastery" name="mastery" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="completations" class="form__group-label">Completations</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="completations" name="completations" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="interceptionsThrown" class="form__group-label">Interceptions Thrown</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="interceptionsThrown" name="interceptionsThrown" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="paasingYards" class="form__group-label">Paasing yards</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="paasingYards" name="paasingYards" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="recieptions" class="form__group-label">Recieptions</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="recieptions" name="recieptions" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="rushingTouchdowns" class="form__group-label">Rushing Touchdowns</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="rushingTouchdowns" name="rushingTouchdowns" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="rushingYards" class="form__group-label">Rushing yards</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="rushingYards" name="rushingYards" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="sacks" class="form__group-label">Sacks</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="sacks" name="sacks" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="soloTrackles" class="form__group-label">Solo Trackles</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="soloTrackles" name="soloTrackles" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="tracklessForLoss" class="form__group-label">Trackless for Loss</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="tracklessForLoss" name="tracklessForLoss" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="totalTrackles" class="form__group-label">Total Trackles</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="totalTrackles" name="totalTrackles" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="touchdownsThrown" class="form__group-label">Touchdowns Thrown</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="touchdownsThrown" name="touchdownsThrown" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="forty" class="form__group-label">Forty</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="forty" name="forty" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="gamesPlayed" class="form__group-label">Games Played</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="gamesPlayed" name="gamesPlayed" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="gamesStarted" class="form__group-label">Games Started</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="gamesStarted" name="gamesStarted" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="vertical" class="form__group-label">Vertical</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="vertical" name="vertical" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="weight" class="form__group-label">Weight</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="weight" name="weight" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc"> Emotional Info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="accountability" class="form__group-label">Accountability</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="accountability" name="accountability" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="behavior" class="form__group-label">Behavior</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="behavior" name="behavior" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="independence" class="form__group-label">Independence</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="independence" name="independence" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="reflection" class="form__group-label">Reflection</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="reflection" name="reflection" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="relationships" class="form__group-label">Relationships</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="relationships" name="relationships" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="responsibility" class="form__group-label">Responsibility</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="responsibility" name="responsibility" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="teamwork" class="form__group-label">Teamwork</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="teamwork" name="teamwork" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__block">
+                                <div class="form__block-header small-desc">Social profile Info</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form__group-wrap">
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="facebookSentiment" class="form__group-label">Facebook Sentiment</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="facebookSentiment" name="facebookSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="instagramFollowers" class="form__group-label">Instagram Followers</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="instagramFollowers" name="instagramFollowers" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="newsMediaCoverageMentions" class="form__group-label">News media Coverage mentions</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="newsMediaCoverageMentions" name="newsMediaCoverageMentions" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="newsMediaCoverageRegional" class="form__group-label">News media Coverage Regional</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="newsMediaCoverageRegional" name="newsMediaCoverageRegional" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="newsMediaCoverageSentiment" class="form__group-label">News media Coverage Sentiment</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="newsMediaCoverageSentiment" name="newsMediaCoverageSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="newsMediaCoverageNational" class="form__group-label">News media Coverage National</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="newsMediaCoverageNational" name="newsMediaCoverageNational" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="pressReleaseSentiment" class="form__group-label">Press release sentiment </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="pressReleaseSentiment" name="pressReleaseSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="pressReleaseSentimentCounter" class="form__group-label">Press release sentiment Counter </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="pressReleaseSentimentCounter" name="pressReleaseSentimentCounter" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="instagramSentiment" class="form__group-label">Instagram Sentiment</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="instagramSentiment" name="instagramSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="twitterSentiment" class="form__group-label">Twitter Sentiment</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="twitterSentiment" name="twitterSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form__group">
+                                                <div class="row">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <label for="twitterFollowers " class="form__group-label">Twitter Followers</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="twitterFollowers" name="twitterFollowers" class="form__group-input" placeholder="e.g. Ryan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form__submin-btn-block">
+                                <input type="submit" class="s-add-athlete__form-submit-btn form__submit-btn" value="Save">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/common.js"></script>
+
+</body>
+
+</html>

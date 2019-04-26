@@ -1,642 +1,895 @@
-<% layout('layout_main') -%>
-<div id="content" class="content">
-  <!-- begin breadcrumb -->
-  <ol class="breadcrumb pull-right">
-    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-    <li class="breadcrumb-item active">Dashboard</li>
-  </ol>
-  <!-- end breadcrumb -->
-  <!-- begin page-header -->
-  <h1 class="page-header">
-    <%=teamDisplay %> New Athlete Input Page</h1>
-  <!-- end page-header -->
-  <!-- begin row -->
-  <div class="row">
-    <!-- begin col-6 -->
-    <div class="col-lg-12">
-      <!-- begin panel -->
-      <div class="panel panel-inverse" id="basicInfo" data-sortable-id="index-7">
-        <div class="panel-heading">
-          <h4 class="panel-title">New Athlete info input</h4>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <!-- <base href="/"> -->
+
+  <title>AgDiago</title>
+  <meta name="description" content="">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Template Basic Images Start -->
+  <meta property="og:image" content="path/to/image.jpg">
+  <link rel="icon" href="img/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+  <!-- Template Basic Images End -->
+
+  <!-- Custom Browsers Color Start -->
+  <meta name="theme-color" content="#F4F7FC">
+  <!-- Custom Browsers Color End -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
+
+  <script src="../updatedDesign/assets/js/jquery-3.4.0.min.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+<%-partial('./partials/sidebarPositions')%>
+
+<div class="wrap" id="mainSection">
+
+  <%-partial('./partials/header')%>
+
+  <section class="s-add-athlete">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="s-add-athlete__heading main-heading"><span>University of Cincinnati</span> New
+            Athlete input</h1>
         </div>
-        <div class="panel-body">
-
-          <form id="coreform">
-            <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="pos">Position: </label>
-                <div class="col-md-9">
-                  <select class="form-control" id="pos">
-                    <% for(let i=0; i<positions.length; i++) { %>
-                    <option>
-                      <%= positions[i].title %>
-                    </option>
-                    <% } -%>
-                  </select>
-                </div>
-            </div>
-            <button class="accord" type="button">Basic Info</button>
-            <div class="pan">
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="fname">First Name</label>
-                  <div class="col-md-8">
-`                    <input class="form-control m-b-5" type="text" placeholder="e.g. Ryan" id="fname" value="<%= athlete.fname %>"/>
-                  </div>
-                </div>
-                <div class="form-group row m-b-15">
-                    <label class="col-form-label col-md-3" for="lname">Last Name</label>
-                    <div class="col-md-8">
-                      <input class="form-control m-b-5" type="text" placeholder="e.g. O Brian" id="lname" />
+        <div class="col-md-12 px-0">
+          <form action="" method="POST" class="s-add-athlete__form form">
+            <div class="form__block">
+              <div class="form__block-header small-desc">New athlete info input</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="position" class="form__group-label">Position</label>
+                        </div>
+                        <div class="col-md-9">
+                          <select class="form__group-select custom-select " id="position">
+                            <% for(let i=0; i<positions.length; i++) { %>
+                            <option>
+                              <%= positions[i].title %>
+                            </option>
+                            <% } -%>
+                          </select>
+                        </div>
+                      </div>
                     </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="school">School</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. Ninety Six HS" id="school" />
                   </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="hometown">Hometown</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. New York" id="hometown" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="state">State</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. SC" id="state" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="hsgradyear">Hight School Graduation Year</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. 2012" id="hsgradyear" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="collegeyear">College Year</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. 2" id="collegeyear" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="multisportathlete">Multisport Athlete</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. 0" id="multisportathlete" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="momparent">Mom Parent</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="momparent" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="dadparent">Dad Parent</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="dadparent" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="grandmother">Grandmother Parent</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="grandmother" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="grandfather">Grandfather Parent</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="grandfather" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="twitter">Twitter</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. https://twitter.com/..." id="twitter" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="instagram">Instagram</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. https://www.instagram.com/..." id="instagram" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="facebook">Facebook</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. https://www.facebook.com/..." id="facebook" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="snapchat">Snapchat</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="text" placeholder="e.g. https://www.snapchat.com/..." id="snapchat" />
-                  </div>
-              </div>
-
-            </div>
-
-          <button class="accord" type="button">Academic Info</button>
-          <div class="pan">
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="SAT">SAT</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 1332" id="sat" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="act">ACT</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 20" id="act" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="gpa">GPA</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 2.8" id="gpa" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="coregpa">Core GPA</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 3.23" id="coregpa" />
-                </div>
-              </div>
-          </div>
-
-          <button class="accord" type="button">Core Attributes Info</button>
-          <div class="pan">
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="competitiveness">Competitiveness</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 123" id="competitiveness" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="mastery">Mastery</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 87" id="mastery" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="persistence">Persistence</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 76" id="persistence" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="teamorientation">Team Orientation</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="teamorientation" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="workethic">Work Ethic</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 40" id="workethic" />
-                  </div>
-              </div>
-          </div>
-
-          <button class="accord" type="button">Athletic Info</button>
-          <div class="pan">
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="сarries">Carries</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 4" id="сarries" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="сompletions">Completions</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 12" id="сompletions" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="interceptionsthrown">Interceptions Thrown</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 33" id="interceptionsthrown" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="passingyards">Passing Yards</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 23.2" id="passingyards" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="recievingyards">Recieving Yards</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 44" id="recievingyards" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="receptions">Receptions</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 6" id="receptions" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="rushingtouchdowns">Rushing Touchdowns</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 9" id="rushingtouchdowns" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="rushingyards">Rushing Yards</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 12" id="rushingyards" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="sacks">Sacks</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 3" id="sacks" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="solotackles">Solo Tackles</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 53" id="solotackles" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="tacklesforloss">Tackles For Loss</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 32" id="tacklesforloss" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="totaltackles">Total Tackles</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 43" id="totaltackles" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="touchdownsthrown">Touchdowns Thrown</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 66" id="touchdownsthrown" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="forty">Forty</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 31.8" id="forty" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="gamesplayed">Games Played</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 72" id="gamesplayed" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="gamesstarted">Games Started</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 72" id="gamesstarted" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="height">Height</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 72.1" id="height" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="vertical">Vertical</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 14" id="vertical" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="weight">Weight</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 292" id="weight" />
-                  </div>
-              </div>
-          </div>
-
-          <button class="accord" type="button">Emotional Info</button>
-          <div class="pan">
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="accountability">Accountability</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 2" id="accountability" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="behavior">Behavior</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 10" id="behavior" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="independence">Independence</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 40" id="independence" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="reflection">Reflection</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 30" id="reflection" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="relationships">Relationships</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 20" id="relationships" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="responsibility">Responsibility</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 100" id="responsibility" />
-                  </div>
-              </div>
-              <div class="form-group row m-b-15">
-                  <label class="col-form-label col-md-3" for="teamwork">TeamWork</label>
-                  <div class="col-md-8">
-                    <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="teamwork" />
-                  </div>
-              </div>
-          </div>
-
-            <button class="accord" type="button">Social Profile Info</button>
-            <div class="pan">
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="facebooksentiment">Facebook Sentiment</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 30" id="facebooksentiment" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="instagramfollowers">Instagram Followers</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 12" id="instagramfollowers" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="newsmediacoveragementions">News Media Coverage mentions</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 42" id="newsmediacoveragementions" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="newsmediacoverageregional">News Media Coverage Regional</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="newsmediacoverageregional" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="newsmediacoveragesentiment">News Media Coverage Sentiment</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 22" id="newsmediacoveragesentiment" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="newsmediacoveragenational">News Media coverage National</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 31" id="newsmediacoveragenational" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="pressreleasesentiment">Press Release Sentiment</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 1" id="pressreleasesentiment" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="pressreleasesentimentcounter">Press Release Sentiment Counter</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 2" id="pressreleasesentimentcounter" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="instagramsentiment">Instagram Sentiment</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 39" id="instagramsentiment" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="twittersentiment">Twitter Sentiment</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 81" id="twittersentiment" />
-                </div>
-              </div>
-              <div class="form-group row m-b-15">
-                <label class="col-form-label col-md-3" for="twitterfollowers">Twitter Followers</label>
-                <div class="col-md-8">
-                  <input class="form-control m-b-5" type="number" placeholder="e.g. 0" id="twitterfollowers" />
                 </div>
               </div>
             </div>
-            <div class="form-group row m-b-15" style="display: flex;flex-direction: row;align-items: center;">
-              <div class="subbtn col-md-5"><input type="button" class="btn btn-lime" id="newathleteinfo_submit" value="Submit"></div>
+            <div class="form__block">
+              <div class="form__block-header small-desc">New athlete info input</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="firstName" class="form__group-label">First Name</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="firstName" name="firstName" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="lasttName" class="form__group-label">Last Name</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="lastName" name="lastName" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="school" class="form__group-label">School</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="school" name="school" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="hometown" class="form__group-label">Hometown</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="hometown" name="hometown" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="state" class="form__group-label">State</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="state" name="state" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="hsgyear" class="form__group-label">High School Graduation year</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="hsgyear" name="hsgyear" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="collegeYear" class="form__group-label">College Year</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="collegeYear" name="collegeYear" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="multistportAthlete" class="form__group-label">Multisport Athelete</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="multistportAthlete" name="multistportAthlete" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="momParent" class="form__group-label">Mom Parent</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="momParent" name="momParent" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="dadParent" class="form__group-label">Dad Parent</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="dadParent" name="dadParent" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="grandmotherParent" class="form__group-label">Grandmother Parent</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="grandmotherParent" name="grandmotherParent" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="grandfatherParent" class="form__group-label">Grandfather Parent</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="grandfatherParent" name="grandfatherParent" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="twitter" class="form__group-label">Twitter</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="twitter" name="twitter" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="instagram" class="form__group-label">Instagram</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="instagram" name="instagram" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="facebook" class="form__group-label">Facebook</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="facebook" name="facebook" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="school" class="form__group-label">School</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="school" name="school" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="snapchat" class="form__group-label">Snapchat</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="text" id="snapchat" name="snapchat" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form__block">
+              <div class="form__block-header small-desc">Academic Info</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="SAT" class="form__group-label">SAT</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="SAT" name="SAT" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="ACT" class="form__group-label">ACT</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="ACT" name="ACT" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="GPA" class="form__group-label">GPA</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="GPA" name="GPA" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="coreGPA" class="form__group-label">Core GPA</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="coreGPA" name="coreGPA" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form__block">
+              <div class="form__block-header small-desc">Core attributes info</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="competitiveness" class="form__group-label">Competitiveness</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="competitiveness" name="competitiveness" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="mastery" class="form__group-label">Mastery</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="mastery" name="mastery" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="persistence" class="form__group-label">Persistence</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="persistence" name="persistence" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="teamOrentation" class="form__group-label">Team orentation</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="teamOrentation" name="teamOrentation" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="workEthic" class="form__group-label">Work Ethic</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="workEthic" name="workEthic" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form__block">
+              <div class="form__block-header small-desc">Athletic info</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="carries" class="form__group-label">Carries</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="carries" name="carries" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="mastery" class="form__group-label">Mastery</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="mastery" name="mastery" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="completations" class="form__group-label">Completations</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="completations" name="completations" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="interceptionsThrown" class="form__group-label">Interceptions Thrown</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="interceptionsThrown" name="interceptionsThrown" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="paasingYards" class="form__group-label">Paasing yards</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="paasingYards" name="paasingYards" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="recieptions" class="form__group-label">Recieptions</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="recieptions" name="recieptions" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="rushingTouchdowns" class="form__group-label">Rushing Touchdowns</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="rushingTouchdowns" name="rushingTouchdowns" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="rushingYards" class="form__group-label">Rushing yards</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="rushingYards" name="rushingYards" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="sacks" class="form__group-label">Sacks</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="sacks" name="sacks" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="soloTrackles" class="form__group-label">Solo Trackles</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="soloTrackles" name="soloTrackles" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="tracklessForLoss" class="form__group-label">Trackless for Loss</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="tracklessForLoss" name="tracklessForLoss" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="totalTrackles" class="form__group-label">Total Trackles</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="totalTrackles" name="totalTrackles" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="touchdownsThrown" class="form__group-label">Touchdowns Thrown</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="touchdownsThrown" name="touchdownsThrown" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="forty" class="form__group-label">Forty</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="forty" name="forty" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="gamesPlayed" class="form__group-label">Games Played</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="gamesPlayed" name="gamesPlayed" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="gamesStarted" class="form__group-label">Games Started</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="gamesStarted" name="gamesStarted" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="vertical" class="form__group-label">Vertical</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="vertical" name="vertical" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="weight" class="form__group-label">Weight</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="weight" name="weight" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form__block">
+              <div class="form__block-header small-desc"> Emotional Info</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="accountability" class="form__group-label">Accountability</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="accountability" name="accountability" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="behavior" class="form__group-label">Behavior</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="behavior" name="behavior" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="independence" class="form__group-label">Independence</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="independence" name="independence" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="reflection" class="form__group-label">Reflection</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="reflection" name="reflection" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="relationships" class="form__group-label">Relationships</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="relationships" name="relationships" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="responsibility" class="form__group-label">Responsibility</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="responsibility" name="responsibility" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="teamwork" class="form__group-label">Teamwork</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="teamwork" name="teamwork" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form__block">
+              <div class="form__block-header small-desc">Social profile Info</div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form__group-wrap">
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="facebookSentiment" class="form__group-label">Facebook Sentiment</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="facebookSentiment" name="facebookSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="instagramFollowers" class="form__group-label">Instagram Followers</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="instagramFollowers" name="instagramFollowers" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="newsMediaCoverageMentions" class="form__group-label">News media Coverage mentions</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="newsMediaCoverageMentions" name="newsMediaCoverageMentions" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="newsMediaCoverageRegional" class="form__group-label">News media Coverage Regional</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="newsMediaCoverageRegional" name="newsMediaCoverageRegional" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="newsMediaCoverageSentiment" class="form__group-label">News media Coverage Sentiment</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="newsMediaCoverageSentiment" name="newsMediaCoverageSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="newsMediaCoverageNational" class="form__group-label">News media Coverage National</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="c" name="newsMediaCoverageNational" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="pressReleaseSentiment" class="form__group-label">Press release sentiment </label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="pressReleaseSentiment" name="pressReleaseSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="pressReleaseSentimentCounter" class="form__group-label">Press release sentiment Counter </label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="pressReleaseSentimentCounter" name="pressReleaseSentimentCounter" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="instagramSentiment" class="form__group-label">Instagram Sentiment</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="instagramSentiment" name="instagramSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="twitterSentiment" class="form__group-label">Twitter Sentiment</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="twitterSentiment" name="twitterSentiment" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="twitterFollowers " class="form__group-label">Twitter Followers</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="twitterFollowers" name="twitterFollowers" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form__submin-btn-block">
+              <input id="newathleteinfo_submit" type="button" class="s-add-athlete__form-submit-btn form__submit-btn" value="Save">
             </div>
           </form>
         </div>
       </div>
-      <!-- end panel -->
     </div>
-    <!-- end col-6 -->
-  </div>
-  <!-- end row -->
+  </section>
 </div>
 
+<script src="../updatedDesign/constants.js"></script>
+<script src="/../assets/js/app/api.js"></script>
+<script src="../updatedDesign/js/common.js"></script>
+<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+
 <script>
-  var accord = document.getElementsByClassName("accord");
-  var i;
-  for (i = 0; i < accord.length; i++) {
-    accord[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      let panel = this.nextElementSibling;
-      if (panel.style.display === "block") {
-        panel.style.display = "none";
-      } else {
-        panel.style.display = "block";
-      }
-    });
-  }
+
   document.getElementById('newathleteinfo_submit').addEventListener('click', function () {
     submit();
   });
 
-
-  const positions = [
-    {title: 'Quarterback', value: 'QB'},
-    {title: 'Running Back', value: 'RB'},
-    {title: 'Wide Receiver', value: 'WR'},
-    {title: 'Offensive Line', value: 'OL'},
-    {title: 'Defensive Line', value: 'DL'},
-    {title: 'Tight End', value: 'TE'},
-    {title: 'Linebacker', value: 'LB'},
-    {title: 'Corner Back', value: 'CB'},
-    {title: 'Kicker', value: 'K'},
-    {title: 'Defensive End', value: 'DE'},
-    {title: 'Defensive Tackle', value: 'DT'},
-    {title: 'Offensive Guard', value: 'OG'},
-    {title: 'Offensive Tackler', value: 'OT'},
-    {title: 'Defensive Back', value: 'DB'},
-    {title: 'Punter', value: 'P'},
-    {title: 'Safety', value: 'S'},
-    {title: 'Long Snapper', value: 'LS'},
-  ]
-
   function submit() {
-    let position = document.getElementById("pos").value;
-    let fnameVal = document.getElementById("fname").value;
-    let lnameVal = document.getElementById("lname").value;
-    let schoolVal = document.getElementById("school").value;
-    let hometownVal = document.getElementById("hometown").value;
-    let stateVal = document.getElementById("state").value;
-    let hsgradyearVal = document.getElementById("hsgradyear").value;
-    let collegeyearVal = document.getElementById("collegeyear").value;
-    let multisportathleteVal = document.getElementById("multisportathlete").value;
-    let momparentVal = document.getElementById("momparent").value;
-    let dadparentVal = document.getElementById("dadparent").value;
-    let grandmotherVal = document.getElementById("grandmother").value;
-    let grandfatherVal = document.getElementById("grandfather").value;
-    let twitterVal = document.getElementById("twitter").value;
-    let instagramVal = document.getElementById("instagram").value;
-    let facebookVal = document.getElementById("facebook").value;
-    let snapchatVal = document.getElementById("snapchat").value;
-    let satVal = document.getElementById("sat").value;
-    let actVal = document.getElementById("act").value;
-    let gpaVal = document.getElementById("gpa").value;
-    let coregpaVal = document.getElementById("coregpa").value;
-    let competitivenessVal = document.getElementById("competitiveness").value;
-    let masteryVal = document.getElementById("mastery").value;
-    let persistenceVal = document.getElementById("persistence").value;
-    let teamorientationVal = document.getElementById("teamorientation").value;
-    let workethicVal = document.getElementById("workethic").value;
-    let сarriesVal = document.getElementById("сarries").value;
-    let completionsVal = document.getElementById("сompletions").value;
-    let interceptionsthrownVal = document.getElementById("interceptionsthrown").value;
-    let passingyardsVal = document.getElementById("passingyards").value;
-    let recievingyardsVal = document.getElementById("recievingyards").value;
-    let receptionsVal = document.getElementById("receptions").value;
-    let rushingtouchdownsVal = document.getElementById("rushingtouchdowns").value;
-    let sacksVal = document.getElementById("sacks").value;
-    let solotacklesVal = document.getElementById("solotackles").value;
-    let tacklesforlossVal = document.getElementById("tacklesforloss").value;
-    let totaltacklesVal = document.getElementById("totaltackles").value;
-    let touchdownsthrownVal = document.getElementById("touchdownsthrown").value;
-    let fortyVal = document.getElementById("forty").value;
-    let gamesplayedVal = document.getElementById("gamesplayed").value;
-    let gamesstartedVal = document.getElementById("gamesstarted").value;
-    let heightVal = document.getElementById("height").value;
-    let verticalVal = document.getElementById("vertical").value;
-    let weightVal = document.getElementById("weight").value;
-    let accountabilityVal = document.getElementById("accountability").value;
-    let behaviorVal = document.getElementById("behavior").value;
-    let independenceVal = document.getElementById("independence").value;
-    let reflectionVal = document.getElementById("reflection").value;
-    let relationshipsVal = document.getElementById("relationships").value;
-    let responsibilityVal = document.getElementById("responsibility").value;
-    let teamworkVal = document.getElementById("teamwork").value;
-    let facebooksentimentVal = document.getElementById("facebooksentiment").value;
-    let instagramfollowersVal = document.getElementById("instagramfollowers").value;
-    let newsmediacoveragementionsVal = document.getElementById("newsmediacoveragementions").value;
-    let newsmediacoverageregionalVal = document.getElementById("newsmediacoverageregional").value;
-    let newsmediacoveragesentimentVal = document.getElementById("newsmediacoveragesentiment").value;
-    let newsmediacoveragenationalVal = document.getElementById("newsmediacoveragenational").value;
-    let pressreleasesentimentVal = document.getElementById("pressreleasesentiment").value;
-    let pressreleasesentimentcounterVal = document.getElementById("pressreleasesentimentcounter").value;
-    let instagramsentimentVal = document.getElementById("instagramsentiment").value;
-    let twittersentimentVal = document.getElementById("twittersentiment").value;
-    let twitterfollowersVal = document.getElementById("twitterfollowers").value;
 
-
-    const athleteattr = {
-      position: position,
-      fname: fnameVal,
-      lname: lnameVal,
-      school: schoolVal,
-      hometown: hometownVal,
-      state: stateVal,
-      highschoolGraduationYea: parseFloat(hsgradyearVal),
-      collegeYear: parseFloat(collegeyearVal),
-      multisportAthlete: parseFloat(multisportathleteVal),
-      momParent: parseFloat(momparentVal),
-      dadParent: parseFloat(dadparentVal),
-      grandmotherParent: parseFloat(grandmotherVal),
-      grandfatherParent: parseFloat(grandfatherVal),
-      twitter: parseFloat(twitterVal),
-      instagram: parseFloat(instagramVal),
-      facebook: parseFloat(facebookVal),
-      snapchat: parseFloat(snapchatVal),
-      sat: parseFloat(satVal),
-      act: parseFloat(actVal),
-      gpa: parseFloat(gpaVal),
-      coreGpa: parseFloat(coregpaVal),
-      coreAttributesCompetitiveness: parseFloat(competitivenessVal),
-      coreAttributesMastery: parseFloat(masteryVal),
-      coreAttributesPersistence: parseFloat(persistenceVal),
-      coreAttributesTeamOrientation: parseFloat(teamorientationVal),
-      coreAttributesWorkEthic: parseFloat(workethicVal),
-      сarries: parseFloat(сarriesVal),
-      completions: parseFloat(completionsVal),
-      interceptionsThrown: parseFloat(interceptionsthrownVal),
-      passingYards: parseFloat(passingyardsVal),
-      recievingYards: parseFloat(recievingyardsVal),
-      receptions: parseFloat(receptionsVal),
-      rushingTouchdowns: parseFloat(rushingtouchdownsVal),
-      sacks: parseFloat(sacksVal),
-      soloTackles: parseFloat(solotacklesVal),
-      tacklesForLoss: parseFloat(tacklesforlossVal),
-      totalTackles: parseFloat(totaltacklesVal),
-      touchdownsThrown: parseFloat(touchdownsthrownVal),
-      forty: parseFloat(fortyVal),
-      gamesPlayed: parseFloat(gamesplayedVal),
-      gamesStarted: parseFloat(gamesstartedVal),
-      height: parseFloat(heightVal),
-      vertical: parseFloat(verticalVal),
-      weight: parseFloat(weightVal),
-      emotionalIntelAccountability: parseFloat(accountabilityVal),
-      emotionalIntelBehavior: parseFloat(behaviorVal),
-      emotionalIntelIndependence: parseFloat(independenceVal),
-      emotionalIntelReflection: parseFloat(reflectionVal),
-      emotionalIntelRelationships: parseFloat(relationshipsVal),
-      emotionalIntelResponsibility: parseFloat(responsibilityVal),
-      emotionalIntelTeamwork: parseFloat(teamworkVal),
-      facebookSentiment: parseFloat(facebooksentimentVal),
-      instagramFollowers: parseFloat(instagramfollowersVal),
-      newsmediaCoverageMentions: parseFloat(newsmediacoveragementionsVal),
-      newsmediaCoverageRegional: parseFloat(newsmediacoverageregionalVal),
-      newsmediaCoverageSentiment: parseFloat(newsmediacoveragesentimentVal),
-      newsmediaCoverageNational: parseFloat(newsmediacoveragenationalVal),
-      pressReleaseSentiment: parseFloat(pressreleasesentimentVal),
-      pressReleaseSentimentCounter: parseFloat(pressreleasesentimentcounterVal),
-      instagramSentiment: parseFloat(instagramsentimentVal),
-      twitterSentiment: parseFloat(twittersentimentVal),
-      twitterFollowers: parseFloat(twitterfollowersVal)
+    const getString = elementId => {
+      const elem = document.getElementById(elementId);
+      if (elem) {
+        return elem.value
+      }
+      return null
     };
 
-    savePlayerInfo(athleteattr)
+    const getFloat = elementId => {
+      const elem = document.getElementById(elementId);
+      if (elem) {
+        const float = parseFloat(elem.value);
+        return isNaN(float) ? null : float;
+      }
+      return null
+    }
+
+    let pos = getString('position');
+    const position = positions.reduce(function(acc, elem){
+      if (elem.title === pos){
+        acc = elem.value
+      }
+      return acc
+    }, 'QB')
+
+    const athleteInfo = {
+      fname: getString('firstName'),
+      lname: getString('lastName'),
+      twitter: getFloat('twitter'),
+      instagram: getFloat('instagram'),
+      snapchat: getFloat('snapchat'),
+      position,
+      offenseDefense: getFloat('-'),
+      facebook: getFloat('facebook'),
+      // school: getString('school'),
+      hometown: getString('hometown'),
+      state: getString('state'),
+      height: getFloat('-'),
+      weight: getFloat('weight'),
+      highschoolGraduationYear: getFloat('hsgyear'),
+      collegeYear: getFloat('collegeYear'),
+      momParent: getFloat('momParent'),
+      dadParent: getFloat('dadParent'),
+      grandmotherParent: getFloat('grandmotherParent'),
+      grandfatherParent: getFloat('grandfatherParent'),
+      guardian: getFloat('guardian'),
+      multisportAthlete: getFloat('multistportAthlete'),
+      forty: getFloat('forty'),
+      vertical: getFloat('vertical'),
+      gamesStarted: getFloat('gamesStarted'),
+      gamesPlayed: getFloat('gamesPlayed'),
+      completions: getFloat('completations'),
+      attempts: getFloat('-'),
+      passingYards: getFloat('paasingYards'),
+      touchdownsThrown: getFloat('touchdownsThrown'),
+      interceptionsThrown: getFloat('interceptionsThrown'),
+      kickoffYards: getFloat('-'),
+      averageKickoff: getFloat('-'),
+      touchBacks: getFloat('-'),
+      totalPuntYards: getFloat('-'),
+      averagePunt: getFloat('-'),
+      fieldGoalPercentage: getFloat('-'),
+      carries: getFloat('carries'),
+      rushingYards: getFloat('rushingYards'),
+      rushingTouchdowns: getFloat('rushingTouchdowns'),
+      receptions: getFloat('recieptions'),
+      receivingYards: getFloat('-'),
+      recievingTouchdowns: getFloat('-'),
+      soloTackles: getFloat('soloTrackles'),
+      totalTackles: getFloat('totalTrackles'),
+      sacks: getFloat('sacks'),
+      tacklesForLoss: getFloat('tracklessForLoss'),
+      interceptions: getFloat('-'),
+      gpa: getFloat('GPA'),
+      sat: getFloat('SAT'),
+      act: getFloat('ACT'),
+      coreGpa: getFloat('coreGPA'),
+      emotionalIntelBehavior: getFloat('behavior'),
+      emotionalIntelReflection: getFloat('reflection'),
+      emotionalIntelTeamWork: getFloat('teamwork'),
+      emotionalIntelRelationships: getFloat('relationships'),
+      emotionalIntelAccountability: getFloat('accountability'),
+      emotionalIntelResponsibility: getFloat('responsibility'),
+      emotionalIntelIndependence: getFloat('independence'),
+      socialTwitterSentiment: getFloat('twitterSentiment'),
+      twitterFollowers: getFloat('twitterFollowers'),
+      socialInstagramSentiment: getFloat('instagramSentiment'),
+      instagramFollowers: getFloat('instagramFollowers'),
+      facebookSentiment: getFloat('facebookSentiment'),
+      newsMediaCoverageSentiment: getFloat('newsMediaCoverageSentiment'),
+      newsMediaCoverageMentions: getFloat('newsMediaCoverageMentions'),
+      newsMediaCoverageNational: getFloat('newsMediaCoverageNational'),
+      newsMediaCoverageRegional: getFloat('newsMediaCoverageRegional'),
+      pressReleaseSentiment: getFloat('pressReleaseSentiment'),
+      pressReleaseSentimentCounter: getFloat('pressReleaseSentimentCounter'),
+      coreAttributesCompetitiveness: getFloat('competitiveness'),
+      coreAttributesPersistence: getFloat('persistence'),
+      coreAttributesWorkEthic: getFloat('workEthic'),
+      coreAttributesTeamOrientation: getFloat('teamOrentation'),
+      coreAttributesMastery: getFloat('mastery'),
+      coreAttributesOverallScore: getFloat('-')
+    }
+
+    createPlayer(athleteInfo)
   }
 
 </script>
 
-<!--<% stylesheet('/../assets/css/common.css') -%>-->
-<!--<% stylesheet('/../assets/css/barchart.css') -%>-->
-<!--<% stylesheet('/../assets/css/newathlete.css') -%>-->
-<!--<% stylesheet('/../assets/css/login.css') -%>-->
-<!--<% stylesheet('/../assets/css/home.css') -%>-->
-<!--<% stylesheet('/../assets/css/table.css') -%>-->
-<!--<% script('/../assets/plugins/ejs/ejs.js') -%>-->
-<!--<% script('/../assets/js/app/utils.js') -%>-->
-<!--<% script('/../assets/js/app/api-mapper.js') -%>-->
-<!--<% script('/../assets/js/app/api.js') -%>-->
-<!--<% script('/../assets/js/app/domain.js') -%>-->
-<!--<% script('/../assets/js/app/components/overall-score-section.js') -%>-->
-<!--<% script('/../assets/js/app/components/core-attributes-section.js') -%>-->
-<!--<% script('/../assets/js/app/components/academic-attributes-section.js') -%>-->
-<!--<% script('/../assets/js/app/components/social-profile-attributes-section.js') -%>-->
-<!--<% script('/../assets/js/app/components/emotional-intel-attributes-section.js') -%>-->
-<!--<% script('/../assets/js/app/components/athletic-attributes-section.js') -%>-->
-<!--<% script('/../assets/js/app/draw/draw-table.js') -%>-->
-<!--<% script('/../assets/js/app/draw/draw-overall.js') -%>-->
-<!--<% script('/../assets/js/app/draw/draw-bar-chart.js') -%>-->
-<!--<% script('/../assets/js/app/draw/draw-top-culturals.js') -%>-->
-<!--<% script('/../assets/js/app/draw/draw-pie-chart.js') -%>-->
-<!--<% script('/../assets/js/app/home.js') -%>-->
+
+</body>
+
+</html>
