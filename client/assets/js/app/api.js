@@ -49,6 +49,13 @@ function createPlayer(props, cb) {
   });
 }
 
+function getClasses(cb) {
+  getAPIData({
+    type: "players",
+    attribute:"highschoolGraduationYear",
+  }, cb);
+}
+
 function updateBenchmarks(position, benchmarks, factors, cb) {
   updateAPIData({
     type: "benchmarks",

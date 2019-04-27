@@ -44,19 +44,7 @@
       <div class="col-md-12">
         <h4 class="s-main__full-view">Full view of players</h4>
         <div class="s-main__class-block">
-          <div class="row">
-            <div class="col-md-3">
-              <a href="/class" class="s-main__class blue"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">2020 <span>Class</span>	</div></a>
-            </div>
-            <div class="col-md-3">
-              <a href="/class" class="s-main__class green"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">2021 <span>Class</span>	</div></a>
-            </div>
-            <div class="col-md-3">
-              <a href="/class" class="s-main__class red"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">2022 <span>Class</span>	</div></a>
-            </div>
-            <div class="col-md-3">
-              <a href="/class" class="s-main__my-recruits orange"><div class="s-main__my-recruits-heading">Lorem</div>My Recruits</a>
-            </div>
+          <div id="classes-buttons" class="row">
           </div>
         </div>
         <div class="row">
@@ -186,7 +174,44 @@
   </div>
 </section>
 
+<script src="/../assets/js/app/api.js"></script>
 <script src="../updatedDesign/js/common.js"></script>
+<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    getClasses((res, status) => {
+
+      const colors = ['blue', 'green', 'red'];
+
+      if (status === 'success') {
+        const classes = res.players.reduce((acc, elem) => {
+          if (!acc.includes(elem.value)) {
+            if (elem.value) {
+              return [...acc, elem.value];
+            }
+          }
+          return acc;
+        }, []);
+
+        const html = classes.map((elem, i) => {
+          const color = colors[i % colors.length];
+          return `<div class="col-md-3">
+              <a href="/class" class="s-main__class ${color}"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">${elem} <span>Class</span>	</div></a>
+            </div>`;
+        });
+
+        html.push(`<div class="col-md-3">
+              <a href="/class" class="s-main__class orange"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">My recruits</div></a>
+            </div>`);
+
+        $('#classes-buttons').html(html.join(''));
+      }
+    });
+  });
+
+</script>
 
 </body>
 
