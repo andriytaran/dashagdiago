@@ -43,7 +43,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="s-player-dashboard__heading main-heading"><span>Player,</span> Dashboard</h1>
+          <h1 class="s-player-dashboard__heading main-heading"><a href="/class">All classes</a></h1>
+          <h1 id="dashboard-name" class="s-player-dashboard__heading main-heading"></h1>
         </div>
         <div class="col-md-12">
           <h4 class="s-player-dashboard__full-view">Full view of players</h4>
@@ -128,7 +129,23 @@
 
 <script>
   $(document).ready(function () {
-    getTopCulturalFitData(undefined, (res, status) => {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(window.location);
+
+    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || undefined;
+
+    let header;
+
+    if (highschoolGraduationYear){
+      header = `<span>${highschoolGraduationYear} class,</span> Dashboard`
+    } else {
+      header = `<span>All classes,</span> Dashboard`
+    }
+
+    $('#dashboard-name').html(header);
+
+    getTopCulturalFitData(undefined, highschoolGraduationYear, (res, status) => {
       if (status === 'success') {
 
         res.players.forEach((player, index) => {

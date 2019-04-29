@@ -134,8 +134,17 @@
     const urlParams = new URLSearchParams(window.location.search);
 
     let position = (urlParams.get("position") || "").toUpperCase();
+    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || undefined;
 
-    $("#dashboard-position-page-header").html(`<span>${position}</span> Position Dashboard`);
+    let header;
+
+    if (highschoolGraduationYear){
+      header = `<span>${position} </span> Position Dashboard for ${highschoolGraduationYear} class`
+    } else {
+      header = `<span>${position} </span> Position Dashboard for all classes`
+    }
+
+    $("#dashboard-position-page-header").html(header);
     $("#dashboard-position-table-header").html(`Top 10 ${position} Players`);
 
     getCulturalFitData(position, (res, status) => {
@@ -163,7 +172,7 @@
       }
     })
 
-    getTopCulturalFitData(position, (res, status) => {
+    getTopCulturalFitData(position, highschoolGraduationYear, (res, status) => {
       if (status === 'success') {
 
         const { players = [] } = res;

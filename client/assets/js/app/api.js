@@ -151,10 +151,11 @@ function getCulturalFitModalTableData(position, valueStart, valueEnd, cb) {
   }, cb);
 }
 
-function getTopCulturalFitData(position, cb) {
+function getTopCulturalFitData(position, highschoolGraduationYear, cb) {
   getAPIData({
     type: "players",
     position: position,
+    highschoolGraduationYear,
     sort: "desc",
     attribute: "overallScore",
     limit: 10

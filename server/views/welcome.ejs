@@ -198,7 +198,7 @@
         const html = classes.map((elem, i) => {
           const color = colors[i % colors.length];
           return `<div class="col-md-3">
-              <a href="/class" class="s-main__class ${color}"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">${elem} <span>Class</span>	</div></a>
+              <a href="/class?&highschoolGraduationYear=${elem}" class="s-main__class ${color}"><div class="s-main__class-heading">Lorem</div><div class="s-main__class-number">${elem} <span>Class</span>	</div></a>
             </div>`;
         });
 
