@@ -43,7 +43,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="s-player-dashboard__heading main-heading"><a href="/class">All classes</a></h1>
+          <h1 id="dashboard-switch-class"  class="s-player-dashboard__heading main-heading"></h1>
           <h1 id="dashboard-name" class="s-player-dashboard__heading main-heading"></h1>
         </div>
         <div class="col-md-12">
@@ -131,13 +131,13 @@
   $(document).ready(function () {
 
     const urlParams = new URLSearchParams(window.location.search);
-    console.log(window.location);
 
-    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || undefined;
+    let allClasses = urlParams.get("allClasses");
+    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
     let header;
 
-    if (highschoolGraduationYear){
+    if (highschoolGraduationYear && highschoolGraduationYear !== "ALL" && !allClasses){
       header = `<span>${highschoolGraduationYear} class,</span> Dashboard`
     } else {
       header = `<span>All classes,</span> Dashboard`
@@ -145,7 +145,11 @@
 
     $('#dashboard-name').html(header);
 
-    getTopCulturalFitData(undefined, highschoolGraduationYear, (res, status) => {
+    const links = `<a href="/class?highschoolGraduationYear=${highschoolGraduationYear}&allClasses=${1}">All classes</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="/class?highschoolGraduationYear=${highschoolGraduationYear}">Current class</a> `
+
+    $('#dashboard-switch-class').html(links);
+
+    getTopCulturalFitData(undefined, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
       if (status === 'success') {
 
         res.players.forEach((player, index) => {
@@ -193,7 +197,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="players-table__item btn-block">
-                        <a href="/dashboard-player/?id=${id}"><button class="showdetails-btn">Show Details</button></a>
+                        <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}"><button class="showdetails-btn">Show Details</button></a>
                       </div>
                     </div>
                   </div>

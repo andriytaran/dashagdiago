@@ -43,6 +43,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <h1 id="dashboard-switch-class"  class="s-player-dashboard__heading main-heading"></h1>
           <h1 id="dashboard-position-page-header" class="top-de-dashboard__heading main-heading"></h1>
         </div>
         <div class="col-md-12">
@@ -134,14 +135,22 @@
     const urlParams = new URLSearchParams(window.location.search);
 
     let position = (urlParams.get("position") || "").toUpperCase();
-    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || undefined;
+
+    const allClasses = urlParams.get("allClasses");
+
+    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
     let header;
 
-    if (highschoolGraduationYear){
-      header = `<span>${position} </span> Position Dashboard for ${highschoolGraduationYear} class`
+    const links = `<a href="/dashboard-position/?position=${position}&highschoolGraduationYear=${highschoolGraduationYear}&allClasses=${1}">All classes</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="/dashboard-position/?position=${position}&highschoolGraduationYear=${highschoolGraduationYear}">Current class</a> `
+
+    $('#dashboard-switch-class').html(links);
+
+
+    if (highschoolGraduationYear && highschoolGraduationYear !== "All" && !allClasses){
+      header = `<span>${highschoolGraduationYear} class </span> <span>${position} </span> Position Dashboard `
     } else {
-      header = `<span>${position} </span> Position Dashboard for all classes`
+      header = `<span>All classes ${position} </span> Position Dashboard`
     }
 
     $("#dashboard-position-page-header").html(header);
@@ -172,10 +181,14 @@
       }
     })
 
-    getTopCulturalFitData(position, highschoolGraduationYear, (res, status) => {
+    getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
       if (status === 'success') {
 
         const { players = [] } = res;
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
         const html = players.map((player, index) => {
 
@@ -215,7 +228,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="players-table__item btn-block">
-                        <a href="/dashboard-player/?id=${id}"><button class="showdetails-btn">Show Details</button></a>
+                        <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}"><button class="showdetails-btn">Show Details</button></a>
                       </div>
                     </div>
                   </div>

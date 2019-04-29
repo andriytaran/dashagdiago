@@ -68,7 +68,7 @@ module.exports = app => {
   });
 
   app.use(function (req, res, next) {
-    console.log(req.user);
+    // console.log(req.user);
     if (!req.user) {
       res.redirect('/login');
     } else {
@@ -96,6 +96,8 @@ module.exports = app => {
 
 
   app.get('/class', async (req, res, next) => {
+
+    const { highschoolGraduationYear = "ALL" } = req.query;
 
     const { athleteId, school, role } = req.user;
 
@@ -161,6 +163,7 @@ module.exports = app => {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
+      highschoolGraduationYear,
     });
   });
 
@@ -260,6 +263,9 @@ module.exports = app => {
 
   //dashboard-position
   app.get('/dashboard-position', async function (req, res, next) {
+
+    const { highschoolGraduationYear = "ALL" } = req.query;
+
     const user = req.user || {};
     const { athleteId, school, role } = req.user;
 
@@ -284,17 +290,21 @@ module.exports = app => {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
+      highschoolGraduationYear
     });
   });
 
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
+    const { highschoolGraduationYear = "ALL" } = req.query;
+
     const user = req.user || {};
     const team = await parseTeamFromQuery(req, res);
     res.render('dashboard-player', {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
+      highschoolGraduationYear
     });
   });
 
@@ -472,7 +482,12 @@ module.exports = app => {
     const parser = new Parser(req, response);
 
     const position = parser.parseParameter('position');
-    const highschoolGraduationYear = parser.parseOptionalParameter('highschoolGraduationYear');
+    let highschoolGraduationYear = parser.parseOptionalParameter('highschoolGraduationYear');
+
+    if (highschoolGraduationYear === 'ALL'){
+      highschoolGraduationYear = null;
+    }
+
     const type = parser.parseRequiredParameter('type');
 
     const queryBuilder = new es.QueryBuilder();
