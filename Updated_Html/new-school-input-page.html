@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<!-- <base href="/"> -->
+
+	<title>AgDiago</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Template Basic Images Start -->
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="icon" href="img/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+	<!-- Template Basic Images End -->
+
+	<!-- Custom Browsers Color Start -->
+	<meta name="theme-color" content="#F4F7FC">
+	<!-- Custom Browsers Color End -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="css/main.min.css">
+	<script src="assets/js/jquery-3.4.0.min.js"></script>
+	<script src="assets/js/jquery.selectric.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="assets/css/selectric.css">
+</head>
+
+<body>
+	<div class="wrap" id="mainSection">
+		<header class="header">
+			<div class="container-fluid px-5">
+				<div class="row">
+					<div class="col-md-5">
+						<a href="index.html" class="header__left-b">
+							<div class="header__logo"><img src="img/gobearcats-logo.svg" alt="GoBearCast.com"></div>
+							<div class="header__heading">University of Cincinnati Coach</div>
+						</a>
+					</div>
+					<div class="col-md-7">
+						<div class="header__right-b">
+							<nav class="header__nav">
+								<ul class="header__nav-list">
+									<li class="header__nav-item"><a class="header__nav-link" href="index.html">Home</a></li>
+									<li class="header__nav-item"><a class="header__nav-link" href="add-new-athlete.html">Add new Athlete
+											info</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section class="s-new-school">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="s-new-school__heading main-heading"><span>New school</span> Import Page</h1>
+					</div>
+					<div class="col-md-12">
+						<div class="s-new-school__form-block">
+							<form method="POST" action="" class="s-new-school__form new-school-form form">
+								<div class="new-school-form__header">
+									<div class="row align-items-center">
+										<div class="col-md-12 ">
+											<div class="new-school-form__heading">
+												Core atributes benchmark input
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="new-school-form__body">
+									<div class="new-school-form__group form__group">
+                                        <div class="row">
+                                            <div class="col-md-3 d-flex align-items-center">
+                                                <label for="schoolName" class="new-school-form__group-label form__group-label">Name of School *</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" required id="schoolName" name="schoolName" placeholder="Full School Name" class="new-school-form__group-input form__group-input">
+                                            </div>
+                                        </div>
+									</div>
+									<div class="new-school-form__group form__group">
+                                        <div class="row">
+                                            <div class="col-md-3 d-flex align-items-center">
+                                                <label for="schoolShortName" class="new-school-form__group-label form__group-label">Short name of School *</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" required id="schoolShortName" name="schoolShortName" placeholder="Short Name" class="new-school-form__group-input form__group-input">
+                                            </div>
+                                        </div>
+									</div>
+									<div class="new-school-form__group form__group">
+                                        <div class="row">
+                                            <div class="col-md-3 d-flex align-items-center">
+                                                <label class="new-school-form__group-label form__group-label">Folder Name</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form__group-input-file-wrap">
+                                                    <label for="schoolData" id="file-name">FTP folder name</label>
+                                                    <input type="file" id="schoolData" name="schoolData" class="new-school-form__group-input form__group-input">
+                                                    <span class="clear-field">Clear Field</span>
+                                                </div>
+                                            </div>
+                                        </div>
+									</div>
+								</div>
+								<div class="new-school-form__submit-btn-block form__submit-btn-block">
+									<input type="submit" class="new-school-form__form-submit-btn form__submit-btn" value="Import">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script src="js/common.js"></script>
+
+</body>
+
+</html>
