@@ -31,12 +31,6 @@
   <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
   <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
 
-
-
-
-
-
-
 </head>
 
 <body>
@@ -92,7 +86,7 @@
                           <label for="firstName" class="form__group-label">First Name</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="firstName" name="firstName" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="firstName" value="<%= athlete.fname || "" %>" name="firstName" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>

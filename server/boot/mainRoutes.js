@@ -338,13 +338,17 @@ module.exports = app => {
     const team = await parseTeamFromQuery(req, res);
     const user = req.user || {};
     const { athleteId, school, role } = req.user;
+    const { highschoolGraduationYear = "ALL" } = req.query;
+    const { id } = req.query;
 
     let athlete = {};
 
-    if (athleteId) {
-      athlete = await es.getPlayer(school, athleteId) || {};
-    }
+    const playerId = athleteId || id;
 
+    if (playerId) {
+      athlete = await es.getPlayer(school, playerId) || {};
+      console.log(athlete);
+    }
 
     res.render('addnewplayer', {
       team: team.shortName,
@@ -352,6 +356,7 @@ module.exports = app => {
       teamDisplay: team.fullName,
       user,
       athlete,
+      highschoolGraduationYear,
     });
   });
 
