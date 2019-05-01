@@ -379,13 +379,16 @@ module.exports = app => {
   app.post('/api/updatePlayer', async function (req, res, next) {
     const player = req.body;
     const { athleteId, school, role } = req.user;
-    await es.updatePlayer(school, athleteId, player);
+    await es.updatePlayer(school, player.id, player);
+    return res.json({status: "OK"});
+
   });
 
   app.post('/api/createPlayer', async function (req, res, next) {
     const player = req.body;
     const { school } = req.user;
     await es.createPlayer(school, player);
+    return res.json({status: "OK"});
   });
 
   // create custom pillar
