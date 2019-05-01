@@ -381,50 +381,10 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="mastery" class="form__group-label">Mastery</label>
+                          <label for="rushingYards" class="form__group-label">Rushing yards</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="mastery" name="mastery" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="completations" class="form__group-label">Completations</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="completations" name="completations" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="interceptionsThrown" class="form__group-label">Interceptions Thrown</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="interceptionsThrown" name="interceptionsThrown" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="paasingYards" class="form__group-label">Paasing yards</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="paasingYards" name="paasingYards" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="recieptions" class="form__group-label">Recieptions</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="recieptions" name="recieptions" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="rushingYards" name="rushingYards" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -441,10 +401,50 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="rushingYards" class="form__group-label">Rushing yards</label>
+                          <label for="completations" class="form__group-label">Completions</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="rushingYards" name="rushingYards" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="completations" name="completations" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="completations" class="form__group-label">Attempts</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="attempts" name="attempts" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="interceptionsThrown" class="form__group-label">Interceptions Thrown</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="interceptionsThrown" name="interceptionsThrown" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="paasingYards" class="form__group-label">Passing Yards</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="paasingYards" name="paasingYards" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="recieptions" class="form__group-label">Receptions</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="recieptions" name="recieptions" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -827,7 +827,7 @@
       gamesStarted: getFloat('gamesStarted'),
       gamesPlayed: getFloat('gamesPlayed'),
       completions: getFloat('completations'),
-      attempts: getFloat('-'),
+      attempts: getFloat('attempts'),
       passingYards: getFloat('paasingYards'),
       touchdownsThrown: getFloat('touchdownsThrown'),
       interceptionsThrown: getFloat('interceptionsThrown'),
