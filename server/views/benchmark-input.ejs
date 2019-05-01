@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <!-- <base href="/"> -->
+
+  <title>AgDiago</title>
+  <meta name="description" content="">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Template Basic Images Start -->
+  <meta property="og:image" content="path/to/image.jpg">
+  <link rel="icon" href="img/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+  <!-- Template Basic Images End -->
+
+  <!-- Custom Browsers Color Start -->
+  <meta name="theme-color" content="#F4F7FC">
+  <!-- Custom Browsers Color End -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
+  <script src="../updatedDesign/assets/js/jquery-3.4.0.min.js"></script>
+  <script src="../updatedDesign/assets/js/jquery.selectric.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../updatedDesign/assets/css/selectric.css">
+</head>
+
+<body>
+<div class="wrap" id="mainSection">
+
+  <%-partial('./partials/header')%>
+
+  <section class="s-benchmark-input">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="s-benchmark-input__heading main-heading"><span>University of Cincinnati</span> Benchmark Input Page</h1>
+          <h1 class="s-benchmark-input__heading main-heading">
+            <a href="benchmark-input?pillar=athletic">athletic</a>
+            <a href="benchmark-input?pillar=emotionalIntel">emotionalIntel</a>
+            <a href="benchmark-input?pillar=academic">academic</a>
+            <a href="benchmark-input?pillar=socialProfile">socialProfile</a>
+            <a href="benchmark-input?pillar=coreAttributes">coreAttributes</a>
+          </h1>
+        </div>
+        <div class="col-md-12">
+          <div class="s-benchmark-input__form-block">
+            <form class="s-benchmark-input__form benchmark-form form" id="benchmark-input_form">
+              <div class="benchmark-form__header">
+                <div class="row align-items-center">
+                  <div class="col-md-12 ">
+                    <div class="benchmark-form__heading">
+                      <%= pillar %> benchmark input
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="benchmark-form__body">
+                <div class="benchmark-form__group form__group">
+                  <div class="row">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label for="position" class="benchmark-form__group-label form__group-label">Position</label>
+                    </div>
+                    <div class="col-md-8">
+                      <select class="benchmark-form__group-select form__group-select custom-select " id="position-benchmark" name="position">
+                        <% for(let i=0; i<positions.length; i++) { %>
+                        <option>
+                          <%= positions[i].title %>
+                        </option>
+                        <% } -%>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="benchmark-form__group form__group">
+                  <div class="row">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label for="factor" class="benchmark-form__group-label form__group-label">Factor</label>
+                    </div>
+
+                    <div class="col-md-4 pr-1">
+                      <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
+                        <span class="minus"></span>
+                        <input type="number" min="0" value="<%= factor %>" max="1000" id="factor"  name="factor" class="benchmark-form__group-input form__group-input">
+                        <span class="plus"></span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div id="form-input-benchmark-values">
+
+                </div>
+              </div>
+              <div class="benchmark-form__submit-btn-block form__submit-btn-block">
+                <input type="submit" class="benchmark-form__form-submit-btn form__submit-btn" value="Submit">
+                <a class="benchmark-form__add-new-pillar" href="#">+ Add new pillar</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="../updatedDesign/constants.js"></script>
+<script src="/../assets/js/app/api.js"></script>
+<script src="../updatedDesign/js/common.js"></script>
+<script>
+  $(document).ready(function () {
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let pillar = urlParams.get("pillar") || 'coreAttributes';
+
+    $('#benchmark-input_form').submit(function(e){
+
+      const formValues = $( this ).serializeArray();
+
+      const position = getPositionValueOnSelect(formValues.find(e => e.name === 'position').value);
+      const factor = parseFloat(formValues.find(e => e.name === 'factor').value);
+
+      console.log('factor', factor);
+
+      const attr = window.attributes || [];
+
+      const benchmarks = attr.reduce((acc, elem)=>{
+        acc[elem] = parseFloat(formValues.find(e => e.name === elem + '-value').value) || 0;
+        return acc;
+      }, {position})
+
+
+      const factors = attr.reduce((acc, elem)=>{
+        acc[elem] = {
+          factor: parseFloat(formValues.find(e => e.name === elem + '-factor').value) || 0
+        }
+        return acc;
+      }, {})
+
+      console.log(formValues)
+      updateBenchmarks({position, benchmarks, factors, pillar, factor})
+
+      event.preventDefault();
+    })
+
+
+    $('#position-benchmark')
+      .change(function () {
+        const position = getPositionValueOnSelect(this.value);
+        getBenchmarks(position, pillar, (res) => {
+          console.log(res);
+
+          const {benchmarks, factors} = res;
+
+          const attr = Object.keys(factors);
+
+          window.attributes = attr;
+          window.benchmarks = benchmarks;
+
+          const html = attr.map(key => {
+
+            return `<div class="benchmark-form__group form__group">
+                  <div class="row">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label for="position" class="benchmark-form__group-label form__group-label">${attributesNamesMatches[key] || key} Benchmark</label>
+                    </div>
+                    <div class="col-md-4 pr-1">
+                      <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
+                        <span class="minus"></span>
+                        <input type="number" min="0" value="${benchmarks[key]}" max="1000" id="${key + '-value'}"  name="${key + '-value'}" class="benchmark-form__group-input form__group-input">
+                        <span class="plus"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
+                        <span class="minus"></span>
+                        <input type="number" min="0" value="${factors[key].factor}" max="1000" id="${key + '-factor'}" name="${key + '-factor'}" class="benchmark-form__group-input form__group-input">
+                        <span class="plus"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+          }).join("");
+
+          $('#form-input-benchmark-values').html(html);
+
+        });
+      }).change()
+
+  });
+
+</script>
+
+</body>
+
+</html>

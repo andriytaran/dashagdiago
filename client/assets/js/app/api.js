@@ -56,19 +56,23 @@ function getClasses(cb) {
   }, cb);
 }
 
-function updateBenchmarks(position, benchmarks, factors, cb) {
+function updateBenchmarks(body, cb) {
+  const {position, benchmarks, factors, pillar, factor} = body;
   updateAPIData({
     type: "benchmarks",
     position: position,
     benchmarks: benchmarks,
     factors: factors,
+    pillar: pillar,
+    factor
   }, cb);
 }
 
-function getBenchmarks(position, cb) {
+function getBenchmarks(position, group, cb) {
   getAPIData({
     type: "benchmarks",
     position: position,
+    group: group,
   }, cb);
 }
 

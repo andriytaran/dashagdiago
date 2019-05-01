@@ -1097,7 +1097,20 @@ async function getPillarsObj(team) {
 
 async function getFactors(team, pillar, position = '_all') {
   const pillars = await getPillarsObj(team);
-  return pillars[pillar].fields[position];
+  try {
+    return pillars[pillar].fields[position];
+  } catch (err){
+    return {};
+  }
+}
+
+async function getFactor(team, pillar) {
+  const pillars = await getPillarsObj(team);
+  try {
+    return pillars[pillar].factor;
+  } catch (err){
+    return {};
+  }
 }
 
 async function getUser(email) {
@@ -1156,6 +1169,7 @@ async function getSchool(id) {
 }
 
 async function updatePillarsObj(team, pillar, factor, value, position = '_all') {
+  console.log('------', factor, pillar);
   const index = team + '-pillars';
   const type = 'post';
   const id = 1;
@@ -1198,6 +1212,7 @@ module.exports = {
   addPlayer,
   getBenchmarks,
   getPillarsObj,
+  getFactor,
   getFactors,
   updatePillarsObj,
   getSchool,

@@ -420,6 +420,30 @@ module.exports = app => {
   });
 
   // core attributes benchmark setup
+  app.get('/benchmark-input', async function (req, res, next) {
+    const team = await parseTeamFromQuery(req, res);
+
+    const {pillar = 'coreAttributes'} = req.query ;
+
+    const user = req.user || {};
+    const benchmarks = await es.getBenchmarks(team.id, 'QB');
+    const factors = await es.getFactors(team.id, pillar);
+    const factor = await es.getFactor(team.id, pillar);
+
+    const renderData = {
+      positions: positionF,
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      benchmarks,
+      pillar,
+      factors,
+      factor,
+      user,
+    };
+
+    res.render('benchmark-input', renderData);
+  });
+
   app.get('/corebench', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
     const user = req.user || {};
@@ -813,13 +837,15 @@ module.exports = app => {
       }
       case 'benchmarks':
         const sort = parser.parseParameter('sort');
+        const group = parser.parseParameter('group');
         if (sort && sort !== 'asc' && sort !== 'desc') throw new Error(`Unsupported sort: ${sort}`);
 
         const benchmarks = await es.getBenchmarks(team.id, position);
+        const factors = await es.getFactors(team.id, group);
 
-        response.benchmarks = benchmarks;
-    }
-    ;
+        response.benchmarks = benchmarks || {};
+        response.factors = factors;
+    };
 
     return res.json(response);
   });
@@ -835,6 +861,10 @@ module.exports = app => {
     const position = parser.parseRequiredParameter('position');
     const benchmarks = parser.parseRequiredParameter('benchmarks');
     const factors = parser.parseRequiredParameter('factors');
+    const factor = parser.parseRequiredParameter('factor');
+    const pillar = parser.parseRequiredParameter('pillar');
+
+    const existingBenchmarks = (await es.getBenchmarks(team.id, position)) || {};
 
     switch (type) {
       case 'benchmarks': {
@@ -843,8 +873,8 @@ module.exports = app => {
             position,
           },
         };
-        es.addOrUpdateDocument(team.id + '-benchmarks', query, 'post', benchmarks);
-        es.updatePillarsObj(team.id, 'coreAttributes', null, factors);
+        es.addOrUpdateDocument(team.id + '-benchmarks', query, 'post', {...existingBenchmarks, ...benchmarks});
+        es.updatePillarsObj(team.id, pillar, factor, factors);
         break;
       }
     }

@@ -31,4 +31,12 @@ const positions = [
   {title: 'Outside Linebacker', value: 'OLB'},
 ]
 
+const getPositionValueOnSelect = (value) => {
+  return positions.reduce(function(acc, elem){
+    if (elem.title === value){
+      acc = elem.value
+    }
+    return acc
+  }, 'QB');
+};
 
