@@ -30,6 +30,12 @@ const mockUsers = [
     role: 'coach',
     school: 'ts',
   },
+  {
+    email: 'coach3@gmail.com',
+    password: '1',
+    role: 'coach',
+    school: 'ts2',
+  },
 ];
 
 const fillDb = (mockUsers) => {

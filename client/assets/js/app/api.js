@@ -202,6 +202,14 @@ function getPlayersData(props, cb) {
   }
 }
 
+function getPlayerAttributesData(id, pillar, cb) {
+  getAPIData({
+    type: "pillar",
+    pillar: pillar,
+    id: id
+  }, cb);
+}
+
 function getPlayerCoreAttributesData(id, cb) {
   getAPIData({
     type: "pillar",

@@ -52,27 +52,7 @@
             <div class="core-attr__subheading">
               Player Attributes
             </div>
-            <div class="core-attr__block">
-              <div class="core-attr__heading">
-                Core Attributes
-              </div>
-              <div class="core-attr__ag-score">
-                <div class="core-attr__ag-score-progressbar orange" style="width: 80%"></div>
-                <div id="individual-player-core-attr-score" class="core-attr__ag-score-value"></div>
-              </div>
-              <button class="core-attr__more-btn" type="button" data-toggle="collapse"
-                      data-target="#coreAttrMoreBlock" aria-expanded="false"
-                      aria-controls="coreAttrMoreBlock">
-                <span class="core-attr__more-btn-show">Show Sub Categories</span>
-                <span class="core-attr__more-btn-hide">Hide Sub Categories</span>
-                <div class="core-attr__more-btn-arrow">
-                  <img src="../updatedDesign/img/core-attr-arrow.svg" alt="">
-                </div>
-              </button>
-              <div class="core-attr__more-block collapse" id="coreAttrMoreBlock"
-                   aria-labelledby="coreAttrMoreBlock">
-              </div>
-            </div>
+            <div class="core-attr__block" id="core-attr__block"></div>
           </div>
         </div>
       </div>
@@ -85,6 +65,7 @@
 <script src="/../assets/js/app/api.js"></script>
 <script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
 <script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../updatedDesign/barBlock.js"></script>
 
 <script>
   $(document).ready(function () {
@@ -151,28 +132,18 @@
 
         $("#individual-player-main-info").html(html);
         $("#individual-player-core-attr-score").html(`AG Score: ${coreAttributesScore}`);
-      }
-    })
 
-    getPlayerCoreAttributesData(id, (res, status) => {
 
-      if (status === 'success') {
+        const scores = res.scores.player;
+        const agdiagoScores = res.scores.agdiago;
 
-        const { player } = res.attributes || {};
-        const keys = Object.keys(player);
-
-        const html = keys.map(key => {
-          return `<div class="core-attr__heading">
-                  ${attributesNamesMatches[key] || key}
-                </div>
-                <div class="core-attr__ag-score">
-                  <div class="core-attr__ag-score-progressbar blue" style="width: ${player[key]}%">
-                  </div>
-                  <div class="core-attr__ag-score-value">${player[key]} %</div>
-                </div>`
-        }).join('');
-
-        $("#coreAttrMoreBlock").html(html);
+        for (let key in scores) {
+          getPlayerAttributesData(id, key, (data, status2) => {
+            if (status2 === 'success') {
+              barBlock(key, scores[key], agdiagoScores[key], key + '12345', 'core-attr__block', data);
+            }
+          });
+        }
       }
     })
   });
