@@ -294,6 +294,38 @@ module.exports = app => {
     });
   });
 
+  app.get('/oldDashboard-position', async function (req, res, next) {
+
+    const { highschoolGraduationYear = "ALL" } = req.query;
+
+    const user = req.user || {};
+    const { athleteId, school, role } = req.user;
+
+    if (role === 'player') {
+      return res.redirect(`/dashboard-player/?id=${athleteId}`);
+    }
+
+    const team = await parseTeamFromQuery(req, res);
+    const pillarsObj = await es.getPillarsObj(team.id);
+    const position = req.query.position != null ?
+      req.query.position.toLowerCase() :
+      null;
+    const overallScore = await es.fetchOverallScore(
+      pillarsObj,
+      es.queryByTerm('position', position),
+      team.id
+    );
+
+    res.render('oldDashboard-position', {
+      position: position.toUpperCase(),
+      overallScore: Math.round(overallScore),
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
+      highschoolGraduationYear
+    });
+  });
+
   //dashboard-player
   app.get('/dashboard-player', async function (req, res, next) {
     const { highschoolGraduationYear = "ALL" } = req.query;

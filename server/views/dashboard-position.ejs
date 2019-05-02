@@ -95,27 +95,7 @@
             <div class="core-attr__subheading">
               Overal Scores
             </div>
-            <div class="core-attr__block">
-              <div class="core-attr__heading">
-                Core Attributes
-              </div>
-              <div class="core-attr__ag-score">
-                <div class="core-attr__ag-score-progressbar orange" style="width: 80%"></div>
-                <div id="dashboard-position-core-attr-score" class="core-attr__ag-score-value"></div>
-              </div>
-              <button class="core-attr__more-btn" type="button" data-toggle="collapse"
-                      data-target="#coreAttrMoreBlock" aria-expanded="false"
-                      aria-controls="coreAttrMoreBlock">
-                <span class="core-attr__more-btn-show">Show Sub Categories</span>
-                <span class="core-attr__more-btn-hide">Hide Sub Categories</span>
-                <div class="core-attr__more-btn-arrow">
-                  <img src="../updatedDesign/img/core-attr-arrow.svg" alt="">
-                </div>
-              </button>
-              <div class="core-attr__more-block collapse" id="coreAttrMoreBlock"
-                   aria-labelledby="coreAttrMoreBlock">
-              </div>
-            </div>
+            <div class="core-attr__block" id="core-attr__block"></div>
           </div>
         </div>
       </div>
@@ -156,30 +136,60 @@
     $("#dashboard-position-page-header").html(header);
     $("#dashboard-position-table-header").html(`Top 10 ${position} Players`);
 
-    getCulturalFitData(position, (res, status) => {
-      if (status === 'success') {
-      }
-    })
+    const barBlock = (title, mainScore, compName, res) => {
+      const { player, agdiago, program } = res.attributes || {};
 
-    getCoreAttributesData(position, (res, status) => {
-      if (status === 'success') {
-        const { player } = res.attributes || {};
-        const keys = Object.keys(player);
+      const keys = Object.keys(player);
 
-        const html = keys.map(key => {
-          return `<div class="core-attr__heading">
+      const html = keys.map(key => {
+
+        const length = player[key];
+        const red = agdiago[key]
+        const black = program[key]
+
+        const scale = 70 / Math.max(length, red, black)
+
+
+
+        return `<div class="core-attr__heading">
                   ${attributesNamesMatches[key] || key}
                 </div>
                 <div class="core-attr__ag-score">
-                  <div class="core-attr__ag-score-progressbar blue" style="width: ${player[key]}%">
+                  <div class="core-attr__ag-score-progressbar blue" style="width: ${length * scale}%">
                   </div>
-                  <div class="core-attr__ag-score-value">${Math.round(player[key])} %</div>
+                  <div style="position: absolute;height: 100%;width: 5px;background: red;left: ${red * scale}%;z-index: 100;"></div>
+                  <div style="position: absolute;height: 100%;width: 5px;background: black;left: ${black * scale}%;z-index: 100;"></div>
+                  <div class="core-attr__ag-score-value">${Math.round(player[key])}</div>
                 </div>`
-        }).join('');
+      }).join('');
 
-        $("#coreAttrMoreBlock").html(html);
-      }
-    })
+      const attrBlock = `<div class="core-attr__block">
+              <div class="core-attr__heading">
+                ${title}
+              </div>
+              <div class="core-attr__ag-score">
+                <div class="core-attr__ag-score-progressbar orange" style="width: ${mainScore}%"></div>
+
+                <div class="core-attr__ag-score-value">AG Score: ${mainScore}</div>
+              </div>
+              <button class="core-attr__more-btn" type="button" data-toggle="collapse"
+                      data-target="#${compName}" aria-expanded="false"
+                      aria-controls="${compName}">
+                <span class="core-attr__more-btn-show">Show Sub Categories</span>
+                <span class="core-attr__more-btn-hide">Hide Sub Categories</span>
+                <div class="core-attr__more-btn-arrow">
+                  <img src="../updatedDesign/img/core-attr-arrow.svg" alt="">
+                </div>
+              </button>
+              <div class="core-attr__more-block collapse" id="${compName}"
+                   aria-labelledby="${compName}">
+                   ${html}
+              </div>
+            </div>`
+
+      $(`#core-attr__block`).append(attrBlock);
+
+    }
 
     getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
       if (status === 'success') {
@@ -242,12 +252,17 @@
 
     getOverallScoresData(position, (res, status) => {
       if (status === 'success') {
-        const coreAttributesScore = Math.round(res.scores.player.coreAttributes);
+        const scores = res.scores.player;
 
-        $("#dashboard-position-core-attr-score").html(`AG Score: ${coreAttributesScore}`);
+        for (let key in scores) {
+          getAttributesData(position, key, (data, status2) => {
+            if (status2 === 'success') {
+              barBlock(key, scores[key], key + '12345', data);
+            }
+          });
+        }
       }
-    })
-
+    });
   });
 
 </script>

@@ -90,6 +90,14 @@ function createNewSchool(body, cb) {
   });
 }
 
+function getAttributesData(position, pillar, cb) {
+  getAPIData({
+    type: "pillar",
+    pillar: pillar,
+    position: position
+  }, cb);
+}
+
 function getCoreAttributesData(position, cb) {
   getAPIData({
     type: "pillar",
