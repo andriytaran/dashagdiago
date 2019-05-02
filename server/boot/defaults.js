@@ -17,10 +17,7 @@ const pillarsObj = {
     agdiagoFactor: 50,
     fields: {
       '_all': {
-        'forty': {
-          reverse: true,
-          factor: 10,
-        },
+        'forty': {factor: 5},
         'vertical': {factor: 5},
         'gamesPlayed': {factor: 5},
         'gamesStarted': {factor: 5},
