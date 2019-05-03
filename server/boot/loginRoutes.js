@@ -19,7 +19,6 @@ module.exports = app => {
 
 //log a user in
   app.post('/login', function(req, res) {
-    console.log('login');
     User.login({
       email: req.body.email,
       password: req.body.password

@@ -178,8 +178,6 @@ module.exports = app => {
   });
 
   app.post('/api/createNewSchool', async function (req, res, next) {
-    console.log('req.body');
-    console.log(req.body);
     try {
       await ftp.importPlayersData(req.body);
     } catch (err) {
@@ -379,7 +377,6 @@ module.exports = app => {
 
     if (playerId) {
       athlete = await es.getPlayer(school, playerId) || {};
-      console.log(athlete);
     }
 
     res.render('addnewplayer', {
@@ -575,7 +572,7 @@ module.exports = app => {
           programBenchmarks,
           player,
         ] = await Promise.all([
-          es.fetchProgramBenchmarks(pillarsObj, {}, team.id),
+          es.fetchProgramBenchmarks(pillarsObj, {size: 50}, team.id),
           es.fetchPlayer(query, team.id, id),
         ]);
 
@@ -671,7 +668,7 @@ module.exports = app => {
 
         const programBenchmarks = await es.fetchProgramBenchmarks(
           pillarsObj,
-          {},
+          {size: 50},
           team.id,
           pillars
         );
@@ -726,7 +723,7 @@ module.exports = app => {
         if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             pillarsObj,
-            {},
+            {size: 50},
             team.id,
             attribute === 'overallScore' ? undefined : [attribute]
           );

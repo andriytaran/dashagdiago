@@ -1169,7 +1169,6 @@ async function getSchool(id) {
 }
 
 async function updatePillarsObj(team, pillar, factor, value, position = '_all') {
-  console.log('------', factor, pillar);
   const index = team + '-pillars';
   const type = 'post';
   const id = 1;
