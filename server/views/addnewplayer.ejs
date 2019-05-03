@@ -23,14 +23,14 @@
   <!-- Custom Browsers Color End -->
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
-
   <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
 
+  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
   <script src="../updatedDesign/assets/js/jquery-3.4.0.min.js"></script>
+  <script src="../updatedDesign/assets/js/jquery.selectric.js"></script>
   <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
   <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" href="../updatedDesign/assets/css/selectric.css">
 </head>
 
 <body>
@@ -374,6 +374,18 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="workEthic" class="form__group-label">Overall Score</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="coreAttributesOverallScore" name="coreAttributesOverallScore" value="<%= athlete.coreAttributesOverallScore || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -563,6 +575,18 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="weight" class="form__group-label">Height</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="height" name="height" value="<%= athlete.height || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -800,11 +824,14 @@
 
     const getFloat = elementId => {
       const elem = document.getElementById(elementId);
+      let result = null;
+
       if (elem) {
         const float = parseFloat(elem.value);
-        return isNaN(float) ? null : float;
+        result = isNaN(float) ? null : float;
       }
-      return null
+
+      return result
     }
 
     let pos = getString('position');
@@ -827,7 +854,7 @@
       // school: getString('school'),
       hometown: getString('hometown'),
       state: getString('state'),
-      height: getFloat('-'),
+      height: getFloat('height'),
       weight: getFloat('weight'),
       highschoolGraduationYear: getFloat('hsgyear'),
       collegeYear: getFloat('collegeYear'),
@@ -890,7 +917,7 @@
       coreAttributesWorkEthic: getFloat('workEthic'),
       coreAttributesTeamOrientation: getFloat('teamOrentation'),
       coreAttributesMastery: getFloat('mastery'),
-      coreAttributesOverallScore: getFloat('-')
+      coreAttributesOverallScore: getFloat('coreAttributesOverallScore')
     }
 
     const id = getFloat('playerId');

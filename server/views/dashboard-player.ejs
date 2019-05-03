@@ -44,6 +44,7 @@
       <div class="row">
         <div class="col-md-12">
           <h1 class="individual-player__heading main-heading"><span>Individual</span> Player Dashboard</h1>
+          <h1 class="individual-player__heading main-heading"><span id="individual-player-position"></span></h1>
         </div>
         <div id="individual-player-main-info" class="col-md-12">
         </div>
@@ -80,7 +81,7 @@
         const overallScore = Math.round(res.overallScore.player);
         const coreAttributesScore = Math.round(res.scores.player.coreAttributes);
 
-        const { hometown, school, fname, lname } = res.player || {}
+        const { hometown, school, fname, lname, position } = res.player || {}
 
         const html = `
           <div class="row">
@@ -95,7 +96,7 @@
                       </div>
                     </div>
                     <div class="col-md-9">
-                      <div class="player-info__name">${fname} ${lname} <a href="/addnewathlete?id=${id}">Edit</a> </div>
+                      <div class="player-info__name">${fname} ${lname} <a class="float-right" href="/addnewathlete?id=${id}">Edit</a> </div>
                       <div class="player-info__additional-info">Hometown: ${hometown}</div>
                       <div class="player-info__additional-info">Atheletic Coach: Not Available</div>
                       <div class="player-info__additional-info">Scout Date: Not Available</div>
@@ -131,6 +132,7 @@
           </div>`
 
         $("#individual-player-main-info").html(html);
+        $("#individual-player-position").html(getFullNamePosition(position));
         $("#individual-player-core-attr-score").html(`AG Score: ${coreAttributesScore}`);
 
 

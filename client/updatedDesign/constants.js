@@ -26,6 +26,17 @@ const positions = [
   {title: 'Long Snapper', value: 'LS'},
 ]
 
+const getFullNamePosition = (shortName) =>{
+  const position = positions.find(elem => elem.value.toLowerCase() === shortName.toLowerCase());
+
+  if (position) {
+    return position.title || shortName
+  }
+
+  return shortName
+
+}
+
 const getPositionValueOnSelect = (value) => {
   return positions.reduce(function(acc, elem){
     if (elem.title === value){
