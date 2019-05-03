@@ -56,38 +56,8 @@ const importPlayersData = (body) => {
           coreAttributesMastery: 1,
           coreAttributesCompetitiveness: 1,
           coreAttributesOverallScore: 1,
-
-          forty: 1,
-          vertical: 1,
-          gamesPlayed: 1,
-          gamesStarted: 1,
-          height: 1,
-          weight: 1,
-          emotionalIntelBehavior: 1,
-          emotionalIntelReflection: 1,
-          emotionalIntelTeamWork: 1,
-          emotionalIntelRelationships: 1,
-          emotionalIntelAccountability: 1,
-          emotionalIntelResponsibility: 1,
-          emotionalIntelIndependence: 1,
-          gpa: 1,
-          sat: 1,
-          act: 1,
-          coreGpa: 1,
-          socialTwitterSentiment: 1,
-          twitterFollowers: 1,
-          socialInstagramSentiment: 1,
-          instagramFollowers: 1,
-          facebookSentiment: 1,
-          newsMediaCoverageSentiment: 1,
-          newsMediaCoverageMentions: 1,
-          newsMediaCoverageNational: 1,
-          newsMediaCoverageRegional: 1,
-          pressReleaseSentiment: 1,
-          pressReleaseSentimentCounter: 1,
         });
       }
-
       await es.addDocument(schoolId + '-pillars', 1, 'post', defaults.pillarsObj);
 
       let playerId = 1;
