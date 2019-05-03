@@ -563,7 +563,7 @@ module.exports = app => {
 
     const { athleteId, school, role } = req.user;
     let ID;
-    if (role === 'player') {
+    if (role === 'player' && parser.parseParameter('id')) {
       ID = athleteId;
     }
 
