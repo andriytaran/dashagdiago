@@ -398,6 +398,8 @@ async function fetchProgramBenchmarks(pillarsObj,
 
   const fetchResponse = await client.search(mergeQuery({
     'index': team + '-benchmarks',
+    // TODO increase size if benchmarks count > 50
+    'size': 50,
   }, query));
 
   const agg = fetchResponse.hits.hits.map(hit => hit._source);

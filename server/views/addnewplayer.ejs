@@ -89,7 +89,7 @@
                           <label for="playerId" class="form__group-label">id</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="playerId" name="playerId" value="<%= athlete.id || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="playerId" name="playerId" value="<%= format(athlete.id) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -100,7 +100,7 @@
                           <label for="firstName" class="form__group-label">First Name</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="firstName" name="firstName" value="<%= athlete.fname || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="firstName" name="firstName" value="<%= format(athlete.fname) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -111,7 +111,7 @@
                           <label for="lasttName" class="form__group-label">Last Name</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="lastName" name="lastName" value="<%= athlete.lname || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="lastName" name="lastName" value="<%= format(athlete.lname) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -131,7 +131,7 @@
                           <label for="hometown" class="form__group-label">Hometown</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="hometown" name="hometown" value="<%= athlete.hometown || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="hometown" name="hometown" value="<%= format(athlete.hometown) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -141,7 +141,7 @@
                           <label for="state" class="form__group-label">State</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="state" name="state" value="<%= athlete.state || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="state" name="state" value="<%= format(athlete.state) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -151,7 +151,7 @@
                           <label for="hsgyear" class="form__group-label">High School Graduation year</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="hsgyear" name="hsgyear" value="<%= athlete.highschoolGraduationYear || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="hsgyear" name="hsgyear" value="<%= format(athlete.highschoolGraduationYear) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -161,7 +161,7 @@
                           <label for="collegeYear" class="form__group-label">College Year</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="collegeYear" name="collegeYear" value="<%= athlete.collegeYear || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="collegeYear" name="collegeYear" value="<%= format(athlete.collegeYear) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -171,7 +171,7 @@
                           <label for="multistportAthlete" class="form__group-label">Multisport Athelete</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="multistportAthlete" name="multistportAthlete" value="<%= athlete.multisportAthlete || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="multistportAthlete" name="multistportAthlete" value="<%= format(athlete.multisportAthlete) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -181,7 +181,7 @@
                           <label for="momParent" class="form__group-label">Mom Parent</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="momParent" name="momParent" value="<%= athlete.momParent || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="momParent" name="momParent" value="<%= format(athlete.momParent) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -191,7 +191,7 @@
                           <label for="dadParent" class="form__group-label">Dad Parent</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="dadParent" name="dadParent" value="<%= athlete.dadParent || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="dadParent" name="dadParent" value="<%= format(athlete.dadParent) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -201,7 +201,7 @@
                           <label for="grandmotherParent" class="form__group-label">Grandmother Parent</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="grandmotherParent" name="grandmotherParent" value="<%= athlete.grandmotherParent || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="grandmotherParent" name="grandmotherParent" value="<%= format(athlete.grandmotherParent) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -211,7 +211,7 @@
                           <label for="grandfatherParent" class="form__group-label">Grandfather Parent</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="grandfatherParent" name="grandfatherParent" value="<%= athlete.grandfatherParent || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="grandfatherParent" name="grandfatherParent" value="<%= format(athlete.grandfatherParent) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -221,7 +221,7 @@
                           <label for="twitter" class="form__group-label">Twitter</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="twitter" name="twitter" value="<%= athlete.twitter || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="twitter" name="twitter" value="<%= format(athlete.twitter) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -231,7 +231,7 @@
                           <label for="instagram" class="form__group-label">Instagram</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="instagram" name="instagram" value="<%= athlete.instagram || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="instagram" name="instagram" value="<%= format(athlete.instagram) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -241,7 +241,7 @@
                           <label for="facebook" class="form__group-label">Facebook</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="facebook" name="facebook" value="<%= athlete.facebook || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="facebook" name="facebook" value="<%= format(athlete.facebook) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -261,7 +261,7 @@
                           <label for="snapchat" class="form__group-label">Snapchat</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="text" id="snapchat" name="snapchat" value="<%= athlete.snapchat || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="text" id="snapchat" name="snapchat" value="<%= format(athlete.snapchat) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -280,7 +280,7 @@
                           <label for="SAT" class="form__group-label">SAT</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="SAT" name="SAT" value="<%= athlete.sat || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="SAT" name="SAT" value="<%= format(athlete.sat) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -290,7 +290,7 @@
                           <label for="ACT" class="form__group-label">ACT</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="ACT" name="ACT" value="<%= athlete.act || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="ACT" name="ACT" value="<%= format(athlete.act) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -300,7 +300,7 @@
                           <label for="GPA" class="form__group-label">GPA</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="GPA" name="GPA" value="<%= athlete.gpa || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="GPA" name="GPA" value="<%= format(athlete.gpa) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -310,7 +310,7 @@
                           <label for="coreGPA" class="form__group-label">Core GPA</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="coreGPA" name="coreGPA" value="<%= athlete.coreGpa || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="coreGPA" name="coreGPA" value="<%= format(athlete.coreGpa) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -330,7 +330,7 @@
                           <label for="competitiveness" class="form__group-label">Competitiveness</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="competitiveness" name="competitiveness" value="<%= athlete.coreAttributesCompetitiveness || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="competitiveness" name="competitiveness" value="<%= format(athlete.coreAttributesCompetitiveness) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -340,7 +340,7 @@
                           <label for="mastery" class="form__group-label">Mastery</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="mastery" name="mastery" value="<%= athlete.coreAttributesMastery || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="mastery" name="mastery" value="<%= format(athlete.coreAttributesMastery) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -350,7 +350,7 @@
                           <label for="persistence" class="form__group-label">Persistence</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="persistence" name="persistence" value="<%= athlete.coreAttributesPersistence || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="persistence" name="persistence" value="<%= format(athlete.coreAttributesPersistence) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -360,7 +360,7 @@
                           <label for="teamOrentation" class="form__group-label">Team orentation</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="teamOrentation" name="teamOrentation" value="<%= athlete.coreAttributesTeamOrientation || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="teamOrentation" name="teamOrentation" value="<%= format(athlete.coreAttributesTeamOrientation) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -370,7 +370,7 @@
                           <label for="workEthic" class="form__group-label">Work Ethic</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="workEthic" name="workEthic" value="<%= athlete.coreAttributesWorkEthic || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="workEthic" name="workEthic" value="<%= format(athlete.coreAttributesWorkEthic) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -381,7 +381,7 @@
                           <label for="workEthic" class="form__group-label">Overall Score</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="coreAttributesOverallScore" name="coreAttributesOverallScore" value="<%= athlete.coreAttributesOverallScore || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="coreAttributesOverallScore" name="coreAttributesOverallScore" value="<%= format(athlete.coreAttributesOverallScore) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -401,7 +401,7 @@
                           <label for="carries" class="form__group-label">Carries</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="carries" name="carries" value="<%= athlete.carries || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="carries" name="carries" value="<%= format(athlete.carries) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -411,7 +411,7 @@
                           <label for="rushingYards" class="form__group-label">Rushing yards</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="rushingYards" name="rushingYards" value="<%= athlete.rushingYards || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="rushingYards" name="rushingYards" value="<%= format(athlete.rushingYards) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -421,7 +421,7 @@
                           <label for="rushingTouchdowns" class="form__group-label">Rushing Touchdowns</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="rushingTouchdowns" name="rushingTouchdowns" value="<%= athlete.rushingTouchdowns || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="rushingTouchdowns" name="rushingTouchdowns" value="<%= format(athlete.rushingTouchdowns) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -431,7 +431,7 @@
                           <label for="completations" class="form__group-label">Completions</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="completations" name="completations" value="<%= athlete.completions || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="completations" name="completations" value="<%= format(athlete.completions) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -441,7 +441,7 @@
                           <label for="completations" class="form__group-label">Attempts</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="attempts" name="attempts" value="<%= athlete.attempts || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="attempts" name="attempts" value="<%= format(athlete.attempts) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -451,7 +451,7 @@
                           <label for="interceptionsThrown" class="form__group-label">Interceptions Thrown</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="interceptionsThrown" name="interceptionsThrown" value="<%= athlete.interceptionsThrown || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="interceptionsThrown" name="interceptionsThrown" value="<%= format(athlete.interceptionsThrown) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -461,7 +461,7 @@
                           <label for="paasingYards" class="form__group-label">Passing Yards</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="paasingYards" name="paasingYards" value="<%= athlete.passingYards || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="paasingYards" name="paasingYards" value="<%= format(athlete.passingYards) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -471,7 +471,7 @@
                           <label for="recieptions" class="form__group-label">Receptions</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="recieptions" name="recieptions" value="<%= athlete.receptions || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="recieptions" name="recieptions" value="<%= format(athlete.receptions) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -481,7 +481,7 @@
                           <label for="sacks" class="form__group-label">Sacks</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="sacks" name="sacks" value="<%= athlete.sacks || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="sacks" name="sacks" value="<%= format(athlete.sacks) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -491,7 +491,7 @@
                           <label for="soloTrackles" class="form__group-label">Solo Trackles</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="soloTrackles" name="soloTrackles" value="<%= athlete.soloTackles || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="soloTrackles" name="soloTrackles" value="<%= format(athlete.soloTackles) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -501,7 +501,7 @@
                           <label for="tracklessForLoss" class="form__group-label">Trackless for Loss</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="tracklessForLoss" name="tracklessForLoss" value="<%= athlete.tacklesForLoss || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="tracklessForLoss" name="tracklessForLoss" value="<%= format(athlete.tacklesForLoss) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -511,7 +511,7 @@
                           <label for="totalTrackles" class="form__group-label">Total Trackles</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="totalTrackles" name="totalTrackles" value="<%= athlete.totalTackles || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="totalTrackles" name="totalTrackles" value="<%= format(athlete.totalTackles) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -521,7 +521,7 @@
                           <label for="touchdownsThrown" class="form__group-label">Touchdowns Thrown</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="touchdownsThrown" name="touchdownsThrown" value="<%= athlete.touchdownsThrown || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="touchdownsThrown" name="touchdownsThrown" value="<%= format(athlete.touchdownsThrown) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -531,7 +531,7 @@
                           <label for="forty" class="form__group-label">Forty</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="forty" name="forty" value="<%= athlete.forty || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="forty" name="forty" value="<%= format(athlete.forty) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -541,7 +541,7 @@
                           <label for="gamesPlayed" class="form__group-label">Games Played</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="gamesPlayed" name="gamesPlayed" value="<%= athlete.gamesPlayed || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="gamesPlayed" name="gamesPlayed" value="<%= format(athlete.gamesPlayed) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -551,7 +551,7 @@
                           <label for="gamesStarted" class="form__group-label">Games Started</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="gamesStarted" name="gamesStarted" value="<%= athlete.gamesStarted || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="gamesStarted" name="gamesStarted" value="<%= format(athlete.gamesStarted) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -561,7 +561,7 @@
                           <label for="vertical" class="form__group-label">Vertical</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="vertical" name="vertical" value="<%= athlete.vertical || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="vertical" name="vertical" value="<%= format(athlete.vertical) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -571,7 +571,7 @@
                           <label for="weight" class="form__group-label">Weight</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="weight" name="weight" value="<%= athlete.weight || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="weight" name="weight" value="<%= format(athlete.weight) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -582,7 +582,7 @@
                           <label for="weight" class="form__group-label">Height</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="height" name="height" value="<%= athlete.height || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="height" name="height" value="<%= format(athlete.height) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -602,7 +602,7 @@
                           <label for="accountability" class="form__group-label">Accountability</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="accountability" name="accountability" value="<%= athlete.emotionalIntelAccountability || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="accountability" name="accountability" value="<%= format(athlete.emotionalIntelAccountability) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -612,7 +612,7 @@
                           <label for="behavior" class="form__group-label">Behavior</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="behavior" name="behavior" value="<%= athlete.emotionalIntelBehavior || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="behavior" name="behavior" value="<%= format(athlete.emotionalIntelBehavior) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -622,7 +622,7 @@
                           <label for="independence" class="form__group-label">Independence</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="independence" name="independence" value="<%= athlete.emotionalIntelIndependence || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="independence" name="independence" value="<%= format(athlete.emotionalIntelIndependence) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -632,7 +632,7 @@
                           <label for="reflection" class="form__group-label">Reflection</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="reflection" name="reflection" value="<%= athlete.emotionalIntelReflection || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="reflection" name="reflection" value="<%= format(athlete.emotionalIntelReflection) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -642,7 +642,7 @@
                           <label for="relationships" class="form__group-label">Relationships</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="relationships" name="relationships" value="<%= athlete.emotionalIntelRelationships || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="relationships" name="relationships" value="<%= format(athlete.emotionalIntelRelationships) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -652,7 +652,7 @@
                           <label for="responsibility" class="form__group-label">Responsibility</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="responsibility" name="responsibility" value="<%= athlete.emotionalIntelResponsibility || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="responsibility" name="responsibility" value="<%= format(athlete.emotionalIntelResponsibility) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -662,7 +662,7 @@
                           <label for="teamwork" class="form__group-label">Teamwork</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="teamwork" name="teamwork" value="<%= athlete.emotionalIntelTeamWork || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="teamwork" name="teamwork" value="<%= format(athlete.emotionalIntelTeamWork) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -681,7 +681,7 @@
                           <label for="facebookSentiment" class="form__group-label">Facebook Sentiment</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="facebookSentiment" name="facebookSentiment" value="<%= athlete.facebookSentiment || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="facebookSentiment" name="facebookSentiment" value="<%= format(athlete.facebookSentiment) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -691,7 +691,7 @@
                           <label for="instagramFollowers" class="form__group-label">Instagram Followers</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="instagramFollowers" name="instagramFollowers" value="<%= athlete.instagramFollowers || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="instagramFollowers" name="instagramFollowers" value="<%= format(athlete.instagramFollowers) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -701,7 +701,7 @@
                           <label for="newsMediaCoverageMentions" class="form__group-label">News media Coverage mentions</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="newsMediaCoverageMentions" name="newsMediaCoverageMentions" value="<%= athlete.newsMediaCoverageSentiment || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="newsMediaCoverageMentions" name="newsMediaCoverageMentions" value="<%= format(athlete.newsMediaCoverageSentiment) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -711,7 +711,7 @@
                           <label for="newsMediaCoverageRegional" class="form__group-label">News media Coverage Regional</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="newsMediaCoverageRegional" name="newsMediaCoverageRegional" value="<%= athlete.newsMediaCoverageRegional || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="newsMediaCoverageRegional" name="newsMediaCoverageRegional" value="<%= format(athlete.newsMediaCoverageRegional) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -721,7 +721,7 @@
                           <label for="newsMediaCoverageSentiment" class="form__group-label">News media Coverage Sentiment</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="newsMediaCoverageSentiment" name="newsMediaCoverageSentiment" value="<%= athlete.newsMediaCoverageSentiment || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="newsMediaCoverageSentiment" name="newsMediaCoverageSentiment" value="<%= format(athlete.newsMediaCoverageSentiment) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -731,7 +731,7 @@
                           <label for="newsMediaCoverageNational" class="form__group-label">News media Coverage National</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="c" name="newsMediaCoverageNational" value="<%= athlete.newsMediaCoverageNational || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="c" name="newsMediaCoverageNational" value="<%= format(athlete.newsMediaCoverageNational) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -741,7 +741,7 @@
                           <label for="pressReleaseSentiment" class="form__group-label">Press release sentiment </label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="pressReleaseSentiment" name="pressReleaseSentiment" value="<%= athlete.pressReleaseSentiment || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="pressReleaseSentiment" name="pressReleaseSentiment" value="<%= format(athlete.pressReleaseSentiment) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -751,7 +751,7 @@
                           <label for="pressReleaseSentimentCounter" class="form__group-label">Press release sentiment Counter </label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="pressReleaseSentimentCounter" name="pressReleaseSentimentCounter" value="<%= athlete.pressReleaseSentimentCounter || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="pressReleaseSentimentCounter" name="pressReleaseSentimentCounter" value="<%= format(athlete.pressReleaseSentimentCounter) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -761,7 +761,7 @@
                           <label for="instagramSentiment" class="form__group-label">Instagram Sentiment</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="instagramSentiment" name="instagramSentiment" class="form__group-input" value="<%= athlete.socialInstagramSentiment || "" %>" placeholder="e.g. Ryan">
+                          <input type="number" id="instagramSentiment" name="instagramSentiment" class="form__group-input" value="<%= format(athlete.socialInstagramSentiment) %>" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -771,7 +771,7 @@
                           <label for="twitterSentiment" class="form__group-label">Twitter Sentiment</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="twitterSentiment" name="twitterSentiment" value="<%= athlete.socialTwitterSentiment || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="twitterSentiment" name="twitterSentiment" value="<%= format(athlete.socialTwitterSentiment) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -781,7 +781,7 @@
                           <label for="twitterFollowers " class="form__group-label">Twitter Followers</label>
                         </div>
                         <div class="col-md-9">
-                          <input type="number" id="twitterFollowers" name="twitterFollowers" value="<%= athlete.twitterFollowers || "" %>" class="form__group-input" placeholder="e.g. Ryan">
+                          <input type="number" id="twitterFollowers" name="twitterFollowers" value="<%= format(athlete.twitterFollowers) %>" class="form__group-input" placeholder="e.g. Ryan">
                         </div>
                       </div>
                     </div>
@@ -824,11 +824,11 @@
 
     const getFloat = elementId => {
       const elem = document.getElementById(elementId);
-      let result = null;
+      let result = 0;
 
       if (elem) {
         const float = parseFloat(elem.value);
-        result = isNaN(float) ? null : float;
+        result = isNaN(float) ? 0 : float;
       }
 
       return result

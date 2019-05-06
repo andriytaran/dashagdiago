@@ -174,6 +174,16 @@ function getTopCulturalFitData(position, highschoolGraduationYear, cb) {
   }, cb);
 }
 
+function getAllCulturalFitData(position, highschoolGraduationYear, cb) {
+  getAPIData({
+    type: "players",
+    position: position,
+    highschoolGraduationYear,
+    sort: "desc",
+    attribute: "highschoolGraduationYear",
+  }, cb);
+}
+
 function getPlayersData(props, cb) {
   props = props || {};
 

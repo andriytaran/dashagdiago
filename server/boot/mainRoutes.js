@@ -12,6 +12,7 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
+const {format} = require('./utils');
 const auth = require('../login');
 const { positionF } = defaults;
 
@@ -91,6 +92,24 @@ module.exports = app => {
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
+    });
+  });
+
+  app.get('/all', async (req, res, next) => {
+
+    const team = await parseTeamFromQuery(req, res);
+    const user = req.user || {};
+    const { highschoolGraduationYear = "ALL" } = req.query;
+
+    res.render('all', {
+      overallCount:0,
+      defenseCount:0,
+      offenseCount:0,
+      overallScore: 0,
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
+      highschoolGraduationYear
     });
   });
 
@@ -383,6 +402,7 @@ module.exports = app => {
       team: team.shortName,
       positions: positionF,
       teamDisplay: team.fullName,
+      format,
       user,
       athlete,
       highschoolGraduationYear,
@@ -398,6 +418,7 @@ module.exports = app => {
 
     res.render('addnewplayer', {
       team: team.shortName,
+      format,
       positions: positionF,
       teamDisplay: team.fullName,
       user,
@@ -572,7 +593,7 @@ module.exports = app => {
           programBenchmarks,
           player,
         ] = await Promise.all([
-          es.fetchProgramBenchmarks(pillarsObj, {size: 50}, team.id),
+          es.fetchProgramBenchmarks(pillarsObj, {}, team.id),
           es.fetchPlayer(query, team.id, id),
         ]);
 
@@ -668,7 +689,7 @@ module.exports = app => {
 
         const programBenchmarks = await es.fetchProgramBenchmarks(
           pillarsObj,
-          {size: 50},
+          {},
           team.id,
           pillars
         );
@@ -723,7 +744,7 @@ module.exports = app => {
         if (isScript) {
           const programBenchmarks = await es.fetchProgramBenchmarks(
             pillarsObj,
-            {size: 50},
+            {},
             team.id,
             attribute === 'overallScore' ? undefined : [attribute]
           );
