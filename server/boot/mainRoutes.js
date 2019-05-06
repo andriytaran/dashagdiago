@@ -480,6 +480,7 @@ module.exports = app => {
   // core attributes benchmark setup
   app.get('/benchmark-input', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
+    const { highschoolGraduationYear = "ALL" } = req.query;
 
     const {pillar = 'coreAttributes'} = req.query ;
 
@@ -497,6 +498,7 @@ module.exports = app => {
       factors,
       factor,
       user,
+      highschoolGraduationYear
     };
 
     res.render('benchmark-input', renderData);

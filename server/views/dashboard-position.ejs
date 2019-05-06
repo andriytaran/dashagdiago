@@ -113,6 +113,8 @@
 <script>
   $(document).ready(function () {
 
+    updateHeaderLinks();
+
     const urlParams = new URLSearchParams(window.location.search);
 
     let position = (urlParams.get("position") || "").toUpperCase();

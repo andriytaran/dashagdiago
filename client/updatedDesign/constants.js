@@ -46,3 +46,13 @@ const getPositionValueOnSelect = (value) => {
   }, 'QB');
 };
 
+const updateHeaderLinks = () =>{
+  const urlParams = new URLSearchParams(window.location.search);
+  const highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
+
+  $('#benchmark-input-link').html(`<a class="header__nav-link" href="/benchmark-input?highschoolGraduationYear=${highschoolGraduationYear}">Benchmark-input</a>`);
+  $('#add-new-athlete-link').html(`<a class="header__nav-link" href="/addnewathlete?highschoolGraduationYear=${highschoolGraduationYear}">Add new Athlete info</a>`);
+
+}
+
+

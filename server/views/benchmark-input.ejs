@@ -34,6 +34,9 @@
 </head>
 
 <body>
+
+<%-partial('./partials/sidebarPositions')%>
+
 <div class="wrap" id="mainSection">
 
   <%-partial('./partials/header')%>
@@ -146,8 +149,6 @@
       const position = getPositionValueOnSelect(formValues.find(e => e.name === 'position').value);
       const factor = parseFloat(formValues.find(e => e.name === 'factor').value);
 
-      console.log('factor', factor);
-
       const attr = window.attributes || [];
 
       const benchmarks = attr.reduce((acc, elem)=>{
@@ -163,7 +164,6 @@
         return acc;
       }, {})
 
-      console.log(formValues)
       updateBenchmarks({position, benchmarks, factors, pillar, factor})
 
       event.preventDefault();
@@ -174,7 +174,6 @@
       .change(function () {
         const position = getPositionValueOnSelect(this.value);
         getBenchmarks(position, pillar, (res) => {
-          console.log(res);
 
           const {benchmarks, factors} = res;
 
