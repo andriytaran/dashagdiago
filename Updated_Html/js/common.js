@@ -74,6 +74,30 @@ $(document).ready( () => {
         }
 
     });
+    $('#playerPhoto').change( () => {
+
+        let $file = $('#playerPhoto').val();
+
+        var ext =  $file.split('.').pop().toLowerCase(),
+            checkIcon = '<img src="img/check-icon.svg" alt="">',
+            outPut = $('.form__group-upload-results');
+
+        if($.inArray(ext, ['jpg','jpeg','gif','png']) == -1) {
+            $('#playerPhoto').val('');
+            outPut.addClass('error').text('Sorry, only files of type jpg, png, jpeg is allowed!');
+
+        } else {
+            $('.clear-field').addClass('active');
+            $file = $file.replace(/\\/g, '/').split('/').pop();
+            outPut.removeClass('error').addClass('active').text($file + ' downloaded').append(checkIcon);
+        }
+
+    });
+    $('.form__group-input-file-wrap--add-photo').on('click', '.clear-field', function(){
+        $('.form__group-upload-results').text('');
+        $('#playerPhoto').val('');
+        $(this).removeClass('active');
+    })
     $('.clear-field').on('click', function(){
         $('#file-name').text('FTP folder name');
         $('#schoolData').val('');

@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <!-- <base href="/"> -->
-
-  <title>AgDiago</title>
-  <meta name="description" content="">
-
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- Template Basic Images Start -->
-  <meta property="og:image" content="path/to/image.jpg">
-  <link rel="icon" href="img/favicon/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
-  <!-- Template Basic Images End -->
-
-  <!-- Custom Browsers Color Start -->
-  <meta name="theme-color" content="#F4F7FC">
-  <!-- Custom Browsers Color End -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
-  <link rel="stylesheet" href="../updatedDesign/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../updatedDesign/css/main.min.css">
-
-  <script src="../updatedDesign/assets/js/jquery-3.4.0.min.js"></script>
-  <script src="../updatedDesign/assets/js/bootstrap.bundle.min.js"></script>
-  <script src="../updatedDesign/assets/js/bootstrap.min.js"></script>
-</head>
+<%-partial('./partials/basePageHeader')%>
 
 <body>
 
@@ -39,21 +8,47 @@
 
   <%- partial('./partials/header') %>
 
-  <section class="individual-player">
-    <div class="container">
+  <section  class="individual-player">
+    <div  class="container">
       <div class="row">
+        <div id="individual-player-main-header" class="col-md-12"></div>
+        <div id="individual-player-main-info" class="col-md-12"></div>
         <div class="col-md-12">
-          <h1 class="individual-player__heading main-heading"><span>Individual</span> Player Dashboard</h1>
-          <h1 class="individual-player__heading main-heading"><span id="individual-player-position"></span></h1>
-        </div>
-        <div id="individual-player-main-info" class="col-md-12">
-        </div>
-        <div class="col-md-12">
-          <div class="individual-player__core-attr core-attr">
-            <div class="core-attr__subheading">
-              Player Attributes
+          <div class="individual-player__attr attr">
+            <div class="attr__header px-4">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="attr__header-benchmark">
+                    <div class="attr__header-benchmark-block">
+                      <div class="attr__benchmark-prog-bar ">
+                        <div class="attr__benchmark-position red-point" style="width: 80%"></div>
+                      </div>
+                      <div>- Team benchmark </div>
+                    </div>
+                    <div class="attr__header-benchmark-block">
+                      <div class="attr__benchmark-prog-bar ">
+                        <div class="attr__benchmark-position black-point" style="width: 40%"></div>
+                      </div>
+                      <div>- AgDiago benchmark</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="attr__header-meet">
+                    <div class="attr__header-meet-block">
+                      <div class="attr__meet-point green"></div>
+                      <div>- Meets or exceeds team benchmark</div>
+                    </div>
+                    <div class="attr__header-meet-block">
+                      <div class="attr__meet-point orange"></div>
+                      <div>- Does not meet team benchmark</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 d-flex align-items-center justify-content-end"><button data-toggle="modal" data-target="#add-attr" class="attr__header-add-attr">+ Add an Attribute</button></div>
+              </div>
             </div>
-            <div class="core-attr__block" id="core-attr__block"></div>
+            <div id="attributes-section" class="attr__block-wrap"></div>
           </div>
         </div>
       </div>
@@ -64,8 +59,6 @@
 <script src="../updatedDesign/constants.js"></script>
 <script src="../updatedDesign/js/common.js"></script>
 <script src="/../assets/js/app/api.js"></script>
-<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
-<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script src="../updatedDesign/barBlock.js"></script>
 
 <script>
@@ -81,70 +74,70 @@
 
       if (status === 'success') {
         const overallScore = Math.round(res.overallScore.player);
-        const coreAttributesScore = Math.round(res.scores.player.coreAttributes);
 
         const { hometown, school, fname, lname, position } = res.player || {}
 
-        const html = `
-          <div class="row">
-            <div class="col-md-7">
-              <div class="individual-player__info player-info">
-                <div class="player-info__heading small-desc">Player Information 1</div>
-                <div class="player-info__box green">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <div class="player-info__photo">
-                        <img src="../updatedDesign/img/player-photo.jpg" alt="">
-                      </div>
-                    </div>
-                    <div class="col-md-9">
-                      <div class="player-info__name">${fname} ${lname} <a class="float-right" href="/addnewathlete?id=${id}">Edit</a> </div>
-                      <div class="player-info__additional-info">Hometown: ${hometown}</div>
-                      <div class="player-info__additional-info">Atheletic Coach: Not Available</div>
-                      <div class="player-info__additional-info">Scout Date: Not Available</div>
-                      <div class="player-info__additional-info">High School: ${school}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div id="individual-player-score" class="individual-player__score player-info">
-                <div class="player-info__heading small-desc">Agdiago Score</div>
-                <div class="player-info__box red">
-                  <div class="row">
-                    <div class="col-md-5 d-flex align-items-center">
-                      <div class="player-info__score-icon">
-                        <img src="../updatedDesign/img/score-icon.svg" alt="">
-                      </div>
-                    </div>
-                    <div class="col-md-7">
-                      <div class="player-info__score-content">
-                        <div class="player-info__score-graph">
-                          <img src="../updatedDesign/img/score-graph.svg" alt="">
-                        </div>
-                        <div class="player-info__score-number">${overallScore}</div>
-                        <div class="player-info__score-based-on">Based on registered benchmarks</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>`
+        const header = `<h1 class="individual-player__heading main-heading"><span>${getFullNamePosition(position)} Individual</span> Player Dashboard</h1>`
 
-        $("#individual-player-main-info").html(html);
-        $("#individual-player-position").html(getFullNamePosition(position));
-        $("#individual-player-core-attr-score").html(`AG Score: ${coreAttributesScore}`);
+        const mainInfo = `<div class="row">
+							<div class="col-md-7">
+								<div class="individual-player__info player-info">
+									<div class="player-info__heading small-desc">Player Information 1</div>
+									<div class="player-info__box green">
+										<div class="row w-100">
+											<div class="col-md-3">
+												<div class="player-info__photo">
+													<img src="../updatedDesign/img/player-photo.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-md-5">
+												<div class="player-info__name">${fname} ${lname}</div>
+												<div class="player-info__additional-info">Hometown: ${hometown}</div>
+												<div class="player-info__additional-info">Atheletic Coach: Not Available</div>
+												<div class="player-info__additional-info">Scout Date: Not Available</div>
+												<div class="player-info__additional-info">High School: ${school}</div>
+											</div>
+											<div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+												<div class="player-info__score-position">
+													${position.toUpperCase()}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="individual-player__score player-info">
+									<div class="player-info__heading small-desc">Agdiago Score</div>
+									<div class="player-info__box red">
+										<div class="row w-100">
+											<div class="col-md-5 d-flex align-items-center">
+												<div class="player-info__score-icon">
+													<img src="../updatedDesign/img/score-icon.svg" alt="">
+												</div>
+											</div>
+											<div class="col-md-7">
+												<div class="player-info__score-content">
+													<div class="player-info__score-number">${overallScore}</div>
+													<div class="player-info__score-based-on">Based on registered benchmarks</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>`
 
+        $("#individual-player-main-header").html(header);
+        $("#individual-player-main-info").html(mainInfo);
 
-        const scores = res.scores.player;
+        const playerScores = res.scores.player;
         const agdiagoScores = res.scores.agdiago;
 
-        for (let key in scores) {
+        for (let key in playerScores) {
           getPlayerAttributesData(id, key, (data, status2) => {
             if (status2 === 'success') {
-              barBlock(key, scores[key], agdiagoScores[key], key + '12345', 'core-attr__block', data);
+              attrBlock(key, agdiagoScores[key], playerScores[key], data, 'attributes-section', key + '-attr-id');
             }
           });
         }

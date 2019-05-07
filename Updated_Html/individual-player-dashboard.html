@@ -25,7 +25,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.min.css">
-	<script src="assets/js/jquery-3.4.0.min.js"></script>
+
+  <script src="assets/js/jquery-3.4.0.min.js"></script>
 	<script src="assets/js/bootstrap.bundle.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 </head>
@@ -167,7 +168,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 class="individual-player__heading main-heading"><span>Individual</span> Player Dashboard</h1>
+						<h1 class="individual-player__heading main-heading"><span>Quarterback Individual</span> Player Dashboard</h1>
 					</div>
 					<div class="col-md-12">
 						<div class="row">
@@ -175,18 +176,23 @@
 								<div class="individual-player__info player-info">
 									<div class="player-info__heading small-desc">Player Information 1</div>
 									<div class="player-info__box green">
-										<div class="row">
+										<div class="row w-100">
 											<div class="col-md-3">
 												<div class="player-info__photo">
 													<img src="img/player-photo.jpg" alt="">
 												</div>
 											</div>
-											<div class="col-md-9">
+											<div class="col-md-5">
 												<div class="player-info__name">Shea Hoogerwerf</div>
 												<div class="player-info__additional-info">Hometown: Bothell</div>
 												<div class="player-info__additional-info">Atheletic Coach: Not Available</div>
 												<div class="player-info__additional-info">Scout Date: Not Available</div>
 												<div class="player-info__additional-info">High School: Bothel HS</div>
+											</div>
+											<div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+												<div class="player-info__score-position">
+													QB
+												</div>
 											</div>
 										</div>
 									</div>
@@ -196,7 +202,7 @@
 								<div class="individual-player__score player-info">
 									<div class="player-info__heading small-desc">Agdiago Score</div>
 									<div class="player-info__box red">
-										<div class="row">
+										<div class="row w-100">
 											<div class="col-md-5 d-flex align-items-center">
 												<div class="player-info__score-icon">
 													<img src="img/score-icon.svg" alt="">
@@ -204,9 +210,6 @@
 											</div>
 											<div class="col-md-7">
 												<div class="player-info__score-content">
-													<div class="player-info__score-graph">
-														<img src="img/score-graph.svg" alt="">
-													</div>
 													<div class="player-info__score-number">163</div>
 													<div class="player-info__score-based-on">Based on registered benchmarks</div>
 												</div>
@@ -218,68 +221,339 @@
 						</div>
 					</div>
 					<div class="col-md-12">
-						<div class="individual-player__core-attr core-attr">
-							<div class="core-attr__subheading">
-								Player Attributes
+						<div class="individual-player__attr attr">
+							<div class="attr__header px-4">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="attr__header-benchmark">
+											<div class="attr__header-benchmark-block">
+												<div class="attr__benchmark-prog-bar ">
+													<div class="attr__benchmark-position red-point" style="width: 80%"></div>
+												</div>
+												<div>- Team benchmark </div>
+											</div>
+											<div class="attr__header-benchmark-block">
+												<div class="attr__benchmark-prog-bar ">
+													<div class="attr__benchmark-position black-point" style="width: 40%"></div>
+												</div>
+												<div>- AgDiago benchmark</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="attr__header-meet">
+											<div class="attr__header-meet-block">
+												<div class="attr__meet-point green"></div>
+												<div>- Meets or exceeds team benchmark</div>
+											</div>
+											<div class="attr__header-meet-block">
+												<div class="attr__meet-point orange"></div>
+												<div>- Does not meet team benchmark</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-5 d-flex align-items-center justify-content-end"><button data-toggle="modal" data-target="#add-attr" class="attr__header-add-attr">+ Add an Attribute</button></div>
+								</div>
 							</div>
-							<div class="core-attr__block">
-								<div class="core-attr__heading">
-									Core Attributes
+							<div class="attr__block-wrap">
+								<div class="attr__block">
+									<div class="attr__heading">
+										Core Attributes
+									</div>
+									<div class="attr__ag-score">
+										<div class="attr__ag-score-progressbar orange" style="width: 60%"></div>
+										<div class="attr__benchmark-position black-point" style="width: 80%"></div>
+										<div class="attr__ag-score-value">AG Score: 119</div>
+									</div>
+									<button class="attr__more-btn" type="button" data-toggle="collapse"
+										data-target="#coreAttrMoreBlock" aria-expanded="false"
+										aria-controls="coreAttrMoreBlock">
+										<span class="attr__more-btn-show">Show Sub Categories</span>
+										<span class="attr__more-btn-hide">Hide Sub Categories</span>
+										<div class="attr__more-btn-arrow">
+											<img src="img/attr-arrow.svg" alt="">
+										</div>
+									</button>
+									<div class="attr__more-block collapse" id="coreAttrMoreBlock"
+										aria-labelledby="coreAttrMoreBlock">
+										<div class="attr__heading">
+											Team Orientation
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 90%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 80%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 50%"></div>
+											<div class="attr__ag-score-value">AG Score: 163</div>
+										</div>
+										<div class="attr__heading">
+												Work Ethic
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 60%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 50%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 70%"></div>
+											<div class="attr__ag-score-value">AG Score: 133</div>
+										</div>
+										<div class="attr__heading">
+												Persistence
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 45%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 50%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 20%"></div>
+											<div class="attr__ag-score-value">AG Score: 75</div>
+										</div>
+										<div class="attr__heading">
+												Mastery
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 30%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 30%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 20%"></div>
+											<div class="attr__ag-score-value">AG Score: 44</div>
+										</div>
+										<div class="attr__heading">
+												Competitiveness
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 70%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 66%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 57%"></div>
+											<div class="attr__ag-score-value">AG Score: 88</div>
+										</div>
+									</div>
 								</div>
-								<div class="core-attr__ag-score">
-									<div class="core-attr__ag-score-progressbar orange" style="width: 80%"></div>
-									<div class="core-attr__ag-score-value">AG Score: 133</div>
+								<div class="attr__block">
+									<div class="attr__heading">
+										Athletic Attributes
+									</div>
+									<div class="attr__ag-score">
+										<div class="attr__ag-score-progressbar orange" style="width: 80%"></div>
+										<div class="attr__benchmark-position black-point" style="width: 40%"></div>
+										<div class="attr__ag-score-value">AG Score: 167</div>
+									</div>
+									<button class="attr__more-btn" type="button" data-toggle="collapse"
+										data-target="#athleticAttrMoreBlock" aria-expanded="false"
+										aria-controls="athleticAttrMoreBlock">
+										<span class="attr__more-btn-show">Show Sub Categories</span>
+										<span class="attr__more-btn-hide">Hide Sub Categories</span>
+										<div class="attr__more-btn-arrow">
+											<img src="img/attr-arrow.svg" alt="">
+										</div>
+									</button>
+									<div class="attr__more-block collapse" id="athleticAttrMoreBlock"
+										aria-labelledby="athleticAttrMoreBlock">
+										<div class="attr__heading">
+												Carriers
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 90%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 80%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 50%"></div>
+											<div class="attr__ag-score-value">AG Score: 163</div>
+										</div>
+										<div class="attr__heading">
+												Completations
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 60%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 50%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 70%"></div>
+											<div class="attr__ag-score-value">AG Score: 133</div>
+										</div>
+										<div class="attr__heading">
+												Interceptions Thrown
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 45%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 50%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 20%"></div>
+											<div class="attr__ag-score-value">AG Score: 75</div>
+										</div>
+										<div class="attr__heading">
+												Passing yards
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 30%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 30%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 20%"></div>
+											<div class="attr__ag-score-value">AG Score: 44</div>
+										</div>
+										<div class="attr__heading">
+												Receving yards
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 70%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 66%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 57%"></div>
+											<div class="attr__ag-score-value">AG Score: 88</div>
+										</div>
+										<div class="attr__heading">
+												Recieptions
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 64%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 43%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 59%"></div>
+											<div class="attr__ag-score-value">AG Score: 85</div>
+										</div>
+										<div class="attr__heading">
+												Rushing Touchdowns
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 54%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 63%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 23%"></div>
+											<div class="attr__ag-score-value">AG Score: 75</div>
+										</div>
+										<div class="attr__heading">
+												Rushing yards
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 82%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 68%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 56%"></div>
+											<div class="attr__ag-score-value">AG Score: 132</div>
+										</div>
+										<div class="attr__heading">
+												Sacks
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 55%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 38%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 47%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Solo Trackles
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 55%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 38%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 47%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Trackless for Loss
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 55%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 38%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 47%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Total Trackles
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 55%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 38%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 47%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Forty
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 92%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 88%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 78%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Games Played
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 12%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 18%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 10%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Games Started
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 73%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 32%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 56%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Vertical
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width:53%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 34%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 67%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+										<div class="attr__heading">
+												Weight
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 25%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 30%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 20%"></div>
+											<div class="attr__ag-score-value">AG Score: 112</div>
+										</div>
+									</div>
 								</div>
-								<button class="core-attr__more-btn" type="button" data-toggle="collapse"
-									data-target="#coreAttrMoreBlock" aria-expanded="false"
-									aria-controls="coreAttrMoreBlock">
-									<span class="core-attr__more-btn-show">Show Sub Categories</span>
-									<span class="core-attr__more-btn-hide">Hide Sub Categories</span>
-									<div class="core-attr__more-btn-arrow">
-										<img src="img/core-attr-arrow.svg" alt="">
+								<div class="attr__block">
+									<div class="attr__heading">
+										Academic Attributes
 									</div>
-								</button>
-								<div class="core-attr__more-block collapse" id="coreAttrMoreBlock"
-									aria-labelledby="coreAttrMoreBlock">
-									<div class="core-attr__heading">
-										Team Orientation
+									<div class="attr__ag-score">
+										<div class="attr__ag-score-progressbar orange" style="width: 48%"></div>
+										<div class="attr__benchmark-position black-point" style="width: 40%"></div>
+										<div class="attr__ag-score-value">AG Score: 85</div>
 									</div>
-									<div class="core-attr__ag-score">
-										<div class="core-attr__ag-score-progressbar blue" style="width: 60%">
+									<button class="attr__more-btn" type="button" data-toggle="collapse"
+										data-target="#academicAttrMoreBlock" aria-expanded="false"
+										aria-controls="academicAttrMoreBlock">
+										<span class="attr__more-btn-show">Show Sub Categories</span>
+										<span class="attr__more-btn-hide">Hide Sub Categories</span>
+										<div class="attr__more-btn-arrow">
+											<img src="img/attr-arrow.svg" alt="">
 										</div>
-										<div class="core-attr__ag-score-value">AG Score: 133</div>
-									</div>
-									<div class="core-attr__heading">
-											Work Ethic
-									</div>
-									<div class="core-attr__ag-score">
-										<div class="core-attr__ag-score-progressbar blue" style="width: 80%">
+									</button>
+									<div class="attr__more-block collapse" id="academicAttrMoreBlock"
+										aria-labelledby="academicAttrMoreBlock">
+										<div class="attr__heading">
+												ATC
 										</div>
-										<div class="core-attr__ag-score-value">AG Score: 133</div>
-									</div>
-									<div class="core-attr__heading">
-											Persistence
-									</div>
-									<div class="core-attr__ag-score">
-										<div class="core-attr__ag-score-progressbar blue" style="width: 45%">
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 90%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 80%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 50%"></div>
+											<div class="attr__ag-score-value">AG Score: 163</div>
 										</div>
-										<div class="core-attr__ag-score-value">AG Score: 133</div>
-									</div>
-									<div class="core-attr__heading">
-											Mastery
-									</div>
-									<div class="core-attr__ag-score">
-										<div class="core-attr__ag-score-progressbar blue" style="width: 30%">
+										<div class="attr__heading">
+												SAT
 										</div>
-										<div class="core-attr__ag-score-value">AG Score: 133</div>
-									</div>
-									<div class="core-attr__heading">
-											Competitiveness
-									</div>
-									<div class="core-attr__ag-score">
-										<div class="core-attr__ag-score-progressbar blue" style="width: 70%">
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 86%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 74%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 50%"></div>
+											<div class="attr__ag-score-value">AG Score: 133</div>
 										</div>
-										<div class="core-attr__ag-score-value">AG Score: 133</div>
+										<div class="attr__heading">
+												GPA
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 77%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 52%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 78%"></div>
+											<div class="attr__ag-score-value">AG Score: 133</div>
+										</div>
+										<div class="attr__heading">
+												Core GPA
+										</div>
+										<div class="attr__ag-score">
+											<div class="attr__ag-score-progressbar green" style="width: 53%"></div>
+											<div class="attr__benchmark-position black-point" style="width: 55%"></div>
+											<div class="attr__benchmark-position red-point" style="width: 48%"></div>
+											<div class="attr__ag-score-value">AG Score: 133</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -289,7 +563,496 @@
 			</div>
 		</section>
 	</div>
-
+<!-- Modal -->
+<div class="modal fade" id="add-attr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="s-benchmark-input__form add-attr-form form">
+						<div class="add-attr-form__header">
+							<div class="row align-items-center">
+								<div class="col-md-12 ">
+									<div class="add-attr-form__heading">
+										Additional Attributes
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="add-attr-form__body">
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="40yd" class="add-attr-form__group-label form__group-label">40 yd</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="40yd" name="40yd" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="verticalJump" class="add-attr-form__group-label form__group-label">Vertical Jump<label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="verticalJump" name="verticalJump" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="height" class="add-attr-form__group-label form__group-label">Height</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="height" name="height" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="weight" class="add-attr-form__group-label form__group-label">Weight</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="weight" name="weight" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="gamesStarted" class="add-attr-form__group-label form__group-label">Games Started</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="gamesStarted" name="gamesStarted" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="gamesPlayed" class="add-attr-form__group-label form__group-label">Games Played</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="gamesPlayed" name="gamesPlayed" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="soloTackles" class="add-attr-form__group-label form__group-label">Solo Tackles</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="soloTackles" name="soloTackles" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="totalTackles" class="add-attr-form__group-label form__group-label">Total Tackles</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="totalTackles" name="totalTackles" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="tacklesforLoss" class="add-attr-form__group-label form__group-label">Tackles for Loss</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="tacklesforLoss" name="tacklesforLoss" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="sacks" class="add-attr-form__group-label form__group-label">Sacks</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="sacks" name="sacks" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="interceptions" class="add-attr-form__group-label form__group-label">Interceptions</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="interceptions" name="interceptions" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fumbleRecoveries" class="add-attr-form__group-label form__group-label">Fumble Recoveries</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fumbleRecoveries" name="fumbleRecoveries" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fumbleReturnsForTouchdown" class="add-attr-form__group-label form__group-label">Fumble Returns for Touchdown</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fumbleReturnsForTouchdown" name="fumbleReturnsForTouchdown" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="interceptionReturnsForTouchdown" class="add-attr-form__group-label form__group-label">Interception Returns for Touchdown</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="interceptionReturnsForTouchdown" name="interceptionReturnsForTouchdown" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="returnsForTouchdownUnderInterceptions" class="add-attr-form__group-label form__group-label">Move interception returns for touchdown under Interceptions</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="returnsForTouchdownUnderInterceptions" name="returnsForTouchdownUnderInterceptions" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="punts" class="add-attr-form__group-label form__group-label">Punts</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="punts" name="punts" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="averageYardsperPunt" class="add-attr-form__group-label form__group-label">Average Yards per Punt</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="averageYardsperPunt" name="averageYardsperPunt" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="averageNetYardsperPunt " class="add-attr-form__group-label form__group-label">Average Net Yards per Punt </label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="averageNetYardsperPunt" name="averageNetYardsperPunt" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="puntsInsidethe10ydLine" class="add-attr-form__group-label form__group-label">Punts Inside the 10 yd Line</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="puntsInsidethe10ydLine" name="puntsInsidethe10ydLine" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="puntsInsidethe20ydLine" class="add-attr-form__group-label form__group-label">Punts Inside the 20 yd Line</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="puntsInsidethe20ydLine" name="puntsInsidethe20ydLine" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="hangTime" class="add-attr-form__group-label form__group-label">Hang Time</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="interceptions" name="interceptions" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="attributesforKickers" class="add-attr-form__group-label form__group-label">Attributes for Kickers</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="attributesforKickers" name="attributesforKickers" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="kickoffs" class="add-attr-form__group-label form__group-label">Kickoffs</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="kickoffs" name="kickoffs" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="touchbacks" class="add-attr-form__group-label form__group-label">Touchbacks</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="touchbacks" name="touchbacks" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fga " class="add-attr-form__group-label form__group-label">Field Goals Attempted</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fga" name="fga" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgaMiddle" class="add-attr-form__group-label form__group-label">Field Goals Attempted Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgaMiddle" name="fgaMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgaRightMiddle" class="add-attr-form__group-label form__group-label">Field Goals Attempted Right Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgaRightMiddle" name="fgaRightMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgaLeftMiddle" class="add-attr-form__group-label form__group-label">Field Goals Attempted Left Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgaLeftMiddle" name="fgaLeftMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgaRightHash " class="add-attr-form__group-label form__group-label">Field Goals Attempted Right Hash </label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgaRightHash" name="fgaRightHash" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgaLeftHash" class="add-attr-form__group-label form__group-label">Field Goals Attempted Left Hash</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgaLeftHash" name="fgaLeftHash" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgm" class="add-attr-form__group-label form__group-label">Field Goals Made</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgm" name="fgm" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgm2040yards" class="add-attr-form__group-label form__group-label">Field Goals Made 20-40 yards</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgm2040yards" name="fgm2040yards" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgm4050yards" class="add-attr-form__group-label form__group-label">Field Goals Made 40-50 yards</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgm4050yards" name="fgm4050yards" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmMore50Yards" class="add-attr-form__group-label form__group-label">Field Goals Made 50+ yards</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmMore50Yards" name="fgmMore50Yards" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="longestFieldGoalMade" class="add-attr-form__group-label form__group-label">Longest Field Goal Made</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="longestFieldGoalMade" name="longestFieldGoalMade" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmMiddle" class="add-attr-form__group-label form__group-label">Field Goals Made Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmMiddle" name="fgmMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmRightMiddle" class="add-attr-form__group-label form__group-label">Field Goals Made Right Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmRightMiddle" name="fgmRightMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmLeftMiddle" class="add-attr-form__group-label form__group-label">Field Goals Made Left Middle</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmLeftMiddle" name="fgmLeftMiddle" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmRightHash" class="add-attr-form__group-label form__group-label">Field Goals Made Right Hash</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmRightHash" name="fgmRightHash" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="fgmLeftHash" class="add-attr-form__group-label form__group-label">Field Goals Made Left Hash</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="fgmLeftHash" name="fgmLeftHash" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="timeToPunter" class="add-attr-form__group-label form__group-label">Time to Punter</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="timeToPunter" name="timeToPunter" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="receptions" class="add-attr-form__group-label form__group-label">Receptions</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="receptions" name="receptions" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="receivingTouchdowns" class="add-attr-form__group-label form__group-label">Receiving Touchdowns</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="receivingTouchdowns" name="receivingTouchdowns" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="carries" class="add-attr-form__group-label form__group-label">Carries</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="carries" name="carries" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="rushingYards" class="add-attr-form__group-label form__group-label">Rushing Yards</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="rushingYards" name="rushingYards" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__group form__group">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="rushingTouchdowns" class="add-attr-form__group-label form__group-label">Rushing Touchdowns</label>
+									</div>
+									<div class="col-md-8 pr-md-4">
+										<input type="text"  id="rushingTouchdowns" name="rushingTouchdowns" placeholder="e.g. Ryan" class="add-attr-form__group-input form__group-input">
+									</div>
+								</div>
+							</div>
+							<div class="add-attr-form__submit-btn-block form__submit-btn-block">
+								<input type="submit" class="add-attr-form__form-submit-btn form__submit-btn" value="Submit">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="js/common.js"></script>
 
 </body>

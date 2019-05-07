@@ -426,6 +426,14 @@ module.exports = app => {
     });
   });
 
+
+  app.post('/api/createPlayer', async function (req, res, next) {
+    const player = req.body;
+    const { school } = req.user;
+    await es.createPlayer(school, player);
+    return res.json({status: "OK"});
+  });
+
   app.post('/api/updatePlayer', async function (req, res, next) {
     const player = req.body;
     const { athleteId, school, role } = req.user;
@@ -434,10 +442,10 @@ module.exports = app => {
 
   });
 
-  app.post('/api/createPlayer', async function (req, res, next) {
-    const player = req.body;
+  app.post('/api/deletePlayer', async function (req, res, next) {
+    const playerId = req.body.id;
     const { school } = req.user;
-    await es.createPlayer(school, player);
+    await es.deletePlayer(school, playerId);
     return res.json({status: "OK"});
   });
 

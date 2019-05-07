@@ -49,6 +49,17 @@ function createPlayer(props, cb) {
   });
 }
 
+const deletePlayerById = (id, cb) => {
+  $.ajax({
+    type: "POST",
+    url: `/api/deletePlayer`,
+    data: JSON.stringify({id}),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: cb
+  });
+}
+
 function getClasses(cb) {
   getAPIData({
     type: "players",

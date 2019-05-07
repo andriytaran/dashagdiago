@@ -1145,13 +1145,31 @@ async function getPlayer(school, athleteId) {
   return res.hits.hits.map(hit => hit._source)[0];
 }
 
+async function createPlayer(school, player) {
+
+  const res = await client.search({
+    index: school,
+    type: 'post',
+    sort: 'id:desc',
+    size: 1
+  });
+
+  const maxIdPlayer = res.hits.hits.map(hit => hit._source)[0] || {};
+
+  const maxId = maxIdPlayer.id || 0;
+
+  player.id = maxId + 1;
+
+  await addPlayer(school, player);
+}
+
 async function updatePlayer(school, athleteId, player) {
   await addOrUpdateDocument(school, { match: { id: athleteId } }, 'post', player);
 }
 
-async function createPlayer(school, player) {
-  player.id = await fetchCount({}, school) + 1;
-  await addPlayer(school, player);
+async function deletePlayer(school, playerId) {
+  const res = await client.delete({ index: school, id: playerId, type: 'post' });
+  return res;
 }
 
 async function getSchool(id) {
@@ -1221,4 +1239,5 @@ module.exports = {
   getPlayer,
   createPlayer,
   updatePlayer,
+  deletePlayer,
 };
