@@ -91,9 +91,56 @@
     </div>
   </section>
 </div>
+
+<div class="modal fade" id="add-attr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="s-benchmark-input__form add-attr-form form">
+          <div class="add-attr-form__header">
+            <div class="row align-items-center">
+              <div class="col-md-12 ">
+                <div class="add-attr-form__heading">
+                  Deleting of player
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="add-attr-form__body">
+            <div class="add-attr-form__group form__group">
+              <div class="row">
+                <div class="col-md-12 d-flex align-items-center">
+                  <label id="delete-user-info" class="add-attr-form__group-label form__group-label"></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 d-flex align-items-center">
+                  <label for="40yd" class="add-attr-form__group-label form__group-label">Are you sure ? </label>
+                </div>
+              </div>
+
+            </div>
+
+            <div id="delete-button-modal" class="add-attr-form__submit-btn-block form__submit-btn-block">
+              <input type="button" class="add-attr-form__form-submit-btn form__submit-btn" value="Yes">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/../assets/js/app/api.js"></script>
 <script src="../updatedDesign/js/common.js"></script>
 <script src="../updatedDesign/constants.js"></script>
+<script src="../updatedDesign/modal.js"></script>
 
 <script>
   $(document).ready(function () {
@@ -119,21 +166,22 @@
 
     $('#dashboard-switch-class').html(links);
 
-    getTopCulturalFitData(undefined, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
-      if (status === 'success') {
+    const updateDataTable = () => {
+      getTopCulturalFitData(undefined, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
+        if (status === 'success') {
 
-        res.players.forEach((player, index) => {
+          const tableHtml = res.players.map((player, index) => {
 
-          const {
-            fname,
-            id,
-            lname,
-            position,
-            team,
-            value,
-          } = player
+            const {
+              fname,
+              id,
+              lname,
+              position,
+              team,
+              value,
+            } = player
 
-          const row = $(`<div class="players-table__row">
+            return `<div class="players-table__row">
                   <div class="row align-items-center">
                     <div class="col-md-1">
                       <div class="players-table__item avatar">
@@ -173,16 +221,35 @@
                         <a href="/addnewathlete?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
-                          <button onclick="deletePlayerById(${id})" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
-
+                        <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${`${fname} ${lname}`}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
                       </div>
                     </div>
                   </div>
-                </div>`);
-          $('#CulturalFitTable').append(row);
-        });
-      }
-    });
+                </div>`
+          }).join('');
+
+          $('#CulturalFitTable').html(tableHtml);
+
+          $(`.delete-btn`).click(function () {
+            const pid = $(this).data('player')
+            const name = $(this).data('name')
+
+            $('#delete-user-info').html(`User ${name} will be deleted`);
+            $('#delete-button-modal').off('click');
+
+            $('#delete-button-modal').click(() => {
+              deletePlayerById(pid, ()=>{
+                $('#close-modal').click();
+                setTimeout(updateDataTable, 1000);
+              })
+            });
+          });
+        }
+      });
+    }
+
+    updateDataTable()
+
   });
 
 </script>
