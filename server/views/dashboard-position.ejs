@@ -72,6 +72,8 @@
   </section>
 </div>
 
+<%-partial('./partials/modalDeletePlayer.ejs')%>
+
 <script src="../updatedDesign/constants.js"></script>
 <script src="../updatedDesign/js/common.js"></script>
 <script src="/../assets/js/app/api.js"></script>
@@ -106,20 +108,23 @@
     $("#dashboard-position-page-header").html(header);
     $("#dashboard-position-table-header").html(`Top 10 ${position} Players`);
 
-    getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
-      if (status === 'success') {
+    const updateData = () => {
+      getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
+        if (status === 'success') {
 
-        const { players = [] } = res;
+          const { players = [] } = res;
 
-        const urlParams = new URLSearchParams(window.location.search);
+          const urlParams = new URLSearchParams(window.location.search);
 
-        let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
+          let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
-        const html = players.map((player, index) => {
+          const html = players.map((player, index) => {
 
-          const { fname, id, lname, position, team, value } = player;
+            const { fname, id, lname, position, team, value } = player;
 
-          return `<div class="players-table__row">
+            const playerInfo = `${fname} ${lname}`;
+
+            return `<div class="players-table__row">
                   <div class="row align-items-center">
                     <div class="col-md-1">
                       <div class="players-table__item avatar">
@@ -154,31 +159,55 @@
                     <div class="col-md-3">
                       <div class="players-table__item btn-block">
                         <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}"><button class="showdetails-btn">Show Details</button></a>
+                         <a href="/addnewathlete?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
+                          <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
+                        </a>
+                        <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
+
                       </div>
                     </div>
                   </div>
                 </div>`
-        }).join("");
+          }).join("");
 
-        $("#dashboard-position-top-10-players").html(html);
+          $("#dashboard-position-top-10-players").html(html);
 
-      }
-    })
+          $(`.delete-btn`).click(function () {
+            const pid = $(this).data('player')
+            const name = $(this).data('name')
 
-    getOverallScoresData(position, (res, status) => {
-      if (status === 'success') {
-        const playerScores = res.scores.player;
-        const agdiagoScores = res.scores.agdiago;
+            $('#delete-user-info').html(`User ${name} will be deleted`);
+            $('#delete-button-modal').off('click');
 
-        for (let key in playerScores) {
-          getAttributesData(position, key, (data, status2) => {
-            if (status2 === 'success') {
-              attrBlock(key, agdiagoScores[key], playerScores[key], data, 'attributes-section-position', key + '-attr-id');
-            }
+            $('#delete-button-modal').click(() => {
+              deletePlayerById(pid, ()=>{
+                $('#close-modal').click();
+                setTimeout(updateData, 1000);
+              })
+            });
           });
+
         }
-      }
-    });
+      })
+
+      getOverallScoresData(position, (res, status) => {
+        if (status === 'success') {
+          const playerScores = res.scores.player;
+          const agdiagoScores = res.scores.agdiago;
+
+          for (let key in playerScores) {
+            getAttributesData(position, key, (data, status2) => {
+              if (status2 === 'success') {
+                attrBlock(key, agdiagoScores[key], playerScores[key], data, 'attributes-section-position', key + '-attr-id');
+              }
+            });
+          }
+        }
+      });
+    }
+
+    updateData()
+
   });
 
 </script>
