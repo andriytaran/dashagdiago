@@ -127,6 +127,7 @@ module.exports = app => {
     }
     const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
+
     const [
       overallCount,
       offenseCount,
@@ -135,27 +136,27 @@ module.exports = app => {
     ] = await Promise.all([
         es.fetchCount({}, team.id),
         es.fetchCount({
-          'body': {
-            'query': {
-              'bool': {
-                'must': {
-                  'match': {
-                    'offenseDefense': 0,
-                  },
+            'body': {
+              'query': {
+                'bool': {
+                  'filter': [{
+                    'terms': {
+                      'position': domain.groupsOfPositions.offense,
+                    },
+                  }],
                 },
               },
             },
-          },
-        }, team.id),
+          }, team.id),
         es.fetchCount({
           'body': {
             'query': {
               'bool': {
-                'must': {
-                  'match': {
-                    'offenseDefense': 1,
+                'filter': [{
+                  'terms': {
+                    'position': domain.groupsOfPositions.defense,
                   },
-                },
+                }],
               },
             },
           },
