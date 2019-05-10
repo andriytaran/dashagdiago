@@ -12,6 +12,7 @@ const domain = require('./domain');
  * @typedef {Object} ProgramBenchmarks
  */
 const positionsHierarchy = domain.positionsHierarchy;
+const groupsOfPositions = domain.groupsOfPositions;
 
 function getAttributeInfo(pillarsObj, attribute, position = '_all', visitedPositions = {}) {
   for (let pillar in pillarsObj) {
@@ -626,6 +627,23 @@ async function fetchPercentileGroups(query,
 
 function queryByTerm(term, value) {
   if (term === 'position') {
+
+    if (Object.keys(groupsOfPositions).includes(value)){
+      return {
+        'body': {
+          'query': {
+            'bool': {
+              'filter': [{
+                'terms': {
+                  'position': groupsOfPositions[value],
+                },
+              }],
+            },
+          },
+        },
+      };
+    }
+
     const childPositions = positionsHierarchy[value];
     const hasChildren = !!childPositions && !!childPositions.length;
 

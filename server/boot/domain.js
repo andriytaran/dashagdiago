@@ -2,6 +2,12 @@
 
 const R = require('ramda');
 
+const groupsOfPositions = {
+  offense: ['rb', 'qbdual', 'qbpro', 'wr', 'og', 'ot', 'te'],
+  defense: ['dl', 'de', 'dt', 'olb', 'ilb', 'mlb', 'db', 's'],
+  special: ['p', 'k', 'ls'],
+};
+
 const positionsHierarchy = {
   'dl': [
     'de',
@@ -326,6 +332,7 @@ function normalizeProgramBenchmarks(programBenchmarks) {
 
 module.exports = {
   positionsHierarchy,
+  groupsOfPositions,
   getParentPosition,
   getPillarAttributes,
   getPillarsAttributes,
