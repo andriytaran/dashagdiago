@@ -186,6 +186,27 @@ module.exports = app => {
     });
   });
 
+  app.get('/comparePlayers', async (req, res, next) => {
+
+    const { highschoolGraduationYear = "ALL" } = req.query;
+
+    const { athleteId, school, role } = req.user;
+
+    const user = req.user || {};
+
+    if (role === 'player') {
+      return res.redirect(`dashboard-player/?id=${athleteId}`);
+    }
+    const team = await parseTeamFromQuery(req, res);
+
+    res.render('comparePlayers', {
+      team: team.id,
+      teamDisplay: capitalizeFirstLetter(team.fullName),
+      user,
+      highschoolGraduationYear,
+    });
+  });
+
   app.get('/profile', async function (req, res, next) {
     const team = await parseTeamFromQuery(req, res);
     const user = req.user || {};
