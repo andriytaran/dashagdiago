@@ -391,6 +391,27 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
+                          <label for="gamesPlayed" class="form__group-label">Games Played</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="gamesPlayed" name="gamesPlayed" value="<%= format(athlete.gamesPlayed) %>" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
+                          <label for="gamesStarted" class="form__group-label">Games Started</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="gamesStarted" name="gamesStarted" value="<%= format(athlete.gamesStarted) %>" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
                           <label for="carries" class="form__group-label">Carries</label>
                         </div>
                         <div class="col-md-9">
@@ -451,6 +472,16 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
+                          <label for="touchdownsThrown" class="form__group-label">Touchdowns Thrown</label>
+                        </div>
+                        <div class="col-md-9">
+                          <input type="number" id="touchdownsThrown" name="touchdownsThrown" value="<%= format(athlete.touchdownsThrown) %>" class="form__group-input" placeholder="e.g. Ryan">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form__group">
+                      <div class="row">
+                        <div class="col-md-3 d-flex align-items-center">
                           <label for="paasingYards" class="form__group-label">Passing Yards</label>
                         </div>
                         <div class="col-md-9">
@@ -481,7 +512,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="soloTrackles" class="form__group-label">Solo Trackles</label>
+                          <label for="soloTrackles" class="form__group-label">Solo Tackles</label>
                         </div>
                         <div class="col-md-9">
                           <input type="number" id="soloTrackles" name="soloTrackles" value="<%= format(athlete.soloTackles) %>" class="form__group-input" placeholder="e.g. Ryan">
@@ -491,7 +522,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="tracklessForLoss" class="form__group-label">Trackless for Loss</label>
+                          <label for="tracklessForLoss" class="form__group-label">Tackles for Loss</label>
                         </div>
                         <div class="col-md-9">
                           <input type="number" id="tracklessForLoss" name="tracklessForLoss" value="<%= format(athlete.tacklesForLoss) %>" class="form__group-input" placeholder="e.g. Ryan">
@@ -501,7 +532,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="totalTrackles" class="form__group-label">Total Trackles</label>
+                          <label for="totalTrackles" class="form__group-label">Total Tackles</label>
                         </div>
                         <div class="col-md-9">
                           <input type="number" id="totalTrackles" name="totalTrackles" value="<%= format(athlete.totalTackles) %>" class="form__group-input" placeholder="e.g. Ryan">
@@ -511,17 +542,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="touchdownsThrown" class="form__group-label">Touchdowns Thrown</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="touchdownsThrown" name="touchdownsThrown" value="<%= format(athlete.touchdownsThrown) %>" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="forty" class="form__group-label">Forty</label>
+                          <label for="forty" class="form__group-label">40 yd Time</label>
                         </div>
                         <div class="col-md-9">
                           <input type="number" id="forty" name="forty" value="<%= format(athlete.forty) %>" class="form__group-input" placeholder="e.g. Ryan">
@@ -531,27 +552,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="gamesPlayed" class="form__group-label">Games Played</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="gamesPlayed" name="gamesPlayed" value="<%= format(athlete.gamesPlayed) %>" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="gamesStarted" class="form__group-label">Games Started</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="number" id="gamesStarted" name="gamesStarted" value="<%= format(athlete.gamesStarted) %>" class="form__group-input" placeholder="e.g. Ryan">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="vertical" class="form__group-label">Vertical</label>
+                          <label for="vertical" class="form__group-label">Vertical Jump</label>
                         </div>
                         <div class="col-md-9">
                           <input type="number" id="vertical" name="vertical" value="<%= format(athlete.vertical) %>" class="form__group-input" placeholder="e.g. Ryan">

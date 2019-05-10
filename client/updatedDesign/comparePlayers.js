@@ -44,10 +44,11 @@ const CardHtml = (player) => {
                 </div>`
 }
 
-const AttrHtml = (attrs) => {
+const AttrHtml = (attrs, id) => {
 
-  const attrsHtml = attrs.map(attr=>{
-    return `<div id="${attr}" class="attr__block-wrap"></div>`
+  const attrsHtml = attrs.map(key=>{
+    const keyId =`${key}-${id}-comp`;
+    return `<div id="${keyId}" class="attr__block-wrap"></div>`
   }).join("");
 
   return `<div class="s-multiple-player__attr attr">
@@ -59,8 +60,9 @@ const AttrHtml = (attrs) => {
 }
 
 
-const AttrBlock = (key, agdiagoScore, playerScore, data) => {
+const AttrBlock = (key, agdiagoScore, playerScore, data, id) => {
 
+  const keyId =`${key}-${id}-comp`;
 
   const scale = 85 / Math.max(agdiagoScore, playerScore);
 
@@ -84,7 +86,9 @@ const AttrBlock = (key, agdiagoScore, playerScore, data) => {
 												${getAttrName(attr)}
 											</div>
 											<div class="attr__ag-score">
-												<div class="attr__ag-score-progressbar green" style="width: 60%">
+												<div class="attr__ag-score-progressbar ${color}" style="width: ${scale * count}%">
+												<div class="attr__benchmark-position black-point" style="width: ${scale * black}%"></div>
+											<div class="attr__benchmark-position red-point" style="width: ${scale * red}%"></div>
 												</div>
 												<div class="attr__ag-score-value">AG Score: ${Math.round(black)}</div>
 											</div>`
@@ -95,26 +99,25 @@ const AttrBlock = (key, agdiagoScore, playerScore, data) => {
 											${getAttrName(key)}
 										</div>
 										<div class="attr__ag-score">
-											<div class="attr__ag-score-progressbar orange" style="width: 80%">
-											</div>
-											<div class="attr__ag-score-value">AG Score: 133</div>
+											<div class="attr__ag-score-progressbar ${color}" style="width: ${scale * playerScore}%"></div>
+											<div class="attr__benchmark-position black-point" style="width: ${scale * agdiagoScore}%"></div>
+											<div class="attr__ag-score-value">AG Score: ${Math.round(agdiagoScore)}</div>
 										</div>
 										<button class="attr__more-btn" type="button" data-toggle="collapse"
-											data-target="#${key}" aria-expanded="false"
-											aria-controls="${key}">
+											data-target="#${keyId}" aria-expanded="false"
+											aria-controls="${keyId}">
 											<span class="attr__more-btn-show">Show Sub Categories</span>
 											<span class="attr__more-btn-hide">Hide Sub Categories</span>
 											<div class="attr__more-btn-arrow">
 												<img src="../updatedDesign/img/attr-arrow.svg" alt="">
 											</div>
 										</button>
-										<div class="attr__more-block collapse" id="${key}"
-											aria-labelledby="${key}">
+										<div class="attr__more-block collapse" id="${keyId}"
+											aria-labelledby="${keyId}">
 											${attrHtml}
 										</div>
 									</div>`
 
-  $(`#${key}`).html(blockHtml);
-
+  $(`#${keyId}`).html(blockHtml);
 
 }

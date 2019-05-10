@@ -6,7 +6,7 @@ const attrBlock = (title, agdiagoScore, playerScore, data, parentCompId, key)=>{
 
   const { player, agdiago, program } = data.attributes || {};
 
-  const keys = Object.keys(player);
+  const keys = Object.keys(player).sort();
 
 
   const attrHtml = keys.map(attr => {
@@ -26,7 +26,7 @@ const attrBlock = (title, agdiagoScore, playerScore, data, parentCompId, key)=>{
 											<div class="attr__ag-score-progressbar ${color}" style="width: ${scale * count}%"></div>
 											<div class="attr__benchmark-position black-point" style="width: ${scale * black}%"></div>
 											<div class="attr__benchmark-position red-point" style="width: ${scale * red}%"></div>
-											<div class="attr__ag-score-value">AG Score: ${Math.round(scale * count)}</div>
+											<div class="attr__ag-score-value">${Math.round(count * 100)/100}</div>
 										</div>`
   }).join('');
 

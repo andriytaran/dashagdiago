@@ -65,7 +65,7 @@
             }
           }
           return acc;
-        }, []);
+        }, []).sort();
 
         const html = classes.map((elem, i) => {
           const color = colors[i % colors.length];
