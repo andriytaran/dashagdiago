@@ -201,8 +201,8 @@
           });
 
           $(`.compare-dropdown`).change(function (e) {
-            const pid = $(this).data('player')
-            window.location = `/comparePlayers?player1=${pid}&player2=${e.target.value}`
+            const pid = $(this).data('player');
+            window.location = `/comparePlayers?player1=${pid}&player2=${e.target.value}&highschoolGraduationYear=${highschoolGraduationYear}`;
           });
 
         }
