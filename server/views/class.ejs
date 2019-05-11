@@ -123,12 +123,15 @@
 
     $('#dashboard-switch-class').html(links);
 
-    const updateDataTable = () => {
+    const updateDataTable = async () => {
+
+      const allPlayers = await getAllPlayers();
+
       getTopCulturalFitData(undefined, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
         if (status === 'success') {
 
-          const dropdownHtml = (playerId, players) => {
-            const options = players.map(player=>{
+          const dropdownHtml = (playerId) => {
+            const options = allPlayers.map(player=>{
               if (playerId !== player.id){
                 return `<option value="${player.id}">${player.fname} ${player.lname}</option>`
               } else {
@@ -139,7 +142,7 @@
             return [`<option value="" disabled selected>Compare ...</option>`, ...options].join("")
           }
 
-          const tableHtml = res.players.slice(0,10).map((player, index) => {
+          const tableHtml = res.players.map((player, index) => {
 
             const { fname, id, lname, position, team, value, } = player;
 
@@ -186,7 +189,7 @@
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
                         <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
-                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id, res.players)}</select>
+                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id)}</select>
                       </div>
                     </div>
                   </div>

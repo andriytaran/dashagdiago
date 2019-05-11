@@ -108,7 +108,10 @@
     $("#dashboard-position-page-header").html(header);
     $("#dashboard-position-table-header").html(`Top 10 ${position} Players`);
 
-    const updateData = () => {
+    const updateData = async () => {
+
+      const allPlayers = await getAllPlayers();
+
       getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
         if (status === 'success') {
 
@@ -118,8 +121,8 @@
 
           let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
-          const dropdownHtml = (playerId, players) => {
-            const options = players.map(player=>{
+          const dropdownHtml = (playerId) => {
+            const options = allPlayers.map(player=>{
               if (playerId !== player.id){
                 return `<option value="${player.id}">${player.fname} ${player.lname}</option>`
               } else {
@@ -130,7 +133,7 @@
             return [`<option value="" disabled selected>Compare ...</option>`, ...options].join("")
           }
 
-          const html = players.slice(0,10).map((player, index) => {
+          const html = players.map((player, index) => {
 
             const { fname, id, lname, position, team, value } = player;
 
@@ -175,7 +178,7 @@
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
                         <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
-                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id, res.players)}</select>
+                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id)}</select>
 
                       </div>
                     </div>

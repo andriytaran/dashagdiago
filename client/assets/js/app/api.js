@@ -181,19 +181,28 @@ function getTopCulturalFitData(position, highschoolGraduationYear, cb) {
     highschoolGraduationYear,
     sort: "desc",
     attribute: "overallScore",
-    // limit: 10
+    limit: 10
   }, cb);
 }
 
-function getAllCulturalFitData(position, highschoolGraduationYear, cb) {
+function getAllCulturalFitData(cb) {
   getAPIData({
     type: "players",
-    position: position,
-    highschoolGraduationYear,
-    sort: "desc",
     attribute: "highschoolGraduationYear",
   }, cb);
 }
+
+const getAllPlayers = () => {
+  return new Promise((resolve, reject) => {
+    getAllCulturalFitData((data, status2) => {
+      if (status2 === 'success') {
+        resolve (data.players);
+      } else {
+        reject('Cannot get data')
+      }
+    });
+  });
+};
 
 function getPlayersData(props, cb) {
   props = props || {};
