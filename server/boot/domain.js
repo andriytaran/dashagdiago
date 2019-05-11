@@ -3,7 +3,7 @@
 const R = require('ramda');
 
 const groupsOfPositions = {
-  offense: ['rb', 'qbdual', 'qbpro', 'wr', 'og', 'ot', 'te'],
+  offense: ['rb', 'qbdual', 'qbpro', 'wr', 'og', 'ot', 'te', 'oc'],
   defense: ['dl', 'de', 'dt', 'olb', 'ilb', 'mlb', 'db', 's'],
   special: ['p', 'k', 'ls'],
 };
