@@ -118,7 +118,19 @@
 
           let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
 
-          const html = players.map((player, index) => {
+          const dropdownHtml = (playerId, players) => {
+            const options = players.map(player=>{
+              if (playerId !== player.id){
+                return `<option value="${player.id}">${player.fname} ${player.lname}</option>`
+              } else {
+                return ""
+              }
+            })
+
+            return [`<option value="" disabled selected>Compare ...</option>`, ...options].join("")
+          }
+
+          const html = players.slice(0,10).map((player, index) => {
 
             const { fname, id, lname, position, team, value } = player;
 
@@ -163,6 +175,7 @@
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
                         <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
+                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id, res.players)}</select>
 
                       </div>
                     </div>
@@ -185,6 +198,11 @@
                 setTimeout(updateData, 1000);
               })
             });
+          });
+
+          $(`.compare-dropdown`).change(function (e) {
+            const pid = $(this).data('player')
+            window.location = `/comparePlayers?player1=${pid}&player2=${e.target.value}`
           });
 
         }
