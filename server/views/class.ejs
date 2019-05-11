@@ -71,7 +71,7 @@
                       Last Name
                     </div>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-1">
                     <div class="players-table__heading">
                       Position
                     </div>
@@ -127,7 +127,19 @@
       getTopCulturalFitData(undefined, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
         if (status === 'success') {
 
-          const tableHtml = res.players.map((player, index) => {
+          const dropdownHtml = (playerId, players) => {
+            const options = players.map(player=>{
+              if (playerId !== player.id){
+                return `<option value="${player.id}">${player.fname} ${player.lname}</option>`
+              } else {
+                return ""
+              }
+            })
+
+            return [`<option value="" disabled selected>Compare ...</option>`, ...options].join("")
+          }
+
+          const tableHtml = res.players.slice(0,10).map((player, index) => {
 
             const { fname, id, lname, position, team, value, } = player;
 
@@ -155,7 +167,7 @@
                         ${lname}
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                       <div class="players-table__item">
                         ${position}
                       </div>
@@ -165,7 +177,7 @@
                         ${Math.round(value)}
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="players-table__item btn-block">
                         <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
                           <button class="showdetails-btn">Show Details</button>
@@ -174,6 +186,7 @@
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
                         <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
+                        <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id, res.players)}</select>
                       </div>
                     </div>
                   </div>
@@ -195,6 +208,11 @@
                 setTimeout(updateDataTable, 1000);
               })
             });
+          });
+
+          $(`.compare-dropdown`).change(function (e) {
+            const pid = $(this).data('player')
+            window.location = `/comparePlayers?player1=${pid}&player2=${e.target.value}`
           });
         }
       });

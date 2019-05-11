@@ -181,7 +181,7 @@ function getTopCulturalFitData(position, highschoolGraduationYear, cb) {
     highschoolGraduationYear,
     sort: "desc",
     attribute: "overallScore",
-    limit: 10
+    // limit: 10
   }, cb);
 }
 
