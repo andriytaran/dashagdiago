@@ -17,18 +17,18 @@
         <div class="col-md-6">
           <div id="compare-players-info-1">
             <div class="row">
-              <div id="compare-players-info-1-score" class="col-md-12"></div>
-              <div id="compare-players-info-1-card" class="col-md-12"></div>
-              <div id="compare-players-info-1-attr" class="col-md-12"></div>
+              <div id="compare-players-info-score-1" class="col-md-12"></div>
+              <div id="compare-players-info-card-1" class="col-md-12"></div>
+              <div id="compare-players-info-attr-1" class="col-md-12"></div>
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div id="compare-players-info-2">
             <div class="row">
-              <div id="compare-players-info-2-score" class="col-md-12"></div>
-              <div id="compare-players-info-2-card" class="col-md-12"></div>
-              <div id="compare-players-info-2-attr" class="col-md-12"></div>
+              <div id="compare-players-info-score-2" class="col-md-12"></div>
+              <div id="compare-players-info-card-2" class="col-md-12"></div>
+              <div id="compare-players-info-attr-2" class="col-md-12"></div>
             </div>
           </div>
         </div>
@@ -42,40 +42,54 @@
 <script src="../updatedDesign/js/common.js"></script>
 <script src="../updatedDesign/constants.js"></script>
 <script src="../updatedDesign/comparePlayers.js"></script>
+<script src="../updatedDesign/barBlock.js"></script>
 <script>
+
   $(document).ready(function () {
 
     updateHeaderLinks();
 
-    // TODO remove hardcode
-    const id = 40;
+    const urlParams = new URLSearchParams(window.location.search);
 
-    getSinglePlayerData(id, (res, status) => {
+    const player1 = urlParams.get("player1");
+    const player2 = urlParams.get("player2");
 
-      if (status === 'success') {
-        const overallScore = Math.round(res.overallScore.player);
-        const player = res.player;
+    const getData = (playerId, compId) => {
+      getSinglePlayerData(playerId, (res, status) => {
 
-        $("#compare-players-info-1-score").html(AgdiagoScoreHtml(overallScore));
-        $("#compare-players-info-1-card").html(CardHtml(player));
+        if (status === 'success') {
+          const overallScore = Math.round(res.overallScore.player);
+          const player = res.player;
 
-        const playerScores = res.scores.player;
-        const agdiagoScores = res.scores.agdiago;
+          $(`#compare-players-info-score-${compId}`).html(AgdiagoScoreHtml(overallScore));
+          $(`#compare-players-info-card-${compId}`).html(CardHtml(player));
 
-        const attr = Object.keys(playerScores);
+          const playerScores = res.scores.player;
+          const agdiagoScores = res.scores.agdiago;
 
-        $("#compare-players-info-1-attr").html(AttrHtml(attr, id));
+          const promises = Object.keys(playerScores).map(key => {
+            return new Promise((resolve, reject) => {
+              getPlayerAttributesData(playerId, key, (data, status2) => {
+                if (status2 === 'success') {
+                  resolve (attrBlockHtml(key, agdiagoScores[key], playerScores[key], data, key));
+                } else {
+                  reject('Cannot get data')
+                }
+              });
+            });
+          })
 
-
-        for (let key in playerScores) {
-          getPlayerAttributesData(id, key, (data, status2) => {
-            if (status2 === 'success') {
-              AttrBlock(key, agdiagoScores[key], playerScores[key], data, id);
-            }
-          });
+          Promise.all(promises)
+            .then(res=>{
+              $(`#${`compare-players-info-attr-${compId}`}`).html(res.join(""));
+            })
         }
-      }
-    })
+      })
+    }
+
+    getData(player1, 1);
+    getData(player2, 2);
+
   });
 
 </script>

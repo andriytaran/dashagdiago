@@ -195,13 +195,22 @@
           const playerScores = res.scores.player;
           const agdiagoScores = res.scores.agdiago;
 
-          for (let key in playerScores) {
-            getAttributesData(position, key, (data, status2) => {
-              if (status2 === 'success') {
-                attrBlock(key, agdiagoScores[key], playerScores[key], data, 'attributes-section-position', key + '-attr-id');
-              }
+          const promises = Object.keys(playerScores).map(key => {
+            return new Promise((resolve, reject) => {
+              getAttributesData(position, key, (data, status2) => {
+                if (status2 === 'success') {
+                  resolve (attrBlockHtml(key, agdiagoScores[key], playerScores[key], data, key + '-attr-id'));
+                } else {
+                  reject('Cannot get data')
+                }
+              });
             });
-          }
+          })
+
+          Promise.all(promises)
+            .then(res=>{
+              $(`#attributes-section-position`).html(res.join(""));
+            })
         }
       });
     }

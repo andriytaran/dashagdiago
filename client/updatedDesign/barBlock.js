@@ -1,4 +1,4 @@
-const attrBlock = (title, agdiagoScore, playerScore, data, parentCompId, key)=>{
+const attrBlockHtml = (title, agdiagoScore, playerScore, data, key)=>{
 
   const scale = 85 / Math.max(agdiagoScore, playerScore);
 
@@ -30,14 +30,14 @@ const attrBlock = (title, agdiagoScore, playerScore, data, parentCompId, key)=>{
 										</div>`
   }).join('');
 
-  const html = `<div class="attr__block">
+  return `<div class="attr__block">
 									<div class="attr__heading">
 										${getAttrName(title)}
 									</div>
 									<div class="attr__ag-score">
 										<div class="attr__ag-score-progressbar ${color}" style="width: ${scale * playerScore}%"></div>
 										<div class="attr__benchmark-position black-point" style="width: ${scale * agdiagoScore}%"></div>
-										<div class="attr__ag-score-value">AG Score: ${Math.round(agdiagoScore)}</div>
+										<div class="attr__ag-score-value">AG Score: ${Math.round(playerScore)}</div>
 									</div>
 									<button class="attr__more-btn" type="button" data-toggle="collapse"
 										data-target="#${key}" aria-expanded="false"
@@ -53,5 +53,4 @@ const attrBlock = (title, agdiagoScore, playerScore, data, parentCompId, key)=>{
 										${attrHtml}
 									</div>
 								</div>`;
-  $(`#${parentCompId}`).append(html);
 }
