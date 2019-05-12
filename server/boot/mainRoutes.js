@@ -12,7 +12,7 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
-const {format} = require('./utils');
+const { format } = require('./utils');
 const auth = require('../login');
 const { positionF } = defaults;
 
@@ -112,7 +112,7 @@ module.exports = app => {
 
   app.get('/class', async (req, res, next) => {
 
-    const { highschoolGraduationYear = "ALL" } = req.query;
+    let { highschoolGraduationYear = "ALL" } = req.query;
 
     const { athleteId, school, role } = req.user;
 
@@ -124,6 +124,11 @@ module.exports = app => {
     const team = await parseTeamFromQuery(req, res);
     const pillarsObj = await es.getPillarsObj(team.id);
 
+
+    if (highschoolGraduationYear === 'ALL') {
+      highschoolGraduationYear = null;
+    }
+
     const [
       overallCount,
       offenseCount,
@@ -131,46 +136,21 @@ module.exports = app => {
       specialCount,
       overallScore,
     ] = await Promise.all([
-        es.fetchCount({}, team.id),
-        es.fetchCount({
-            'body': {
-              'query': {
-                'bool': {
-                  'filter': [{
-                    'terms': {
-                      'position': domain.groupsOfPositions.offense,
-                    },
-                  }],
-                },
-              },
-            },
-          }, team.id),
-        es.fetchCount({
-          'body': {
-            'query': {
-              'bool': {
-                'filter': [{
-                  'terms': {
-                    'position': domain.groupsOfPositions.defense,
-                  },
-                }],
-              },
-            },
-          },
-        }, team.id),
-        es.fetchCount({
-          'body': {
-            'query': {
-              'bool': {
-                'filter': [{
-                  'terms': {
-                    'position': domain.groupsOfPositions.special,
-                  },
-                }],
-              },
-            },
-          },
-        }, team.id),
+        es.fetchCount(new es.QueryBuilder()
+          .add(es.queryByTerm('highschoolGraduationYear', highschoolGraduationYear))
+          .build(), team.id),
+        es.fetchCount(new es.QueryBuilder()
+          .add(es.queryByTerm('position', 'offense'))
+          .add(es.queryByTerm('highschoolGraduationYear', highschoolGraduationYear))
+          .build(), team.id),
+        es.fetchCount(new es.QueryBuilder()
+          .add(es.queryByTerm('position', 'defense'))
+          .add(es.queryByTerm('highschoolGraduationYear', highschoolGraduationYear))
+          .build(), team.id),
+        es.fetchCount(new es.QueryBuilder()
+          .add(es.queryByTerm('position', 'special'))
+          .add(es.queryByTerm('highschoolGraduationYear', highschoolGraduationYear))
+          .build(), team.id),
         es.fetchOverallScore(pillarsObj, {}, team.id),
       ])
       .catch(function (err) {
@@ -464,14 +444,14 @@ module.exports = app => {
     const player = req.body;
     const { school } = req.user;
     await es.createPlayer(school, player);
-    return res.json({status: "OK"});
+    return res.json({ status: "OK" });
   });
 
   app.post('/api/updatePlayer', async function (req, res, next) {
     const player = req.body;
     const { athleteId, school, role } = req.user;
     await es.updatePlayer(school, player.id, player);
-    return res.json({status: "OK"});
+    return res.json({ status: "OK" });
 
   });
 
@@ -479,7 +459,7 @@ module.exports = app => {
     const playerId = req.body.id;
     const { school } = req.user;
     await es.deletePlayer(school, playerId);
-    return res.json({status: "OK"});
+    return res.json({ status: "OK" });
   });
 
   // create custom pillar
@@ -523,7 +503,7 @@ module.exports = app => {
     const team = await parseTeamFromQuery(req, res);
     const { highschoolGraduationYear = "ALL" } = req.query;
 
-    const {pillar = 'coreAttributes'} = req.query ;
+    const { pillar = 'coreAttributes' } = req.query;
 
     const user = req.user || {};
     const benchmarks = await es.getBenchmarks(team.id, 'QB');
@@ -593,7 +573,7 @@ module.exports = app => {
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
     });
-  })
+  });
 
   // dashboard data ajax handler
   // TODO: use loopback for this? or move to '/' handler?
@@ -609,7 +589,7 @@ module.exports = app => {
     const position = parser.parseParameter('position');
     let highschoolGraduationYear = parser.parseOptionalParameter('highschoolGraduationYear');
 
-    if (highschoolGraduationYear === 'ALL'){
+    if (highschoolGraduationYear === 'ALL') {
       highschoolGraduationYear = null;
     }
 
@@ -974,7 +954,7 @@ module.exports = app => {
             position,
           },
         };
-        es.addOrUpdateDocument(team.id + '-benchmarks', query, 'post', {...existingBenchmarks, ...benchmarks});
+        es.addOrUpdateDocument(team.id + '-benchmarks', query, 'post', { ...existingBenchmarks, ...benchmarks });
         es.updatePillarsObj(team.id, pillar, factor, factors);
         break;
       }
