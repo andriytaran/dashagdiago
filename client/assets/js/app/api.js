@@ -185,6 +185,16 @@ function getTopCulturalFitData(position, highschoolGraduationYear, cb) {
   }, cb);
 }
 
+function getTopCulturalFitDataWithoutLimit(position, highschoolGraduationYear, cb) {
+  getAPIData({
+    type: "players",
+    position: position,
+    highschoolGraduationYear,
+    sort: "desc",
+    attribute: "overallScore",
+  }, cb);
+}
+
 function getAllCulturalFitData(cb) {
   getAPIData({
     type: "players",

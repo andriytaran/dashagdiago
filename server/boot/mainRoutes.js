@@ -102,10 +102,6 @@ module.exports = app => {
     const { highschoolGraduationYear = "ALL" } = req.query;
 
     res.render('all', {
-      overallCount:0,
-      defenseCount:0,
-      offenseCount:0,
-      overallScore: 0,
       team: team.id,
       teamDisplay: capitalizeFirstLetter(team.fullName),
       user,
@@ -132,6 +128,7 @@ module.exports = app => {
       overallCount,
       offenseCount,
       defenseCount,
+      specialCount,
       overallScore,
     ] = await Promise.all([
         es.fetchCount({}, team.id),
@@ -161,6 +158,19 @@ module.exports = app => {
             },
           },
         }, team.id),
+        es.fetchCount({
+          'body': {
+            'query': {
+              'bool': {
+                'filter': [{
+                  'terms': {
+                    'position': domain.groupsOfPositions.special,
+                  },
+                }],
+              },
+            },
+          },
+        }, team.id),
         es.fetchOverallScore(pillarsObj, {}, team.id),
       ])
       .catch(function (err) {
@@ -173,6 +183,7 @@ module.exports = app => {
       overallCount,
       defenseCount,
       offenseCount,
+      specialCount,
       // defensePercent: overallCount ?
       //   Math.round(100 * defenseCount / overallCount) :
       //   null,

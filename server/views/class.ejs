@@ -19,8 +19,8 @@
           <h4 class="s-player-dashboard__full-view">Full view of players</h4>
           <div class="s-player-dashboard__class-block class-block">
             <div class="row">
-              <div class="col-md-4">
-                <a href="#" class="class-block__class blue">
+              <div class="col-md-3">
+                <a id="all-link" href="#" class="class-block__class blue">
                   <div class="class-block__class-heading">University of Cincinnati Potential
                     Recruits
                     matches based on benchmarks
@@ -28,20 +28,28 @@
                   <div class="class-block__class-number"><%= overallCount %></div>
                 </a>
               </div>
-              <div class="col-md-4">
-                <a href="#" class="class-block__class green">
+              <div class="col-md-3">
+                <a id="defense-link" href="#" class="class-block__class green">
                   <div class="class-block__class-heading">University of Cincinnati Potential</br>
                     Defensive Recruits
                   </div>
                   <div class="s-player-dashboard__class-number"><%= defenseCount %></div>
                 </a>
               </div>
-              <div class="col-md-4">
-                <a href="#" class="class-block__class red">
+              <div class="col-md-3">
+                <a id="offense-link" href="#" class="class-block__class red">
                   <div class="class-block__class-heading">University of Cincinnati Potential</br>
                     Offensive Recruits
                   </div>
                   <div class="class-block__class-number"><%= offenseCount %></div>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <a id="special-link" href="#" class="class-block__class blue">
+                  <div class="class-block__class-heading">University of Cincinnati Potential</br>
+                    Special Team Recruits
+                  </div>
+                  <div class="class-block__class-number"><%= specialCount %></div>
                 </a>
               </div>
             </div>
@@ -108,6 +116,11 @@
 
     let allClasses = urlParams.get("allClasses");
     let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
+
+    $("#all-link").attr("href", `/all/?highschoolGraduationYear=${highschoolGraduationYear}`);
+    $("#defense-link").attr("href", `/all/?position=defense&highschoolGraduationYear=${highschoolGraduationYear}`);
+    $("#offense-link").attr("href", `/all/?position=offense&highschoolGraduationYear=${highschoolGraduationYear}`);
+    $("#special-link").attr("href", `/all/?position=special&highschoolGraduationYear=${highschoolGraduationYear}`);
 
     let header;
 
