@@ -113,6 +113,7 @@ module.exports = app => {
   app.get('/class', async (req, res, next) => {
 
     let { highschoolGraduationYear = "ALL" } = req.query;
+    let { allClasses } = req.query;
 
     const { athleteId, school, role } = req.user;
 
@@ -125,7 +126,7 @@ module.exports = app => {
     const pillarsObj = await es.getPillarsObj(team.id);
 
 
-    if (highschoolGraduationYear === 'ALL') {
+    if (highschoolGraduationYear === 'ALL' || allClasses) {
       highschoolGraduationYear = null;
     }
 

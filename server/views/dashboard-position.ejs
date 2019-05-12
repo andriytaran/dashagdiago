@@ -173,13 +173,16 @@
                     </div>
                     <div class="col-md-3">
                       <div class="players-table__item btn-block">
-                        <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}"><button class="showdetails-btn">Show Details</button></a>
-                         <a href="/addnewathlete?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
+                        <a href="/dashboard-player/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
+                          <button class="showdetails-btn">Show Details</button>
+                        </a>
+                        <a data-toggle="tooltip" title="Edit player info" href="/addnewathlete?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}">
                           <button class="edit-btn"><img src="../updatedDesign/img/edit-icon.svg" alt=""></button>
                         </a>
-                        <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
+                        <a data-toggle="tooltip" title="Delete player info" href="#">
+                          <button id="delete-button-${id}" data-target="#add-attr" data-toggle="modal" data-player="${id}" data-name="${playerInfo}" class="delete-btn"><img src="../updatedDesign/img/delete-icon.svg" alt=""></button>
+                        </a>
                         <select id="compare-dropdown-${id}" class="compare-dropdown" data-player="${id}">${dropdownHtml(id)}</select>
-
                       </div>
                     </div>
                   </div>
