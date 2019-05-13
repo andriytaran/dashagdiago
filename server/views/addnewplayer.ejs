@@ -828,12 +828,8 @@
     }
 
     let pos = getString('position');
-    const position = positions.reduce(function(acc, elem){
-      if (elem.title === pos){
-        acc = elem.value
-      }
-      return acc
-    }, 'QB')
+    const position = getPositionValueOnSelect(pos)
+    const highschoolGraduationYear = getFloat('hsgyear');
 
     const athleteInfo = {
       fname: getString('firstName'),
@@ -849,7 +845,7 @@
       state: getString('state'),
       height: getFloat('height'),
       weight: getFloat('weight'),
-      highschoolGraduationYear: getFloat('hsgyear'),
+      highschoolGraduationYear,
       collegeYear: getFloat('collegeYear'),
       momParent: getFloat('momParent'),
       dadParent: getFloat('dadParent'),
@@ -915,17 +911,20 @@
 
     const id = getFloat('playerId');
 
+    const redirect = () => {
+      window.location = `/dashboard-position/?position=${position}&highschoolGraduationYear=${highschoolGraduationYear || 'ALL'}`;
+    }
+
     if (id){
       athleteInfo.id = id;
-      updatePlayer(athleteInfo)
+      updatePlayer(athleteInfo, () => setTimeout(redirect, 1000))
     } else {
-      createPlayer(athleteInfo)
+      createPlayer(athleteInfo, () => setTimeout(redirect, 1000))
     }
 
   }
 
 </script>
-
 
 </body>
 

@@ -102,7 +102,7 @@ const positions = [
   {title: 'Punter', value: 'P'},
   {title: 'Kicker', value: 'K'},
   {title: 'Long Snapper', value: 'LS'},
-]
+];
 
 const getFullNamePosition = (shortName) =>{
   const position = positions.find(elem => elem.value.toLowerCase() === shortName.toLowerCase());
@@ -113,7 +113,7 @@ const getFullNamePosition = (shortName) =>{
 
   return shortName
 
-}
+};
 
 const getPositionValueOnSelect = (value) => {
   return positions.reduce(function(acc, elem){
@@ -121,7 +121,7 @@ const getPositionValueOnSelect = (value) => {
       acc = elem.value
     }
     return acc
-  }, 'QB');
+  }, 'QBPRO');
 };
 
 const updateHeaderLinks = () =>{
@@ -131,6 +131,6 @@ const updateHeaderLinks = () =>{
   $('#benchmark-input-link').html(`<a class="header__nav-link" href="/benchmark-input?highschoolGraduationYear=${highschoolGraduationYear}">Benchmark-input</a>`);
   $('#add-new-athlete-link').html(`<a class="header__nav-link" href="/addnewathlete?highschoolGraduationYear=${highschoolGraduationYear}">Add new Athlete info</a>`);
 
-}
+};
 
 
