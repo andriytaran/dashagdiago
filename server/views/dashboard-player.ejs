@@ -45,7 +45,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-5 d-flex align-items-center justify-content-end"><button data-toggle="modal" data-target="#add-attr" class="attr__header-add-attr">+ Add an Attribute</button></div>
+                <div class="col-md-5 d-flex align-items-center justify-content-end"><a id="edit-info-link" href="#"><button class="attr__header-add-attr">Edit Athlete Info</button></a></div>
               </div>
             </div>
             <div id="attributes-section" class="attr__block-wrap"></div>
@@ -69,6 +69,9 @@
     const urlParams = new URLSearchParams(window.location.search);
 
     const id = urlParams.get("id");
+    let highschoolGraduationYear = (urlParams.get("highschoolGraduationYear") || "").toUpperCase() || "ALL";
+
+    $("#edit-info-link").attr("href", `/addnewathlete/?id=${id}&highschoolGraduationYear=${highschoolGraduationYear}`);
 
     getSinglePlayerData(id, (res, status) => {
 

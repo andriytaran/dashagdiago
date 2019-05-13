@@ -16,6 +16,7 @@ const mockUsers = [
     password: '1',
     role: 'coach',
     school: 'cincinnati',
+    name: 'Denbrock',
   },
   {
     email: 'player2@gmail.com',
@@ -29,12 +30,14 @@ const mockUsers = [
     password: '1',
     role: 'coach',
     school: 'ts',
+    name: 'Denbrock',
   },
   {
     email: 'coach3@gmail.com',
     password: '1',
     role: 'coach',
     school: 'ts2',
+    name: 'Denbrock',
   },
 ];
 
@@ -46,7 +49,13 @@ const fillDb = (mockUsers) => {
   });
 };
 
-return fillDb(mockUsers)
+const deleteAllUsers = () => {
+  return User.destroyAll({});
+};
+
+return deleteAllUsers()
+  .then(() => console.log('Users were deleted'))
+  .then(() => fillDb(mockUsers))
   .then(() => console.log('finished'))
   .then(() => process.exit())
   .catch(err => {
