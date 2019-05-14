@@ -14,9 +14,9 @@
         <div class="col-md-12">
           <h1 class="s-benchmark-input__heading main-heading"><span>University of Cincinnati</span> Benchmark Input Page</h1>
           <h1 class="s-benchmark-input__heading main-heading">
-            <a href="benchmark-input?pillar=athletic"><button>Athletic</button></a>
-            <a href="benchmark-input?pillar=academic"><button>Academic</button></a>
-            <a href="benchmark-input?pillar=coreAttributes"><button>Core Attributes</button></a>
+            <a href="benchmark-input?pillar=coreAttributes"><button class="<%= pillar === "coreAttributes" ? "green" : "" %>">Core Attributes</button></a>
+            <a href="benchmark-input?pillar=academic"><button class="<%= pillar === "academic" ? "green" : "" %>">Academic</button></a>
+            <a href="benchmark-input?pillar=athletic"><button class="<%= pillar === "athletic" ? "green" : "" %>">Athletic</button></a>
           </h1>
         </div>
         <div class="col-md-12">
@@ -26,7 +26,7 @@
                 <div class="row align-items-center">
                   <div class="col-md-12 ">
                     <div class="benchmark-form__heading">
-                      <%= pillar %> benchmark input
+                      Football Athlete Behavioral Strengths benchmark input
                     </div>
                   </div>
                 </div>
