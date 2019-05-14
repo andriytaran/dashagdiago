@@ -161,7 +161,7 @@
                     <div class="form__group">
                       <div class="row">
                         <div class="col-md-3 d-flex align-items-center">
-                          <label for="multistportAthlete" class="form__group-label">Multisport Athelete</label>
+                          <label for="multistportAthlete" class="form__group-label">Multisport Athlete</label>
                         </div>
                         <div class="col-md-9">
                           <input type="text" id="multistportAthlete" name="multistportAthlete" value="<%= format(athlete.multisportAthlete) %>" class="form__group-input" placeholder="">
@@ -235,16 +235,6 @@
                         </div>
                         <div class="col-md-9">
                           <input type="text" id="facebook" name="facebook" value="<%= format(athlete.facebook) %>" class="form__group-input" placeholder="">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form__group">
-                      <div class="row">
-                        <div class="col-md-3 d-flex align-items-center">
-                          <label for="school" class="form__group-label">School</label>
-                        </div>
-                        <div class="col-md-9">
-                          <input type="text" id="school" name="school" class="form__group-input" placeholder="">
                         </div>
                       </div>
                     </div>
@@ -840,7 +830,7 @@
       position,
       offenseDefense: getFloat('-'),
       facebook: getFloat('facebook'),
-      // school: getString('school'),
+      school: getString('school'),
       hometown: getString('hometown'),
       state: getString('state'),
       height: getFloat('height'),
