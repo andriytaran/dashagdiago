@@ -138,6 +138,7 @@ module.exports = app => {
       overallScore,
     ] = await Promise.all([
         es.fetchCount(new es.QueryBuilder()
+          .add(es.queryByTerm('position', 'all'))
           .add(es.queryByTerm('highschoolGraduationYear', highschoolGraduationYear))
           .build(), team.id),
         es.fetchCount(new es.QueryBuilder()

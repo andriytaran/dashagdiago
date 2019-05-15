@@ -2,10 +2,15 @@
 
 const R = require('ramda');
 
+const offense = ['rb', 'qbdual', 'qbpro', 'wr', 'og', 'ot', 'te', 'oc'];
+const defense = ['dl', 'de', 'dt', 'olb', 'ilb', 'mlb', 'db', 's'];
+const special = ['p', 'k', 'ls'];
+
 const groupsOfPositions = {
-  offense: ['rb', 'qbdual', 'qbpro', 'wr', 'og', 'ot', 'te', 'oc'],
-  defense: ['dl', 'de', 'dt', 'olb', 'ilb', 'mlb', 'db', 's'],
-  special: ['p', 'k', 'ls'],
+  offense,
+  defense,
+  special,
+  all: [...offense, ...defense, ...special],
 };
 
 const positionsHierarchy = {
