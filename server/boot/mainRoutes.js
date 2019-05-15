@@ -12,7 +12,7 @@ const ftp = require('./../ftp');
 const es = require('./es');
 const domain = require('./domain');
 const defaults = require('./defaults');
-const { format } = require('./utils');
+const { format, capitalizeFirstLetter } = require('./utils');
 const auth = require('../login');
 const { positionF } = defaults;
 
@@ -22,10 +22,6 @@ const parseTeamFromQuery = async (req, res) => {
   const school = await es.getSchool(team);
   if (!school) res.redirect('/new');
   return school;
-};
-
-const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 // TODO delete this (it adds pillarsObj for cincinnati team to ES)
