@@ -148,7 +148,7 @@
 
           const {benchmarks, factors} = res;
 
-          const attr = Object.keys(factors).sort();
+          const attr = sortAttr(Object.keys(factors));
 
           window.attributes = attr;
           window.benchmarks = benchmarks;

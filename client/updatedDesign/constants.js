@@ -1,73 +1,32 @@
 const attributesNamesMatches = {
+
+  position: "Position",
+
+  // New Athlete Info Input
   fname: "First name",
   lname: "Last name",
-  twitter: "Twitter",
-  instagram: "Instagram",
-  snapchat: "Snapchat",
-  position: "Position",
-  offenseDefense: "Offense defense",
-  facebook: "Facebook",
   school: "School",
   hometown: "Hometown",
   state: "State",
-  height: "Height",
-  weight: "Weight",
   highschoolGraduationYear: "Highschool Graduation Year",
   collegeYear: "College Year",
+  multisportAthlete: "Multisport Athlete",
   momParent: "Mom Parent",
   dadParent: "Dad Parent",
   grandmotherParent: "Grandmother Parent",
   grandfatherParent: "Grandfather Parent",
-  guardian: "Guardian",
-  multisportAthlete: "Multisport Athlete",
-  forty: "40 yd Time",
-  vertical: "Vertical Jump",
-  gamesStarted: "Games started",
-  gamesPlayed: "Games played",
-  completions: "Completions",
-  attempts: "Attempts",
-  passingYards: "Passing Yards",
-  touchdownsThrown: "Touchdowns Thrown",
-  interceptionsThrown: "Interceptions Thrown",
-  kickoffYards: "Kickoff Yards",
-  averageKickoff: "Average Kickoff",
-  touchBacks: "Touch Backs",
-  totalPuntYards: "Total Punt Yards",
-  averagePunt: "Average Punt",
-  fieldGoalPercentage: "Field Goal Percentage",
-  carries: "Carries",
-  rushingYards: "Rushing Yards",
-  rushingTouchdowns: "Rushing Touchdowns",
-  receptions: "Receptions",
-  receivingYards: "Receiving Yards",
-  recievingTouchdowns: "Recieving Touchdowns",
-  soloTackles: "Solo Tackles",
-  totalTackles: "Total Tackles",
-  sacks: "Sacks",
-  tacklesForLoss: "Tackles For Loss",
-  interceptions: "Interceptions",
-  gpa: "GPA",
+  twitter: "Twitter",
+  instagram: "Instagram",
+  facebook: "Facebook",
+  snapchat: "Snapchat",
+
+  // Academic Info
   sat: "SAT",
   act: "ACT",
+  gpa: "GPA",
   coreGpa: "Core GPA",
-  emotionalIntelBehavior: "Emotional Intel Behavior",
-  emotionalIntelReflection: "Emotional Intel Reflection",
-  emotionalIntelTeamWork: "Emotional Intel TeamWork",
-  emotionalIntelRelationships: "Emotional Intel Relationships",
-  emotionalIntelAccountability: "Emotional Intel Accountability",
-  emotionalIntelResponsibility: "Emotional Intel Responsibility",
-  emotionalIntelIndependence: "Emotional Intel Independence",
-  socialTwitterSentiment: "Social Twitter Sentiment",
-  twitterFollowers: "Twitter Followers",
-  socialInstagramSentiment: "Social Instagram Sentiment",
-  instagramFollowers: "Instagram Followers",
-  facebookSentiment: "Facebook Sentiment",
-  newsMediaCoverageSentiment: "News Media Coverage Sentiment",
-  newsMediaCoverageMentions: "News Media Coverage Mentions",
-  newsMediaCoverageNational: "News Media Coverage National",
-  newsMediaCoverageRegional: "News Media Coverage Regional",
-  pressReleaseSentiment: "Press Release Sentiment",
-  pressReleaseSentimentCounter: "Press Release SentimentCounter",
+
+  // Core Attributes Info
   coreAttributesCompetitiveness: 'Competitiveness',
   coreAttributesMastery: 'Mastery',
   coreAttributesPersistence: 'Persistence',
@@ -75,14 +34,81 @@ const attributesNamesMatches = {
   coreAttributesWorkEthic: 'Work Ethic',
   coreAttributesOverallScore: "core Attributes Overall Score",
 
-  academic: "Academic Attributes",
+  // Athletic Info
+  gamesPlayed: "Games played",
+  gamesStarted: "Games started",
+  carries: "Carries",
+  rushingYards: "Rushing Yards",
+  rushingTouchdowns: "Rushing Touchdowns",
+  completions: "Completions",
+  attempts: "Attempts",
+  interceptionsThrown: "Interceptions Thrown",
+  touchdownsThrown: "Touchdowns Thrown",
+  passingYards: "Passing Yards",
+  receptions: "Receptions",
+  sacks: "Sacks",
+  soloTackles: "Solo Tackles",
+  tacklesForLoss: "Tackles For Loss",
+  totalTackles: "Total Tackles",
+  forty: "40 yd Time",
+  vertical: "Vertical Jump",
+  weight: "Weight",
+  height: "Height",
+
+  // there are no these attr on addnewathlete page
+  kickoffYards: "Kickoff Yards",
+  averageKickoff: "Average Kickoff",
+  touchBacks: "Touch Backs",
+  totalPuntYards: "Total Punt Yards",
+  averagePunt: "Average Punt",
+  fieldGoalPercentage: "Field Goal Percentage",
+  receivingYards: "Receiving Yards",
+  recievingTouchdowns: "Recieving Touchdowns",
+  offenseDefense: "Offense defense",
+  guardian: "Guardian",
+  interceptions: "Interceptions",
+
+  // Emotional Info
+  emotionalIntelAccountability: "Emotional Intel Accountability",
+  emotionalIntelBehavior: "Emotional Intel Behavior",
+  emotionalIntelIndependence: "Emotional Intel Independence",
+  emotionalIntelReflection: "Emotional Intel Reflection",
+  emotionalIntelRelationships: "Emotional Intel Relationships",
+  emotionalIntelResponsibility: "Emotional Intel Responsibility",
+  emotionalIntelTeamWork: "Emotional Intel TeamWork",
+
+  // Social profile Info
+  facebookSentiment: "Facebook Sentiment",
+  instagramFollowers: "Instagram Followers",
+  newsMediaCoverageMentions: "News Media Coverage Mentions",
+  newsMediaCoverageRegional: "News Media Coverage Regional",
+  newsMediaCoverageSentiment: "News Media Coverage Sentiment",
+  newsMediaCoverageNational: "News Media Coverage National",
+  pressReleaseSentiment: "Press Release Sentiment",
+  pressReleaseSentimentCounter: "Press Release Sentiment Counter",
+  socialInstagramSentiment: "Social Instagram Sentiment",
+  socialTwitterSentiment: "Social Twitter Sentiment",
+  twitterFollowers: "Twitter Followers",
+
+  // pillars names (not player attributes - just for displaying on dashboard-player page and dashboard-position page)
   athletic: "Athletic Attributes",
   coreAttributes: "Core Attributes",
   emotionalIntel: "Emotional Intel Attributes",
+  academic: "Academic Attributes",
   socialProfile: "Social Profile Attributes",
 };
 
 const getAttrName = (shortName) => attributesNamesMatches[shortName] || shortName;
+
+const orderOfAttr = Object.keys(attributesNamesMatches);
+
+const sortAttr = (values)=>{
+  return values.sort((a,b) => {
+    if(orderOfAttr.indexOf(a) < orderOfAttr.indexOf(b)) { return -1; }
+    if(orderOfAttr.indexOf(a) > orderOfAttr.indexOf(b)) { return 1; }
+    return 0;
+  })
+};
 
 const positions = [
   {title: 'Quarterback Pro Style', value: 'QBPRO'},

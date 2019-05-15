@@ -6,8 +6,7 @@ const attrBlockHtml = (title, agdiagoScore, playerScore, data, key)=>{
 
   const { player, agdiago, program } = data.attributes || {};
 
-  const keys = Object.keys(player).sort();
-
+  const keys = sortAttr(Object.keys(player));
 
   const attrHtml = keys.map(attr => {
 
