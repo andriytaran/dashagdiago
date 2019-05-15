@@ -206,7 +206,11 @@ const getAllPlayers = () => {
   return new Promise((resolve, reject) => {
     getAllCulturalFitData((data, status2) => {
       if (status2 === 'success') {
-        resolve (data.players);
+        resolve (data.players.sort((a,b) => {
+          if(a.fname < b.fname) { return -1; }
+          if(a.fname > b.fname) { return 1; }
+          return 0;
+        }));
       } else {
         reject('Cannot get data')
       }
