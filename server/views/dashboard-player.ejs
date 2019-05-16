@@ -152,6 +152,7 @@
         Promise.all(promises)
           .then(res=>{
             $(`#attributes-section`).html(res.join(""));
+            $('[data-toggle="tooltip"]').tooltip({animation: false, delay: 0})
           })
 
       }

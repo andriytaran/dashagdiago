@@ -233,6 +233,7 @@
           Promise.all(promises)
             .then(res=>{
               $(`#attributes-section-position`).html(res.join(""));
+              $('[data-toggle="tooltip"]').tooltip({animation: false, delay: 0})
             })
         }
       });
