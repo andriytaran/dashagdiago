@@ -56,7 +56,7 @@
                     <div class="col-md-4 pr-1">
                       <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
                         <span class="minus"></span>
-                        <input type="number" min="0" value="<%= factor %>" max="1000" id="factor"  name="factor" class="benchmark-form__group-input form__group-input">
+                        <input type="number" min="0" value="<%= factor %>" max="100" id="factor"  name="factor" class="benchmark-form__group-input form__group-input">
                         <span class="plus"></span>
                       </div>
                     </div>
@@ -113,7 +113,9 @@
 
     $('#benchmark-form-header').html(`Football Athlete ${headers[pillar] || ""} benchmark input`)
 
-    $('#benchmark-input_form').submit(function(e){
+    $('#benchmark-input_form').submit(function(event){
+
+      event.preventDefault();
 
       const formValues = $( this ).serializeArray();
 
@@ -123,7 +125,7 @@
       const attr = window.attributes || [];
 
       const benchmarks = attr.reduce((acc, elem)=>{
-        acc[elem] = parseFloat(formValues.find(e => e.name === elem + '-value').value) || 0;
+        acc[elem] = parseFloat(formValues.find(e => e.name === elem + '-value').value) || null;
         return acc;
       }, {position})
 
@@ -137,7 +139,6 @@
 
       updateBenchmarks({position, benchmarks, factors, pillar, factor})
 
-      event.preventDefault();
     })
 
 
@@ -162,16 +163,16 @@
                     </div>
                     <div class="col-md-4 pr-1">
                       <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
-                        <span class="minus"></span>
-                        <input type="number" min="0" value="${benchmarks[key]}" max="1000" id="${key + '-value'}"  name="${key + '-value'}" class="benchmark-form__group-input form__group-input">
-                        <span class="plus"></span>
+                        <!--<span class="minus"></span>-->
+                        <input type="number" step="any" value="${benchmarks[key]}" id="${key + '-value'}"  name="${key + '-value'}" class="benchmark-form__group-input form__group-input">
+                        <!--<span class="plus"></span>-->
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="benchmark-form__group-input-wrapper form__group-input-num-wrap">
-                        <span class="minus"></span>
-                        <input type="number" min="0" value="${factors[key].factor}" max="1000" id="${key + '-factor'}" name="${key + '-factor'}" class="benchmark-form__group-input form__group-input">
-                        <span class="plus"></span>
+                        <!--<span class="minus"></span>-->
+                        <input type="number" min="0" value="${factors[key].factor}" max="100" id="${key + '-factor'}" name="${key + '-factor'}" class="benchmark-form__group-input form__group-input">
+                        <!--<span class="plus"></span>-->
                       </div>
                     </div>
                   </div>
