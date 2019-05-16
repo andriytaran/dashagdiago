@@ -100,6 +100,8 @@
 
     const updateDataTable = async () => {
 
+      $('[data-toggle="tooltip"]').tooltip('hide');
+
       const allPlayers = await getAllPlayers();
 
       getTopCulturalFitDataWithoutLimit(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
@@ -174,6 +176,7 @@
           }).join('');
 
           $('#CulturalFitTable').html(tableHtml);
+          $('[data-toggle="tooltip"]').tooltip({animation: false, delay: 0});
 
           $(`.delete-btn`).click(function () {
             const pid = $(this).data('player')

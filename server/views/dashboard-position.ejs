@@ -110,6 +110,8 @@
 
     const updateData = async () => {
 
+      $('[data-toggle="tooltip"]').tooltip('hide');
+
       const allPlayers = await getAllPlayers();
 
       getTopCulturalFitData(position, allClasses ? "ALL" : highschoolGraduationYear, (res, status) => {
@@ -190,6 +192,7 @@
           }).join("");
 
           $("#dashboard-position-top-10-players").html(html);
+          $('[data-toggle="tooltip"]').tooltip({animation: false, delay: 0})
 
           $(`.delete-btn`).click(function () {
             const pid = $(this).data('player')
@@ -233,7 +236,6 @@
           Promise.all(promises)
             .then(res=>{
               $(`#attributes-section-position`).html(res.join(""));
-              $('[data-toggle="tooltip"]').tooltip({animation: false, delay: 0})
             })
         }
       });
